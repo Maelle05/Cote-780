@@ -1,6 +1,5 @@
 import { Scene, PerspectiveCamera, WebGLRenderer, LoadingManager, TextureLoader, Color } from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { Plane } from './Objects/Plane';
 import { ParallaxScene } from './Objects/ParallaxScene';
 
 export class webgl {
