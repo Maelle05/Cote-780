@@ -1,5 +1,5 @@
 import { Group } from 'three';
-import { Plane } from './Plane';
+import { Plane } from './plane';
 
 class ParallaxScene extends Group {
   constructor(name, textures, scale ){
