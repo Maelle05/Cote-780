@@ -1,10 +1,10 @@
-import { Mesh, PlaneGeometry, MeshBasicMaterial, BoxGeometry, DoubleSide } from 'three';
+import { Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide } from 'three';
 
 class Plane extends Mesh {
-    constructor(name, texture){
+    constructor(zIndex, texture){
         super()
 
-        this.name = name
+        this.name = 'plane-' + zIndex
 
         // TEXTURE
         this.texture = texture
@@ -20,8 +20,17 @@ class Plane extends Mesh {
         this.geometry = new PlaneGeometry(1, 1 / this.aspectRatio);
 
         // Create a MeshBasicMaterial with the texture
-        this.material = new MeshBasicMaterial({ map: this.texture, color: 'white', side: DoubleSide });
+        this.material = new MeshBasicMaterial({ 
+          map: this.texture,
+          color: 'white',
+          side: DoubleSide,
+          // depthWrite: false
+        });
         this.material.transparent = true
+
+
+        this.renderOrder = zIndex
+
     }
     
     setScale(coef){
