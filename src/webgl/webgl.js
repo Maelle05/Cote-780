@@ -29,7 +29,10 @@ export class webgl {
       textureLoader.load('./2.png'),
       textureLoader.load('./3.png'),
       textureLoader.load('./4.png'),
+      textureLoader.load('./5.png'),
+      textureLoader.load('./6.png'),
     ]
+    this.persoText = textureLoader.load('./perso.png')
 
     // Sizes
     this.sizes = {
@@ -59,7 +62,7 @@ export class webgl {
   }
 
   assetLoad() {
-    this.parallax = new ParallaxScene('Mountain parallax', this.planeTexture, 8)
+    this.parallax = new ParallaxScene('Mountain parallax', this.planeTexture, 9, this.persoText)
 
     this.scene.add(this.parallax)
   }

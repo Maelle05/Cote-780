@@ -23,7 +23,7 @@ class Plane extends Mesh {
         this.material = new MeshBasicMaterial({ 
           map: this.texture,
           color: 'white',
-          side: DoubleSide,
+          // side: DoubleSide,
           // depthWrite: false
         });
         this.material.transparent = true
