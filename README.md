@@ -1,8 +1,19 @@
-# Vue 3 + Vite
+# Cote 780
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Project Setup
 
-## Recommended IDE Setup
+```sh
+pnpm install
+```
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
-# Cote-780
+### Compile and Hot-Reload for Development
+
+```sh
+pnpm dev
+```
+
+### Compile and Minify for Production
+
+```sh
+pnpm build
+```

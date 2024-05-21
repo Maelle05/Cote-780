@@ -1,0 +1,26 @@
+:root {
+  --c-white: #ffffff;
+  --c-black: #000000;
+  --c-beige: #F3E3C8;
+  --c-green: #2E615F;
+  --c-red: #C9523B;
+  --c-yellow: #CD8F26;
+  --c-blue: #204062;
+
+  // Texts
+  --c-text-white: #FFFFFF;
+  --c-text-dark: #OOOOOO;
+
+  // Fonts
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  position: relative;
+  background-color: var(--c-beige);
+  color: var(--c-text-white);
+}
