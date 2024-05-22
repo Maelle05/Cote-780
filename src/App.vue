@@ -13,10 +13,4 @@ import BtnChangeScene from './components/UI/BtnChangeScene.vue'
 </template>
 
 <style scoped lang="scss">
-button {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  cursor: pointer;
-}
 </style>

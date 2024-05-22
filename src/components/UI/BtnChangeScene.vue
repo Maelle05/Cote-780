@@ -12,3 +12,13 @@ function onClickBtn() {
 <template>
   <button @click="onClickBtn"> Change current scene </button>
 </template>
+
+<style scoped lang="scss">
+button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  cursor: pointer;
+  pointer-events: all;
+}
+</style>
