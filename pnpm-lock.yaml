@@ -1,4 +1,4 @@
-lockfileVersion: 5.4
+lockfileVersion: 6.1
 
 specifiers:
   '@vitejs/plugin-vue': ^5.0.4
@@ -611,7 +611,7 @@ packages:
 
   /rollup/4.17.2:
     resolution: {integrity: sha512-/9ClTJPByC0U4zNLowV1tMBe8yMEAxewtR3cUNX5BoEpGH3dQEWpJLr6CLp0fPdYRF/fzVOgvDb1zXuakwF5kQ==}
-    engines: {node: '>=18.0.0', npm: '>=7.27.0'}
+    engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
     dependencies:
       '@types/estree': 1.0.5
