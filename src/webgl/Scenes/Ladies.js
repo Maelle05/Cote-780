@@ -3,9 +3,8 @@ import { state } from '../Utils/State';
 import TestPlane from '../Objects/TestPlane'
 import WebglController from '../WebglController';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { EVENTS } from '../Constants/events';
 
-class Map extends Scene {
+class Ladies extends Scene {
 	constructor() {
         super()
         state.register(this)
@@ -42,4 +41,4 @@ class Map extends Scene {
     }
 }
 
-export { Map };
+export { Ladies };

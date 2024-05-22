@@ -20,6 +20,7 @@ const EVENTS = {
 	DRAG_END: i++,
 	PINCH: i++,
 	WHEEL: i++,
+
 };
 
 const EVENTS_MAP = Object.fromEntries(

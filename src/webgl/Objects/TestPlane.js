@@ -1,5 +1,5 @@
 import { Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide } from 'three';
-// import { TestPlaneMaterial } from '../Materials/TestPlane/material';
+import { TestPlaneMaterial } from '../Materials/TestPlane/material';
 
 export default class TestPlane extends Mesh {
   constructor() {
@@ -16,13 +16,13 @@ export default class TestPlane extends Mesh {
   }
 
   #createMaterial(){
-    // const material = new TestPlaneMaterial({
-    //         uniforms: {
-		// 		uTime: { value: 0 },
-		// 	}
-    //     })
+    const material = new TestPlaneMaterial({
+            uniforms: {
+				uTime: { value: 0 },
+			}
+    })
 
-    const material = new MeshBasicMaterial({color: 'red'})
+    // const material = new MeshBasicMaterial({color: 'red'})
     material.side = DoubleSide
     return material
   }

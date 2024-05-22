@@ -13,6 +13,7 @@ import { Camera } from './Camera';
 
 // Scenes
 import { Map } from './Scenes/Map';
+import { Ladies } from './Scenes/Ladies';
 
 let webglInstance = null;
 
