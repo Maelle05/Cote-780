@@ -1,4 +1,5 @@
 <script setup>
+import BtnChangeScene from './components/UI/BtnChangeScene.vue'
 </script>
 
 <template>
@@ -7,10 +8,15 @@
   </header>
 
   <main>
-    coucou vue app
+    <BtnChangeScene />
   </main>
 </template>
 
-<style scoped>
-
+<style scoped lang="scss">
+button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  cursor: pointer;
+}
 </style>

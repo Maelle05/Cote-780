@@ -21,6 +21,9 @@ const EVENTS = {
 	PINCH: i++,
 	WHEEL: i++,
 
+
+  // COTE 780
+  CHANGE_SCENE: i++,
 };
 
 const EVENTS_MAP = Object.fromEntries(

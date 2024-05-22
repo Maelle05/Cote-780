@@ -25,7 +25,6 @@ class Map extends Scene {
 
     onAttach(){
         this.plan = new Plan();
-        console.log(this.plan);
         this.add(this.plan);
     }
 }

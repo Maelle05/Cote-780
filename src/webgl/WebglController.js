@@ -43,7 +43,11 @@ export default class WebglController {
     this.canvasWrapper = container;
     this.renderer = new Renderer(this.canvasWrapper)
     this.camera = new Camera()
-    this.scene = new Map()
+
+    this.allScene = [Map, Ladies]
+    this.currentScene = 0
+
+    this.scene = new this.allScene[this.currentScene]()
 
     this.init();
   }
@@ -94,7 +98,13 @@ export default class WebglController {
     if(this.renderer){
       this.renderer.clear();
       this.renderer.render(this.scene, this.camera);
+      console.log(this.scene);
     }
+  }
+
+  onChangeScene(){
+    this.currentScene = (this.currentScene + 1) % this.allScene.length
+    this.scene = new this.allScene[this.currentScene]()
   }
 
   clear() {
