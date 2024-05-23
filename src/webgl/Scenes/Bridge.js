@@ -10,6 +10,7 @@ import {
   MeshBasicMaterial,
   Scene,
   SphereGeometry,
+  HemisphereLight,
   Vector3,
 } from "three";
 import { state } from "../Utils/State";
@@ -27,14 +28,16 @@ class Bridge extends Scene {
 
     this.webgl = new WebglController();
 
-    this.light = new AmbientLight({ color: 0x000000, intensity: 1.0 });
-
+    this.light = new AmbientLight({ color: 0xFFFFFF });
     this.add(this.light);
+
     // Controls
     this.controls = new OrbitControls(
       this.webgl.camera,
       this.webgl.renderer.domElement
     );
+
+    this.position.set(2, 0, -1.5);
 
     this.angle = 0;
     this.radius = 0.5;
@@ -53,19 +56,19 @@ class Bridge extends Scene {
     this.bridge = this.webgl.assetsManager.get("bridge");
     this.bridge.position.set(-0.8, -1, -2.2);
     this.bridge.rotation.y = -0.3;
-
+    this.bridge.traverce
     this.add(this.bridge);
 
     this.rock = this.webgl.assetsManager.get("rock");
     this.rock.scale.set(0.2, 0.2, 0.2);
-    this.rock.position.set(-0.5, -0.98, -0.1);
+    this.rock.position.set(-0.5, -1.5, -0.1);
 
-    this.add(this.rock);
+    // this.add(this.rock);
 
-    this.player = new Mesh(
-      new SphereGeometry(0.1, 10, 10),
-      new MeshBasicMaterial({ color: 0x0055ff })
-    );
+    this.player = this.webgl.assetsManager.get("milo")
+    this.player.scale.set(0.15, 0.15, 0.15)
+    this.player.position.set(0, 0, 0)
+    this.player.rotation.y = 30
 
     this.add(this.player);
 

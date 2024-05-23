@@ -14,7 +14,7 @@ class Dam extends Scene {
 
 
         // Controls
-        this.controls = new OrbitControls(this.webgl.camera, this.webgl.renderer.domElement);
+        // this.controls = new OrbitControls(this.webgl.camera, this.webgl.renderer.domElement);
 	}
 
   init(){

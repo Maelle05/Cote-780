@@ -13,7 +13,7 @@ class Chapel extends Scene {
         this.webgl = new WebglController()
 
         // Controls
-        this.controls = new OrbitControls(this.webgl.camera, this.webgl.renderer.domElement);
+        // this.controls = new OrbitControls(this.webgl.camera, this.webgl.renderer.domElement);
 	}
 
   init(){

@@ -11,7 +11,7 @@ class Renderer extends WebGLRenderer {
 
     this.setPixelRatio(window.devicePixelRatio);
     this.setSize(this.width, this.height);
-    this.setClearColor(0x000000, 1);
+    this.setClearColor(0x988C86, 1);
     this.autoClear = false;
 
     // this.shadowMap.enabled = true;

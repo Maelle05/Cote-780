@@ -13,10 +13,10 @@ class Map extends Scene {
     this.webgl = new WebglController();
 
     // Controls
-    this.controls = new OrbitControls(
-      this.webgl.camera,
-      this.webgl.renderer.domElement
-    );
+    // this.controls = new OrbitControls(
+    //   this.webgl.camera,
+    //   this.webgl.renderer.domElement
+    // );
 
     this.light = new DirectionalLight({ color: 0x000000, intensity: 1.0 });
     this.light.position.set(0, 10, 0);

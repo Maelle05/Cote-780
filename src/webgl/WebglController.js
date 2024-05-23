@@ -46,7 +46,7 @@ export default class WebglController {
     this.camera = new Camera();
 
     this.allScene = [new Map(), new Ladies(), new Dam(), new Bridge(), new Chapel(), new Village()]
-    this.currentScene = 1
+    this.currentScene = 3
 
     this.scene = this.allScene[this.currentScene]
     this.scene.init()
