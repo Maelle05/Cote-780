@@ -8,7 +8,6 @@ import { Viewport } from './Utils/Tools/Viewport';
 import { Keyboard } from './Utils/Tools/Keyboard';
 import { EVENTS } from './Constants/events';
 import Stats from 'three/examples/jsm/libs/stats.module';
-import { Pane } from 'tweakpane';
 import { Camera } from './Camera';
 
 // Scenes
@@ -36,18 +35,16 @@ export default class WebglController {
     this.keyboard = new Keyboard();
     this.scroll= new Scroll(this.viewport);
 
-    // Settings
-    this.pane = new Pane({ title: 'Parameters', expanded: true });
-
     // Webgl
     this.canvasWrapper = container;
     this.renderer = new Renderer(this.canvasWrapper)
     this.camera = new Camera()
 
-    this.allScene = [Map, Ladies]
+    this.allScene = [new Map(), new Ladies()]
     this.currentScene = 0
 
-    this.scene = new this.allScene[this.currentScene]()
+    this.scene = this.allScene[this.currentScene]
+    this.scene.init()
 
     this.init();
   }
@@ -98,18 +95,17 @@ export default class WebglController {
     if(this.renderer){
       this.renderer.clear();
       this.renderer.render(this.scene, this.camera);
-      console.log(this.scene);
     }
   }
 
   onChangeScene(){
     this.currentScene = (this.currentScene + 1) % this.allScene.length
-    this.scene = new this.allScene[this.currentScene]()
+    this.scene.clear()
+    this.scene = this.allScene[this.currentScene]
+    this.scene.init()
   }
 
   clear() {
-    // clear pane
-    this.pane.dispose();
     webglInstance = null;
   }
 }
