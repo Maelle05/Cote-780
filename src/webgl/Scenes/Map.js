@@ -1,6 +1,6 @@
 import { Scene } from 'three'
 import { state } from '../Utils/State';
-import TestPlane from '../Objects/TestPlane'
+import Plan from '../Objects/Plan'
 import WebglController from '../WebglController';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { EVENTS } from '../Constants/events';
@@ -21,24 +21,11 @@ class Map extends Scene {
 	}
 
     initPane(){
-        this.pane.addBinding(
-            {
-                progress: 0,
-                theme: 'dark',
-            },
-            'progress', {
-                min: 0,
-                max: 1,
-                step: 0.01,
-            }
-        ).on('change', function (ev) {
-            console.log(`change: ${ev.value}`);
-        });
     }
 
     onAttach(){
-        this.plane = new TestPlane();
-        this.add(this.plane);
+        this.plan = new Plan();
+        this.add(this.plan);
     }
 }
 
