@@ -11,8 +11,9 @@ import Stats from 'three/examples/jsm/libs/stats.module';
 import { Camera } from './Camera';
 
 // Scenes
-import { Map } from './Scenes/Map';
-import { Ladies } from './Scenes/Ladies';
+import { Map } from "./Scenes/Map";
+import { Ladies } from "./Scenes/Ladies";
+import { Bridge } from "./Scenes/Bridge";
 
 let webglInstance = null;
 
@@ -33,12 +34,12 @@ export default class WebglController {
     this.viewport = new Viewport(container);
     this.mouse = new Mouse(this.viewport);
     this.keyboard = new Keyboard();
-    this.scroll= new Scroll(this.viewport);
+    this.scroll = new Scroll(this.viewport);
 
     // Webgl
     this.canvasWrapper = container;
-    this.renderer = new Renderer(this.canvasWrapper)
-    this.camera = new Camera()
+    this.renderer = new Renderer(this.canvasWrapper);
+    this.camera = new Camera();
 
     this.allScene = [new Map(), new Ladies()]
     this.currentScene = 0
@@ -58,8 +59,7 @@ export default class WebglController {
     this.canvasWrapper.appendChild(this.stats.dom);
   }
 
-  async beforeLoad() {
-  }
+  async beforeLoad() {}
 
   async load() {
     await this.beforeLoad();
@@ -73,7 +73,7 @@ export default class WebglController {
   onAttach() {
     // console.log('Event onAttach')
     // clear canvas
-    this.canvasWrapper.innerHTML = '';
+    this.canvasWrapper.innerHTML = "";
     // add canvas to dom
     this.initStats();
     this.canvasWrapper.appendChild(this.renderer.domElement);
@@ -89,10 +89,10 @@ export default class WebglController {
     // console.log('Event onRender')
 
     // update monitoring performances
-    if(this.stats) this.stats.update();
+    if (this.stats) this.stats.update();
 
     // render
-    if(this.renderer){
+    if (this.renderer) {
       this.renderer.clear();
       this.renderer.render(this.scene, this.camera);
     }

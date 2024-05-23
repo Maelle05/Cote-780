@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "gsap": "^3.12.5",
     "sass": "^1.77.2",
     "three": "^0.164.1",
     "tweakpane": "^4.0.3",
