@@ -18,15 +18,16 @@ import { Bridge } from "./Scenes/Bridge";
 import { Chapel } from "./Scenes/Chapel";
 import { Village } from "./Scenes/Village";
 
-let webglInstance = null;
 
 export default class WebglController {
+  static instance = null;
+
   constructor(container) {
     // Singleton
-    if (webglInstance) {
-      return webglInstance;
+    if (WebglController.instance) {
+      return WebglController.instance;
     }
-    webglInstance = this;
+    WebglController.instance = this;
 
     state.register(this);
 
@@ -109,6 +110,6 @@ export default class WebglController {
   }
 
   clear() {
-    webglInstance = null;
+    WebglController.instance = null;
   }
 }
