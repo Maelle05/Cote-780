@@ -20,6 +20,7 @@ const manifest = {
   models: {
     bridge: { path: `assets/models/bridge.glb` },
     rock: { path: `assets/models/rock.glb` },
+    map: { path: `assets/models/map.glb` },
   },
   jsons: {},
   sounds: {

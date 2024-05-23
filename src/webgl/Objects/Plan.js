@@ -1,32 +1,22 @@
-import { Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide } from 'three';
+import { Mesh, PlaneGeometry, DoubleSide } from 'three';
 import { PlanMaterial } from '../Materials/Plan/material';
+import { state } from '../Utils/State';
+import App from '@/App.vue';
+import WebglController from '../WebglController';
 
 export default class Plan extends Mesh {
   constructor() {
-    super()
-
-    this.geometry = this.#createGeometry();
-    this.material = this.#createMaterial();
-
-
-    this.rotation.x = (180 / Math.PI) / 27
-
+    super();
+    state.register(this);
   }
 
-  #createGeometry(){
-    const geometry = new PlaneGeometry(3, 3, 60, 60);
-    return geometry
-  }
+  onAttach() {
+    this.map = WebglController.instance.assetsManager.get("map");
+    this.add(this.map);
 
-  #createMaterial(){
-    const material = new PlanMaterial({
-            uniforms: {
-				uTime: { value: 0 },
-			}
-    })
-
-    // const material = new MeshBasicMaterial({color: 'red'})
-    material.side = DoubleSide
-    return material
+    // this.map.traverse((o) => {
+    //   o.receiveShadow = true;
+    //   o.castShadow = true;
+    // })
   }
 }
