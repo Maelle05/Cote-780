@@ -3,7 +3,6 @@ import { state } from '../Utils/State';
 import Plan from '../Objects/Plan'
 import WebglController from '../WebglController';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { EVENTS } from '../Constants/events';
 import { Pane } from 'tweakpane';
 
 class Map extends Scene {

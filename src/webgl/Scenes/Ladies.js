@@ -23,19 +23,6 @@ class Ladies extends Scene {
   }
 
   initPane(){
-    this.pane.addBinding(
-        {
-            progress: 0,
-            theme: 'dark',
-        },
-        'progress', {
-            min: 0,
-            max: 1,
-            step: 0.01,
-        }
-    ).on('change', function (ev) {
-        console.log(`change: ${ev.value}`);
-    });
   }
 
   onAttach(){

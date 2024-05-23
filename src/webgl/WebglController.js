@@ -13,7 +13,10 @@ import { Camera } from './Camera';
 // Scenes
 import { Map } from "./Scenes/Map";
 import { Ladies } from "./Scenes/Ladies";
+import { Dam } from "./Scenes/Dam";
 import { Bridge } from "./Scenes/Bridge";
+import { Chapel } from "./Scenes/Chapel";
+import { Village } from "./Scenes/Village";
 
 let webglInstance = null;
 
@@ -41,7 +44,7 @@ export default class WebglController {
     this.renderer = new Renderer(this.canvasWrapper);
     this.camera = new Camera();
 
-    this.allScene = [new Map(), new Ladies()]
+    this.allScene = [new Map(), new Ladies(), new Dam(), new Bridge(), new Chapel(), new Village()]
     this.currentScene = 0
 
     this.scene = this.allScene[this.currentScene]

@@ -18,6 +18,7 @@ import WebglController from "../WebglController";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { EVENTS } from "../Constants/events";
 import gsap from "gsap";
+import { Pane } from 'tweakpane';
 
 class Bridge extends Scene {
   constructor() {
@@ -35,31 +36,17 @@ class Bridge extends Scene {
       this.webgl.renderer.domElement
     );
 
-    this.pane = this.webgl.pane;
-    if (this.pane) this.initPane();
-
     this.angle = 0;
     this.radius = 0.5;
     this.center = new Vector3(-1, -0.98, 0.1);
   }
 
+  init(){
+    this.pane = new Pane({ title: 'Parameters Bridge', expanded: true });
+    this.initPane();
+  }
+
   initPane() {
-    this.pane
-      .addBinding(
-        {
-          progress: 0,
-          theme: "dark",
-        },
-        "progress",
-        {
-          min: 0,
-          max: 1,
-          step: 0.01,
-        }
-      )
-      .on("change", function (ev) {
-        console.log(`change: ${ev.value}`);
-      });
   }
 
   onAttach() {
@@ -131,6 +118,10 @@ class Bridge extends Scene {
   updatePos() {
     this.circle.position.set(this.center.x, this.center.y, this.center.z);
     this.player.position.set(this.center.x, -0.88, this.center.z);
+  }
+
+  clear(){
+    this.pane.dispose()
   }
 }
 
