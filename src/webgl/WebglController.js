@@ -7,11 +7,13 @@ import { Scroll } from './Utils/Tools/Scroll';
 import { Viewport } from './Utils/Tools/Viewport';
 import { Keyboard } from './Utils/Tools/Keyboard';
 import { EVENTS } from './Constants/events';
+import { INIT_SCENE } from './Constants/config';
 import Stats from 'three/examples/jsm/libs/stats.module';
 import { Camera } from './Camera';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 // Scenes
+import { Intro } from "./Scenes/Intro";
 import { Map } from "./Scenes/Map";
 import { Ladies } from "./Scenes/Ladies";
 import { Dam } from "./Scenes/Dam";
@@ -46,23 +48,23 @@ export default class WebglController {
     this.renderer = new Renderer(this.canvasWrapper);
     this.camera = new Camera();
 
-    this.allScene = [new Map(), new Ladies(), new Dam(), new Bridge(), new Chapel(), new Village()]
-    this.currentScene = 3
-
+    this.allScene = [new Intro(), new Map(), new Ladies(), new Dam(), new Bridge(), new Chapel(), new Village()]
+    this.currentScene = INIT_SCENE
     this.scene = this.allScene[this.currentScene]
     this.scene.init()
-
+    
+    
     // Controls
     this.controls = new OrbitControls(
       this.camera,
       this.renderer.domElement
-    );
-
-    this.init();
+      );
+      
+      this.init();
   }
-
+    
   async init() {
-    await this.load();
+      await this.load();
   }
 
   initStats() {
@@ -109,11 +111,13 @@ export default class WebglController {
     }
   }
 
-  onChangeScene(){
-    this.currentScene = (this.currentScene + 1) % this.allScene.length
+  onChangeScene(e){
+    this.currentScene = e
+    console.log(this.currentScene);
     this.scene.clear()
     this.scene = this.allScene[this.currentScene]
     this.scene.init()
+    this.controls.reset()
   }
 
   clear() {

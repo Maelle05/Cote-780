@@ -1,10 +1,15 @@
 <script setup>
 import { EVENTS } from '@/webgl/Constants/events'
+import { INIT_SCENE } from '@/webgl/Constants/config'
 import { state } from '../../webgl/Utils/State'
+import { ref } from 'vue'
+
+let currentScene = ref(INIT_SCENE)
 
 // functions that mutate state and trigger updates
 function onClickBtn() {
-  state.emit(EVENTS.CHANGE_SCENE)
+  currentScene.value = (currentScene.value + 1) % 7
+  state.emit(EVENTS.CHANGE_SCENE, currentScene.value )
 }
 
 </script>
