@@ -1,4 +1,4 @@
-import { DirectionalLight, Scene } from "three";
+import { DirectionalLight, AmbientLight, Scene } from "three";
 import { state } from "../Utils/State";
 import Plan from "../Objects/Plan";
 import WebglController from "../WebglController";
@@ -11,13 +11,15 @@ class Map extends Scene {
 
     this.webgl = new WebglController();
 
+
+    this.ambient = new AmbientLight({ color: 0xFFFFFF, intensity: 0.1})
     this.light = new DirectionalLight({ color: 0x000000, intensity: 1.0 });
     this.light.position.set(0, 10, 0);
     // this.light.castShadow = true;
     // this.light.shadow.mapSize.width = 2048;
     // this.light.shadow.mapSize.height = 2048;
 
-    this.add(this.light);
+    this.add(this.light, this.ambient);
   }
 
   init() {
@@ -29,6 +31,8 @@ class Map extends Scene {
 
   onAttach() {
     this.plan = new Plan();
+    this.plan.position.set(0, 0, -7);
+    this.plan.rotation.x = 20
     this.add(this.plan);
   }
 

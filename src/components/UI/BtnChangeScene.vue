@@ -15,7 +15,7 @@ function onClickBtn() {
 </script>
 
 <template>
-  <button @click="onClickBtn"> Change current scene </button>
+  <button @click="onClickBtn"> Go next scene </button>
 </template>
 
 <style scoped lang="scss">

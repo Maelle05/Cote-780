@@ -61,7 +61,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div :class="`container-intro`">
     <div
       :class="`section section--${index}`"
       :key="section.text"
@@ -75,6 +75,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.container-intro{
+  pointer-events: all;
+}
 .section {
   height: 100vh;
   width: 100vw;

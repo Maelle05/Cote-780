@@ -119,19 +119,18 @@ export default class WebglController {
     }
   }
 
-  handleFirstClick = () => {
-    window.removeEventListener("click", this.handleFirstClick);
-    state.emit(EVENTS.FIRST_CLICK);
-  };
-
   onChangeScene(e) {
     this.currentScene = e;
-    console.log(this.currentScene);
     this.scene.clear();
     this.scene = this.allScene[this.currentScene];
     this.scene.init();
     this.controls.reset();
   }
+
+  handleFirstClick = () => {
+    window.removeEventListener("click", this.handleFirstClick);
+    state.emit(EVENTS.FIRST_CLICK);
+  };
 
   clear() {
     WebglController.instance = null;
