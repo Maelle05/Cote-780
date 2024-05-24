@@ -1,3 +1,3 @@
-const INIT_SCENE = 3
+const INIT_SCENE = 1
 
 export { INIT_SCENE }

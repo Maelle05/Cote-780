@@ -42,6 +42,7 @@ class Demoiselle extends Group {
 
   onPointerMove(e){
     if(this.topIsDraw) return
+    if(this.webgl.currentScene != 2) return
 
     // update the picking ray with the camera and pointer position
     this.raycaster.setFromCamera(e.webgl, this.webgl.camera);

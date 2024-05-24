@@ -113,7 +113,6 @@ export default class WebglController {
 
   onChangeScene(e){
     this.currentScene = e
-    console.log(this.currentScene);
     this.scene.clear()
     this.scene = this.allScene[this.currentScene]
     this.scene.init()
