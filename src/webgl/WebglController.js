@@ -45,7 +45,7 @@ export default class WebglController {
     this.renderer = new Renderer(this.canvasWrapper);
     this.camera = new Camera();
 
-    this.allScene = [Map, Ladies];
+    this.allScene = [Bridge, Ladies];
     this.currentScene = 0;
 
     this.scene = new this.allScene[this.currentScene]();
