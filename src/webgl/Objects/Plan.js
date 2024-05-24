@@ -14,6 +14,9 @@ export default class Plan extends Mesh {
     this.map = WebglController.instance.assetsManager.get("map");
     this.add(this.map);
 
+    this.map = WebglController.instance.assetsManager.get("map");
+    this.add(this.map);
+
     // this.map.traverse((o) => {
     //   o.receiveShadow = true;
     //   o.castShadow = true;
