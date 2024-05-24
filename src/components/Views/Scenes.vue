@@ -1,13 +1,20 @@
 <script setup>
-import { EVENTS } from '@/webgl/Constants/events'
-import { state } from '../../webgl/Utils/State'
-import { ref } from 'vue'
+import { EVENTS } from "@/webgl/Constants/events";
+import { state } from "../../webgl/Utils/State";
+import { ref } from "vue";
+import ChapterTitle from "../UI/ChapterTitle.vue";
+import Sound from "../UI/Sound.vue";
 
+const props = defineProps({
+  sceneIndex: Number,
+});
+
+console.log(props.sceneIndex);
 </script>
 
 <template>
-  coucou scene
+  <ChapterTitle></ChapterTitle>
+  <Sound></Sound>
 </template>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

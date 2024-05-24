@@ -1,3 +1,3 @@
-const INIT_SCENE = 0
+const INIT_SCENE = 4;
 
-export { INIT_SCENE }
+export { INIT_SCENE };

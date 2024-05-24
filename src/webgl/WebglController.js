@@ -20,6 +20,7 @@ import { Dam } from "./Scenes/Dam";
 import { Bridge } from "./Scenes/Bridge";
 import { Chapel } from "./Scenes/Chapel";
 import { Village } from "./Scenes/Village";
+import { AudioManager } from "./Utils/Core/Audio/AudioManager";
 
 export default class WebglController {
   static instance = null;
@@ -36,6 +37,8 @@ export default class WebglController {
     // Core
     this.assetsManager = new AssetsManager();
     this.ticker = new Ticker();
+    this.audio = new AudioManager();
+
     // Tools
     this.viewport = new Viewport(container);
     this.mouse = new Mouse(this.viewport);
@@ -62,6 +65,8 @@ export default class WebglController {
 
     // Controls
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+
+    window.addEventListener("click", this.handleFirstClick);
 
     this.init();
   }
@@ -113,6 +118,11 @@ export default class WebglController {
       this.renderer.render(this.scene, this.camera);
     }
   }
+
+  handleFirstClick = () => {
+    window.removeEventListener("click", this.handleFirstClick);
+    state.emit(EVENTS.FIRST_CLICK);
+  };
 
   onChangeScene(e) {
     this.currentScene = e;

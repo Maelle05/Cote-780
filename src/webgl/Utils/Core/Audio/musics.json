@@ -1,0 +1,12 @@
+{
+  "sources": [
+    {
+      "name": "music_1",
+      "src": "music_1.mp3"
+    },
+    {
+      "name": "music_name",
+      "src": "music_name.mp3"
+    }
+  ]
+}

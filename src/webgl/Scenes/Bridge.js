@@ -18,7 +18,7 @@ import TestPlane from "../Objects/TestPlane";
 import WebglController from "../WebglController";
 import { EVENTS } from "../Constants/events";
 import gsap from "gsap";
-import { Pane } from 'tweakpane';
+import { Pane } from "tweakpane";
 
 class Bridge extends Scene {
   constructor() {
@@ -27,8 +27,10 @@ class Bridge extends Scene {
 
     this.webgl = new WebglController();
 
-    this.light = new AmbientLight({ color: 0xFFFFFF });
+    this.light = new AmbientLight({ color: 0xffffff });
     this.add(this.light);
+
+    console.log();
 
     this.position.set(2, 0, -1.5);
 
@@ -37,19 +39,18 @@ class Bridge extends Scene {
     this.center = new Vector3(-1, -0.98, 0.1);
   }
 
-  init(){
-    this.pane = new Pane({ title: 'Parameters Bridge', expanded: true });
+  init() {
+    this.pane = new Pane({ title: "Parameters Bridge", expanded: true });
     this.initPane();
   }
 
-  initPane() {
-  }
+  initPane() {}
 
   onAttach() {
     this.bridge = this.webgl.assetsManager.get("bridge");
     this.bridge.position.set(-0.8, -1, -2.2);
     this.bridge.rotation.y = -0.3;
-    this.bridge.traverce
+    this.bridge.traverce;
     this.add(this.bridge);
 
     this.rock = this.webgl.assetsManager.get("rock");
@@ -58,10 +59,10 @@ class Bridge extends Scene {
 
     // this.add(this.rock);
 
-    this.player = this.webgl.assetsManager.get("milo")
-    this.player.position.set(0, -10, 0)
-    this.player.scale.set(0.15, 0.15, 0.15)
-    this.player.rotation.y = 30
+    this.player = this.webgl.assetsManager.get("milo");
+    this.player.position.set(0, -10, 0);
+    this.player.scale.set(0.15, 0.15, 0.15);
+    this.player.rotation.y = 30;
 
     this.add(this.player);
 
@@ -85,6 +86,8 @@ class Bridge extends Scene {
     this.add(this.target);
 
     this.updatePos();
+
+    this.webgl.audio.playMusic("music_1");
   }
 
   onTick() {
@@ -116,8 +119,8 @@ class Bridge extends Scene {
     this.player.position.set(this.center.x, -0.88, this.center.z);
   }
 
-  clear(){
-    this.pane.dispose()
+  clear() {
+    this.pane.dispose();
   }
 }
 
