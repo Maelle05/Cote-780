@@ -7,24 +7,29 @@ import { Scroll } from "./Utils/Tools/Scroll";
 import { Viewport } from "./Utils/Tools/Viewport";
 import { Keyboard } from "./Utils/Tools/Keyboard";
 import { EVENTS } from "./Constants/events";
+import { INIT_SCENE } from "./Constants/config";
 import Stats from "three/examples/jsm/libs/stats.module";
-import { Pane } from "tweakpane";
 import { Camera } from "./Camera";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 // Scenes
+import { Intro } from "./Scenes/Intro";
 import { Map } from "./Scenes/Map";
 import { Ladies } from "./Scenes/Ladies";
+import { Dam } from "./Scenes/Dam";
 import { Bridge } from "./Scenes/Bridge";
-
-let webglInstance = null;
+import { Chapel } from "./Scenes/Chapel";
+import { Village } from "./Scenes/Village";
 
 export default class WebglController {
+  static instance = null;
+
   constructor(container) {
     // Singleton
-    if (webglInstance) {
-      return webglInstance;
+    if (WebglController.instance) {
+      return WebglController.instance;
     }
-    webglInstance = this;
+    WebglController.instance = this;
 
     state.register(this);
 
@@ -37,18 +42,26 @@ export default class WebglController {
     this.keyboard = new Keyboard();
     this.scroll = new Scroll(this.viewport);
 
-    // Settings
-    this.pane = new Pane({ title: "Parameters", expanded: true });
-
     // Webgl
     this.canvasWrapper = container;
     this.renderer = new Renderer(this.canvasWrapper);
     this.camera = new Camera();
 
-    this.allScene = [Bridge, Ladies];
-    this.currentScene = 0;
+    this.allScene = [
+      new Intro(),
+      new Map(),
+      new Ladies(),
+      new Dam(),
+      new Bridge(),
+      new Chapel(),
+      new Village(),
+    ];
+    this.currentScene = INIT_SCENE;
+    this.scene = this.allScene[this.currentScene];
+    this.scene.init();
 
-    this.scene = new this.allScene[this.currentScene]();
+    // Controls
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
     this.init();
   }
@@ -98,18 +111,19 @@ export default class WebglController {
     if (this.renderer) {
       this.renderer.clear();
       this.renderer.render(this.scene, this.camera);
-      console.log(this.scene);
     }
   }
 
-  onChangeScene() {
-    this.currentScene = (this.currentScene + 1) % this.allScene.length;
-    this.scene = new this.allScene[this.currentScene]();
+  onChangeScene(e) {
+    this.currentScene = e;
+    console.log(this.currentScene);
+    this.scene.clear();
+    this.scene = this.allScene[this.currentScene];
+    this.scene.init();
+    this.controls.reset();
   }
 
   clear() {
-    // clear pane
-    this.pane.dispose();
-    webglInstance = null;
+    WebglController.instance = null;
   }
 }

@@ -4,7 +4,7 @@ import { state } from "./Utils/State";
 class Camera extends PerspectiveCamera {
   constructor() {
     // Base FOV, Viewport Ratio, Cam near, Cam far
-    super(70, window.innerWidth / window.innerHeight, 1, 1000);
+    super(70, window.innerWidth / window.innerHeight, 0.1, 1000);
     state.register(this);
 
     this.position.set(0, 0, 2);

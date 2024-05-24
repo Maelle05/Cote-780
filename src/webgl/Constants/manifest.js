@@ -18,8 +18,10 @@ const manifest = {
     // envmap: { path: `/assets/textures/envmap.hdr` },
   },
   models: {
-    bridge: { path: `assets/models/bridge.glb` },
+    bridge: { path: `assets/models/pont_v1.glb` },
     rock: { path: `assets/models/rock.glb` },
+    map: { path: `assets/models/map.glb` },
+    milo: { path: `assets/models/milo.glb` },
   },
   jsons: {},
   sounds: {

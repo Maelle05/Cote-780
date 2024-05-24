@@ -1,4 +1,3 @@
-const CAMERA = {
-	near: 1,
-	far: 100,
-};
+const INIT_SCENE = 0
+
+export { INIT_SCENE }

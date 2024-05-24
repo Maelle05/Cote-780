@@ -1,32 +1,40 @@
-import { Scene } from 'three'
-import { state } from '../Utils/State';
-import Plan from '../Objects/Plan'
-import WebglController from '../WebglController';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { EVENTS } from '../Constants/events';
+import { DirectionalLight, Scene } from "three";
+import { state } from "../Utils/State";
+import Plan from "../Objects/Plan";
+import WebglController from "../WebglController";
+import { Pane } from "tweakpane";
 
 class Map extends Scene {
-	constructor() {
-        super()
-        state.register(this)
+  constructor() {
+    super();
+    state.register(this);
 
-        this.webgl = new WebglController()
+    this.webgl = new WebglController();
 
+    this.light = new DirectionalLight({ color: 0x000000, intensity: 1.0 });
+    this.light.position.set(0, 10, 0);
+    // this.light.castShadow = true;
+    // this.light.shadow.mapSize.width = 2048;
+    // this.light.shadow.mapSize.height = 2048;
 
-        // Controls
-        this.controls = new OrbitControls(this.webgl.camera, this.webgl.renderer.domElement);
+    this.add(this.light);
+  }
 
-        this.pane = this.webgl.pane
-        if(this.pane) this.initPane()
-	}
+  init() {
+    this.pane = new Pane({ title: "Parameters Map", expanded: true });
+    this.initPane();
+  }
 
-    initPane(){
-    }
+  initPane() {}
 
-    onAttach(){
-        this.plan = new Plan();
-        this.add(this.plan);
-    }
+  onAttach() {
+    this.plan = new Plan();
+    this.add(this.plan);
+  }
+
+  clear() {
+    this.pane.dispose();
+  }
 }
 
 export { Map };
