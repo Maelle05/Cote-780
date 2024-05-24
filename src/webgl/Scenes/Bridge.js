@@ -16,7 +16,6 @@ import {
 import { state } from "../Utils/State";
 import TestPlane from "../Objects/TestPlane";
 import WebglController from "../WebglController";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { EVENTS } from "../Constants/events";
 import gsap from "gsap";
 import { Pane } from 'tweakpane';
@@ -30,12 +29,6 @@ class Bridge extends Scene {
 
     this.light = new AmbientLight({ color: 0xFFFFFF });
     this.add(this.light);
-
-    // Controls
-    this.controls = new OrbitControls(
-      this.webgl.camera,
-      this.webgl.renderer.domElement
-    );
 
     this.position.set(2, 0, -1.5);
 
@@ -66,8 +59,8 @@ class Bridge extends Scene {
     // this.add(this.rock);
 
     this.player = this.webgl.assetsManager.get("milo")
+    this.player.position.set(0, -10, 0)
     this.player.scale.set(0.15, 0.15, 0.15)
-    this.player.position.set(0, 0, 0)
     this.player.rotation.y = 30
 
     this.add(this.player);

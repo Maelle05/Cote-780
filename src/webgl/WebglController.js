@@ -9,6 +9,7 @@ import { Keyboard } from './Utils/Tools/Keyboard';
 import { EVENTS } from './Constants/events';
 import Stats from 'three/examples/jsm/libs/stats.module';
 import { Camera } from './Camera';
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 // Scenes
 import { Map } from "./Scenes/Map";
@@ -50,6 +51,12 @@ export default class WebglController {
 
     this.scene = this.allScene[this.currentScene]
     this.scene.init()
+
+    // Controls
+    this.controls = new OrbitControls(
+      this.camera,
+      this.renderer.domElement
+    );
 
     this.init();
   }

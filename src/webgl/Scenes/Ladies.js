@@ -18,7 +18,7 @@ class Demoiselle extends Group {
     this.canvas = document.createElement('canvas')
     this.canvas.width = 100
     this.canvas.height = 100
-    this.ctx = this.canvas.getContext("2d")
+    this.ctx = this.canvas.getContext("2d", { willReadFrequently: true })
     this.ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${0.2})`;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.canvasTex = new CanvasTexture(this.canvas);
