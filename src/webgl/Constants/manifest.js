@@ -12,16 +12,17 @@ Finally, you can set some item to be criticals if you want your to wait the load
 const manifest = {
   images: {},
   textures: {
-    // test: { path: `/assets/textures/test.jpg` },
+    matcap: { path: `/assets/textures/matcap.png` },
   },
   envMaps: {
     // envmap: { path: `/assets/textures/envmap.hdr` },
   },
   models: {
-    bridge: { path: `assets/models/pont_v1.glb` },
-    ladies: {path: `assets/models/ladies.glb`},
-    rock: { path: `assets/models/rock.glb` },
     map: { path: `assets/models/map.glb` },
+    ladies: {path: `assets/models/ladies.glb`},
+    dam: {path: `assets/models/dam.glb`},
+    bridge: { path: `assets/models/pont_v1.glb` },
+    rock: { path: `assets/models/rock.glb` },
     milo: { path: `assets/models/milo.glb` },
   },
   jsons: {},

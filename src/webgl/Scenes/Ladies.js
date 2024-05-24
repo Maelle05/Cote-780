@@ -1,4 +1,4 @@
-import { Scene, Mesh, ConeGeometry, MeshBasicMaterial, Group, PlaneGeometry, CanvasTexture, Raycaster, AmbientLight } from 'three'
+import { Scene, MeshMatcapMaterial, MeshBasicMaterial, Group, CanvasTexture, Raycaster, AmbientLight } from 'three'
 import { state } from '../Utils/State';
 import WebglController from '../WebglController';
 import { Pane } from 'tweakpane';
@@ -173,6 +173,7 @@ class Ladies extends Scene {
       this.ambient = new AmbientLight({ color: 0xFFFFFF, intensity: 0.1})
       this.ladies = this.webgl.assetsManager.get('ladies')
       this.ladies.traverse((el)=>{
+        el.material = new MeshMatcapMaterial({ matcap: this.webgl.assetsManager.get('matcap')})
         if(el.name == 'dame1' || el.name == 'top1'){
           el.material = new MeshBasicMaterial({  color: 'green'})
           this.D1.push(el)
