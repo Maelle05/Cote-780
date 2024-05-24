@@ -1,15 +1,15 @@
-import { Renderer } from './Renderer';
-import { state } from './Utils/State';
-import { AssetsManager } from './Utils/Core/AssetsManager';
-import { Ticker } from './Utils/Core/Ticker';
-import { Mouse } from './Utils/Tools/Mouse';
-import { Scroll } from './Utils/Tools/Scroll';
-import { Viewport } from './Utils/Tools/Viewport';
-import { Keyboard } from './Utils/Tools/Keyboard';
-import { EVENTS } from './Constants/events';
-import { INIT_SCENE } from './Constants/config';
-import Stats from 'three/examples/jsm/libs/stats.module';
-import { Camera } from './Camera';
+import { Renderer } from "./Renderer";
+import { state } from "./Utils/State";
+import { AssetsManager } from "./Utils/Core/AssetsManager";
+import { Ticker } from "./Utils/Core/Ticker";
+import { Mouse } from "./Utils/Tools/Mouse";
+import { Scroll } from "./Utils/Tools/Scroll";
+import { Viewport } from "./Utils/Tools/Viewport";
+import { Keyboard } from "./Utils/Tools/Keyboard";
+import { EVENTS } from "./Constants/events";
+import { INIT_SCENE } from "./Constants/config";
+import Stats from "three/examples/jsm/libs/stats.module";
+import { Camera } from "./Camera";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 // Scenes
@@ -20,7 +20,6 @@ import { Dam } from "./Scenes/Dam";
 import { Bridge } from "./Scenes/Bridge";
 import { Chapel } from "./Scenes/Chapel";
 import { Village } from "./Scenes/Village";
-
 
 export default class WebglController {
   static instance = null;
@@ -48,23 +47,27 @@ export default class WebglController {
     this.renderer = new Renderer(this.canvasWrapper);
     this.camera = new Camera();
 
-    this.allScene = [new Intro(), new Map(), new Ladies(), new Dam(), new Bridge(), new Chapel(), new Village()]
-    this.currentScene = INIT_SCENE
-    this.scene = this.allScene[this.currentScene]
-    this.scene.init()
-    
-    
+    this.allScene = [
+      new Intro(),
+      new Map(),
+      new Ladies(),
+      new Dam(),
+      new Bridge(),
+      new Chapel(),
+      new Village(),
+    ];
+    this.currentScene = INIT_SCENE;
+    this.scene = this.allScene[this.currentScene];
+    this.scene.init();
+
     // Controls
-    this.controls = new OrbitControls(
-      this.camera,
-      this.renderer.domElement
-      );
-      
-      this.init();
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+
+    this.init();
   }
-    
+
   async init() {
-      await this.load();
+    await this.load();
   }
 
   initStats() {
