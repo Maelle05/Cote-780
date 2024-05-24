@@ -19,6 +19,7 @@ const manifest = {
   },
   models: {
     bridge: { path: `assets/models/pont_v1.glb` },
+    ladies: {path: `assets/models/ladies.glb`},
     rock: { path: `assets/models/rock.glb` },
     map: { path: `assets/models/map.glb` },
     milo: { path: `assets/models/milo.glb` },

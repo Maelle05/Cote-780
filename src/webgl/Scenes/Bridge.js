@@ -56,7 +56,7 @@ class Bridge extends Scene {
     this.rock.scale.set(0.2, 0.2, 0.2);
     this.rock.position.set(-0.5, -1.5, -0.1);
 
-    // this.add(this.rock);
+    this.add(this.rock);
 
     this.player = this.webgl.assetsManager.get("milo")
     this.player.position.set(0, -10, 0)
@@ -98,7 +98,8 @@ class Bridge extends Scene {
     this.target.position.set(this.x, -0.94, this.z);
   }
 
-  onKeyDown(e) {
+  onKeyDown() {
+    if (this.webgl.currentScene != 5) return
     if (this.target.position.distanceTo(this.rock.position) > 0.15) return;
     gsap.to(this.center, {
       x: -0.5,

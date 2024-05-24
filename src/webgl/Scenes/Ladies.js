@@ -1,4 +1,4 @@
-import { Scene, Mesh, ConeGeometry, MeshBasicMaterial, Group, PlaneGeometry, CanvasTexture, Raycaster } from 'three'
+import { Scene, Mesh, ConeGeometry, MeshBasicMaterial, Group, PlaneGeometry, CanvasTexture, Raycaster, AmbientLight } from 'three'
 import { state } from '../Utils/State';
 import WebglController from '../WebglController';
 import { Pane } from 'tweakpane';
@@ -6,7 +6,7 @@ import { HeaddressesMaterial } from '../Materials/Headdresses/material';
 import { gsap } from 'gsap'
 
 class Demoiselle extends Group {
-  constructor(color, height){
+  constructor(body, top, color){
     super()
     state.register(this)
 
@@ -24,20 +24,16 @@ class Demoiselle extends Group {
     this.canvasTex = new CanvasTexture(this.canvas);
     // document.querySelector('#vue-app').appendChild(this.canvas)
 
-
-    this.base = new Mesh(new ConeGeometry( 2, height, 32 ), new MeshBasicMaterial( { color: color } ));
-    this.top = new Mesh(new PlaneGeometry( 1, 1, 1, 1 ), new HeaddressesMaterial( {
+    body.material = new MeshBasicMaterial( { color: color } );
+    top.material = new HeaddressesMaterial( {
       uniforms: {
         uTex: { value: this.canvasTex },
       }
-    }));
-    this.top.name = 'top'
-    this.top.position.z = -10;
-    this.top.position.y = -0.7;
-    this.top.rotateY(160 / (180/Math.PI))
-    this.topIsDraw = false
+    });
 
-    this.add(this.base, this.top);
+    this.body = body;
+    this.top = top;
+    this.topIsDraw = false
   }
 
   onPointerMove(e){
@@ -60,15 +56,15 @@ class Demoiselle extends Group {
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       gsap.to(this.top.position, {
-        x: 0,
-        y: 4,
-        z: 0
+        x: this.body.position.x,
+        y: this.body.position.y + 17,
+        z: this.body.position.z
       })
     }
   }
 
   drawOnCanvasTex(coords){
-    const radius = 20
+    const radius = 3
     const x = coords.x * 100
     const y = coords.y * 100
     const color = `rgb(${this.color.r}, ${this.color.g}, ${this.color.b})`;
@@ -115,7 +111,7 @@ class Demoiselle extends Group {
 
     const note = results.filter((el) => el == true).length / results.length
   
-    if(note > 0.9){
+    if(note > 0.08){
       return true; // Canvas painted
     } else {
       return false;
@@ -130,23 +126,77 @@ class Ladies extends Scene {
         state.register(this)
 
         this.webgl = new WebglController()
+
+        this.PARAMS = {
+          scenePos: {
+            x: -2.6,
+            y: -1.0,
+            z: 0.9,
+          },
+          rotateY: -86.1,
+          rotateX: -3.9,
+        }
 	}
 
   init(){
     this.pane = new Pane({ title: 'Parameters Ladies', expanded: true });
+    this.pane.addBinding(this.PARAMS, 'rotateY', {
+      min: -180,
+      max: 180,
+      step: 0.1
+    }).on('change', (ev) => {
+      this.ladies.rotation.y = ev.value / (180 / Math.PI)
+    });
+    this.pane.addBinding(this.PARAMS, 'rotateX', {
+      min: -180,
+      max: 180,
+      step: 0.1
+    }).on('change', (ev) => {
+      this.ladies.rotation.x = ev.value / (180 / Math.PI)
+    });
+    this.pane.addBinding(this.PARAMS, 'scenePos', {
+      min: -10,
+      max: 10,
+      step: 0.1
+    }).on('change', (ev) => {
+      console.log(ev.value);
+      this.ladies.position.set(ev.value.x, ev.value.y, ev.value.z)
+    });
   }
 
   onAttach(){
       this.demoiselles = new Group();
-      this.D1 = new Demoiselle('rgb(255, 0, 0)', 6);
-      this.D1.position.set(-1, 0, 0)
-      this.D2 = new Demoiselle('rgb(255, 0, 255)', 5);
-      this.D2.position.set(1, -0.5, 0);
-      this.demoiselles.add(this.D1, this.D2);
-      this.demoiselles.position.set(-6, 0, -12);
-      this.demoiselles.rotateY(29)
+      this.D1 = [];
+      this.D2 = [];
+      this.D3 = [];
 
-      this.add(this.demoiselles);
+      this.ambient = new AmbientLight({ color: 0xFFFFFF, intensity: 0.1})
+      this.ladies = this.webgl.assetsManager.get('ladies')
+      this.ladies.traverse((el)=>{
+        if(el.name == 'dame1' || el.name == 'top1'){
+          el.material = new MeshBasicMaterial({  color: 'green'})
+          this.D1.push(el)
+        }
+        if(el.name == 'dame2' || el.name == 'top2'){
+          el.material = new MeshBasicMaterial({  color: 'blue'})
+          this.D2.push(el)
+        }
+        if(el.name == 'dame3' || el.name == 'top3'){
+          el.material = new MeshBasicMaterial({  color: 'orange'})
+          this.D3.push(el)
+        }
+      })
+      this.ladies.scale.set(0.1,0.1,0.1)
+      this.ladies.position.set(this.PARAMS.scenePos.x, this.PARAMS.scenePos.y, this.PARAMS.scenePos.z)
+      this.ladies.rotation.x = this.PARAMS.rotateX / (180 / Math.PI)
+      this.ladies.rotation.y = this.PARAMS.rotateY / (180 / Math.PI)
+
+      this.dem1 = new Demoiselle(this.D1[0], this.D1[1], 'rgb(0, 255, 0)' )
+      this.dem2 = new Demoiselle(this.D2[0], this.D2[1], 'rgb(0, 0, 255)')
+      this.dem3 = new Demoiselle(this.D3[0], this.D3[1], 'rgb(255,165,0)')
+      this.demoiselles.add(this.dem1, this.dem2, this.dem3)
+
+      this.add(this.ladies, this.ambient);
   }
 
   clear(){
