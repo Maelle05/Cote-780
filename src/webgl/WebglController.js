@@ -127,7 +127,7 @@ export default class WebglController {
     this.currentScene = e;
     this.scene.clear();
     this.scene = this.allScene[this.currentScene];
-    console.log(this.scene, this.currentScene);
+    // console.log(this.scene, this.currentScene);
     this.scene.init();
     this.controls.reset();
   }

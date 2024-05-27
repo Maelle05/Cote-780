@@ -38,7 +38,7 @@ class Bridge extends Scene {
     this.add(this.sun);
 
     this.directionLight = new DirectionalLight(0xffffff);
-    this.directionLight.intensity = 0.5;
+    this.directionLight.intensity = 3;
     this.directionLight.position.set(7, 10, 15);
     this.add(this.directionLight);
 
@@ -128,7 +128,7 @@ class Bridge extends Scene {
     this.target.position.set(this.x, -0.9, this.z);
   }
 
-  onKeyDown() {
+  onPointerDown() {
     this.currentRock = this.rocks[this.rockIndex];
     this.nextRock = this.rocks[this.rockIndex + 1];
 

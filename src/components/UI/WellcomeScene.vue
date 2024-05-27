@@ -12,7 +12,12 @@ const props = defineProps({
 const container = ref(null)
 
 onMounted(() => {
-  
+  setTimeout(()=>{
+    gsap.to(container.value, {
+      opacity: 0,
+      duration: 0.3,
+    })
+  }, 1500)
 })
 
 state.on(EVENTS.CHANGE_SCENE, (e) => {
@@ -24,7 +29,7 @@ state.on(EVENTS.CHANGE_SCENE, (e) => {
           opacity: 0,
           duration: 0.3,
         })
-      }, 1000)
+      }, 1500)
     }
   }, 100)
 })

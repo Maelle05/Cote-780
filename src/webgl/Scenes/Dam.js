@@ -8,6 +8,7 @@ import { MeshBasicMaterial } from 'three';
 import { SphereGeometry } from 'three';
 import gsap from 'gsap';
 import { DEV_MODE } from '../Constants/config';
+import { EVENTS } from "../Constants/events";
 
 class Spirit extends Mesh {
   constructor() {
@@ -66,6 +67,7 @@ class Spirit extends Mesh {
       case 0:
         this.material.color.setHex(0x1a80e6)
         this.isCaptured = true
+        state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, WebglController.instance.currentScene)
         break;
     
       default:
