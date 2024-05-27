@@ -8,7 +8,7 @@ let currentScene = ref(INIT_SCENE)
 
 // functions that mutate state and trigger updates
 function onClickBtn() {
-  currentScene.value = (currentScene.value + 1) % 7
+  currentScene.value = (currentScene.value + 1) % 8
   state.emit(EVENTS.CHANGE_SCENE, currentScene.value )
 }
 
