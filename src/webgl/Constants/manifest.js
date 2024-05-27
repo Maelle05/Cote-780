@@ -24,6 +24,7 @@ const manifest = {
     bridge: { path: `assets/models/bridge.glb` },
     rock: { path: `assets/models/rock.glb` },
     milo: { path: `assets/models/milo.glb` },
+    rocks: { path: `assets/models/rocks.glb`}
   },
   jsons: {},
   sounds: {

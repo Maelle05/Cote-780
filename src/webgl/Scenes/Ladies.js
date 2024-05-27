@@ -14,10 +14,11 @@ class Demoiselle extends Group {
     this.raycaster = new Raycaster()
 
     // Canvas texture
+    this.sizeCanvas = 300
     this.color = this.extractRGBParameters(color)
     this.canvas = document.createElement('canvas')
-    this.canvas.width = 100
-    this.canvas.height = 100
+    this.canvas.width = this.sizeCanvas
+    this.canvas.height = this.sizeCanvas
     this.ctx = this.canvas.getContext("2d", { willReadFrequently: true })
     this.ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${0.2})`;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -64,9 +65,9 @@ class Demoiselle extends Group {
   }
 
   drawOnCanvasTex(coords){
-    const radius = 3
-    const x = coords.x * 100
-    const y = coords.y * 100
+    const radius = 10
+    const x = coords.x * this.sizeCanvas
+    const y = coords.y * this.sizeCanvas
     const color = `rgb(${this.color.r}, ${this.color.g}, ${this.color.b})`;
 
     this.ctx.beginPath();
