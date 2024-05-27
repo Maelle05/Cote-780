@@ -13,7 +13,7 @@ console.log(props.sceneIndex);
 </script>
 
 <template>
-  <ChapterTitle></ChapterTitle>
+  <ChapterTitle :sceneIndex="sceneIndex"> </ChapterTitle>
   <Sound></Sound>
 </template>
 
