@@ -129,6 +129,8 @@ class Bridge extends Scene {
   }
 
   onPointerDown() {
+    if(this.webgl.currentScene != 4) return
+
     this.currentRock = this.rocks[this.rockIndex];
     this.nextRock = this.rocks[this.rockIndex + 1];
 
@@ -150,7 +152,10 @@ class Bridge extends Scene {
       },
     });
 
-    if (!this.nextRock) return;
+    if (!this.nextRock) {
+      state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, 4)
+      return
+    };
 
     gsap.to(this.rocks[this.rockIndex + 1].position, {
       y: -0.98,
