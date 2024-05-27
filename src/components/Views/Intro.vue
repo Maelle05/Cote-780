@@ -1,33 +1,11 @@
 <script setup>
 import { EVENTS } from '@/webgl/Constants/events'
+import { INTRO_SECTIONS } from '@/webgl/Constants/config'
 import { state } from '../../webgl/Utils/State'
 import { ref, watch, onMounted } from "vue"
 import { gsap, ScrollTrigger } from "gsap/all"
 
 gsap.registerPlugin(ScrollTrigger)
-
-const sections = [
-  {
-    elements: [],
-    text: "ÉCRAN 1",
-  },
-  {
-    elements: [],
-    text: "ÉCRAN 2",
-  },
-  {
-    elements: [],
-    text: "ÉCRAN 3",
-  },
-  {
-    elements: [],
-    text: "ÉCRAN 4",
-  },
-  {
-    elements: [],
-    text: "ÉCRAN 5",
-  },
-]
 
 const activeSection = ref("")
 
@@ -36,7 +14,7 @@ const onActiveSectionChange = (newVal, oldVal) => {
   
   state.emit(EVENTS.INTRO_CHANGE_SECTION, newVal)
   
-  const updatedText = sections[newVal]?.text
+  const updatedText = INTRO_SECTIONS[newVal]?.text
   if (updatedText !== undefined) {
     state.emit(EVENTS.INTRO_UPDATE_TEXT, {text: updatedText})
   }
@@ -45,7 +23,7 @@ const onActiveSectionChange = (newVal, oldVal) => {
 watch(activeSection, onActiveSectionChange)
 
 onMounted(() => {
-  sections.forEach((section, index) => {
+  INTRO_SECTIONS.forEach((section, index) => {
     ScrollTrigger.create({
       trigger: `.section--${index}`,
       start: "top center",
@@ -65,11 +43,8 @@ onMounted(() => {
     <div
       :class="`section section--${index}`"
       :key="section.text"
-      v-for="(section, index) in sections"
+      v-for="(section, index) in INTRO_SECTIONS"
     >
-      <p>
-        {{ section.text }}
-      </p>
     </div>
   </div>
 </template>
