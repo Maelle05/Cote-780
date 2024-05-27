@@ -12,12 +12,14 @@ export default class IntroText extends Text {
 
     this.material = this.#createMaterial()
     this.anchorX = "left"
-    this.anchorY = "middle"
+    this.anchorY = "bottom"
     this.fontStyle = "italic"
     this.textAlign = "left"
-    this.position.x = -1
+    this.position.x = -2.2
+    this.position.y = -1
     this.maxWidth = 2
     this.fontSize = 0.08
+    this.fontWeight = 800
   }
 
   setText(text) {
