@@ -16,17 +16,17 @@ const TITLES_SCENE = [
 
 const INTRO_SECTIONS = [
   {
-    elements: [{ id: "lac", src: "src/assets/intro/1_lac.png" }],
+    elements: [{ id: "lac", src: "/assets/images/intro/1_lac.png" }],
     text: TEXTS.intro[0],
   },
   {
-    elements: [{ id: "maison", src: "src/assets/intro/2_maison.png" }],
+    elements: [{ id: "maison", src: "/assets/images/intro/2_maison.png" }],
     text: TEXTS.intro[1],
   },
   {
     elements: [
-      { id: "chambre", src: "src/assets/intro/3_chambre.png" },
-      { id: "lettre", src: "src/assets/intro/4_lettre.png" },
+      { id: "chambre", src: "/assets/images/intro/3_chambre.png" },
+      { id: "lettre", src: "/assets/images/intro/4_lettre.png" },
     ],
     text: TEXTS.intro[2],
   },
@@ -34,9 +34,9 @@ const INTRO_SECTIONS = [
     elements: [
       {
         id: "construction-barrage",
-        src: "src/assets/intro/5_construction-barrage.png",
+        src: "/assets/images/intro/5_construction-barrage.png",
       },
-      { id: "durance-colere", src: "src/assets/intro/6_durance-colere.png" },
+      { id: "durance-colere", src: "/assets/images/intro/6_durance-colere.png" },
     ],
     text: TEXTS.intro[3],
   },
@@ -46,27 +46,27 @@ const INTRO_SECTIONS = [
   },
   {
     elements: [
-      { id: "mamie-lien-durance-2", src: "src/assets/intro/8_mamie-lien-durance-2.png" },
-      { id: "mamie-lien-durance-1", src: "src/assets/intro/8_mamie-lien-durance-1.png" },
+      { id: "mamie-lien-durance-2", src: "/assets/images/intro/8_mamie-lien-durance-2.png" },
+      { id: "mamie-lien-durance-1", src: "/assets/images/intro/8_mamie-lien-durance-1.png" },
     ],
     text: TEXTS.intro[5],
   },
   {
     elements: [
-      { id: "passage-lac", src: "src/assets/intro/9_passage-lac.png" },
+      { id: "passage-lac", src: "/assets/images/intro/9_passage-lac.png" },
     ],
     text: TEXTS.intro[6],
   },
   {
     elements: [
-      { id: "milo", src: "src/assets/intro/10_milo.png" },
+      { id: "milo", src: "/assets/images/intro/10_milo.png" },
     ],
     text: TEXTS.intro[7],
   },
   {
     elements: [
-      { id: "carte", src: "src/assets/intro/11_carte.png" },
-      { id: "collier", src: "src/assets/intro/12_collier.png" },
+      { id: "carte", src: "/assets/images/intro/11_carte.png" },
+      { id: "collier", src: "/assets/images/intro/12_collier.png" },
 
     ],
     text: TEXTS.intro[8],
