@@ -8,6 +8,7 @@ import { PlaneGeometry } from "three";
 import { MeshBasicMaterial } from "three";
 import { Mesh } from "three";
 import Fireworks from "../Objects/Fireworks";
+import { DEV_MODE } from "../Constants/config";
 
 class End extends Scene {
   constructor() {
@@ -19,22 +20,23 @@ class End extends Scene {
   }
 
   init() {
-    this.pane = new Pane({ title: "Parameters End", expanded: true });
-    this.initPane();
+    if (DEV_MODE) {
+      this.pane = new Pane({ title: "Parameters End", expanded: true });
+    }
   }
-
-  initPane() {}
 
   onAttach() {
     this.add(this.fireworks);
   }
 
   clear() {
-    this.pane.dispose();
+    if (DEV_MODE) {
+      this.pane.dispose();
+    }
   }
 
   onResize() {
-    this.fireworks.resize();
+      this.fireworks.resize();
   }
 }
 

@@ -1,5 +1,6 @@
 import { TEXTS } from "./texts";
 
+const DEV_MODE = false;
 const INIT_SCENE = 0;
 const TITLES_SCENE = [
   "Intro",
@@ -35,4 +36,4 @@ const INTRO_SECTIONS = [
   },
 ];
 
-export { INIT_SCENE, INTRO_SECTIONS, TITLES_SCENE };
+export { DEV_MODE, INIT_SCENE, INTRO_SECTIONS, TITLES_SCENE };

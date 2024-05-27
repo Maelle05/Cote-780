@@ -7,7 +7,7 @@ import { Scroll } from "./Utils/Tools/Scroll";
 import { Viewport } from "./Utils/Tools/Viewport";
 import { Keyboard } from "./Utils/Tools/Keyboard";
 import { EVENTS } from "./Constants/events";
-import { INIT_SCENE } from "./Constants/config";
+import { DEV_MODE, INIT_SCENE } from "./Constants/config";
 import Stats from "three/examples/jsm/libs/stats.module";
 import { Camera } from "./Camera";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
@@ -76,8 +76,10 @@ export default class WebglController {
   }
 
   initStats() {
-    this.stats = new Stats();
-    this.canvasWrapper.appendChild(this.stats.dom);
+    if (DEV_MODE) {
+      this.stats = new Stats();
+      this.canvasWrapper.appendChild(this.stats.dom);
+    }
   }
 
   async beforeLoad() {}
@@ -110,7 +112,7 @@ export default class WebglController {
     // console.log('Event onRender')
 
     // update monitoring performances
-    if (this.stats) this.stats.update();
+    if (this.stats && DEV_MODE) this.stats.update();
 
     // render
     if (this.renderer) {

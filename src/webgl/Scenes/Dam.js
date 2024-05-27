@@ -7,6 +7,7 @@ import { PlaneGeometry } from 'three';
 import { MeshBasicMaterial } from 'three';
 import { SphereGeometry } from 'three';
 import gsap from 'gsap';
+import { DEV_MODE } from '../Constants/config';
 
 class Spirit extends Mesh {
   constructor() {
@@ -119,42 +120,44 @@ class Dam extends Scene {
 	}
 
   init(){
-    this.pane = new Pane({ title: 'Parameters Dam', expanded: true });
-    this.pane.addBinding(this.PARAMS, 'sceneRot', {
-      min: -180,
-      max: 180,
-      step: 0.1
-    }).on('change', (ev) => {
-      this.scene.rotation.set(ev.value.x / (180 / Math.PI), ev.value.y / (180 / Math.PI), ev.value.z / (180 / Math.PI))
-    });
-    this.pane.addBinding(this.PARAMS, 'scenePos', {
-      min: -10,
-      max: 10,
-      step: 0.1
-    }).on('change', (ev) => {
-      this.scene.position.set(ev.value.x, ev.value.y, ev.value.z)
-    });
-    this.pane.addBinding(this.PARAMS, 'persoPos', {
-      min: -10,
-      max: 10,
-      step: 0.1
-    }).on('change', (ev) => {
-      this.player.position.set(ev.value.x, ev.value.y, ev.value.z)
-    });
-    this.pane.addBinding(this.PARAMS, 'spiritPos', {
-      min: -10,
-      max: 10,
-      step: 0.1
-    }).on('change', (ev) => {
-      this.spirit.position.set(ev.value.x, ev.value.y, ev.value.z)
-    });
-    this.pane.addBinding(this.PARAMS, 'rocksPos', {
-      min: -10,
-      max: 10,
-      step: 0.1
-    }).on('change', (ev) => {
-      this.rocks.position.set(ev.value.x, ev.value.y, ev.value.z)
-    });
+    if (DEV_MODE) {
+      this.pane = new Pane({ title: 'Parameters Dam', expanded: false });
+      this.pane.addBinding(this.PARAMS, 'sceneRot', {
+        min: -180,
+        max: 180,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.scene.rotation.set(ev.value.x / (180 / Math.PI), ev.value.y / (180 / Math.PI), ev.value.z / (180 / Math.PI))
+      });
+      this.pane.addBinding(this.PARAMS, 'scenePos', {
+        min: -10,
+        max: 10,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.scene.position.set(ev.value.x, ev.value.y, ev.value.z)
+      });
+      this.pane.addBinding(this.PARAMS, 'persoPos', {
+        min: -10,
+        max: 10,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.player.position.set(ev.value.x, ev.value.y, ev.value.z)
+      });
+      this.pane.addBinding(this.PARAMS, 'spiritPos', {
+        min: -10,
+        max: 10,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.spirit.position.set(ev.value.x, ev.value.y, ev.value.z)
+      });
+      this.pane.addBinding(this.PARAMS, 'rocksPos', {
+        min: -10,
+        max: 10,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.rocks.position.set(ev.value.x, ev.value.y, ev.value.z)
+      });
+    }
   }
 
   onAttach(){
@@ -224,7 +227,9 @@ class Dam extends Scene {
   }
 
   clear(){
-    this.pane.dispose()
+    if (DEV_MODE) {
+      this.pane.dispose()
+    }
   }
 }
 

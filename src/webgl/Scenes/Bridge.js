@@ -20,6 +20,7 @@ import { EVENTS } from "../Constants/events";
 import gsap from "gsap";
 import { Pane } from "tweakpane";
 import { DirectionalLightHelper } from "three";
+import { DEV_MODE } from "../Constants/config";
 
 class Bridge extends Scene {
   constructor() {
@@ -57,11 +58,10 @@ class Bridge extends Scene {
   }
 
   init() {
-    this.pane = new Pane({ title: "Parameters Bridge", expanded: true });
-    this.initPane();
+    if (DEV_MODE) {
+      this.pane = new Pane({ title: "Parameters Bridge", expanded: true });
+    }
   }
-
-  initPane() {}
 
   onAttach() {
     this.bridge = this.webgl.assetsManager.get("bridge");
@@ -164,7 +164,9 @@ class Bridge extends Scene {
   }
 
   clear() {
-    this.pane.dispose();
+    if (DEV_MODE) {
+      this.pane.dispose();
+    }
   }
 }
 

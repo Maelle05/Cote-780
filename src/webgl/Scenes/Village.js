@@ -3,6 +3,7 @@ import { state } from '../Utils/State';
 import TestPlane from '../Objects/TestPlane'
 import WebglController from '../WebglController';
 import { Pane } from 'tweakpane';
+import { DEV_MODE } from '../Constants/config';
 
 class Village extends Scene {
 	constructor() {
@@ -13,11 +14,9 @@ class Village extends Scene {
 	}
 
   init(){
-    this.pane = new Pane({ title: 'Parameters Village', expanded: true });
-    this.initPane()
-  }
-
-  initPane(){
+    if (DEV_MODE) {
+      this.pane = new Pane({ title: 'Parameters Village', expanded: true });
+    }
   }
 
   onAttach(){
@@ -26,7 +25,9 @@ class Village extends Scene {
   }
 
   clear(){
-    this.pane.dispose()
+    if (DEV_MODE) {
+      this.pane.dispose()
+    }
   }
 }
 

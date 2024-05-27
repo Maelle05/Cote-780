@@ -9,7 +9,7 @@ const props = defineProps({
   sceneIndex: Number,
 });
 
-console.log(props.sceneIndex);
+// console.log(props.sceneIndex);
 </script>
 
 <template>

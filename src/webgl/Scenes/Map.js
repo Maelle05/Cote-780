@@ -3,6 +3,7 @@ import { state } from "../Utils/State";
 import Plan from "../Objects/Plan";
 import WebglController from "../WebglController";
 import { Pane } from "tweakpane";
+import { DEV_MODE } from "../Constants/config";
 
 class Map extends Scene {
   constructor() {
@@ -23,11 +24,10 @@ class Map extends Scene {
   }
 
   init() {
-    this.pane = new Pane({ title: "Parameters Map", expanded: true });
-    this.initPane();
+    if (DEV_MODE) {
+      this.pane = new Pane({ title: "Parameters Map", expanded: true });
+    }
   }
-
-  initPane() {}
 
   onAttach() {
     this.plan = new Plan();
@@ -37,7 +37,9 @@ class Map extends Scene {
   }
 
   clear() {
-    this.pane.dispose();
+    if (DEV_MODE) {
+      this.pane.dispose();
+    }
   }
 }
 

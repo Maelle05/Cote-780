@@ -15,7 +15,7 @@ class Scroll {
 	}
 
     #onScroll(e){
-        console.log(e);
+        // console.log(e);
     }
 }
 

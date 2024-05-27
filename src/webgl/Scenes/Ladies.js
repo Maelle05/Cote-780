@@ -4,6 +4,7 @@ import WebglController from '../WebglController';
 import { Pane } from 'tweakpane';
 import { HeaddressesMaterial } from '../Materials/Headdresses/material';
 import { gsap } from 'gsap'
+import { DEV_MODE } from '../Constants/config';
 
 class Demoiselle extends Group {
   constructor(body, top, color){
@@ -140,29 +141,30 @@ class Ladies extends Scene {
 	}
 
   init(){
-    this.pane = new Pane({ title: 'Parameters Ladies', expanded: true });
-    this.pane.addBinding(this.PARAMS, 'rotateY', {
-      min: -180,
-      max: 180,
-      step: 0.1
-    }).on('change', (ev) => {
-      this.ladies.rotation.y = ev.value / (180 / Math.PI)
-    });
-    this.pane.addBinding(this.PARAMS, 'rotateX', {
-      min: -180,
-      max: 180,
-      step: 0.1
-    }).on('change', (ev) => {
-      this.ladies.rotation.x = ev.value / (180 / Math.PI)
-    });
-    this.pane.addBinding(this.PARAMS, 'scenePos', {
-      min: -10,
-      max: 10,
-      step: 0.1
-    }).on('change', (ev) => {
-      console.log(ev.value);
-      this.ladies.position.set(ev.value.x, ev.value.y, ev.value.z)
-    });
+    if (DEV_MODE) {
+      this.pane = new Pane({ title: 'Parameters Ladies', expanded: true });
+      this.pane.addBinding(this.PARAMS, 'rotateY', {
+        min: -180,
+        max: 180,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.ladies.rotation.y = ev.value / (180 / Math.PI)
+      });
+      this.pane.addBinding(this.PARAMS, 'rotateX', {
+        min: -180,
+        max: 180,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.ladies.rotation.x = ev.value / (180 / Math.PI)
+      });
+      this.pane.addBinding(this.PARAMS, 'scenePos', {
+        min: -10,
+        max: 10,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.ladies.position.set(ev.value.x, ev.value.y, ev.value.z)
+      });
+    }
   }
 
   onAttach(){
@@ -202,7 +204,9 @@ class Ladies extends Scene {
   }
 
   clear(){
-    this.pane.dispose()
+    if (DEV_MODE) {
+      this.pane.dispose()
+    }
   }
 }
 

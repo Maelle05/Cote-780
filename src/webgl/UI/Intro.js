@@ -1,4 +1,4 @@
-import { INTRO_SECTIONS } from '@/webgl/Constants/config';
+import { DEV_MODE, INTRO_SECTIONS } from '@/webgl/Constants/config';
 import { Scene } from 'three';
 import { state } from '../Utils/State';
 import TestPlane from '../Objects/TestPlane'
@@ -15,7 +15,9 @@ class Intro extends Scene {
   }
 
   init(){
-    this.pane = new Pane({ title: 'Parameters Intro', expanded: true });
+    if (DEV_MODE) {
+      this.pane = new Pane({ title: 'Parameters Intro', expanded: true });
+    }
   }
 
   onAttach(){
@@ -30,7 +32,9 @@ class Intro extends Scene {
   }
 
   clear(){
-    this.pane.dispose()
+    if (DEV_MODE) {
+      this.pane.dispose()
+    }
     this.text.dispose()
   }
 }

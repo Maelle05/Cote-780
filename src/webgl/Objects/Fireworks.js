@@ -15,7 +15,7 @@ export default class Fireworks extends Points {
 
     this.webgl = new WebglController();
 
-    console.log(this.webgl);
+    // console.log(this.webgl);
 
     this.count = count;
     this.position.copy(position);

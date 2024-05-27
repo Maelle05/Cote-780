@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
 const activeSection = ref("")
 
 const onActiveSectionChange = (newVal, oldVal) => {
-  console.log(`active section changed from ${oldVal} to ${newVal}`)
+  // console.log(`active section changed from ${oldVal} to ${newVal}`)
   
   state.emit(EVENTS.INTRO_CHANGE_SECTION, newVal)
   
