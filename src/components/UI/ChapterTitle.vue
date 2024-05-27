@@ -8,15 +8,11 @@ const props = defineProps({
 </script>
 
 <template lang="">
-  <div class="title">{{ TITLES_SCENE[props.sceneIndex] }}</div>
+  <h2 class="title">{{ TITLES_SCENE[props.sceneIndex] }}</h2>
 </template>
 
 <style scoped lang="scss">
-.title {
-  position: absolute;
-  left: 50%;
-  top: 10%;
-  transform: translate(-50%, -50%);
-  // display: none;
+.title{
+  color: black;
 }
 </style>
