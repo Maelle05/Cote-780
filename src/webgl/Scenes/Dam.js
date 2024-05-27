@@ -101,7 +101,7 @@ class Dam extends Scene {
           },
           persoPos: {
             x: 0.1,
-            y: -0.7,
+            y: -1.1,
             z: -0.2,
           },
           spiritPos: {
@@ -171,9 +171,9 @@ class Dam extends Scene {
       this.light = new AmbientLight({ color: 0xffffff });
       this.add(this.light);
 
-      this.player = this.webgl.assetsManager.get("milo").children[0];
+      this.player = this.webgl.assetsManager.get("milo").clone();
       this.player.position.set(this.PARAMS.persoPos.x, this.PARAMS.persoPos.y, this.PARAMS.persoPos.z)
-      this.player.scale.set(0.1, 0.1, 0.1)
+      this.player.scale.set(0.3, 0.3, 0.3)
       this.add(this.player);
 
       this.water = new Mesh( new PlaneGeometry(25, 13, 1, 1), new MeshBasicMaterial({ color: '#77b5fe', side: DoubleSide}))

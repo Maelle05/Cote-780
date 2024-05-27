@@ -98,7 +98,7 @@ class Bridge extends Scene {
     this.add(this.rock2);
     this.rocks = [this.rock, this.rock1, this.rock2];
 
-    this.player = this.webgl.assetsManager.get("milo");
+    this.player = this.webgl.assetsManager.get("milo").clone();
     this.player.scale.set(0.1, 0.1, 0.1);
     this.player.rotation.y = 30;
 
