@@ -24,6 +24,7 @@ const EVENTS = {
 
   // COTE 780
   CHANGE_SCENE: i++,
+  VIEW_COLLECTION_CAIRNS: i++,
   INTRO_CHANGE_SECTION: i++,
   INTRO_UPDATE_TEXT: i++,
 };

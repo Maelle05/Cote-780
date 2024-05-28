@@ -7,6 +7,8 @@ import { PlaneGeometry } from 'three';
 import { MeshBasicMaterial } from 'three';
 import { SphereGeometry } from 'three';
 import gsap from 'gsap';
+import { DEV_MODE } from '../Constants/config';
+import { EVENTS } from "../Constants/events";
 
 class Spirit extends Mesh {
   constructor() {
@@ -65,6 +67,7 @@ class Spirit extends Mesh {
       case 0:
         this.material.color.setHex(0x1a80e6)
         this.isCaptured = true
+        state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, WebglController.instance.currentScene)
         break;
     
       default:
@@ -100,7 +103,7 @@ class Dam extends Scene {
           },
           persoPos: {
             x: 0.1,
-            y: -0.7,
+            y: -1.1,
             z: -0.2,
           },
           spiritPos: {
@@ -119,42 +122,44 @@ class Dam extends Scene {
 	}
 
   init(){
-    this.pane = new Pane({ title: 'Parameters Dam', expanded: true });
-    this.pane.addBinding(this.PARAMS, 'sceneRot', {
-      min: -180,
-      max: 180,
-      step: 0.1
-    }).on('change', (ev) => {
-      this.scene.rotation.set(ev.value.x / (180 / Math.PI), ev.value.y / (180 / Math.PI), ev.value.z / (180 / Math.PI))
-    });
-    this.pane.addBinding(this.PARAMS, 'scenePos', {
-      min: -10,
-      max: 10,
-      step: 0.1
-    }).on('change', (ev) => {
-      this.scene.position.set(ev.value.x, ev.value.y, ev.value.z)
-    });
-    this.pane.addBinding(this.PARAMS, 'persoPos', {
-      min: -10,
-      max: 10,
-      step: 0.1
-    }).on('change', (ev) => {
-      this.player.position.set(ev.value.x, ev.value.y, ev.value.z)
-    });
-    this.pane.addBinding(this.PARAMS, 'spiritPos', {
-      min: -10,
-      max: 10,
-      step: 0.1
-    }).on('change', (ev) => {
-      this.spirit.position.set(ev.value.x, ev.value.y, ev.value.z)
-    });
-    this.pane.addBinding(this.PARAMS, 'rocksPos', {
-      min: -10,
-      max: 10,
-      step: 0.1
-    }).on('change', (ev) => {
-      this.rocks.position.set(ev.value.x, ev.value.y, ev.value.z)
-    });
+    if (DEV_MODE) {
+      this.pane = new Pane({ title: 'Parameters Dam', expanded: false });
+      this.pane.addBinding(this.PARAMS, 'sceneRot', {
+        min: -180,
+        max: 180,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.scene.rotation.set(ev.value.x / (180 / Math.PI), ev.value.y / (180 / Math.PI), ev.value.z / (180 / Math.PI))
+      });
+      this.pane.addBinding(this.PARAMS, 'scenePos', {
+        min: -10,
+        max: 10,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.scene.position.set(ev.value.x, ev.value.y, ev.value.z)
+      });
+      this.pane.addBinding(this.PARAMS, 'persoPos', {
+        min: -10,
+        max: 10,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.player.position.set(ev.value.x, ev.value.y, ev.value.z)
+      });
+      this.pane.addBinding(this.PARAMS, 'spiritPos', {
+        min: -10,
+        max: 10,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.spirit.position.set(ev.value.x, ev.value.y, ev.value.z)
+      });
+      this.pane.addBinding(this.PARAMS, 'rocksPos', {
+        min: -10,
+        max: 10,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.rocks.position.set(ev.value.x, ev.value.y, ev.value.z)
+      });
+    }
   }
 
   onAttach(){
@@ -168,9 +173,9 @@ class Dam extends Scene {
       this.light = new AmbientLight({ color: 0xffffff });
       this.add(this.light);
 
-      this.player = this.webgl.assetsManager.get("milo").children[0];
+      this.player = this.webgl.assetsManager.get("milo").clone();
       this.player.position.set(this.PARAMS.persoPos.x, this.PARAMS.persoPos.y, this.PARAMS.persoPos.z)
-      this.player.scale.set(0.1, 0.1, 0.1)
+      this.player.scale.set(0.3, 0.3, 0.3)
       this.add(this.player);
 
       this.water = new Mesh( new PlaneGeometry(25, 13, 1, 1), new MeshBasicMaterial({ color: '#77b5fe', side: DoubleSide}))
@@ -224,7 +229,9 @@ class Dam extends Scene {
   }
 
   clear(){
-    this.pane.dispose()
+    if (DEV_MODE) {
+      this.pane.dispose()
+    }
   }
 }
 

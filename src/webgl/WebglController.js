@@ -7,7 +7,7 @@ import { Scroll } from "./Utils/Tools/Scroll";
 import { Viewport } from "./Utils/Tools/Viewport";
 import { Keyboard } from "./Utils/Tools/Keyboard";
 import { EVENTS } from "./Constants/events";
-import { INIT_SCENE } from "./Constants/config";
+import { DEV_MODE, INIT_SCENE } from "./Constants/config";
 import Stats from "three/examples/jsm/libs/stats.module";
 import { Camera } from "./Camera";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
@@ -16,10 +16,11 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Intro } from "./Scenes/Intro";
 import { Map } from "./Scenes/Map";
 import { Ladies } from "./Scenes/Ladies";
-import { Dam } from "./Scenes/Dam";
 import { Bridge } from "./Scenes/Bridge";
+import { Dam } from "./Scenes/Dam";
 import { Chapel } from "./Scenes/Chapel";
 import { Village } from "./Scenes/Village";
+import { End } from "./Scenes/End"
 import { AudioManager } from "./Utils/Core/Audio/AudioManager";
 
 export default class WebglController {
@@ -58,6 +59,7 @@ export default class WebglController {
       new Bridge(),
       new Chapel(),
       new Village(),
+      new End()
     ];
     this.currentScene = INIT_SCENE;
     this.scene = this.allScene[this.currentScene];
@@ -76,8 +78,10 @@ export default class WebglController {
   }
 
   initStats() {
-    this.stats = new Stats();
-    this.canvasWrapper.appendChild(this.stats.dom);
+    if (DEV_MODE) {
+      this.stats = new Stats();
+      this.canvasWrapper.appendChild(this.stats.dom);
+    }
   }
 
   async beforeLoad() {}
@@ -110,7 +114,7 @@ export default class WebglController {
     // console.log('Event onRender')
 
     // update monitoring performances
-    if (this.stats) this.stats.update();
+    if (this.stats && DEV_MODE) this.stats.update();
 
     // render
     if (this.renderer) {
@@ -123,6 +127,7 @@ export default class WebglController {
     this.currentScene = e;
     this.scene.clear();
     this.scene = this.allScene[this.currentScene];
+    // console.log(this.scene, this.currentScene);
     this.scene.init();
     this.controls.reset();
   }

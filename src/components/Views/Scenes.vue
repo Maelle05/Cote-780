@@ -2,19 +2,19 @@
 import { EVENTS } from "@/webgl/Constants/events";
 import { state } from "../../webgl/Utils/State";
 import { ref } from "vue";
-import ChapterTitle from "../UI/ChapterTitle.vue";
+import WellcomeScene from "../UI/WellcomeScene.vue";
+import CollectionCairns from "../UI/CollectionCairns.vue"
 import Sound from "../UI/Sound.vue";
 
 const props = defineProps({
   sceneIndex: Number,
 });
-
-console.log(props.sceneIndex);
 </script>
 
 <template>
-  <ChapterTitle :sceneIndex="sceneIndex"> </ChapterTitle>
-  <Sound></Sound>
+  <WellcomeScene :sceneIndex="props.sceneIndex"> </WellcomeScene>
+  <CollectionCairns/>
+  <!-- <Sound></Sound> -->
 </template>
 
 <style scoped lang="scss"></style>

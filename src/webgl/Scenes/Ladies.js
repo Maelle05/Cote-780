@@ -4,6 +4,8 @@ import WebglController from '../WebglController';
 import { Pane } from 'tweakpane';
 import { HeaddressesMaterial } from '../Materials/Headdresses/material';
 import { gsap } from 'gsap'
+import { DEV_MODE } from '../Constants/config';
+import { EVENTS } from '../Constants/events'
 
 class Demoiselle extends Group {
   constructor(body, top, color){
@@ -55,6 +57,7 @@ class Demoiselle extends Group {
     if(this.isCanvasPainted()){
       this.ctx.fillStyle = `rgb(${this.color.r}, ${this.color.g}, ${this.color.b})`;
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      this.topIsDraw = true
 
       gsap.to(this.top.position, {
         x: this.body.position.x,
@@ -137,32 +140,42 @@ class Ladies extends Scene {
           rotateY: -86.1,
           rotateX: -3.9,
         }
+
+        this.finish = false
 	}
 
   init(){
-    this.pane = new Pane({ title: 'Parameters Ladies', expanded: true });
-    this.pane.addBinding(this.PARAMS, 'rotateY', {
-      min: -180,
-      max: 180,
-      step: 0.1
-    }).on('change', (ev) => {
-      this.ladies.rotation.y = ev.value / (180 / Math.PI)
-    });
-    this.pane.addBinding(this.PARAMS, 'rotateX', {
-      min: -180,
-      max: 180,
-      step: 0.1
-    }).on('change', (ev) => {
-      this.ladies.rotation.x = ev.value / (180 / Math.PI)
-    });
-    this.pane.addBinding(this.PARAMS, 'scenePos', {
-      min: -10,
-      max: 10,
-      step: 0.1
-    }).on('change', (ev) => {
-      console.log(ev.value);
-      this.ladies.position.set(ev.value.x, ev.value.y, ev.value.z)
-    });
+    if (DEV_MODE) {
+      this.pane = new Pane({ title: 'Parameters Ladies', expanded: true });
+      this.pane.addBinding(this.PARAMS, 'rotateY', {
+        min: -180,
+        max: 180,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.ladies.rotation.y = ev.value / (180 / Math.PI)
+      });
+      this.pane.addBinding(this.PARAMS, 'rotateX', {
+        min: -180,
+        max: 180,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.ladies.rotation.x = ev.value / (180 / Math.PI)
+      });
+      this.pane.addBinding(this.PARAMS, 'scenePos', {
+        min: -10,
+        max: 10,
+        step: 0.1
+      }).on('change', (ev) => {
+        this.ladies.position.set(ev.value.x, ev.value.y, ev.value.z)
+      });
+    }
+  }
+
+  onPointerMove(){
+    if(this.dem1.topIsDraw && this.dem2.topIsDraw && this.dem3.topIsDraw && !this.finish){
+      state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, 2)
+      this.finish = true
+    }
   }
 
   onAttach(){
@@ -202,7 +215,9 @@ class Ladies extends Scene {
   }
 
   clear(){
-    this.pane.dispose()
+    if (DEV_MODE) {
+      this.pane.dispose()
+    }
   }
 }
 

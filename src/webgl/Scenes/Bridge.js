@@ -20,6 +20,7 @@ import { EVENTS } from "../Constants/events";
 import gsap from "gsap";
 import { Pane } from "tweakpane";
 import { DirectionalLightHelper } from "three";
+import { DEV_MODE } from "../Constants/config";
 
 class Bridge extends Scene {
   constructor() {
@@ -37,7 +38,7 @@ class Bridge extends Scene {
     this.add(this.sun);
 
     this.directionLight = new DirectionalLight(0xffffff);
-    this.directionLight.intensity = 0.5;
+    this.directionLight.intensity = 3;
     this.directionLight.position.set(7, 10, 15);
     this.add(this.directionLight);
 
@@ -56,11 +57,10 @@ class Bridge extends Scene {
   }
 
   init() {
-    this.pane = new Pane({ title: "Parameters Bridge", expanded: true });
-    this.initPane();
+    if (DEV_MODE) {
+      this.pane = new Pane({ title: "Parameters Bridge", expanded: true });
+    }
   }
-
-  initPane() {}
 
   onAttach() {
     this.bridge = this.webgl.assetsManager.get("bridge");
@@ -97,7 +97,7 @@ class Bridge extends Scene {
     this.add(this.rock2);
     this.rocks = [this.rock, this.rock1, this.rock2];
 
-    this.player = this.webgl.assetsManager.get("milo");
+    this.player = this.webgl.assetsManager.get("milo").clone();
     this.player.scale.set(0.1, 0.1, 0.1);
     this.player.rotation.y = 30;
 
@@ -127,7 +127,9 @@ class Bridge extends Scene {
     this.target.position.set(this.x, -0.9, this.z);
   }
 
-  onKeyDown() {
+  onPointerDown() {
+    if(this.webgl.currentScene != 4) return
+
     this.currentRock = this.rocks[this.rockIndex];
     this.nextRock = this.rocks[this.rockIndex + 1];
 
@@ -149,7 +151,10 @@ class Bridge extends Scene {
       },
     });
 
-    if (!this.nextRock) return;
+    if (!this.nextRock) {
+      state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, 4)
+      return
+    };
 
     gsap.to(this.rocks[this.rockIndex + 1].position, {
       y: -0.98,
@@ -163,7 +168,9 @@ class Bridge extends Scene {
   }
 
   clear() {
-    this.pane.dispose();
+    if (DEV_MODE) {
+      this.pane.dispose();
+    }
   }
 }
 

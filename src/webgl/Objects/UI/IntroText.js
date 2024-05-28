@@ -7,44 +7,63 @@ export default class IntroText extends Text {
   constructor() {
     super()
 
-    this.isAnimated = false
+    this.animationDuration = 1.4
     this.animationProgress = 0
+
     this.material = this.#createMaterial()
+    this.anchorX = "left"
+    this.anchorY = "bottom"
+    this.fontStyle = "italic"
+    this.textAlign = "left"
+    this.position.x = -2.2
+    this.position.y = -1
+    this.maxWidth = 2
+    this.fontSize = 0.08
+    this.fontWeight = 800
   }
 
   setText(text) {
     this.text = text
+    this.sync()
   }
 
   animateText(text) {
-    this.isAnimated = true
-    this.animationProgress = 0
+    this.currentText = text
+    this.disappearAnimation()
+  }
 
-    // [WIP] gérer plusieurs animateText en même temps
-
+  disappearAnimation() {
     gsap.to(this, {
       animationProgress: 0.5,
-      duration: 0.5,
+      duration: this.animationDuration / 2,
+      onUpdate: () => {
+        this.onAnimationProgress()
+      },
+      onComplete: () => {
+        this.setText(this.currentText)
+        this.appearAnimation()
+      },
+    })
+  }
+
+  appearAnimation() {
+    gsap.to(this, {
+      animationProgress: 0,
+      duration: this.animationDuration / 2,
       onUpdate: () => {
         this.onAnimationProgress()
       },
       onComplete: () => {
         this.resetAnimation()
       },
-      onRepeat: () => {
-        this.text = text
-      },
-      yoyo: true,
-      repeat: 1,
     })
   }
 
   onAnimationProgress() {
-    // this.material.uniforms.uTime.value = this.animationProgress
+    this.material.uniforms.uTime.value = this.animationProgress * 2
   }
 
   resetAnimation() {
-    this.isAnimated = false
     this.animationProgress = 0
   }
 

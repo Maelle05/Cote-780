@@ -31,13 +31,25 @@ state.on(EVENTS.CHANGE_SCENE, (e) => {
 </script>
 
 <template>
-  <header>Cote 780</header>
+  <header></header>
 
   <main>
+    <div>
+      <img class="logo" src="/assets/images/logo.png" >
+    </div>
     <Intro v-if="isIntro" />
     <Scenes v-if="isScenes" :sceneIndex="sceneIndex" />
     <BtnChangeScene />
   </main>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+main{
+  img.logo{
+    position: absolute;
+    width: 70px;
+    top: 10px;
+    left: 15px;
+  }
+}
+</style>
