@@ -12,6 +12,10 @@ function onClickBtn() {
   state.emit(EVENTS.CHANGE_SCENE, currentScene.value )
 }
 
+state.on(EVENTS.CHANGE_SCENE, (e) => {
+  currentScene.value = e
+})
+
 </script>
 
 <template>
