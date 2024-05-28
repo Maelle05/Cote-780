@@ -53,7 +53,6 @@ class Bridge extends Scene {
     this.radius = 0.7;
     this.center = new Vector3(-1, -0.98, -1.45);
     this.rockIndex = 0;
-    this.rocks;
   }
 
   init() {
