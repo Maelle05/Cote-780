@@ -68,7 +68,7 @@ class Map extends Scene {
     this.raycaster.setFromCamera(e.webgl, this.webgl.camera);
     const intersects = this.raycaster.intersectObjects( this.plan.allPoint );
 
-    if (intersects.length != 0) {
+    if (intersects.length != 0 && intersects[0].object.name == '2') {
       state.emit(EVENTS.CHANGE_SCENE, parseInt(intersects[0].object.name))
     }
   }

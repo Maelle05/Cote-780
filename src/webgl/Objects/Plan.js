@@ -45,6 +45,7 @@ export default class Plan extends Mesh {
 
     this.DATA.forEach((el, i) => {
       const point = new Mesh(new SphereGeometry(0.1, 32, 16), new MeshBasicMaterial({ color: 'red', transparent: true }))
+      if(i != 0) point.material.opacity = 0.30
       point.position.set(this.DATA[i].pos.x, this.DATA[i].pos.y, this.DATA[i].pos.z)
       point.name = this.DATA[i].id
       this.allPoint.push(point)
