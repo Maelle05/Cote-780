@@ -20,7 +20,7 @@ import { Bridge } from "./Scenes/Bridge";
 import { Dam } from "./Scenes/Dam";
 import { Chapel } from "./Scenes/Chapel";
 import { Village } from "./Scenes/Village";
-import { End } from "./Scenes/End"
+import { End } from "./Scenes/End";
 import { AudioManager } from "./Utils/Core/Audio/AudioManager";
 
 export default class WebglController {
@@ -59,14 +59,14 @@ export default class WebglController {
       new Bridge(),
       new Chapel(),
       new Village(),
-      new End()
+      new End(),
     ];
     this.currentScene = INIT_SCENE;
     this.scene = this.allScene[this.currentScene];
     this.scene.init();
 
     // Controls
-    // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
     window.addEventListener("click", this.handleFirstClick);
 

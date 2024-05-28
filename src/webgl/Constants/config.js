@@ -36,7 +36,10 @@ const INTRO_SECTIONS = [
         id: "construction-barrage",
         src: "/assets/images/intro/5_construction-barrage.png",
       },
-      { id: "durance-colere", src: "/assets/images/intro/6_durance-colere.png" },
+      {
+        id: "durance-colere",
+        src: "/assets/images/intro/6_durance-colere.png",
+      },
     ],
     text: TEXTS.intro[3],
   },
@@ -46,8 +49,14 @@ const INTRO_SECTIONS = [
   },
   {
     elements: [
-      { id: "mamie-lien-durance-2", src: "/assets/images/intro/8_mamie-lien-durance-2.png" },
-      { id: "mamie-lien-durance-1", src: "/assets/images/intro/8_mamie-lien-durance-1.png" },
+      {
+        id: "mamie-lien-durance-2",
+        src: "/assets/images/intro/8_mamie-lien-durance-2.png",
+      },
+      {
+        id: "mamie-lien-durance-1",
+        src: "/assets/images/intro/8_mamie-lien-durance-1.png",
+      },
     ],
     text: TEXTS.intro[5],
   },
@@ -58,19 +67,16 @@ const INTRO_SECTIONS = [
     text: TEXTS.intro[6],
   },
   {
-    elements: [
-      { id: "milo", src: "/assets/images/intro/10_milo.png" },
-    ],
+    elements: [{ id: "milo", src: "/assets/images/intro/10_milo.png" }],
     text: TEXTS.intro[7],
   },
   {
     elements: [
       { id: "carte", src: "/assets/images/intro/11_carte.png" },
       { id: "collier", src: "/assets/images/intro/12_collier.png" },
-
     ],
     text: TEXTS.intro[8],
   },
-]
+];
 
 export { DEV_MODE, INIT_SCENE, INTRO_SECTIONS, TITLES_SCENE };
