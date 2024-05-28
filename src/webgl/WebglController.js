@@ -66,7 +66,7 @@ export default class WebglController {
     this.scene.init();
 
     // Controls
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
     window.addEventListener("click", this.handleFirstClick);
 
@@ -129,7 +129,7 @@ export default class WebglController {
     this.scene = this.allScene[this.currentScene];
     // console.log(this.scene, this.currentScene);
     this.scene.init();
-    this.controls.reset();
+    // this.controls.reset();
   }
 
   handleFirstClick = () => {
