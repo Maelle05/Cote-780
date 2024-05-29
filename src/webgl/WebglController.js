@@ -20,7 +20,7 @@ import { Bridge } from "./Scenes/Bridge";
 import { Dam } from "./Scenes/Dam";
 import { Chapel } from "./Scenes/Chapel";
 import { Village } from "./Scenes/Village";
-import { End } from "./Scenes/End"
+import { End } from "./Scenes/End";
 import { AudioManager } from "./Utils/Core/Audio/AudioManager";
 
 export default class WebglController {
@@ -59,7 +59,7 @@ export default class WebglController {
       new Bridge(),
       new Chapel(),
       new Village(),
-      new End()
+      new End(),
     ];
     this.currentScene = INIT_SCENE;
     this.scene = this.allScene[this.currentScene];
@@ -127,7 +127,6 @@ export default class WebglController {
     this.currentScene = e;
     this.scene.clear();
     this.scene = this.allScene[this.currentScene];
-    // console.log(this.scene, this.currentScene);
     this.scene.init();
     this.controls.reset();
   }

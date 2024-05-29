@@ -11,7 +11,12 @@ const TEXTS = {
     "Prends la pierre et la carte que je t'ai laissée et va rencontrer les Demoiselles Coiffées.",
     "Elles t'expliqueront tout.",
   ],
-}
+  scene_1: [
+    "Retrouve les chapeaux",
+    "Merci pour ton aide ... Voici le premier Cairn qui compose la porte de Savines. Prends garde, les prochains pourraient être plus périeux à récupérer...",
+    "Bravo premier cairn",
+  ],
+};
 
 // 1 - Milo face au lac
 // 2 - Milo va chez les grands-parents
@@ -19,7 +24,7 @@ const TEXTS = {
 // 4 - la lettre
 // 5 - chantier
 // 6 - Durance en colère
-// 7 - Grandma 
+// 7 - Grandma
 // 8 - Milo l'élu
 
-export { TEXTS }
+export { TEXTS };
