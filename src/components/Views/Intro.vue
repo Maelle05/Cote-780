@@ -4,6 +4,9 @@ import { INTRO_SECTIONS } from "@/webgl/Constants/config"
 import { state } from "../../webgl/Utils/State"
 import { ref, watch, onMounted, onUnmounted } from "vue"
 import { gsap, ScrollTrigger } from "gsap/all"
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -187,7 +190,7 @@ onMounted(() => {
       <div class="intro-title-screen__ui">
         <img src="/src/assets/logo/cote-780.png" alt="Cote 780" />
         <p class="intro-cta intro-cta--start" @click="onClickCtaStart">
-          Démarrer l'expérience
+          {{ t('intro.start') }}
         </p>
       </div>
       <div class="intro-title-screen__scroll">
