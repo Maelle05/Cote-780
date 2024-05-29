@@ -48,8 +48,11 @@ export default class WebglController {
 
     // Webgl
     this.canvasWrapper = container;
-    this.renderer = new Renderer(this.canvasWrapper);
+    this.renderer = new Renderer(this.canvasWrapper, 0x988C86, 1);
     this.camera = new Camera();
+
+    // Controls
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
     this.allScene = [
       new Intro(),
@@ -64,9 +67,6 @@ export default class WebglController {
     this.currentScene = INIT_SCENE;
     this.scene = this.allScene[this.currentScene];
     this.scene.init();
-
-    // Controls
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
     window.addEventListener("click", this.handleFirstClick);
 
@@ -125,10 +125,13 @@ export default class WebglController {
 
   onChangeScene(e) {
     this.currentScene = e;
+    this.camera = new Camera();
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.enabled = true;
+    this.controls.reset()
     this.scene.clear();
     this.scene = this.allScene[this.currentScene];
     this.scene.init();
-    // this.controls.reset();
   }
 
   handleFirstClick = () => {

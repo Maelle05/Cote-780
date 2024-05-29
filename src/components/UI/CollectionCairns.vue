@@ -28,8 +28,8 @@ state.on(EVENTS.VIEW_COLLECTION_CAIRNS, (e) => {
 </script>
 
 <template lang="">
-  <div ref='container' class='collectionCairns-container'>
-    <div class='chapters'>
+  <div ref='container' class='collection-cairns-container'>
+    <div class='collection-cairns-container__chapters'>
       <ChapterEl :id='2' :active='stateProgress[0]'/>
       <ChapterEl :id='3' :active='stateProgress[1]'/>
       <ChapterEl :id='4' :active='stateProgress[2]'/>
@@ -40,7 +40,7 @@ state.on(EVENTS.VIEW_COLLECTION_CAIRNS, (e) => {
 </template>
 
 <style scoped lang="scss">
-.collectionCairns-container {
+.collection-cairns-container {
   position: absolute;
   left: 0;
   top: 0;
@@ -56,7 +56,7 @@ state.on(EVENTS.VIEW_COLLECTION_CAIRNS, (e) => {
   color: black;
   opacity: 0;
 
-  .chapters {
+  &__chapters {
     display: flex;
     flex-direction: row;
   }

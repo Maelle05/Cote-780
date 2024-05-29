@@ -14,9 +14,10 @@ import { HeaddressesMaterial } from "../Materials/Headdresses/material";
 import { gsap } from "gsap";
 import { DEV_MODE } from "../Constants/config";
 import { EVENTS } from "../Constants/events";
+import { CamAnim } from "../Utils/Tools/CamAnim";
 
 class Demoiselle extends Group {
-  constructor(body, top, color) {
+  constructor(body, top, riseTop) {
     super();
     state.register(this);
 
@@ -25,33 +26,33 @@ class Demoiselle extends Group {
 
     // Canvas texture
     this.sizeCanvas = 300;
-    this.color = this.extractRGBParameters(color);
     this.canvas = document.createElement("canvas");
     this.canvas.width = this.sizeCanvas;
     this.canvas.height = this.sizeCanvas;
     this.ctx = this.canvas.getContext("2d", { willReadFrequently: true });
-    this.ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${
-      this.color.b
-    }, ${0.2})`;
+    this.ctx.fillStyle = `black`;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    this.canvasTex = new CanvasTexture(this.canvas);
     // document.querySelector('#vue-app').appendChild(this.canvas)
 
-    body.material = new MeshBasicMaterial({ color: color });
+    this.baseTexture = top.material.map
+    this.canvasTex = new CanvasTexture(this.canvas);
     top.material = new HeaddressesMaterial({
       uniforms: {
-        uTex: { value: this.canvasTex },
+        uBaseTex: { value: this.baseTexture },
+        uMaskTex: { value: this.canvasTex },
       },
     });
 
     this.body = body;
     this.top = top;
+    this.riseTop = riseTop;
     this.topIsDraw = false;
   }
 
   onPointerMove(e) {
     if (this.topIsDraw) return;
     if (this.webgl.currentScene != 2) return;
+    if (this.webgl.scene.anim.currentKeyfame != 3) return;
 
     // update the picking ray with the camera and pointer position
     this.raycaster.setFromCamera(e.webgl, this.webgl.camera);
@@ -60,18 +61,18 @@ class Demoiselle extends Group {
     const intersects = this.raycaster.intersectObject(this.top);
 
     for (let i = 0; i < intersects.length; i++) {
-      // intersects[ i ].object.material.opacity = 1;
+      intersects[ i ].object.material.opacity = 1;
       this.drawOnCanvasTex(intersects[i].uv);
     }
 
     if (this.isCanvasPainted()) {
-      this.ctx.fillStyle = `rgb(${this.color.r}, ${this.color.g}, ${this.color.b})`;
+      this.ctx.fillStyle = `white`;
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
       this.topIsDraw = true;
 
       gsap.to(this.top.position, {
         x: this.body.position.x,
-        y: this.body.position.y + 17,
+        y: this.body.position.y + this.riseTop,
         z: this.body.position.z,
       });
     }
@@ -81,7 +82,7 @@ class Demoiselle extends Group {
     const radius = 10;
     const x = coords.x * this.sizeCanvas;
     const y = coords.y * this.sizeCanvas;
-    const color = `rgb(${this.color.r}, ${this.color.g}, ${this.color.b})`;
+    const color = `white`;
 
     this.ctx.beginPath();
     this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
@@ -90,23 +91,6 @@ class Demoiselle extends Group {
 
     // Create a texture from the canvas
     this.canvasTex.needsUpdate = true;
-  }
-
-  extractRGBParameters(rgbString) {
-    const regex = /rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)/;
-    const match = rgbString.match(regex);
-
-    // If the string matches the regex, return the parameters as numbers
-    if (match) {
-      return {
-        r: parseInt(match[1], 10),
-        g: parseInt(match[2], 10),
-        b: parseInt(match[3], 10),
-      };
-    } else {
-      // If no match, return null or throw an error
-      return null;
-    }
   }
 
   isCanvasPainted() {
@@ -121,7 +105,7 @@ class Demoiselle extends Group {
     const results = [];
 
     for (let i = 0; i < data.length; i += 4) {
-      if (data[i + 3] > 200) {
+      if (data[i + 0] > 200) {
         results.push(true);
       } else {
         results.push(false);
@@ -130,7 +114,7 @@ class Demoiselle extends Group {
 
     const note = results.filter((el) => el == true).length / results.length;
 
-    if (note > 0.08) {
+    if (note > 0.10) {
       return true; // Canvas painted
     } else {
       return false;
@@ -189,6 +173,8 @@ class Ladies extends Scene {
           this.ladies.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
     }
+
+    this.webgl.controls.enabled = false;
   }
 
   onPointerMove() {
@@ -210,39 +196,33 @@ class Ladies extends Scene {
     this.D3 = [];
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
+
+
     this.ladies = this.webgl.assetsManager.get("ladies");
     this.ladies.traverse((el) => {
-      el.material = new MeshMatcapMaterial({
-        matcap: this.webgl.assetsManager.get("matcap"),
-      });
       if (el.name == "dame1" || el.name == "top1") {
-        el.material = new MeshBasicMaterial({ color: "green" });
         this.D1.push(el);
       }
       if (el.name == "dame2" || el.name == "top2") {
-        el.material = new MeshBasicMaterial({ color: "blue" });
         this.D2.push(el);
       }
       if (el.name == "dame3" || el.name == "top3") {
-        el.material = new MeshBasicMaterial({ color: "orange" });
         this.D3.push(el);
       }
     });
-    this.ladies.scale.set(0.1, 0.1, 0.1);
-    this.ladies.position.set(
-      this.PARAMS.scenePos.x,
-      this.PARAMS.scenePos.y,
-      this.PARAMS.scenePos.z
-    );
-    this.ladies.rotation.x = this.PARAMS.rotateX / (180 / Math.PI);
-    this.ladies.rotation.y = this.PARAMS.rotateY / (180 / Math.PI);
 
-    this.dem1 = new Demoiselle(this.D1[0], this.D1[1], "rgb(0, 255, 0)");
-    this.dem2 = new Demoiselle(this.D2[0], this.D2[1], "rgb(0, 0, 255)");
-    this.dem3 = new Demoiselle(this.D3[0], this.D3[1], "rgb(255,165,0)");
+    this.dem1 = new Demoiselle(this.D1[0], this.D1[1], 1.5);
+    this.dem2 = new Demoiselle(this.D2[0], this.D2[1], 1.7);
+    this.dem3 = new Demoiselle(this.D3[0], this.D3[1], 1.5);
     this.demoiselles.add(this.dem1, this.dem2, this.dem3);
 
+    this.anim = new CamAnim(2, this.ladies, this.webgl.camera, [0, 0.33, 0.66, 0.66, 1]);
+
     this.add(this.ladies, this.ambient);
+  }
+
+  onChangeSceneStep(){
+    this.anim.changeStep()
   }
 
   clear() {

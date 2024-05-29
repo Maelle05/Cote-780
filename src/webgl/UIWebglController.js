@@ -1,5 +1,5 @@
-import { UIRenderer } from './UIRenderer';
-import { UICamera } from './UICamera';
+import { Renderer } from './Renderer';
+import { Camera } from './Camera';
 import { state } from './Utils/State';
 import { EVENTS } from './Constants/events';
 import { INIT_SCENE } from './Constants/config'
@@ -28,8 +28,8 @@ export default class UIWebglController {
 
     // Webgl
     this.canvasWrapper = container;
-    this.renderer = new UIRenderer(this.canvasWrapper);
-    this.camera = new UICamera();
+    this.renderer = new Renderer(this.canvasWrapper, 0x000000, 0);
+    this.camera = new Camera();
 
     this.allScene = [new Intro(), new Null()]
     this.currentScene = INIT_SCENE

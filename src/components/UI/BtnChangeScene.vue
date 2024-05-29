@@ -17,6 +17,10 @@ function previous() {
   state.emit(EVENTS.CHANGE_SCENE, currentScene.value);
 }
 
+function changeStepAnim() {
+  state.emit(EVENTS.CHANGE_SCENE_STEP);
+}
+
 state.on(EVENTS.CHANGE_SCENE, (e) => {
   currentScene.value = e;
 });
@@ -26,6 +30,7 @@ state.on(EVENTS.CHANGE_SCENE, (e) => {
   <div class="wrapper">
     <button @click="previous">Go previous scene</button>
     <button @click="next">Go next scene</button>
+    <button class="wrapper__top" @click="changeStepAnim" v-if="currentScene == 2">Change step scene</button>
   </div>
 </template>
 
@@ -38,5 +43,11 @@ state.on(EVENTS.CHANGE_SCENE, (e) => {
   pointer-events: all;
   display: flex;
   gap: 5px;
+
+  &__top {
+    position: absolute;
+    bottom: 24px;
+    right: 0;
+  }
 }
 </style>

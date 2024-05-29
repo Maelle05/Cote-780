@@ -39,15 +39,15 @@ state.on(EVENTS.CHANGE_SCENE, (e) => {
 </script>
 
 <template lang="">
-  <div ref='container' class='wellcomeScene-container' v-if='props.sceneIndex != 1'>
+  <div ref='container' class='wellcome-scene-container' v-if='props.sceneIndex != 1'>
     <ChapterIcon :sceneIndex="props.sceneIndex"></ChapterIcon>
-    <div class='chapter' >Chapitre {{props.sceneIndex - 1}}</div>
+    <div class='wellcome-scene-container__chapter' >Chapitre {{props.sceneIndex - 1}}</div>
     <ChapterTitle :sceneIndex="props.sceneIndex"></ChapterTitle>
   </div>
 </template>
 
 <style scoped lang="scss">
-.wellcomeScene-container {
+.wellcome-scene-container {
   position: absolute;
   left: 0;
   top: 0;
@@ -61,7 +61,7 @@ state.on(EVENTS.CHANGE_SCENE, (e) => {
   justify-content: center;
   align-items: center;
 
-  .chapter{
+  &__chapter{
     color: black;
     text-decoration: underline;
     margin: 10px 0 10px 0;

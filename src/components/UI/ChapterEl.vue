@@ -10,7 +10,7 @@ const props = defineProps({
 <template>
   <div class="chapter-element" :class="{ active: props.active }">
     <img :src="'/assets/images/icons/' + props.id  + '.png'" />
-    <h4 class="title">{{ TITLES_SCENE[props.id] }}</h4>
+    <h4 class="chapter-element__title">{{ TITLES_SCENE[props.id] }}</h4>
   </div>
 </template>
 
@@ -37,7 +37,7 @@ const props = defineProps({
     width: 100px;
   }
 
-  .title{
+  &__title{
     margin: 10px 0 0 0;
   }
 }
