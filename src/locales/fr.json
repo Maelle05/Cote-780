@@ -1,0 +1,19 @@
+{
+  "global": {
+    "title": "Cote 780",
+    "description": "Bla Bli Bla Blou"
+  },
+  "intro": {
+    "start": "Démarrer l'expérience"
+  },
+  "scene_1": {
+    "text_1": "Mon cher Milo, si tu lis ces mots, c'est que je ne suis malheureusement plus avec vous...,",
+    "text_2": "Il y a une histoire que je dois te raconter, une histoire qui remonte à la création du barrage...,",
+    "text_3": "La Durance, capricieuse et indomptable, a lancé son baroud d'honneur.,",
+    "text_4": "Grâce au lien de notre famille avec la vallée, j'ai pu l'apaiser.,",
+    "text_5": "La porte de Savines a été créée pour maintenir l'équilibre de la vallée, et j'en fus la gardienne.,",
+    "text_6": "C'est à toi que revient ce rôle désormais.,",
+    "text_7": "Prends la pierre et la carte que je t'ai laissée et va rencontrer les Demoiselles Coiffées.,",
+    "text_8": "Elles t'expliqueront tout.,"
+  }
+}
