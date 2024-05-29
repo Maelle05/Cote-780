@@ -126,6 +126,7 @@ export default class WebglController {
   onChangeScene(e) {
     this.currentScene = e;
     this.camera = new Camera();
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enabled = true;
     this.controls.reset()
     this.scene.clear();

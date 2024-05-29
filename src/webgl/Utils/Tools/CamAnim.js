@@ -5,10 +5,11 @@ import WebglController from "@/webgl/WebglController";
 
 
 export class CamAnim {
-  constructor( scene, targetObject, keyframes){
+  constructor(idScene, scene, targetObject, keyframes){
     state.register(this);
 
     this.webgl = new WebglController()
+    this.idScene = idScene
 
     this.refCam = scene.children.find(el => el.name == "Camera")
     this.animationClip = scene.animations[0]
@@ -31,11 +32,11 @@ export class CamAnim {
     this.animationAction.play();
     this.animationAction.paused = true;
 
-    this.webgl.camera = this.refCam
   }
-
+  
   onTick(){
-    if(!this.keyframes && this.keyframes.length == 0) return;
+    if(!this.keyframes && this.keyframes.length == 0 || this.webgl.currentScene != this.idScene) return;
+    if(this.webgl.camera != this.refCam) this.webgl.camera = this.refCam
 
     this.targetProgressAnim = this.keyframes[this.currentKeyfame];
     this.currentProgressAnim = MathUtils.lerp(
