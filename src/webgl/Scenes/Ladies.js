@@ -14,6 +14,7 @@ import { HeaddressesMaterial } from "../Materials/Headdresses/material";
 import { gsap } from "gsap";
 import { DEV_MODE } from "../Constants/config";
 import { EVENTS } from "../Constants/events";
+import { CamAnim } from "../Utils/Tools/CamAnim";
 
 class Demoiselle extends Group {
   constructor(body, top, color) {
@@ -33,11 +34,12 @@ class Demoiselle extends Group {
     this.ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${
       this.color.b
     }, ${0.2})`;
+    // console.log(top.material.map.source);
+    // this.ctx.drawImage(top.material.map.source)
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.canvasTex = new CanvasTexture(this.canvas);
-    // document.querySelector('#vue-app').appendChild(this.canvas)
+    document.querySelector('#vue-app').appendChild(this.canvas)
 
-    body.material = new MeshBasicMaterial({ color: color });
     top.material = new HeaddressesMaterial({
       uniforms: {
         uTex: { value: this.canvasTex },
@@ -52,6 +54,7 @@ class Demoiselle extends Group {
   onPointerMove(e) {
     if (this.topIsDraw) return;
     if (this.webgl.currentScene != 2) return;
+    if (this.webgl.scene.anim.currentKeyfame != 2) return;
 
     // update the picking ray with the camera and pointer position
     this.raycaster.setFromCamera(e.webgl, this.webgl.camera);
@@ -71,7 +74,7 @@ class Demoiselle extends Group {
 
       gsap.to(this.top.position, {
         x: this.body.position.x,
-        y: this.body.position.y + 17,
+        y: this.body.position.y + 1.5,
         z: this.body.position.z,
       });
     }
@@ -144,6 +147,7 @@ class Ladies extends Scene {
     state.register(this);
 
     this.webgl = new WebglController();
+    this.webgl.controls.enabled = false;
 
     this.PARAMS = {
       scenePos: {
@@ -198,7 +202,7 @@ class Ladies extends Scene {
       this.dem3.topIsDraw &&
       !this.finish
     ) {
-      state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, 2);
+      // state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, 2);
       this.finish = true;
     }
   }
@@ -210,39 +214,35 @@ class Ladies extends Scene {
     this.D3 = [];
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
+
+
     this.ladies = this.webgl.assetsManager.get("ladies");
     this.ladies.traverse((el) => {
-      el.material = new MeshMatcapMaterial({
-        matcap: this.webgl.assetsManager.get("matcap"),
-      });
       if (el.name == "dame1" || el.name == "top1") {
-        el.material = new MeshBasicMaterial({ color: "green" });
         this.D1.push(el);
       }
       if (el.name == "dame2" || el.name == "top2") {
-        el.material = new MeshBasicMaterial({ color: "blue" });
         this.D2.push(el);
       }
       if (el.name == "dame3" || el.name == "top3") {
-        el.material = new MeshBasicMaterial({ color: "orange" });
         this.D3.push(el);
       }
     });
-    this.ladies.scale.set(0.1, 0.1, 0.1);
-    this.ladies.position.set(
-      this.PARAMS.scenePos.x,
-      this.PARAMS.scenePos.y,
-      this.PARAMS.scenePos.z
-    );
-    this.ladies.rotation.x = this.PARAMS.rotateX / (180 / Math.PI);
-    this.ladies.rotation.y = this.PARAMS.rotateY / (180 / Math.PI);
 
     this.dem1 = new Demoiselle(this.D1[0], this.D1[1], "rgb(0, 255, 0)");
     this.dem2 = new Demoiselle(this.D2[0], this.D2[1], "rgb(0, 0, 255)");
     this.dem3 = new Demoiselle(this.D3[0], this.D3[1], "rgb(255,165,0)");
     this.demoiselles.add(this.dem1, this.dem2, this.dem3);
 
+    this.anim = new CamAnim(this.ladies, this.webgl.camera, [0, 0.33, 0.66, 1]);
+    this.anim.changeStep(2)
+
     this.add(this.ladies, this.ambient);
+  }
+
+  onPointerDown(){
+    if(this.webgl.currentScene != 2) return
+    // this.anim.changeStep()
   }
 
   clear() {
