@@ -48,7 +48,7 @@ export default class WebglController {
 
     // Webgl
     this.canvasWrapper = container;
-    this.renderer = new Renderer(this.canvasWrapper);
+    this.renderer = new Renderer(this.canvasWrapper, 0x988C86, 1);
     this.camera = new Camera();
 
     this.allScene = [

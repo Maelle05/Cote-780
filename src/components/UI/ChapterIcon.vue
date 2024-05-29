@@ -9,7 +9,9 @@ const props = defineProps({
 </template>
 
 <style scoped lang="scss">
-img {
-  width: 160px;
+.icon {
+  img {
+    width: 160px;
+  }
 }
 </style>

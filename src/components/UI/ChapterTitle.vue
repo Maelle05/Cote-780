@@ -8,11 +8,11 @@ const props = defineProps({
 </script>
 
 <template lang="">
-  <h2 class="title">{{ TITLES_SCENE[props.sceneIndex] }}</h2>
+  <h2 class="chapter-title">{{ TITLES_SCENE[props.sceneIndex] }}</h2>
 </template>
 
 <style scoped lang="scss">
-.title{
+.chapter-title{
   color: black;
 }
 </style>
