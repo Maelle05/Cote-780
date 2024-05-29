@@ -35,7 +35,7 @@ state.on(EVENTS.CHANGE_SCENE, (e) => {
 
   <main>
     <div>
-      <img class="logo" src="/assets/images/logo.png" >
+      <img class="logo" src="/assets/images/logo.png" />
     </div>
     <Intro v-if="isIntro" />
     <Scenes v-if="isScenes" :sceneIndex="sceneIndex" />
@@ -44,8 +44,8 @@ state.on(EVENTS.CHANGE_SCENE, (e) => {
 </template>
 
 <style scoped lang="scss">
-main{
-  img.logo{
+main {
+  img.logo {
     position: absolute;
     width: 70px;
     top: 10px;

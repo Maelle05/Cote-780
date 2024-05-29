@@ -128,7 +128,7 @@ export default class WebglController {
     this.scene.clear();
     this.scene = this.allScene[this.currentScene];
     this.scene.init();
-    this.controls.reset();
+    // this.controls.reset();
   }
 
   handleFirstClick = () => {
