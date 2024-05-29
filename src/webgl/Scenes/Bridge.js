@@ -12,6 +12,7 @@ import {
   SphereGeometry,
   HemisphereLight,
   Vector3,
+  Color,
 } from "three";
 import { state } from "../Utils/State";
 import TestPlane from "../Objects/TestPlane";
@@ -22,6 +23,8 @@ import { Pane } from "tweakpane";
 import { DirectionalLightHelper } from "three";
 import { DEV_MODE } from "../Constants/config";
 import Spirit from "../Objects/Spirit";
+import TargetParticles from "../Objects/TargetParticles";
+import Cairn from "../Objects/Cairn";
 
 class Bridge extends Scene {
   constructor() {
@@ -63,6 +66,7 @@ class Bridge extends Scene {
     this.angle = 0;
     this.direction = 1;
     this.radius = 0.7;
+    this.radiusOffset = 0;
     this.center = new Vector3(-1, -0.98, -1.45);
     this.rockIndex = 0;
     this.minSpeed = 0.01;
@@ -73,8 +77,6 @@ class Bridge extends Scene {
     this.bridge.position.set(-0.5, -1, -3.7);
     this.bridge.rotation.y = -0.5;
     this.add(this.bridge);
-
-    console.log(this.bridge);
 
     //Remove reflection from material
     this.bridge.traverse((child) => {
@@ -104,6 +106,7 @@ class Bridge extends Scene {
     this.rocks[0].position.set(this.rockPos.x, -1, -1.6);
 
     this.player = this.webgl.assetsManager.get("milo").clone();
+    this.player.position.set(this.center.x, -0.95, this.center.z);
     this.player.scale.set(0.1, 0.1, 0.1);
     this.player.rotation.y = 30;
 
@@ -115,7 +118,25 @@ class Bridge extends Scene {
 
     this.add(this.spirit);
 
-    this.updatePos();
+    this.target = new TargetParticles(
+      200,
+      new Vector3(
+        this.rocks[0].position.x,
+        this.rocks[0].position.y + 0.2,
+        this.rocks[0].position.z
+      ),
+      0.02
+    );
+    this.add(this.target);
+
+    this.cairn = new Cairn();
+    this.cairn.position.set(
+      this.rocks.at(-1).position.x,
+      this.rocks[0].position.y + 0.2,
+      this.rocks.at(-1).position.z
+    );
+
+    this.add(this.cairn);
 
     this.webgl.audio.playMusic("music_1");
 
@@ -134,17 +155,33 @@ class Bridge extends Scene {
     // Calculate new angle based on easing
     let angleIncrement = (0.05 * easing + this.minSpeed) * this.direction;
     this.angle += angleIncrement;
+    this.progressAngle = Math.abs(this.angle / (Math.PI / 2));
 
     if (this.angle >= Math.PI / 2 || this.angle <= -Math.PI / 2) {
       this.direction *= -1;
     }
 
+    // if (this.progressAngle > 0.8) this.radiusOffset -= 0.005;
+    // else if (this.radiusOffset > 0) this.radiusOffset += 0.005;
+
     if (!this.spirit) return;
 
-    this.x = this.center.x + this.radius * Math.cos(this.angle - 0.2);
-    this.z = this.center.z + this.radius * Math.sin(this.angle - 0.2);
+    this.x =
+      this.center.x +
+      (this.radius + this.radiusOffset) * Math.cos(this.angle - 0.2);
+    this.z =
+      this.center.z +
+      (this.radius + this.radiusOffset) * Math.sin(this.angle - 0.2);
 
-    this.spirit.position.set(this.x, -0.9, this.z);
+    this.spirit.position.set(this.x, this.rocks[0].position.y + 0.2, this.z);
+
+    if (this.spirit.position.distanceTo(this.target.position) < 0.2) {
+      this.spirit.material.color = new Color("red");
+    } else {
+      this.spirit.material.color = new Color("white");
+    }
+
+    this.target.material.uniforms.uTime.value += 0.05;
   }
 
   onPointerDown() {
@@ -156,10 +193,10 @@ class Bridge extends Scene {
     this.nextRock = this.rocks[this.rockIndex + 1];
 
     if (!this.currentRock) return;
-    if (this.spirit.position.distanceTo(this.currentRock.position) > 0.3)
-      return;
+    if (this.spirit.position.distanceTo(this.target.position) > 0.2) return;
 
     this.spirit.hide();
+    this.target.hide();
 
     gsap.to(this.center, {
       x: this.currentRock.position.x,
@@ -168,11 +205,19 @@ class Bridge extends Scene {
       duration: 1,
       ease: "power1.out",
       onUpdate: () => {
-        this.updatePos();
+        this.player.position.set(this.center.x, -0.95, this.center.z);
       },
       onComplete: () => {
         this.rockIndex++;
         this.spirit.show();
+
+        this.target.show(
+          new Vector3(
+            this.nextRock.position.x,
+            this.nextRock.position.y + 0.2,
+            this.nextRock.position.z
+          )
+        );
       },
     });
 
@@ -188,10 +233,6 @@ class Bridge extends Scene {
     });
   }
 
-  updatePos() {
-    this.player.position.set(this.center.x, -0.95, this.center.z);
-  }
-
   #off() {}
 
   #start() {
@@ -202,6 +243,13 @@ class Bridge extends Scene {
     this.spirit.show();
 
     //launch Particles
+    this.target.show(
+      new Vector3(
+        this.rocks[0].position.x,
+        this.rocks[0].position.y + 0.2,
+        this.rocks[0].position.z
+      )
+    );
   }
 
   clear() {

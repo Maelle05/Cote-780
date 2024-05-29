@@ -36,7 +36,7 @@ class End extends Scene {
   }
 
   onResize() {
-      this.fireworks.resize();
+    this.fireworks.resize();
   }
 }
 

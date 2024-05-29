@@ -3,7 +3,7 @@ import { EVENTS } from "@/webgl/Constants/events";
 import { state } from "../../webgl/Utils/State";
 import { ref } from "vue";
 import WellcomeScene from "../UI/WellcomeScene.vue";
-import CollectionCairns from "../UI/CollectionCairns.vue"
+import CollectionCairns from "../UI/CollectionCairns.vue";
 import Sound from "../UI/Sound.vue";
 
 const props = defineProps({
@@ -12,8 +12,8 @@ const props = defineProps({
 </script>
 
 <template>
-  <WellcomeScene :sceneIndex="props.sceneIndex"> </WellcomeScene>
-  <CollectionCairns/>
+  <!-- <WellcomeScene :sceneIndex="props.sceneIndex"> </WellcomeScene> -->
+  <CollectionCairns />
   <!-- <Sound></Sound> -->
 </template>
 
