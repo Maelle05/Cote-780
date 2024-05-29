@@ -52,7 +52,7 @@ class Demoiselle extends Group {
   onPointerMove(e) {
     if (this.topIsDraw) return;
     if (this.webgl.currentScene != 2) return;
-    if (this.webgl.scene.anim.currentKeyfame != 2) return;
+    if (this.webgl.scene.anim.currentKeyfame != 3) return;
 
     // update the picking ray with the camera and pointer position
     this.raycaster.setFromCamera(e.webgl, this.webgl.camera);
@@ -184,7 +184,7 @@ class Ladies extends Scene {
       this.dem3.topIsDraw &&
       !this.finish
     ) {
-      // state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, 2);
+      state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, 2);
       this.finish = true;
     }
   }
@@ -216,7 +216,7 @@ class Ladies extends Scene {
     this.dem3 = new Demoiselle(this.D3[0], this.D3[1], 1.5);
     this.demoiselles.add(this.dem1, this.dem2, this.dem3);
 
-    this.anim = new CamAnim(2, this.ladies, this.webgl.camera, [0, 0.33, 0.66, 1]);
+    this.anim = new CamAnim(2, this.ladies, this.webgl.camera, [0, 0.33, 0.66, 0.66, 1]);
 
     this.add(this.ladies, this.ambient);
   }
