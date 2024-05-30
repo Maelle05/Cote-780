@@ -161,8 +161,6 @@ class Bridge extends Scene {
 
     // Calculate easing based on the current angle's distance from the center
     let easing = Math.abs(normalizedAngle);
-    // let easing = 0.05;
-    let loopEasing = Math.sin((normalizedAngle * Math.PI) / 2);
 
     // Calculate new angle based on easing
     let angleIncrement = (0.05 * easing + this.minSpeed) * this.direction;
