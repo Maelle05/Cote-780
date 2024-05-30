@@ -161,6 +161,8 @@ class Dam extends Scene {
         this.rocks.position.set(ev.value.x, ev.value.y, ev.value.z)
       });
     }
+
+    if(this.anim) this.anim.changeStep(0)
   }
 
   onAttach(){
@@ -195,6 +197,7 @@ class Dam extends Scene {
 
   onPointerDown(e){
     if(this.webgl.currentScene != 3) return
+    if(this.anim.currentKeyfame != 2) return
 
     this.raycaster.setFromCamera(e.webgl, this.webgl.camera);
     const intersects = this.raycaster.intersectObject( this.spirit );
