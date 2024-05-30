@@ -1,14 +1,13 @@
 import './src/assets/styles/main.scss'
-import WebglController from './src/webgl/WebglController'
-import UIWebglController from './src/webgl/UIWebglController'
-
 import { createApp } from 'vue'
 import App from './src/App.vue'
 import i18n from '@/config/i18n'
+import { app } from '@/App'
 
-new WebglController(document.getElementById('webgl-app'))
-new UIWebglController(document.getElementById('ui-webgl-app'))
+// Vue App
+const appVue = createApp(App);
+appVue.use(i18n);
+appVue.mount('#vue-app');
 
-const app = createApp(App);
-app.use(i18n);
-app.mount('#vue-app');
+// JS App
+app.init();

@@ -1,6 +1,6 @@
 import { state } from '../State';
 import { Vector2 } from 'three';
-import { EVENTS } from '../../Constants/events';
+import { EVENTS } from '../constants/events';
 
 class Mouse {
 	#pinchStart;

@@ -14,25 +14,23 @@ import {
   Vector3,
   Color,
 } from "three";
-import { state } from "../Utils/State";
+import { state } from "../../utils/State";
 import TestPlane from "../Objects/TestPlane";
-import WebglController from "../WebglController";
-import { EVENTS } from "../Constants/events";
+import { EVENTS } from "../../utils/constants/events";
 import gsap from "gsap";
 import { Pane } from "tweakpane";
 import { DirectionalLightHelper } from "three";
-import { DEV_MODE } from "../Constants/config";
+import { DEV_MODE } from "../../utils/constants/config";
 import Spirit from "../Objects/Spirit";
 import TargetParticles from "../Objects/TargetParticles";
 import Cairn from "../Objects/Cairn";
-import { CamAnim } from "../Utils/Tools/CamAnim";
+import { CamAnim } from "../utils/CamAnim";
+import { app } from "@/App";
 
 class Bridge extends Scene {
   constructor() {
     super();
     state.register(this);
-
-    this.webgl = new WebglController();
 
     this.light = new AmbientLight({ color: 0xffffff });
     this.add(this.light);
@@ -57,7 +55,7 @@ class Bridge extends Scene {
 
     //States : off / start / step_1 / step_2 / step_3 / end
     this.state = "off";
-    this.init()
+    this.init();
   }
 
   init() {
@@ -75,7 +73,7 @@ class Bridge extends Scene {
   }
 
   onAttach() {
-    this.bridge = this.webgl.assetsManager.get("bridge");
+    this.bridge = app.assetsManager.get("bridge");
     this.bridge.position.set(-0.5, -1, -3.7);
     this.bridge.rotation.y = -0.5;
     this.add(this.bridge);
@@ -88,7 +86,7 @@ class Bridge extends Scene {
       }
     });
 
-    this.rock = this.webgl.assetsManager.get("rock");
+    this.rock = app.assetsManager.get("rock");
     this.rockPos = new Vector3(-0.3, -1.2, -1.6);
     this.rockScale = new Vector3(0.15, 0.15, 0.15);
     this.rocks = [];
@@ -107,7 +105,7 @@ class Bridge extends Scene {
 
     this.rocks[0].position.set(this.rockPos.x, -1, -1.6);
 
-    this.player = this.webgl.assetsManager.get("milo").clone();
+    this.player = app.assetsManager.get("milo").clone();
     this.player.position.set(this.center.x, -0.95, this.center.z);
     this.player.scale.set(0.1, 0.1, 0.1);
     this.player.rotation.y = 30;
@@ -121,7 +119,7 @@ class Bridge extends Scene {
     this.add(this.spirit);
 
     this.target = new TargetParticles(
-      200,
+      500,
       new Vector3(
         this.rocks[0].position.x,
         this.rocks[0].position.y + 0.2,
@@ -129,6 +127,7 @@ class Bridge extends Scene {
       ),
       0.02
     );
+    this.target.rotation.x = 4;
     this.add(this.target);
 
     this.cairn = new Cairn();
@@ -140,9 +139,14 @@ class Bridge extends Scene {
 
     this.add(this.cairn);
 
-    this.webgl.audio.playMusic("music_1");
+    app.audio.playMusic("music_1");
 
-    this.anim = new CamAnim(4, this.bridge, this.webgl.camera, [0, 0.33, 0.66, 0.66, 1]);
+    this.anim = new CamAnim(
+      4,
+      this.bridge,
+      app.webgl.camera,
+      [0, 0.33, 0.66, 0.66, 1]
+    );
 
     setTimeout(() => {
       this.#start();
@@ -150,25 +154,27 @@ class Bridge extends Scene {
   }
 
   onTick() {
-    if (this.webgl.currentScene != 4) return;
+    if (app.webgl.currentScene != 4) return;
     // if (this.anim.currentKeyfame != 2) return;
     if (this.state == "off") return;
     let normalizedAngle = this.angle / (Math.PI / 2);
 
     // Calculate easing based on the current angle's distance from the center
-    let easing = 1 - Math.abs(normalizedAngle);
+    let easing = Math.abs(normalizedAngle);
 
     // Calculate new angle based on easing
     let angleIncrement = (0.05 * easing + this.minSpeed) * this.direction;
     this.angle += angleIncrement;
-    this.progressAngle = Math.abs(this.angle / (Math.PI / 2));
 
     if (this.angle >= Math.PI / 2 || this.angle <= -Math.PI / 2) {
       this.direction *= -1;
     }
 
-    // if (this.progressAngle > 0.8) this.radiusOffset -= 0.005;
-    // else if (this.radiusOffset > 0) this.radiusOffset += 0.005;
+    this.progressAngle = Math.abs(this.angle / (Math.PI / 2));
+
+    // if (this.progressAngle > 0.7 && this.progressAngle < 0.85)
+    //   this.radiusOffset += 0.0051;
+    // if (this.progressAngle > 0.85) this.radiusOffset -= 0.0051;
 
     if (!this.spirit) return;
 
@@ -191,7 +197,7 @@ class Bridge extends Scene {
   }
 
   onPointerDown() {
-    if (this.webgl.currentScene != 4 || this.state == "off") return;
+    if (app.webgl.currentScene != 4 || this.state == "off") return;
 
     this.currentRock = this.rocks[this.rockIndex];
 
@@ -238,13 +244,14 @@ class Bridge extends Scene {
     });
   }
 
-  onChangeSceneStep(){
-    this.anim.changeStep()
+  onChangeSceneStep() {
+    this.anim.changeStep();
   }
 
   #off() {}
 
   #start() {
+    console.log("start");
     //Create all animations of apparitions
     this.state = "step_1";
 

@@ -1,11 +1,11 @@
 <script setup>
-import BtnChangeScene from "./components/UI/BtnChangeScene.vue";
-import Intro from "./components/Views/Intro.vue";
-import Scenes from "./components/Views/Scenes.vue";
+import BtnChangeScene from "./UI/components/BtnChangeScene.vue";
+import Intro from "./UI/views/Intro.vue";
+import Scenes from "./UI/views/Scenes.vue";
 import { ref } from "vue";
-import { INIT_SCENE } from "./webgl/Constants/config";
-import { state } from "./webgl/Utils/State";
-import { EVENTS } from "@/webgl/Constants/events";
+import { INIT_SCENE } from "./utils/constants/config";
+import { state } from "./utils/State";
+import { EVENTS } from "./utils/constants/events";
 
 const isIntro = ref(false);
 const isScenes = ref(false);

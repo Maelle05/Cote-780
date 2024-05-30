@@ -1,26 +1,22 @@
-import { DEV_MODE, INTRO_SECTIONS } from '@/webgl/Constants/config';
-import { Scene } from 'three';
-import { state } from '../Utils/State';
-import TestPlane from '../Objects/TestPlane'
-import IntroText from '../Objects/UI/IntroText'
-import UiWebglController from '../UIWebglController';
-import { Pane } from 'tweakpane';
+import { DEV_MODE, INTRO_SECTIONS } from "@/utils/constants/config";
+import { Scene } from "three";
+import { state } from "../../utils/State";
+import IntroText from "../Objects/UI/IntroText";
+import { Pane } from "tweakpane";
 
 class Intro extends Scene {
   constructor() {
-    super()
-    state.register(this)
-
-    this.webgl = new UiWebglController()
+    super();
+    state.register(this);
   }
 
-  init(){
+  init() {
     if (DEV_MODE) {
-      this.pane = new Pane({ title: 'Parameters Intro', expanded: true });
+      this.pane = new Pane({ title: "Parameters Intro", expanded: true });
     }
   }
 
-  onAttach(){
+  onAttach() {
     this.text = new IntroText();
     this.text.setText(INTRO_SECTIONS[0].text);
     this.add(this.text);
@@ -31,11 +27,11 @@ class Intro extends Scene {
     this.text.animateText(e.text);
   }
 
-  clear(){
+  clear() {
     if (DEV_MODE) {
-      this.pane.dispose()
+      this.pane.dispose();
     }
-    this.text.dispose()
+    this.text.dispose();
   }
 }
 

@@ -1,7 +1,7 @@
 import { TEXTS } from "./texts";
 
 const DEV_MODE = false;
-const INIT_SCENE = 2;
+const INIT_SCENE = 0;
 
 const TITLES_SCENE = [
   "Intro",

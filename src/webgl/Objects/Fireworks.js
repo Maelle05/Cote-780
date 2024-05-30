@@ -6,24 +6,19 @@ import { PointsMaterial } from "three";
 import { Points } from "three";
 import { FireworkMaterial } from "../Materials/Firework/material";
 import { Uniform } from "three";
-import WebglController from "../WebglController";
 import { Vector2 } from "three";
+import { app } from "@/App";
 
 export default class Fireworks extends Points {
   constructor(count, position, size) {
     super();
-
-    this.webgl = new WebglController();
 
     // console.log(this.webgl);
 
     this.count = count;
     this.position.copy(position);
     this.particleSize = size;
-    this.resolution = new Vector2(
-      this.webgl.viewport.width,
-      this.webgl.viewport.height
-    );
+    this.resolution = new Vector2(app.viewport.width, app.viewport.height);
 
     this.geometry = this.#createGeometry();
     this.material = this.#createMaterial();
@@ -62,8 +57,8 @@ export default class Fireworks extends Points {
 
   resize() {
     this.resolution.set(
-      this.webgl.viewport.width * Math.min(window.devicePixelRatio, 2),
-      this.webgl.viewport.height * Math.min(window.devicePixelRatio, 2)
+      app.viewport.width * Math.min(window.devicePixelRatio, 2),
+      app.viewport.height * Math.min(window.devicePixelRatio, 2)
     );
   }
 }

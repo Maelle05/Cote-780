@@ -2,13 +2,13 @@ import { AnimationMixer, MathUtils, Euler, Quaternion } from "three";
 import { state } from '../State';
 import { EVENTS } from '../../Constants/events';
 import WebglController from "@/webgl/WebglController";
+import { app } from "@/App";
 
 
 export class CamAnim {
   constructor(idScene, scene, targetObject, keyframes){
     state.register(this);
 
-    this.webgl = new WebglController()
     this.idScene = idScene
 
     this.refCam = scene.children.find(el => el.name == "Camera")
@@ -31,8 +31,8 @@ export class CamAnim {
   }
   
   onTick(){
-    if(!this.keyframes && this.keyframes.length == 0 || this.webgl.currentScene != this.idScene) return;
-    if(this.webgl.camera != this.refCam) this.webgl.camera = this.refCam
+    if(!this.keyframes && this.keyframes.length == 0 || app.webgl.currentScene != this.idScene) return;
+    if(app.webgl.camera != this.refCam) app.webgl.camera = this.refCam
 
     this.targetProgressAnim = this.keyframes[this.currentKeyfame];
     this.currentProgressAnim = MathUtils.lerp(
@@ -47,11 +47,11 @@ export class CamAnim {
       this.animationClip.duration * this.currentProgressAnim
     );
     this.animationAction.paused = true;
-    this.animationMixer.update(this.webgl.ticker.delta);
+    this.animationMixer.update(app.ticker.delta);
 
     // Set position
     this.posTarget = this.refCam.position;
-    this.webgl.camera.position.set(
+    app.webgl.camera.position.set(
       this.posTarget.x,
       this.posTarget.y,
       this.posTarget.z
@@ -59,7 +59,7 @@ export class CamAnim {
 
     // Set rotation
     this.rotTarget = this.refCam.rotation;
-    this.webgl.camera.setRotationFromEuler(this.rotTarget);
+    app.webgl.camera.setRotationFromEuler(this.rotTarget);
   }
 
   onPointerMove(e){

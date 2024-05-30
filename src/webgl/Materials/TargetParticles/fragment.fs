@@ -12,16 +12,12 @@ float rand(float seed) {
 }
 
 void main() {
-    if(uProgress > 0.99) {
-        discard;
-    }
-
     //make particles circle
-    float dist = distance(gl_PointCoord, vec2(0.5, 0.5));
-    if(dist > 0.5) {
+    float dist = distance(gl_PointCoord, vec2(0.2, 0.2));
+    if(dist < uProgress) {
         discard;
     }
-    gl_FragColor = vec4(1.0, 1.0, 1.0, 0.5); 
+    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0); 
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
 }
