@@ -1,4 +1,4 @@
-import { AnimationMixer, MathUtils, Euler } from "three";
+import { AnimationMixer, MathUtils, Euler, Quaternion } from "three";
 import { state } from '../State';
 import { EVENTS } from '../../Constants/events';
 import WebglController from "@/webgl/WebglController";
@@ -18,13 +18,9 @@ export class CamAnim {
     this.currentKeyfame = 0
 
     this.rotTarget = new Euler(0, 0, 0, 'YXZ');
+    this.offsetRot = new Euler(0, 0, 0, 'YXZ')
     this.currentProgressAnim = 0;
     this.targetProgressAnim = 0;
-    this.orbitEuler = new Euler(0, 0, 0, 'YXZ');
-    this.orbitEulerTarget = {
-      x: this.orbitEuler.x,
-      y: this.orbitEuler.y,
-    };
 
     // Init anim
     this.animationMixer = new AnimationMixer(this.refCam);
@@ -61,9 +57,20 @@ export class CamAnim {
       this.posTarget.z
     );
 
-    // anim rot
+    // Set rotation
     this.rotTarget = this.refCam.rotation;
     this.webgl.camera.setRotationFromEuler(this.rotTarget);
+  }
+
+  onPointerMove(e){
+    if(!this.keyframes && this.keyframes.length == 0 || this.webgl.currentScene != this.idScene) return;
+
+    const movementX = e.webgl.x;
+    const movementY = e.webgl.y;
+
+    this.offsetRot.x = movementX;
+    this.offsetRot.y = movementY;
+    this.offsetRot.z = 0;
   }
 
   onChangeScene(){
