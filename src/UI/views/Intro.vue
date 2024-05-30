@@ -1,7 +1,7 @@
 <script setup>
-import { EVENTS } from "@/webgl/Constants/events"
-import { INTRO_SECTIONS } from "@/webgl/Constants/config"
-import { state } from "../../webgl/Utils/State"
+import { EVENTS } from "../../utils/constants/events"
+import { INTRO_SECTIONS } from "../../utils/constants/config"
+import { state } from "../../utils/State"
 import { ref, watch, onMounted, onUnmounted } from "vue"
 import { gsap, ScrollTrigger } from "gsap/all"
 import { useI18n } from "vue-i18n";

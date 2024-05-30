@@ -1,5 +1,5 @@
 <script setup>
-import { TITLES_SCENE } from '@/webgl/Constants/config';
+import { TITLES_SCENE } from '../../utils/constants/config';
 
 const props = defineProps({
   id: Number,

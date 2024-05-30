@@ -1,5 +1,5 @@
 import { WebGLRenderer } from 'three';
-import { state } from './Utils/State';
+import { state } from '../utils/State';
 
 class Renderer extends WebGLRenderer {
 	constructor(container, color, alpha) {

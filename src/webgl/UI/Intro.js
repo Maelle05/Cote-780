@@ -1,17 +1,14 @@
-import { DEV_MODE, INTRO_SECTIONS } from '@/webgl/Constants/config';
+import { DEV_MODE, INTRO_SECTIONS } from '@/utils/constants/config';
 import { Scene } from 'three';
-import { state } from '../Utils/State';
-import TestPlane from '../Objects/TestPlane'
-import IntroText from '../Objects/UI/IntroText'
-import UiWebglController from '../UIWebglController';
+import { state } from '../../utils/State';
+import TestPlane from '../objects/TestPlane'
+import IntroText from '../objects/UI/IntroText'
 import { Pane } from 'tweakpane';
 
 class Intro extends Scene {
   constructor() {
     super()
     state.register(this)
-
-    this.webgl = new UiWebglController()
   }
 
   init(){
