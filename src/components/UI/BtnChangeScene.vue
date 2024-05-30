@@ -30,7 +30,7 @@ state.on(EVENTS.CHANGE_SCENE, (e) => {
   <div class="wrapper">
     <button @click="previous">Go previous scene</button>
     <button @click="next">Go next scene</button>
-    <button class="wrapper__top" @click="changeStepAnim" v-if="currentScene == 2 || currentScene == 4 || currentScene == 3">Change step scene</button>
+    <button class="wrapper__top" @click="changeStepAnim" v-if="currentScene == 2 || currentScene == 4 || currentScene == 3 || currentScene == 5">Change step scene</button>
   </div>
 </template>
 

@@ -1,10 +1,9 @@
-import { Scene } from 'three'
+import { Scene, MeshMatcapMaterial } from 'three'
 import { state } from '../Utils/State';
-import TestPlane from '../Objects/TestPlane'
 import WebglController from '../WebglController';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Pane } from 'tweakpane';
 import { DEV_MODE } from '../Constants/config';
+import { CamAnim } from "../Utils/Tools/CamAnim";
 
 class Chapel extends Scene {
 	constructor() {
@@ -21,8 +20,17 @@ class Chapel extends Scene {
   }
 
   onAttach(){
-      this.plane = new TestPlane();
-      this.add(this.plane);
+    this.chapel = this.webgl.assetsManager.get('chapel')
+    this.chapel.traverse((el) => {
+      el.material = new MeshMatcapMaterial({ matcap: this.webgl.assetsManager.get('matcap')})
+    })
+    this.add(this.chapel)
+
+    this.anim = new CamAnim(5, this.chapel, this.webgl.camera, [0, 0.33, 0.66, 1])
+  }
+
+  onChangeSceneStep(){
+    this.anim.changeStep()
   }
 
   clear(){
