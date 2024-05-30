@@ -8,7 +8,7 @@ import { SphereGeometry } from 'three';
 import gsap from 'gsap';
 import { DEV_MODE } from '../../utils/constants/config';
 import { EVENTS } from "../../utils/constants/events";
-import { CamAnim } from "../../utils/tools/CamAnim";
+import { CamAnim } from "../utils/CamAnim";
 import { app } from '@/App';
 
 class Spirit extends Mesh {

@@ -1,6 +1,6 @@
 import { AnimationMixer, MathUtils, Euler } from "three";
-import { state } from "../State";
-import { EVENTS } from '../constants/events';
+import { state } from "../../utils/State";
+import { EVENTS } from '../../utils/constants/events';
 import WebglController from "@/webgl/WebglController";
 import { app } from "@/App";
 
