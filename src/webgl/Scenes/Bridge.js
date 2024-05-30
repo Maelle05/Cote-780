@@ -25,6 +25,7 @@ import { DEV_MODE } from "../Constants/config";
 import Spirit from "../Objects/Spirit";
 import TargetParticles from "../Objects/TargetParticles";
 import Cairn from "../Objects/Cairn";
+import { CamAnim } from "../Utils/Tools/CamAnim";
 
 class Bridge extends Scene {
   constructor() {
@@ -56,6 +57,7 @@ class Bridge extends Scene {
 
     //States : off / start / step_1 / step_2 / step_3 / end
     this.state = "off";
+    this.init()
   }
 
   init() {
@@ -140,12 +142,15 @@ class Bridge extends Scene {
 
     this.webgl.audio.playMusic("music_1");
 
+    this.anim = new CamAnim(4, this.bridge, this.webgl.camera, [0, 0.33, 0.66, 0.66, 1]);
+
     setTimeout(() => {
       this.#start();
     }, 1000);
   }
 
   onTick() {
+    if (this.webgl.currentScene != 4) return;
     if (this.state == "off") return;
     let normalizedAngle = this.angle / (Math.PI / 2);
 
@@ -185,7 +190,6 @@ class Bridge extends Scene {
   }
 
   onPointerDown() {
-    console.log("pointerdown");
     if (this.webgl.currentScene != 4 || this.state == "off") return;
 
     this.currentRock = this.rocks[this.rockIndex];
@@ -231,6 +235,10 @@ class Bridge extends Scene {
       ease: "power4.out",
       duration: 1,
     });
+  }
+
+  onChangeSceneStep(){
+    this.anim.changeStep()
   }
 
   #off() {}

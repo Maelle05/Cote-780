@@ -9,15 +9,16 @@ import { SphereGeometry } from 'three';
 import gsap from 'gsap';
 import { DEV_MODE } from '../Constants/config';
 import { EVENTS } from "../Constants/events";
+import { CamAnim } from "../Utils/Tools/CamAnim";
 
 class Spirit extends Mesh {
   constructor() {
     super()
 
     this.allPos = [
-      { x: 0, y: 1, z: -2 },
-      { x: 1, y: .5, z: -2.5 },
-      { x: 0.4, y: 1.3, z: -1 },
+      { x: 1.0, y: -0.5, z: -0.7 },
+      { x: 0.5, y: -0.7, z: -1.3 },
+      { x: 1.9, y: -0.7, z: -0.9 },
     ]
     this.currentPos = 2
     this.currentLife = 4
@@ -102,9 +103,9 @@ class Dam extends Scene {
             z: 0,
           },
           persoPos: {
-            x: 0.1,
-            y: -1.1,
-            z: -0.2,
+            x: 1.2,
+            y: -1.95,
+            z: 0.4,
           },
           spiritPos: {
             x: 0,
@@ -112,8 +113,8 @@ class Dam extends Scene {
             z: 0,
           },
           rocksPos: {
-            x: -5.73,
-            y: -3.0,
+            x: -4.7,
+            y: -3.9,
             z: -1.5,
           }
         }
@@ -175,14 +176,8 @@ class Dam extends Scene {
 
       this.player = this.webgl.assetsManager.get("milo").clone();
       this.player.position.set(this.PARAMS.persoPos.x, this.PARAMS.persoPos.y, this.PARAMS.persoPos.z)
-      this.player.scale.set(0.3, 0.3, 0.3)
+      this.player.scale.set(0.15, 0.15, 0.15)
       this.add(this.player);
-
-      this.water = new Mesh( new PlaneGeometry(25, 13, 1, 1), new MeshBasicMaterial({ color: '#77b5fe', side: DoubleSide}))
-      this.water.rotateX(90 / (180/ Math.PI))
-      this.water.position.y = -2.5
-      this.water.position.z = -4
-      this.add(this.water)
 
       this.spirit = new Spirit()
       this.add(this.spirit)
@@ -192,6 +187,9 @@ class Dam extends Scene {
       this.rocks.position.set(this.PARAMS.rocksPos.x, this.PARAMS.rocksPos.y, this.PARAMS.rocksPos.z)
       this.rocks.scale.set(1.5, 1.5, 1.5)
       this.add(this.rocks)
+
+
+      this.anim = new CamAnim(3, this.scene, this.webgl.camera, [0, 0.25, 0.5, 0.75, 1]);
 
   }
 
@@ -226,6 +224,10 @@ class Dam extends Scene {
         opacity: 0,
       })
     }
+  }
+
+  onChangeSceneStep(){
+    this.anim.changeStep()
   }
 
   clear(){

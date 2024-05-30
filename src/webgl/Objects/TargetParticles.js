@@ -63,8 +63,7 @@ export default class TargetParticles extends Points {
         uResolution: { value: this.resolution },
         uProgress: { value: this.progress },
         uTime: { value: this.time },
-      },
-      tranparent: true,
+      }
     });
 
     return material;
