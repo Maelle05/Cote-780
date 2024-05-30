@@ -24,7 +24,7 @@ import { DEV_MODE } from "../../utils/constants/config";
 import Spirit from "../objects/Spirit";
 import TargetParticles from "../objects/TargetParticles";
 import Cairn from "../objects/Cairn";
-import { CamAnim } from "../../utils/tools/CamAnim";
+import { CamAnim } from "../utils/CamAnim";
 import { app } from "@/App";
 
 class Bridge extends Scene {
