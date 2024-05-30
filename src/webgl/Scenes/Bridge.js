@@ -57,7 +57,7 @@ class Bridge extends Scene {
 
     //States : off / start / step_1 / step_2 / step_3 / end
     this.state = "off";
-    this.init()
+    this.init();
   }
 
   init() {
@@ -65,7 +65,7 @@ class Bridge extends Scene {
       this.pane = new Pane({ title: "Parameters Bridge", expanded: true });
     }
 
-    if(this.anim) this.anim.changeStep(0)
+    if (this.anim) this.anim.changeStep(2);
 
     this.angle = 0;
     this.direction = 1;
@@ -123,7 +123,7 @@ class Bridge extends Scene {
     this.add(this.spirit);
 
     this.target = new TargetParticles(
-      200,
+      500,
       new Vector3(
         this.rocks[0].position.x,
         this.rocks[0].position.y + 0.2,
@@ -131,6 +131,7 @@ class Bridge extends Scene {
       ),
       0.02
     );
+    this.target.rotation.x = 4;
     this.add(this.target);
 
     this.cairn = new Cairn();
@@ -144,7 +145,14 @@ class Bridge extends Scene {
 
     this.webgl.audio.playMusic("music_1");
 
-    this.anim = new CamAnim(4, this.bridge, this.webgl.camera, [0, 0.33, 0.66, 0.66, 1]);
+    this.anim = new CamAnim(
+      4,
+      this.bridge,
+      this.webgl.camera,
+      [0, 0.33, 0.66, 0.66, 1]
+    );
+
+    // this.anim.changeStep(2);
 
     setTimeout(() => {
       this.#start();
@@ -153,24 +161,28 @@ class Bridge extends Scene {
 
   onTick() {
     if (this.webgl.currentScene != 4) return;
-    if (this.anim.currentKeyfame != 2) return;
+    // if (this.anim.currentKeyfame != 2) return;
     if (this.state == "off") return;
     let normalizedAngle = this.angle / (Math.PI / 2);
 
     // Calculate easing based on the current angle's distance from the center
-    let easing = 1 - Math.abs(normalizedAngle);
+    let easing = Math.abs(normalizedAngle);
+    // let easing = 0.05;
+    let loopEasing = Math.sin((normalizedAngle * Math.PI) / 2);
 
     // Calculate new angle based on easing
     let angleIncrement = (0.05 * easing + this.minSpeed) * this.direction;
     this.angle += angleIncrement;
-    this.progressAngle = Math.abs(this.angle / (Math.PI / 2));
 
     if (this.angle >= Math.PI / 2 || this.angle <= -Math.PI / 2) {
       this.direction *= -1;
     }
 
-    // if (this.progressAngle > 0.8) this.radiusOffset -= 0.005;
-    // else if (this.radiusOffset > 0) this.radiusOffset += 0.005;
+    this.progressAngle = Math.abs(this.angle / (Math.PI / 2));
+
+    // if (this.progressAngle > 0.7 && this.progressAngle < 0.85)
+    //   this.radiusOffset += 0.0051;
+    // if (this.progressAngle > 0.85) this.radiusOffset -= 0.0051;
 
     if (!this.spirit) return;
 
@@ -240,13 +252,14 @@ class Bridge extends Scene {
     });
   }
 
-  onChangeSceneStep(){
-    this.anim.changeStep()
+  onChangeSceneStep() {
+    this.anim.changeStep();
   }
 
   #off() {}
 
   #start() {
+    console.log("start");
     //Create all animations of apparitions
     this.state = "step_1";
 

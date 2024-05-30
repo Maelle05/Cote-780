@@ -16,8 +16,6 @@ export default class TargetParticles extends Points {
 
     this.webgl = new WebglController();
 
-    // console.log(this.webgl);
-
     this.count = count;
     this.position.copy(position);
     this.particleSize = size;
@@ -25,7 +23,7 @@ export default class TargetParticles extends Points {
       this.webgl.viewport.width,
       this.webgl.viewport.height
     );
-    this.radius = 0.5;
+    this.radius = 0.05;
     this.progress = 1;
     this.time = 0;
 
@@ -63,7 +61,8 @@ export default class TargetParticles extends Points {
         uResolution: { value: this.resolution },
         uProgress: { value: this.progress },
         uTime: { value: this.time },
-      }
+        uRadius: { value: this.radius },
+      },
     });
 
     return material;
