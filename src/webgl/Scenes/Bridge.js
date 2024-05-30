@@ -14,25 +14,23 @@ import {
   Vector3,
   Color,
 } from "three";
-import { state } from "../Utils/State";
-import TestPlane from "../Objects/TestPlane";
-import WebglController from "../WebglController";
-import { EVENTS } from "../Constants/events";
+import { state } from "../../utils/State";
+import TestPlane from "../objects/TestPlane";
+import { EVENTS } from "../../utils/constants/events";
 import gsap from "gsap";
 import { Pane } from "tweakpane";
 import { DirectionalLightHelper } from "three";
-import { DEV_MODE } from "../Constants/config";
-import Spirit from "../Objects/Spirit";
-import TargetParticles from "../Objects/TargetParticles";
-import Cairn from "../Objects/Cairn";
-import { CamAnim } from "../Utils/Tools/CamAnim";
+import { DEV_MODE } from "../../utils/constants/config";
+import Spirit from "../objects/Spirit";
+import TargetParticles from "../objects/TargetParticles";
+import Cairn from "../objects/Cairn";
+import { CamAnim } from "../../utils/tools/CamAnim";
+import { app } from "@/App";
 
 class Bridge extends Scene {
   constructor() {
     super();
     state.register(this);
-
-    this.webgl = new WebglController();
 
     this.light = new AmbientLight({ color: 0xffffff });
     this.add(this.light);
@@ -75,7 +73,7 @@ class Bridge extends Scene {
   }
 
   onAttach() {
-    this.bridge = this.webgl.assetsManager.get("bridge");
+    this.bridge = app.assetsManager.get("bridge");
     this.bridge.position.set(-0.5, -1, -3.7);
     this.bridge.rotation.y = -0.5;
     this.add(this.bridge);
@@ -88,7 +86,7 @@ class Bridge extends Scene {
       }
     });
 
-    this.rock = this.webgl.assetsManager.get("rock");
+    this.rock = app.assetsManager.get("rock");
     this.rockPos = new Vector3(-0.3, -1.2, -1.6);
     this.rockScale = new Vector3(0.15, 0.15, 0.15);
     this.rocks = [];
@@ -107,7 +105,7 @@ class Bridge extends Scene {
 
     this.rocks[0].position.set(this.rockPos.x, -1, -1.6);
 
-    this.player = this.webgl.assetsManager.get("milo").clone();
+    this.player = app.assetsManager.get("milo").clone();
     this.player.position.set(this.center.x, -0.95, this.center.z);
     this.player.scale.set(0.1, 0.1, 0.1);
     this.player.rotation.y = 30;
@@ -140,9 +138,9 @@ class Bridge extends Scene {
 
     this.add(this.cairn);
 
-    this.webgl.audio.playMusic("music_1");
+    app.audio.playMusic("music_1");
 
-    this.anim = new CamAnim(4, this.bridge, this.webgl.camera, [0, 0.33, 0.66, 0.66, 1]);
+    this.anim = new CamAnim(4, this.bridge, app.webgl.camera, [0, 0.33, 0.66, 0.66, 1]);
 
     setTimeout(() => {
       this.#start();
@@ -150,7 +148,7 @@ class Bridge extends Scene {
   }
 
   onTick() {
-    if (this.webgl.currentScene != 4) return;
+    if (app.webgl.currentScene != 4) return;
     // if (this.anim.currentKeyfame != 2) return;
     if (this.state == "off") return;
     let normalizedAngle = this.angle / (Math.PI / 2);
@@ -191,7 +189,7 @@ class Bridge extends Scene {
   }
 
   onPointerDown() {
-    if (this.webgl.currentScene != 4 || this.state == "off") return;
+    if (app.webgl.currentScene != 4 || this.state == "off") return;
 
     this.currentRock = this.rocks[this.rockIndex];
 

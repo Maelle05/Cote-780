@@ -1,30 +1,21 @@
 import { Renderer } from './Renderer';
 import { Camera } from './Camera';
-import { state } from './Utils/State';
-import { EVENTS } from './Constants/events';
-import { INIT_SCENE } from './Constants/config'
-import WebglController from './WebglController';
+import { state } from '../utils/State';
+import { INIT_SCENE } from '../utils/constants/config'
 
 // UI
 import { Intro } from "./UI/Intro";
 import { Null } from './UI/Null';
+import { app } from '@/App';
 
 
 export default class UIWebglController {
-  static instance = null;
-
   constructor(container) {
-    // Singleton
-    if (UIWebglController.instance) {
-      return UIWebglController.instance;
-    }
-    UIWebglController.instance = this;
-
     state.register(this);
 
     // Core
-    this.assetsManager = WebglController.instance.assetsManager;
-    this.ticker = WebglController.instance.ticker;
+    this.assetsManager = app.assetsManager;
+    this.ticker = app.ticker;
 
     // Webgl
     this.canvasWrapper = container;
@@ -39,19 +30,6 @@ export default class UIWebglController {
       this.scene = this.allScene[1]
     }
     this.scene.init()
-
-    this.init();
-  }
-
-  async init() {
-    await this.load();
-  }
-
-  async beforeLoad() {}
-
-  async load() {
-    await this.beforeLoad();
-    await this.assetsManager.load();
   }
 
   onAttach() {
@@ -81,9 +59,5 @@ export default class UIWebglController {
       this.renderer.clear();
       this.renderer.render(this.scene, this.camera);
     }
-  }
-
-  clear() {
-    UIWebglController.instance = null;
   }
 }

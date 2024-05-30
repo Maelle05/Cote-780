@@ -1,6 +1,6 @@
 <script setup>
-import { state } from "../../webgl/Utils/State"
-import { EVENTS } from "@/webgl/Constants/events";
+import { state } from "../../utils/State"
+import { EVENTS } from "../../utils/constants/events";
 import { gsap } from "gsap/gsap-core";
 import { ref, onMounted } from 'vue'
 import ChapterEl from './ChapterEl.vue'

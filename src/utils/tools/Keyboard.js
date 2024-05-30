@@ -1,5 +1,5 @@
 import { state } from '../State';
-import { EVENTS } from '../../Constants/events';
+import { EVENTS } from '../constants/events';
 
 class Keyboard {
 	constructor() {

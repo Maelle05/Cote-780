@@ -1,15 +1,15 @@
 import { Scene, MeshMatcapMaterial, AmbientLight, DoubleSide, Raycaster } from 'three'
-import { state } from '../Utils/State';
-import WebglController from '../WebglController';
+import { state } from '../../utils/State';
 import { Pane } from 'tweakpane';
 import { Mesh } from 'three';
 import { PlaneGeometry } from 'three';
 import { MeshBasicMaterial } from 'three';
 import { SphereGeometry } from 'three';
 import gsap from 'gsap';
-import { DEV_MODE } from '../Constants/config';
-import { EVENTS } from "../Constants/events";
-import { CamAnim } from "../Utils/Tools/CamAnim";
+import { DEV_MODE } from '../../utils/constants/config';
+import { EVENTS } from "../../utils/constants/events";
+import { CamAnim } from "../../utils/tools/CamAnim";
+import { app } from '@/App';
 
 class Spirit extends Mesh {
   constructor() {
@@ -68,7 +68,7 @@ class Spirit extends Mesh {
       case 0:
         this.material.color.setHex(0x1a80e6)
         this.isCaptured = true
-        state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, WebglController.instance.currentScene)
+        state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, app.webgl.currentScene)
         break;
     
       default:
@@ -88,7 +88,6 @@ class Dam extends Scene {
         super()
         state.register(this)
 
-        this.webgl = new WebglController()
         this.raycaster = new Raycaster()
 
         this.PARAMS = {
@@ -164,17 +163,17 @@ class Dam extends Scene {
   }
 
   onAttach(){
-      this.scene = this.webgl.assetsManager.get('dam');
+      this.scene = app.assetsManager.get('dam');
       this.scene.position.set(this.PARAMS.scenePos.x, this.PARAMS.scenePos.y, this.PARAMS.scenePos.z)
       this.scene.traverse((el) => {
-        el.material = new MeshMatcapMaterial({ matcap: this.webgl.assetsManager.get('matcap')})
+        el.material = new MeshMatcapMaterial({ matcap: app.assetsManager.get('matcap')})
       })
       this.add(this.scene);
 
       this.light = new AmbientLight({ color: 0xffffff });
       this.add(this.light);
 
-      this.player = this.webgl.assetsManager.get("milo").clone();
+      this.player = app.assetsManager.get("milo").clone();
       this.player.position.set(this.PARAMS.persoPos.x, this.PARAMS.persoPos.y, this.PARAMS.persoPos.z)
       this.player.scale.set(0.15, 0.15, 0.15)
       this.add(this.player);
@@ -182,22 +181,22 @@ class Dam extends Scene {
       this.spirit = new Spirit()
       this.add(this.spirit)
 
-      this.rocks = this.webgl.assetsManager.get('rocks')
-      this.rocks.traverse((el) => { el.material = new MeshMatcapMaterial({ matcap: this.webgl.assetsManager.get('matcap'), transparent: true})})
+      this.rocks = app.assetsManager.get('rocks')
+      this.rocks.traverse((el) => { el.material = new MeshMatcapMaterial({ matcap: app.assetsManager.get('matcap'), transparent: true})})
       this.rocks.position.set(this.PARAMS.rocksPos.x, this.PARAMS.rocksPos.y, this.PARAMS.rocksPos.z)
       this.rocks.scale.set(1.5, 1.5, 1.5)
       this.add(this.rocks)
 
 
-      this.anim = new CamAnim(3, this.scene, this.webgl.camera, [0, 0.25, 0.5, 0.75, 1]);
+      this.anim = new CamAnim(3, this.scene, app.webgl.camera, [0, 0.25, 0.5, 0.75, 1]);
 
   }
 
   onPointerDown(e){
-    if(this.webgl.currentScene != 3) return
+    if(app.webgl.currentScene != 3) return
     if(this.anim.currentKeyfame != 2) return
 
-    this.raycaster.setFromCamera(e.webgl, this.webgl.camera);
+    this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
     const intersects = this.raycaster.intersectObject( this.spirit );
 
     if (intersects.length != 0) {

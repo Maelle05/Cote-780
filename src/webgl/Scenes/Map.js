@@ -1,19 +1,18 @@
 import { DirectionalLight, AmbientLight, Scene, Raycaster } from "three";
-import { state } from "../Utils/State";
-import Plan from "../Objects/Plan";
-import WebglController from "../WebglController";
+import { state } from "../../utils/State";
+import Plan from "../objects/Plan";
 import { Pane } from "tweakpane";
-import { DEV_MODE } from "../Constants/config";
-import { EVENTS } from '../Constants/events';
+import { DEV_MODE } from "../../utils/constants/config";
+import { EVENTS } from '../../utils/constants/events';
 import {Text} from 'troika-three-text'
-import { TITLES_SCENE } from '../Constants/config.js';
+import { TITLES_SCENE } from '../../utils/constants/config.js';
+import { app } from "@/App";
 
 class Map extends Scene {
   constructor() {
     super();
     state.register(this);
 
-    this.webgl = new WebglController();
     this.raycaster = new Raycaster();
 
 
@@ -63,9 +62,9 @@ class Map extends Scene {
   }
 
   onPointerDown(e){
-    if(this.webgl.currentScene != 1) return
+    if(app.webgl.currentScene != 1) return
 
-    this.raycaster.setFromCamera(e.webgl, this.webgl.camera);
+    this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
     const intersects = this.raycaster.intersectObjects( this.plan.allPoint );
 
     if (intersects.length != 0 && intersects[0].object.name == '2') {
@@ -74,9 +73,9 @@ class Map extends Scene {
   }
 
   onPointerMove(e){
-    if(this.webgl.currentScene != 1) return
+    if(app.webgl.currentScene != 1) return
 
-    this.raycaster.setFromCamera(e.webgl, this.webgl.camera);
+    this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
     const intersects = this.raycaster.intersectObjects( this.plan.allPoint );
 
     if (intersects.length != 0) {

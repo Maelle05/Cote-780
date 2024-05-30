@@ -5,7 +5,7 @@ import {
   DoubleSide,
   SphereGeometry,
 } from "three";
-import { TestPlaneMaterial } from "../Materials/TestPlane/material";
+import { TestPlaneMaterial } from "../materials/TestPlane/material";
 import gsap from "gsap";
 import { Vector3 } from "three";
 

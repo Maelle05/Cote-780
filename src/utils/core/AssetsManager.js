@@ -3,12 +3,12 @@ import { AudioLoader, Cache } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
-import { EVENTS } from '../../Constants/events.js';
-import { manifest } from '../../Constants/manifest.js';
+import { EVENTS } from '../constants/events.js';
+import { manifest } from '../constants/manifest.js';
 import { AssetsLoader } from './AssetsLoader.js';
-import { AjaxImageLoader } from './CustomLoaders/AjaxImageLoader.js';
-import { AjaxJSONLoader } from './CustomLoaders/AjaxJSONLoader.js';
-import { AjaxTextureLoader } from './CustomLoaders/AjaxTextureLoader.js';
+import { AjaxImageLoader } from './custom-loaders/AjaxImageLoader.js';
+import { AjaxJSONLoader } from './custom-loaders/AjaxJSONLoader.js';
+import { AjaxTextureLoader } from './custom-loaders/AjaxTextureLoader.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 // import { TextureLoader } from 'three'
 

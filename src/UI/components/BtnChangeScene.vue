@@ -1,7 +1,7 @@
 <script setup>
-import { EVENTS } from "@/webgl/Constants/events";
-import { INIT_SCENE } from "@/webgl/Constants/config";
-import { state } from "../../webgl/Utils/State";
+import { EVENTS } from "../../utils/constants/events";
+import { INIT_SCENE } from "../../utils/constants/config";
+import { state } from "../../utils/State";
 import { ref } from "vue";
 
 let currentScene = ref(INIT_SCENE);
