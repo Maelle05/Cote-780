@@ -161,8 +161,6 @@ class Dam extends Scene {
         this.rocks.position.set(ev.value.x, ev.value.y, ev.value.z)
       });
     }
-
-    if(this.anim) this.anim.changeStep(0)
   }
 
   onAttach(){

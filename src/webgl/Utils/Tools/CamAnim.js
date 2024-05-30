@@ -66,6 +66,10 @@ export class CamAnim {
     this.webgl.camera.setRotationFromEuler(this.rotTarget);
   }
 
+  onChangeScene(){
+    this.currentKeyfame = 0
+  }
+
   changeStep(e){
     if(e) { this.currentKeyfame = e; return }
     this.currentKeyfame = (this.currentKeyfame + 1) % this.keyframes.length

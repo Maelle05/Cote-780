@@ -65,8 +65,6 @@ class Bridge extends Scene {
       this.pane = new Pane({ title: "Parameters Bridge", expanded: true });
     }
 
-    if(this.anim) this.anim.changeStep(0)
-
     this.angle = 0;
     this.direction = 1;
     this.radius = 0.7;
@@ -153,7 +151,7 @@ class Bridge extends Scene {
 
   onTick() {
     if (this.webgl.currentScene != 4) return;
-    if (this.anim.currentKeyfame != 2) return;
+    // if (this.anim.currentKeyfame != 2) return;
     if (this.state == "off") return;
     let normalizedAngle = this.angle / (Math.PI / 2);
 

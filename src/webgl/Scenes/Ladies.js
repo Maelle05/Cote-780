@@ -175,7 +175,6 @@ class Ladies extends Scene {
     }
 
     this.webgl.controls.enabled = false;
-    if(this.anim) this.anim.changeStep(0)
   }
 
   onPointerMove() {
