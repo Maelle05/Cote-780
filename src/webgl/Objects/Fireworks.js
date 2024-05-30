@@ -1,10 +1,10 @@
 import { Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide } from "three";
-import { TestPlaneMaterial } from "../materials/TestPlane/material";
+import { TestPlaneMaterial } from "../Materials/TestPlane/material";
 import { BufferGeometry } from "three";
 import { Float32BufferAttribute } from "three";
 import { PointsMaterial } from "three";
 import { Points } from "three";
-import { FireworkMaterial } from "../materials/Firework/material";
+import { FireworkMaterial } from "../Materials/Firework/material";
 import { Uniform } from "three";
 import { Vector2 } from "three";
 import { app } from "@/App";
@@ -18,10 +18,7 @@ export default class Fireworks extends Points {
     this.count = count;
     this.position.copy(position);
     this.particleSize = size;
-    this.resolution = new Vector2(
-      app.viewport.width,
-      app.viewport.height
-    );
+    this.resolution = new Vector2(app.viewport.width, app.viewport.height);
 
     this.geometry = this.#createGeometry();
     this.material = this.#createMaterial();

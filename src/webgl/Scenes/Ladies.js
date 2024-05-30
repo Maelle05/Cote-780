@@ -10,7 +10,7 @@ import {
 import { state } from "../../utils/State";
 import WebglController from "../WebglController";
 import { Pane } from "tweakpane";
-import { HeaddressesMaterial } from "../materials/Headdresses/material";
+import { HeaddressesMaterial } from "../Materials/Headdresses/material";
 import { gsap } from "gsap";
 import { DEV_MODE } from "../../utils/constants/config";
 import { EVENTS } from "../../utils/constants/events";
@@ -21,7 +21,7 @@ class Demoiselle extends Group {
   constructor(body, top, riseTop) {
     super();
     state.register(this);
-    
+
     this.raycaster = new Raycaster();
 
     // Canvas texture
@@ -34,7 +34,7 @@ class Demoiselle extends Group {
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     // document.querySelector('#vue-app').appendChild(this.canvas)
 
-    this.baseTexture = top.material.map
+    this.baseTexture = top.material.map;
     this.canvasTex = new CanvasTexture(this.canvas);
     top.material = new HeaddressesMaterial({
       uniforms: {
@@ -61,7 +61,7 @@ class Demoiselle extends Group {
     const intersects = this.raycaster.intersectObject(this.top);
 
     for (let i = 0; i < intersects.length; i++) {
-      intersects[ i ].object.material.opacity = 1;
+      intersects[i].object.material.opacity = 1;
       this.drawOnCanvasTex(intersects[i].uv);
     }
 
@@ -114,7 +114,7 @@ class Demoiselle extends Group {
 
     const note = results.filter((el) => el == true).length / results.length;
 
-    if (note > 0.10) {
+    if (note > 0.1) {
       return true; // Canvas painted
     } else {
       return false;
@@ -195,7 +195,6 @@ class Ladies extends Scene {
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
 
-
     this.ladies = app.assetsManager.get("ladies");
     this.ladies.traverse((el) => {
       if (el.name == "dame1" || el.name == "top1") {
@@ -214,13 +213,18 @@ class Ladies extends Scene {
     this.dem3 = new Demoiselle(this.D3[0], this.D3[1], 1.5);
     this.demoiselles.add(this.dem1, this.dem2, this.dem3);
 
-    this.anim = new CamAnim(2, this.ladies, app.webgl.camera, [0, 0.33, 0.66, 0.66, 1]);
+    this.anim = new CamAnim(
+      2,
+      this.ladies,
+      app.webgl.camera,
+      [0, 0.33, 0.66, 0.66, 1]
+    );
 
     this.add(this.ladies, this.ambient);
   }
 
-  onChangeSceneStep(){
-    this.anim.changeStep()
+  onChangeSceneStep() {
+    this.anim.changeStep();
   }
 
   clear() {

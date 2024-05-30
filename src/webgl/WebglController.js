@@ -6,14 +6,14 @@ import { Camera } from "./Camera";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 // Scenes
-import { Intro } from "./scenes/Intro";
-import { Map } from "./scenes/Map";
-import { Ladies } from "./scenes/Ladies";
-import { Bridge } from "./scenes/Bridge";
-import { Dam } from "./scenes/Dam";
-import { Chapel } from "./scenes/Chapel";
-import { Village } from "./scenes/Village";
-import { End } from "./scenes/End";
+import { Intro } from "./Scenes/Intro";
+import { Map } from "./Scenes/Map";
+import { Ladies } from "./Scenes/Ladies";
+import { Bridge } from "./Scenes/Bridge";
+import { Dam } from "./Scenes/Dam";
+import { Chapel } from "./Scenes/Chapel";
+import { Village } from "./Scenes/Village";
+import { End } from "./Scenes/End";
 
 export default class WebglController {
   constructor(container) {
@@ -21,7 +21,7 @@ export default class WebglController {
 
     // Webgl
     this.canvasWrapper = container;
-    this.renderer = new Renderer(this.canvasWrapper, 0x988C86, 1);
+    this.renderer = new Renderer(this.canvasWrapper, 0x988c86, 1);
     this.camera = new Camera();
 
     // Controls
@@ -82,7 +82,7 @@ export default class WebglController {
     this.camera = new Camera();
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enabled = true;
-    this.controls.reset()
+    this.controls.reset();
     this.scene.clear();
     this.scene = this.allScene[this.currentScene];
     this.scene.init();
