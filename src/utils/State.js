@@ -1,4 +1,4 @@
-import { EVENTS_MAP } from '../Constants/events';
+import { EVENTS_MAP } from './constants/events';
 
 class State {
 	/** @type State */

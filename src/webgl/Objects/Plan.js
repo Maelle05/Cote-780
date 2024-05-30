@@ -1,9 +1,9 @@
 import { Mesh, PlaneGeometry, SphereGeometry, DoubleSide, MeshBasicMaterial } from 'three';
-import { PlanMaterial } from '../Materials/Plan/material';
-import { state } from '../Utils/State';
+import { PlanMaterial } from '../materials/Plan/material';
+import { state } from '../../utils/State';
 import App from '@/App.vue';
-import WebglController from '../WebglController';
-import { TITLES_SCENE } from '../Constants/config.js';
+import { TITLES_SCENE } from '../../utils/constants/config.js';
+import { app } from '@/App';
 
 export default class Plan extends Mesh {
   constructor() {
@@ -40,7 +40,7 @@ export default class Plan extends Mesh {
   }
 
   onAttach() {
-    this.map = WebglController.instance.assetsManager.get("map");
+    this.map = app.assetsManager.get("map");
     this.add(this.map);
 
     this.DATA.forEach((el, i) => {

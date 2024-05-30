@@ -1,6 +1,6 @@
 import { gsap } from "gsap"
 
-import { IntroTextMaterial } from "@/webgl/Materials/IntroText/material"
+import { IntroTextMaterial } from "@/webgl/materials/IntroText/material"
 import { Text } from "troika-three-text"
 
 export default class IntroText extends Text {

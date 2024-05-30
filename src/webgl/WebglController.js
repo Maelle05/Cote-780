@@ -1,50 +1,23 @@
 import { Renderer } from "./Renderer";
-import { state } from "./Utils/State";
-import { AssetsManager } from "./Utils/Core/AssetsManager";
-import { Ticker } from "./Utils/Core/Ticker";
-import { Mouse } from "./Utils/Tools/Mouse";
-import { Scroll } from "./Utils/Tools/Scroll";
-import { Viewport } from "./Utils/Tools/Viewport";
-import { Keyboard } from "./Utils/Tools/Keyboard";
-import { EVENTS } from "./Constants/events";
-import { DEV_MODE, INIT_SCENE } from "./Constants/config";
+import { state } from "../utils/State";
+import { DEV_MODE, INIT_SCENE } from "../utils/constants/config";
 import Stats from "three/examples/jsm/libs/stats.module";
 import { Camera } from "./Camera";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 // Scenes
-import { Intro } from "./Scenes/Intro";
-import { Map } from "./Scenes/Map";
-import { Ladies } from "./Scenes/Ladies";
-import { Bridge } from "./Scenes/Bridge";
-import { Dam } from "./Scenes/Dam";
-import { Chapel } from "./Scenes/Chapel";
-import { Village } from "./Scenes/Village";
-import { End } from "./Scenes/End";
-import { AudioManager } from "./Utils/Core/Audio/AudioManager";
+import { Intro } from "./scenes/Intro";
+import { Map } from "./scenes/Map";
+import { Ladies } from "./scenes/Ladies";
+import { Bridge } from "./scenes/Bridge";
+import { Dam } from "./scenes/Dam";
+import { Chapel } from "./scenes/Chapel";
+import { Village } from "./scenes/Village";
+import { End } from "./scenes/End";
 
 export default class WebglController {
-  static instance = null;
-
   constructor(container) {
-    // Singleton
-    if (WebglController.instance) {
-      return WebglController.instance;
-    }
-    WebglController.instance = this;
-
     state.register(this);
-
-    // Core
-    this.assetsManager = new AssetsManager();
-    this.ticker = new Ticker();
-    this.audio = new AudioManager();
-
-    // Tools
-    this.viewport = new Viewport(container);
-    this.mouse = new Mouse(this.viewport);
-    this.keyboard = new Keyboard();
-    this.scroll = new Scroll(this.viewport);
 
     // Webgl
     this.canvasWrapper = container;
@@ -67,14 +40,6 @@ export default class WebglController {
     this.currentScene = INIT_SCENE;
     this.scene = this.allScene[this.currentScene];
     this.scene.init();
-
-    window.addEventListener("click", this.handleFirstClick);
-
-    this.init();
-  }
-
-  async init() {
-    await this.load();
   }
 
   initStats() {
@@ -82,17 +47,6 @@ export default class WebglController {
       this.stats = new Stats();
       this.canvasWrapper.appendChild(this.stats.dom);
     }
-  }
-
-  async beforeLoad() {}
-
-  async load() {
-    await this.beforeLoad();
-    await this.assetsManager.load();
-
-    state.emit(EVENTS.APP_LOADED);
-    state.emit(EVENTS.RESIZE, this.viewport.infos);
-    state.emit(EVENTS.ATTACH);
   }
 
   onAttach() {
@@ -132,14 +86,5 @@ export default class WebglController {
     this.scene.clear();
     this.scene = this.allScene[this.currentScene];
     this.scene.init();
-  }
-
-  handleFirstClick = () => {
-    window.removeEventListener("click", this.handleFirstClick);
-    state.emit(EVENTS.FIRST_CLICK);
-  };
-
-  clear() {
-    WebglController.instance = null;
   }
 }

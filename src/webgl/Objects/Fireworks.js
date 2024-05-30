@@ -1,19 +1,17 @@
 import { Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide } from "three";
-import { TestPlaneMaterial } from "../Materials/TestPlane/material";
+import { TestPlaneMaterial } from "../materials/TestPlane/material";
 import { BufferGeometry } from "three";
 import { Float32BufferAttribute } from "three";
 import { PointsMaterial } from "three";
 import { Points } from "three";
-import { FireworkMaterial } from "../Materials/Firework/material";
+import { FireworkMaterial } from "../materials/Firework/material";
 import { Uniform } from "three";
-import WebglController from "../WebglController";
 import { Vector2 } from "three";
+import { app } from "@/App";
 
 export default class Fireworks extends Points {
   constructor(count, position, size) {
     super();
-
-    this.webgl = new WebglController();
 
     // console.log(this.webgl);
 
@@ -21,8 +19,8 @@ export default class Fireworks extends Points {
     this.position.copy(position);
     this.particleSize = size;
     this.resolution = new Vector2(
-      this.webgl.viewport.width,
-      this.webgl.viewport.height
+      app.viewport.width,
+      app.viewport.height
     );
 
     this.geometry = this.#createGeometry();
@@ -62,8 +60,8 @@ export default class Fireworks extends Points {
 
   resize() {
     this.resolution.set(
-      this.webgl.viewport.width * Math.min(window.devicePixelRatio, 2),
-      this.webgl.viewport.height * Math.min(window.devicePixelRatio, 2)
+      app.viewport.width * Math.min(window.devicePixelRatio, 2),
+      app.viewport.height * Math.min(window.devicePixelRatio, 2)
     );
   }
 }
