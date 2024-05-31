@@ -1,7 +1,7 @@
 import { DEV_MODE, INTRO_SECTIONS } from "@/utils/constants/config";
 import { Scene } from "three";
 import { state } from "../../utils/State";
-import IntroText from "../Objects/UI/IntroText";
+import IntroText from "../objects/UI/IntroText";
 import { Pane } from "tweakpane";
 
 class Intro extends Scene {

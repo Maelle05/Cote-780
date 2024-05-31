@@ -1,5 +1,5 @@
 import { Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide } from "three";
-import { TestPlaneMaterial } from "../Materials/TestPlane/material";
+import { TestPlaneMaterial } from "../materials/TestPlane/material";
 
 export default class TestPlane extends Mesh {
   constructor() {

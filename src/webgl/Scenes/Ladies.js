@@ -10,7 +10,7 @@ import {
 import { state } from "../../utils/State";
 import WebglController from "../WebglController";
 import { Pane } from "tweakpane";
-import { HeaddressesMaterial } from "../Materials/Headdresses/material";
+import { HeaddressesMaterial } from "../materials/Headdresses/material";
 import { gsap } from "gsap";
 import { DEV_MODE } from "../../utils/constants/config";
 import { EVENTS } from "../../utils/constants/events";

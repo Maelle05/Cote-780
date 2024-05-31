@@ -1,10 +1,10 @@
 import { Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide } from "three";
-import { TestPlaneMaterial } from "../Materials/TestPlane/material";
+import { TestPlaneMaterial } from "../materials/TestPlane/material";
 import { BufferGeometry } from "three";
 import { Float32BufferAttribute } from "three";
 import { PointsMaterial } from "three";
 import { Points } from "three";
-import { FireworkMaterial } from "../Materials/Firework/material";
+import { FireworkMaterial } from "../materials/Firework/material";
 import { Uniform } from "three";
 import { Vector2 } from "three";
 import { app } from "@/App";

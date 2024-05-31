@@ -5,7 +5,7 @@ import { PointsMaterial } from "three";
 import { Points } from "three";
 import { Uniform } from "three";
 import { Vector2 } from "three";
-import { TargetParticlesMaterial } from "@/webgl/Materials/TargetParticles/material";
+import { TargetParticlesMaterial } from "@/webgl/materials/TargetParticles/material";
 import gsap from "gsap";
 import { Vector3 } from "three";
 import { app } from "@/App";

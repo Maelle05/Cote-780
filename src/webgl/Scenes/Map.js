@@ -1,6 +1,6 @@
 import { DirectionalLight, AmbientLight, Scene, Raycaster } from "three";
 import { state } from "../../utils/State";
-import Plan from "../Objects/Plan";
+import Plan from "../objects/Plan";
 import { Pane } from "tweakpane";
 import { DEV_MODE } from "../../utils/constants/config";
 import { EVENTS } from "../../utils/constants/events";
