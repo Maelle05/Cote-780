@@ -1,6 +1,6 @@
 import { Scene } from "three";
 import { state } from "../../utils/State";
-import TestPlane from "../Objects/TestPlane";
+import TestPlane from "../objects/TestPlane";
 import { Pane } from "tweakpane";
 import { DEV_MODE } from "../../utils/constants/config";
 

@@ -15,15 +15,15 @@ import {
   Color,
 } from "three";
 import { state } from "../../utils/State";
-import TestPlane from "../Objects/TestPlane";
+import TestPlane from "../objects/TestPlane";
 import { EVENTS } from "../../utils/constants/events";
 import gsap from "gsap";
 import { Pane } from "tweakpane";
 import { DirectionalLightHelper } from "three";
 import { DEV_MODE } from "../../utils/constants/config";
-import Spirit from "../Objects/Spirit";
-import TargetParticles from "../Objects/TargetParticles";
-import Cairn from "../Objects/Cairn";
+import Spirit from "../objects/Spirit";
+import TargetParticles from "../objects/TargetParticles";
+import Cairn from "../objects/Cairn";
 import { CamAnim } from "../utils/CamAnim";
 import { app } from "@/App";
 
