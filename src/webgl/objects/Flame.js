@@ -5,11 +5,11 @@ import {
   DoubleSide,
   SphereGeometry,
 } from "three";
-import { TestPlaneMaterial } from "../Materials/TestPlane/material";
+import { TestPlaneMaterial } from "../materials/TestPlane/material";
 import gsap from "gsap";
 import { Vector3 } from "three";
 
-export default class Cairn extends Mesh {
+export default class Flame extends Mesh {
   constructor() {
     super();
 
@@ -45,13 +45,13 @@ export default class Cairn extends Mesh {
   }
 
   #createGeometry() {
-    const geometry = new SphereGeometry(0.05, 20, 20);
+    const geometry = new SphereGeometry(0.04, 20, 20);
     return geometry;
   }
 
   #createMaterial() {
     const material = new MeshBasicMaterial({
-      color: 0x333333,
+      color: "orange",
       side: DoubleSide,
     });
 

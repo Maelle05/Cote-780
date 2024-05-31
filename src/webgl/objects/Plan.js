@@ -5,7 +5,7 @@ import {
   DoubleSide,
   MeshBasicMaterial,
 } from "three";
-import { PlanMaterial } from "../Materials/Plan/material";
+import { PlanMaterial } from "../materials/Plan/material";
 import { state } from "../../utils/State";
 import App from "@/App.vue";
 import { TITLES_SCENE } from "../../utils/constants/config.js";

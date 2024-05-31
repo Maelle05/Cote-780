@@ -8,14 +8,14 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 
 // Scenes
-import { Intro } from "./Scenes/Intro";
-import { Map } from "./Scenes/Map";
-import { Ladies } from "./Scenes/Ladies";
-import { Bridge } from "./Scenes/Bridge";
-import { Dam } from "./Scenes/Dam";
-import { Chapel } from "./Scenes/Chapel";
-import { Village } from "./Scenes/Village";
-import { End } from "./Scenes/End";
+import { Intro } from "./scenes/Intro";
+import { Map } from "./scenes/Map";
+import { Ladies } from "./scenes/Ladies";
+import { Bridge } from "./scenes/Bridge";
+import { Dam } from "./scenes/Dam";
+import { Chapel } from "./scenes/Chapel";
+import { Village } from "./scenes/Village";
+import { End } from "./scenes/End";
 
 export default class WebglController {
   constructor(container) {
