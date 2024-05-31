@@ -1,6 +1,7 @@
-import { AnimationMixer, MathUtils, Euler, Quaternion } from "three";
+import { AnimationMixer, MathUtils, Euler, Quaternion, Vector3 } from "three";
 import { state } from '../../utils/State';
 import { app } from "@/App";
+import { Vector2 } from "three";
 
 
 export class CamAnim {
@@ -10,14 +11,16 @@ export class CamAnim {
     this.idScene = idScene
 
     this.refCam = scene.children.find(el => el.name == "Camera")
-    this.refCam.userData.name = 'Camera scene : ' + idScene
+    this.refCam.userData.name = 'Ref cam scene : ' + idScene
     this.baseFov = this.refCam.fov
     this.animationClip = scene.animations[0]
     this.keyframes = keyframes
     this.currentKeyfame = 0
 
+    this.pos = new Vector3(0, 0, 0);
+    this.posTarget = new Vector3(0, 0, 0);
     this.rotTarget = new Euler(0, 0, 0, 'YXZ');
-    this.offsetRot = new Euler(0, 0, 0, 'YXZ');
+    this.cursorOffset = new Vector2(0, 0);
     this.currentProgressAnim = 0;
     this.targetProgressAnim = 0;
 
@@ -58,27 +61,23 @@ export class CamAnim {
     this.animationMixer.update(app.ticker.delta);
 
     // Set position
-    this.posTarget = this.refCam.position;
-    app.webgl.camera.position.set(
-      this.posTarget.x,
-      this.posTarget.y,
-      this.posTarget.z
-    );
+    // this.pos.copy(this.refCam.position)
+    this.posTarget.copy(this.refCam.position)
+    this.posTarget.x -= this.cursorOffset.x * 0.1;
+    this.posTarget.y += this.cursorOffset.y * 0.1;
+    // this.pos.lerp(this.posTarget, 0.8 );
+    // console.log(this.pos, this.posResult);
+    app.webgl.camera.position.copy(this.posTarget)
 
     // Set rotation
-    this.rotTarget = this.refCam.rotation;
+    this.rotTarget.copy(this.refCam.rotation);
     app.webgl.camera.setRotationFromEuler(this.rotTarget);
   }
 
   onPointerMove(e){
     if(app.webgl.currentScene != this.idScene) return;
-
-    const movementX = e.webgl.x;
-    const movementY = e.webgl.y;
-
-    this.offsetRot.x = movementX;
-    this.offsetRot.y = movementY;
-    this.offsetRot.z = 0;
+    this.cursorOffset.x = e.webgl.x;
+    this.cursorOffset.y = e.webgl.y;
   }
 
   onChangeScene(){
@@ -95,6 +94,8 @@ export class CamAnim {
 
   #changeCam(){
     app.webgl.camera = this.refCam.clone()
+    app.webgl.camera.name = 'Cam'
+    app.webgl.camera.uuid = ''
     const ratio = window.innerWidth / window.innerHeight
     app.webgl.camera.aspect = ratio;
     app.webgl.camera.fov = this.baseFov / Math.min(1, ratio * 1.5);
