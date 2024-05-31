@@ -17,6 +17,8 @@ class Chapel extends Scene {
     state.register(this);
 
     this.raycaster = new Raycaster();
+
+    this.init()
   }
 
   init() {

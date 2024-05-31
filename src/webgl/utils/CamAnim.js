@@ -1,6 +1,6 @@
 import { AnimationMixer, MathUtils, Euler, Quaternion } from "three";
-import { state } from '../State';
-import { EVENTS } from '../../Constants/events';
+import { state } from '../../utils/State';
+import { EVENTS } from '../../utils/constants/events';
 import WebglController from "@/webgl/WebglController";
 import { app } from "@/App";
 
@@ -63,7 +63,7 @@ export class CamAnim {
   }
 
   onPointerMove(e){
-    if(!this.keyframes && this.keyframes.length == 0 || this.webgl.currentScene != this.idScene) return;
+    if(!this.keyframes && this.keyframes.length == 0 || app.webgl.currentScene != this.idScene) return;
 
     const movementX = e.webgl.x;
     const movementY = e.webgl.y;
