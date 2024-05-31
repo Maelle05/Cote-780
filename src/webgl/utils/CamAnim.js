@@ -1,24 +1,23 @@
 import { AnimationMixer, MathUtils, Euler, Quaternion } from "three";
 import { state } from '../../utils/State';
-import { EVENTS } from '../../utils/constants/events';
-import WebglController from "@/webgl/WebglController";
 import { app } from "@/App";
 
 
 export class CamAnim {
-  constructor(idScene, scene, targetObject, keyframes){
+  constructor(idScene, scene, keyframes){
     state.register(this);
 
     this.idScene = idScene
 
     this.refCam = scene.children.find(el => el.name == "Camera")
+    this.refCam.userData.name = 'Camera scene : ' + idScene
+    this.baseFov = this.refCam.fov
     this.animationClip = scene.animations[0]
-    this.targetObj = targetObject
     this.keyframes = keyframes
     this.currentKeyfame = 0
 
     this.rotTarget = new Euler(0, 0, 0, 'YXZ');
-    this.offsetRot = new Euler(0, 0, 0, 'YXZ')
+    this.offsetRot = new Euler(0, 0, 0, 'YXZ');
     this.currentProgressAnim = 0;
     this.targetProgressAnim = 0;
 
@@ -27,12 +26,22 @@ export class CamAnim {
     this.animationAction = this.animationMixer.clipAction(this.animationClip);
     this.animationAction.play();
     this.animationAction.paused = true;
+  }
 
+  onAttach(){
+    if(app.webgl.currentScene != this.idScene) return;
+    this.#changeCam()
+  }
+
+  onResize({ ratio }) {
+    if(app.webgl.currentScene != this.idScene) return;
+    app.webgl.camera.aspect = ratio;
+    app.webgl.camera.fov = this.baseFov / Math.min(1, ratio * 1.5);
+    app.webgl.camera.updateProjectionMatrix();
   }
   
   onTick(){
     if(!this.keyframes && this.keyframes.length == 0 || app.webgl.currentScene != this.idScene) return;
-    if(app.webgl.camera != this.refCam) app.webgl.camera = this.refCam
 
     this.targetProgressAnim = this.keyframes[this.currentKeyfame];
     this.currentProgressAnim = MathUtils.lerp(
@@ -40,7 +49,6 @@ export class CamAnim {
       this.targetProgressAnim,
       0.03
     );
-
 
     this.animationAction.paused = false;
     this.animationMixer.setTime(
@@ -63,7 +71,7 @@ export class CamAnim {
   }
 
   onPointerMove(e){
-    if(!this.keyframes && this.keyframes.length == 0 || app.webgl.currentScene != this.idScene) return;
+    if(app.webgl.currentScene != this.idScene) return;
 
     const movementX = e.webgl.x;
     const movementY = e.webgl.y;
@@ -74,11 +82,22 @@ export class CamAnim {
   }
 
   onChangeScene(){
+    if(app.webgl.currentScene != this.idScene) return;
     this.currentKeyfame = 0
+    this.#changeCam()
   }
 
-  changeStep(e){
+  onChangeSceneStep(e){
+    if(app.webgl.currentScene != this.idScene) return;
     if(e) { this.currentKeyfame = e; return }
     this.currentKeyfame = (this.currentKeyfame + 1) % this.keyframes.length
+  }
+
+  #changeCam(){
+    app.webgl.camera = this.refCam.clone()
+    const ratio = window.innerWidth / window.innerHeight
+    app.webgl.camera.aspect = ratio;
+    app.webgl.camera.fov = this.baseFov / Math.min(1, ratio * 1.5);
+    app.webgl.camera.updateProjectionMatrix();
   }
 }

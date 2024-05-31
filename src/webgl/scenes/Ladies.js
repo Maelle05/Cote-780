@@ -171,8 +171,6 @@ class Ladies extends Scene {
           this.ladies.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
     }
-
-    app.webgl.controls.enabled = false;
   }
 
   onPointerMove() {
@@ -216,15 +214,10 @@ class Ladies extends Scene {
     this.anim = new CamAnim(
       2,
       this.ladies,
-      app.webgl.camera,
       [0, 0.33, 0.66, 0.66, 1]
     );
 
     this.add(this.ladies, this.ambient);
-  }
-
-  onChangeSceneStep() {
-    this.anim.changeStep();
   }
 
   clear() {

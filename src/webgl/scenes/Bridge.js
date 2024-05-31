@@ -32,6 +32,14 @@ class Bridge extends Scene {
     super();
     state.register(this);
 
+    this.PARAMS = {
+      posPerso: {
+        x: 0,
+        y: 0,
+        z: 0
+      }
+    }
+
     this.light = new AmbientLight({ color: 0xffffff });
     this.add(this.light);
 
@@ -61,21 +69,26 @@ class Bridge extends Scene {
   init() {
     if (DEV_MODE) {
       this.pane = new Pane({ title: "Parameters Bridge", expanded: true });
+      this.pane.addBinding(this.PARAMS, 'posPerso', {
+        min: -10,
+        max: 10,
+        step: 0.01
+      }).on('change', (ev) => {
+        this.player.position.set(ev.value.x, ev.value.y, ev.value.z)
+      });
     }
 
     this.angle = 0;
     this.direction = 1;
     this.radius = 0.7;
     this.radiusOffset = 0;
-    this.center = new Vector3(-1, -0.98, -1.45);
+    this.center = new Vector3(0.67, 0.02, 2.19);
     this.rockIndex = 0;
     this.minSpeed = 0.01;
   }
 
   onAttach() {
     this.bridge = app.assetsManager.get("bridge");
-    this.bridge.position.set(-0.5, -1, -3.7);
-    this.bridge.rotation.y = -0.5;
     this.add(this.bridge);
 
     //Remove reflection from material
@@ -87,7 +100,7 @@ class Bridge extends Scene {
     });
 
     this.rock = app.assetsManager.get("rock");
-    this.rockPos = new Vector3(-0.3, -1.2, -1.6);
+    this.rockPos = new Vector3(0.8, 0.02, 2.19);
     this.rockScale = new Vector3(0.15, 0.15, 0.15);
     this.rocks = [];
 
@@ -106,9 +119,9 @@ class Bridge extends Scene {
     this.rocks[0].position.set(this.rockPos.x, -1, -1.6);
 
     this.player = app.assetsManager.get("milo").clone();
-    this.player.position.set(this.center.x, -0.95, this.center.z);
+    this.player.position.set(this.center.x, this.center.y, this.center.z);
     this.player.scale.set(0.1, 0.1, 0.1);
-    this.player.rotation.y = 30;
+    this.player.rotation.y = -45 / (180 / Math.PI);
 
     this.add(this.player);
 
@@ -144,7 +157,6 @@ class Bridge extends Scene {
     this.anim = new CamAnim(
       4,
       this.bridge,
-      app.webgl.camera,
       [0, 0.33, 0.66, 0.66, 1]
     );
 
@@ -244,14 +256,10 @@ class Bridge extends Scene {
     });
   }
 
-  onChangeSceneStep() {
-    this.anim.changeStep();
-  }
-
   #off() {}
 
   #start() {
-    console.log("start");
+    // console.log("start");
     //Create all animations of apparitions
     this.state = "step_1";
 

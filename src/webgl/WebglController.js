@@ -26,9 +26,6 @@ export default class WebglController {
     this.camera = new Camera();
     this.renderer = new Renderer(this.canvasWrapper, 0x988c86, 1);
 
-    // Controls
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-
     this.allScene = [
       new Intro(),
       new Map(),
@@ -71,6 +68,7 @@ export default class WebglController {
   // UPDATE AND RENDER
   onTick() {
     // console.log('Event onTick')
+    // console.log(this.camera.fov)
   }
 
   onRender() {
@@ -88,11 +86,10 @@ export default class WebglController {
 
   onChangeScene(e) {
     this.currentScene = e;
-    // this.camera = new Camera();
-    // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    // this.controls.enabled = true;
-    // this.controls.reset();
     this.scene.clear();
+    if(this.currentScene == 0 || this.currentScene == 1 || this.currentScene == 6 || this.currentScene == 7) {
+      this.camera = new Camera()
+    }
     this.scene = this.allScene[this.currentScene];
     this.renderPass.scene = this.scene
     this.scene.init();

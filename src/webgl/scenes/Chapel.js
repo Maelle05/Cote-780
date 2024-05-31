@@ -63,11 +63,10 @@ class Chapel extends Scene {
     this.anim = new CamAnim(
       5,
       this.chapel,
-      app.webgl.camera,
       [0, 0.33, 0.66, 1]
     );
 
-    this.anim.changeStep(2);
+    // this.anim.changeStep(2);
   }
 
   onPointerDown(e) {
@@ -156,10 +155,6 @@ class Chapel extends Scene {
     //     this.spirit.position.set(newX, object.position.y, newZ);
     //   },
     // });
-  }
-
-  onChangeSceneStep() {
-    this.anim.changeStep();
   }
 
   clear() {
