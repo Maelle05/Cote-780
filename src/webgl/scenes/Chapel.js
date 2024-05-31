@@ -19,15 +19,14 @@ class Chapel extends Scene {
     this.raycaster = new Raycaster();
 
     this.init()
+    this.torchs = [];
+    this.flames = [];
   }
 
   init() {
     if (DEV_MODE) {
       this.pane = new Pane({ title: "Parameters Chapel", expanded: true });
     }
-
-    this.torchs = [];
-    this.flames = [];
   }
 
   onAttach() {
