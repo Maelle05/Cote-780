@@ -15,5 +15,15 @@
     "text_6": "C'est à toi que revient ce rôle désormais.,",
     "text_7": "Prends la pierre et la carte que je t'ai laissée et va rencontrer les Demoiselles Coiffées.,",
     "text_8": "Elles t'expliqueront tout.,"
+  },
+  "scene_1": {
+    "person_1": "Milo",
+    "text_1": "Bonjour, je suis Milo. Ma grand-mère m’a conduit vers vous. Pourquoi êtes-vous triste ? (À revoir ?)",
+    "person_2": "Demoiselles",
+    "text_2": "L'équilibre de la vallée a été rompue., à cause de cela, Dès lors, nous avons perdu nos chapeaux."
+  },
+  "scene_2": {
+    "person_1": "Durance",
+    "text_1": "Tu as peut-être réussi à convaincre”______”, mais si tu veux me prouver ta détermination, il va falloir me rejoindre sur les flots."
   }
 }

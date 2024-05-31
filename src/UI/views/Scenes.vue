@@ -4,6 +4,7 @@ import { state } from "../../utils/State";
 import { ref } from "vue";
 import WellcomeScene from "../components/WellcomeScene.vue";
 import CollectionCairns from "../components/CollectionCairns.vue";
+import Dialogues from "../components/Dialogues.vue";
 import Sound from "../components/Sound.vue";
 
 const props = defineProps({
@@ -14,6 +15,7 @@ const props = defineProps({
 <template>
   <!-- <WellcomeScene :sceneIndex="props.sceneIndex"> </WellcomeScene> -->
   <CollectionCairns />
+  <Dialogues :sceneIndex="props.sceneIndex" />
   <!-- <Sound></Sound> -->
 </template>
 
