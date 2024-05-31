@@ -1,32 +1,29 @@
-import { Scene } from 'three'
-import { state } from '../Utils/State';
-import TestPlane from '../Objects/TestPlane'
-import WebglController from '../WebglController';
-import { Pane } from 'tweakpane';
-import { DEV_MODE } from '../Constants/config';
+import { Scene } from "three";
+import { state } from "../../utils/State";
+import TestPlane from "../Objects/TestPlane";
+import { Pane } from "tweakpane";
+import { DEV_MODE } from "../../utils/constants/config";
 
 class Village extends Scene {
-	constructor() {
-        super()
-        state.register(this)
+  constructor() {
+    super();
+    state.register(this);
+  }
 
-        this.webgl = new WebglController()
-	}
-
-  init(){
+  init() {
     if (DEV_MODE) {
-      this.pane = new Pane({ title: 'Parameters Village', expanded: true });
+      this.pane = new Pane({ title: "Parameters Village", expanded: true });
     }
   }
 
-  onAttach(){
-      this.plane = new TestPlane();
-      this.add(this.plane);
+  onAttach() {
+    this.plane = new TestPlane();
+    this.add(this.plane);
   }
 
-  clear(){
+  clear() {
     if (DEV_MODE) {
-      this.pane.dispose()
+      this.pane.dispose();
     }
   }
 }

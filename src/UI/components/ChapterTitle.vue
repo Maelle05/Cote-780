@@ -1,0 +1,18 @@
+<script setup>
+import { TITLES_SCENE } from "../../utils/constants/config";
+import { ref, watch } from "vue";
+
+const props = defineProps({
+  sceneIndex: Number,
+});
+</script>
+
+<template lang="">
+  <h2 class="chapter-title">{{ TITLES_SCENE[props.sceneIndex] }}</h2>
+</template>
+
+<style scoped lang="scss">
+.chapter-title{
+  color: black;
+}
+</style>

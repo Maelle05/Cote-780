@@ -1,5 +1,5 @@
 import { PerspectiveCamera } from "three";
-import { state } from "./Utils/State";
+import { state } from "../utils/State";
 
 class Camera extends PerspectiveCamera {
   constructor() {

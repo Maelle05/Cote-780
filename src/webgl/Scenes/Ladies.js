@@ -7,21 +7,21 @@ import {
   Raycaster,
   AmbientLight,
 } from "three";
-import { state } from "../Utils/State";
+import { state } from "../../utils/State";
 import WebglController from "../WebglController";
 import { Pane } from "tweakpane";
 import { HeaddressesMaterial } from "../Materials/Headdresses/material";
 import { gsap } from "gsap";
-import { DEV_MODE } from "../Constants/config";
-import { EVENTS } from "../Constants/events";
-import { CamAnim } from "../Utils/Tools/CamAnim";
+import { DEV_MODE } from "../../utils/constants/config";
+import { EVENTS } from "../../utils/constants/events";
+import { CamAnim } from "../utils/CamAnim";
+import { app } from "@/App";
 
 class Demoiselle extends Group {
   constructor(body, top, riseTop) {
     super();
     state.register(this);
 
-    this.webgl = new WebglController();
     this.raycaster = new Raycaster();
 
     // Canvas texture
@@ -34,7 +34,7 @@ class Demoiselle extends Group {
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     // document.querySelector('#vue-app').appendChild(this.canvas)
 
-    this.baseTexture = top.material.map
+    this.baseTexture = top.material.map;
     this.canvasTex = new CanvasTexture(this.canvas);
     top.material = new HeaddressesMaterial({
       uniforms: {
@@ -51,17 +51,17 @@ class Demoiselle extends Group {
 
   onPointerMove(e) {
     if (this.topIsDraw) return;
-    if (this.webgl.currentScene != 2) return;
-    if (this.webgl.scene.anim.currentKeyfame != 3) return;
+    if (app.webgl.currentScene != 2) return;
+    if (app.webgl.scene.anim.currentKeyfame != 3) return;
 
     // update the picking ray with the camera and pointer position
-    this.raycaster.setFromCamera(e.webgl, this.webgl.camera);
+    this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
 
     // calculate objects intersecting the picking ray
     const intersects = this.raycaster.intersectObject(this.top);
 
     for (let i = 0; i < intersects.length; i++) {
-      intersects[ i ].object.material.opacity = 1;
+      intersects[i].object.material.opacity = 1;
       this.drawOnCanvasTex(intersects[i].uv);
     }
 
@@ -114,7 +114,7 @@ class Demoiselle extends Group {
 
     const note = results.filter((el) => el == true).length / results.length;
 
-    if (note > 0.10) {
+    if (note > 0.1) {
       return true; // Canvas painted
     } else {
       return false;
@@ -126,8 +126,6 @@ class Ladies extends Scene {
   constructor() {
     super();
     state.register(this);
-
-    this.webgl = new WebglController();
 
     this.PARAMS = {
       scenePos: {
@@ -174,7 +172,7 @@ class Ladies extends Scene {
         });
     }
 
-    this.webgl.controls.enabled = false;
+    app.webgl.controls.enabled = false;
   }
 
   onPointerMove() {
@@ -197,8 +195,7 @@ class Ladies extends Scene {
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
 
-
-    this.ladies = this.webgl.assetsManager.get("ladies");
+    this.ladies = app.assetsManager.get("ladies");
     this.ladies.traverse((el) => {
       if (el.name == "dame1" || el.name == "top1") {
         this.D1.push(el);
@@ -216,13 +213,18 @@ class Ladies extends Scene {
     this.dem3 = new Demoiselle(this.D3[0], this.D3[1], 1.5);
     this.demoiselles.add(this.dem1, this.dem2, this.dem3);
 
-    this.anim = new CamAnim(2, this.ladies, this.webgl.camera, [0, 0.33, 0.66, 0.66, 1]);
+    this.anim = new CamAnim(
+      2,
+      this.ladies,
+      app.webgl.camera,
+      [0, 0.33, 0.66, 0.66, 1]
+    );
 
     this.add(this.ladies, this.ambient);
   }
 
-  onChangeSceneStep(){
-    this.anim.changeStep()
+  onChangeSceneStep() {
+    this.anim.changeStep();
   }
 
   clear() {
