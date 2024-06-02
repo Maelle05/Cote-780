@@ -1,0 +1,59 @@
+{
+  "global": {
+    "title": "Cote 780",
+    "description": "Bla Bli Bla Blou"
+  },
+  "intro": {
+    "start": "Démarrer l'expérience"
+  },
+  "scene_0": {
+    "text_1": {
+      "text": "Mon cher Milo, si tu lis ces mots, c'est que je ne suis malheureusement plus avec vous...,",
+      "person": ""
+    },
+    "text_2": {
+      "text": "Il y a une histoire que je dois te raconter, une histoire qui remonte à la création du barrage...,",
+      "person": ""
+    },
+    "text_3": {
+      "text": "La Durance, capricieuse et indomptable, a lancé son baroud d'honneur.,",
+      "person": ""
+    },
+    "text_4": {
+      "text": "Grâce au lien de notre famille avec la vallée, j'ai pu l'apaiser.,",
+      "person": ""
+    },
+    "text_5": {
+      "text": "La porte de Savines a été créée pour maintenir l'équilibre de la vallée, et j'en fus la gardienne.,",
+      "person": ""
+    },
+    "text_6": {
+      "text": "C'est à toi que revient ce rôle désormais.,",
+      "person": ""
+    },
+    "text_7": {
+      "text": "Prends la pierre et la carte que je t'ai laissée et va rencontrer les Demoiselles Coiffées.,",
+      "person": ""
+    },
+    "text_8": {
+      "text": "Elles t'expliqueront tout.,",
+      "person": ""
+    }
+  },
+  "scene_1": {
+    "text_1": {
+      "text": "Bonjour, je suis Milo. Ma grand-mère m’a conduit vers vous. Pourquoi êtes-vous triste ? (À revoir ?)",
+      "person": "Milo"
+    },
+    "text_2": {
+      "text": "L'équilibre de la vallée a été rompue., à cause de cela, Dès lors, nous avons perdu nos chapeaux.",
+      "person": "Demoiselles"
+    }
+  },
+  "scene_2": {
+    "text_1": {
+      "text": "Tu as peut-être réussi à convaincre”______”, mais si tu veux me prouver ta détermination, il va falloir me rejoindre sur les flots.",
+      "person": "Durance"
+    }
+  }
+}
