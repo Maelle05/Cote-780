@@ -23,6 +23,7 @@ const EVENTS = {
   WHEEL: i++,
 
   // COTE 780
+  ASK_CHANGE_SCENE: i++,
   CHANGE_SCENE: i++,
   CHANGE_SCENE_STEP: i++,
   VIEW_COLLECTION_CAIRNS: i++,

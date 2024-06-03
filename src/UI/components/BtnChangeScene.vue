@@ -12,12 +12,12 @@ const dialogueManager = new DialoguesManager();
 // functions that mutate state and trigger updates
 function next() {
   currentScene.value = (currentScene.value + 1) % 8;
-  state.emit(EVENTS.CHANGE_SCENE, currentScene.value);
+  state.emit(EVENTS.ASK_CHANGE_SCENE, currentScene.value);
 }
 
 function previous() {
   currentScene.value = (currentScene.value - 1) % 8;
-  state.emit(EVENTS.CHANGE_SCENE, currentScene.value);
+  state.emit(EVENTS.ASK_CHANGE_SCENE, currentScene.value);
 }
 
 function changeStepAnim() {
@@ -28,7 +28,7 @@ function nextDialogue() {
   dialogueManager.nextText();
 }
 
-state.on(EVENTS.CHANGE_SCENE, (e) => {
+state.on(EVENTS.ASK_CHANGE_SCENE, (e) => {
   currentScene.value = e;
 });
 </script>

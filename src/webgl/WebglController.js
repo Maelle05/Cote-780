@@ -23,6 +23,8 @@ import { End } from "./scenes/End";
 import { TransitionPass } from "./pass/TransitionPass/TransitionPass";
 import { app } from "@/App";
 import { Vector4 } from "three";
+import gsap from "gsap";
+import { EVENTS } from "@/utils/constants/events";
 
 export default class WebglController {
   constructor(container) {
@@ -106,6 +108,19 @@ export default class WebglController {
     }
   }
 
+  onAskChangeScene(e){
+    app.webgl.transitionPass.material.uniforms.uIsColor.value = false;
+    app.webgl.transitionPass.material.uniforms.uProgress.value = 0.;
+    gsap.to(app.webgl.transitionPass.material.uniforms.uProgress, {
+      value: 1.,
+      duration: 3,
+      ease : 'circ.in',
+      onComplete: () => {
+        state.emit(EVENTS.CHANGE_SCENE, e)
+      }
+    })
+  }
+
   onChangeScene(e) {
     this.currentScene = e;
     this.scene.clear();
@@ -115,6 +130,15 @@ export default class WebglController {
     this.scene = this.allScene[this.currentScene];
     this.renderPass.scene = this.scene
     this.scene.init();
+
+    app.webgl.transitionPass.material.uniforms.uIsColor.value = true;
+    app.webgl.transitionPass.material.uniforms.uProgress.value = 0.;
+    gsap.to(app.webgl.transitionPass.material.uniforms.uProgress, {
+      delay: 0.3,
+      value: 1.,
+      duration: 3,
+      ease : 'circ.in',
+    })
   }
 
   onResize(){

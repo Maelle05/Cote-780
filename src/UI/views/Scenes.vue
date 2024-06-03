@@ -13,7 +13,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <!-- <WellcomeScene :sceneIndex="props.sceneIndex"> </WellcomeScene> -->
+  <WellcomeScene :sceneIndex="props.sceneIndex"> </WellcomeScene>
   <CollectionCairns />
   <Dialogues :sceneIndex="props.sceneIndex" />
   <!-- <Sound></Sound> -->

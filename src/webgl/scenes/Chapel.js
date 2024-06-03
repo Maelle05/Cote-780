@@ -57,6 +57,7 @@ class Chapel extends Scene {
         torch.position.z
       );
 
+      // console.log(flame);
       torch.flame = flame;
       flame.visible = false;
       this.flames.push(flame);
