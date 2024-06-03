@@ -15,7 +15,6 @@ import {
   Color,
 } from "three";
 import { state } from "../../utils/State";
-import TestPlane from "../objects/TestPlane";
 import { EVENTS } from "../../utils/constants/events";
 import gsap from "gsap";
 import { Pane } from "tweakpane";
@@ -27,8 +26,8 @@ import Cairn from "../objects/Cairn";
 import { CamAnim } from "../utils/CamAnim";
 import { app } from "@/App";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { PlaneGeometry } from "three";
 import Foam from "../objects/Foam";
+import { RockMaterial } from "../materials/Rock/material";
 
 class Bridge extends Scene {
   constructor() {
@@ -117,9 +116,19 @@ class Bridge extends Scene {
         plane.position.y -= 0.02;
         this.add(plane);
 
+        child.material = new RockMaterial({
+          uniforms: {
+            uProgress: { value: 0 },
+          },
+          side: DoubleSide,
+          transparent: true,
+        });
+
         this.rocks.push(child);
       }
     });
+
+    this.rocks[0].material.uniforms.uProgress.value = 1;
 
     this.player = app.assetsManager.get("milo").clone();
     this.player.position.set(this.center.x, this.center.y, this.center.z);
@@ -154,6 +163,8 @@ class Bridge extends Scene {
     );
 
     this.add(this.cairn);
+
+    this.radius = this.player.position.distanceTo(this.rocks[0].position);
 
     app.audio.playMusic("music_1");
 
@@ -202,7 +213,7 @@ class Bridge extends Scene {
 
     this.spirit.position.set(this.x, this.rocks[0].position.y + 0.2, this.z);
 
-    if (this.spirit.position.distanceTo(this.target.position) < 0.2) {
+    if (this.spirit.position.distanceTo(this.target.position) < 0.15) {
       this.spirit.material.color = new Color("red");
     } else {
       this.spirit.material.color = new Color("white");
@@ -219,8 +230,6 @@ class Bridge extends Scene {
 
     if (!this.currentRock) return;
     if (this.spirit.position.distanceTo(this.target.position) > 0.2) return;
-
-    console.log(this.rockIndex, this.rocks.length);
 
     this.spirit.hide();
     this.target.hide();
@@ -264,11 +273,11 @@ class Bridge extends Scene {
       return;
     }
 
-    // gsap.to(this.rocks[this.rockIndex + 1].position, {
-    //   y: this.center.y,
-    //   ease: "power4.out",
-    //   duration: 1,
-    // });
+    gsap.to(this.rocks[this.rockIndex + 1].material.uniforms.uProgress, {
+      value: 1,
+      ease: "power1.in",
+      duration: 2,
+    });
   }
 
   #off() {}

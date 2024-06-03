@@ -21,6 +21,8 @@ export default class Foam extends Mesh {
     const material = new FoamMaterial({
       uniforms: {
         uTime: { value: 0 },
+        uSize: { value: 0.5 },
+        uProgress: { value: 0 },
       },
     });
 

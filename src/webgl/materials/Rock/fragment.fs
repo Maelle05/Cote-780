@@ -1,5 +1,3 @@
-uniform float uTime;
-uniform float uSize;
 uniform float uProgress;
 
 varying vec2 vUv;
@@ -7,6 +5,7 @@ varying vec3 vPosition;
 
 float PI = 3.141592653589793238;
 float radius = 0.19;
+float size = 0.5;
 
 // Simplex noise function
 vec3 mod289(vec3 x) {
@@ -55,17 +54,17 @@ float snoise(vec2 v) {
 }
 
 void main() {
-	//Distance between UV and center of the plane
-	float dist = distance(vec2(uSize), vUv);
+	float noise = snoise(vUv * 20.0 + uProgress * 0.2);
+	float noise2 = snoise(vUv * 20.0 + uProgress * 0.5);
+	float edge0 = uProgress + noise * 0.01;
+	float edge1 = uProgress + clamp(0.02 * uProgress, 0., 1.) + noise2 * 0.01;
 
-	float noise = snoise(vUv * 20.0 + uTime * 0.2);
-	float noisyRadius = radius + noise * 0.01;
-
-	//Create a circle with noise moving
-	float alpha = smoothstep(noisyRadius, noisyRadius + 0.05, dist);
-
-	vec4 colorInside = vec4(0.64, 0.86, 0.98, 0.93);
-	vec4 colorOutside = vec4(0.0);
-	gl_FragColor = mix(colorInside, colorOutside, alpha);
+	if(vUv.x < edge0) {
+		gl_FragColor = vec4(0.44, 0.44, 0.44, 1.0);
+	} else if(vUv.x < edge1) {
+		gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+	} else {
+		discard;
+	}
 
 }
