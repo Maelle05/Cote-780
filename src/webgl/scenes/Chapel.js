@@ -3,13 +3,14 @@ import { state } from "../../utils/State";
 import { Pane } from "tweakpane";
 import { DEV_MODE } from "../../utils/constants/config";
 import { CamAnim } from "../utils/CamAnim";
-import { app } from "@/App";
 import Flame from "../objects/Flame";
 import Spirit from "../objects/Spirit";
 import { Raycaster } from "three";
 import { Mesh } from "three";
 import { Group } from "three";
 import gsap from "gsap";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { app } from "@/App";
 
 class Chapel extends Scene {
   constructor() {
@@ -18,8 +19,10 @@ class Chapel extends Scene {
 
     this.raycaster = new Raycaster();
 
+    this.init();
     this.torchs = [];
     this.flames = [];
+    this.flameOffset = 0.15;
   }
 
   init() {
@@ -29,6 +32,11 @@ class Chapel extends Scene {
   }
 
   onAttach() {
+    // const controls = new OrbitControls(
+    //   app.webgl.camera,
+    //   app.webgl.renderer.domElement
+    // );
+
     this.chapel = app.assetsManager.get("chapel");
     this.chapel.traverse((el) => {
       el.material = new MeshMatcapMaterial({
@@ -45,9 +53,11 @@ class Chapel extends Scene {
       const flame = new Flame();
       flame.position.set(
         torch.position.x,
-        torch.position.y + 0.1,
+        torch.position.y + 0.01,
         torch.position.z
       );
+
+      // console.log(flame);
       torch.flame = flame;
       flame.visible = false;
       this.flames.push(flame);
@@ -58,14 +68,9 @@ class Chapel extends Scene {
     this.spirit.position.set(-1, this.torchs[0].position.y + 0.1, 0);
     this.add(this.spirit);
 
-    this.anim = new CamAnim(
-      5,
-      this.chapel,
-      app.webgl.camera,
-      [0, 0.33, 0.66, 1]
-    );
+    this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 1]);
 
-    this.anim.changeStep(2);
+    this.anim.onChangeSceneStep(0);
   }
 
   onPointerDown(e) {
@@ -80,7 +85,7 @@ class Chapel extends Scene {
     }
   }
 
-  goTo(object) {
+  goTo(flame) {
     // Define start point, control point, and end point
     const startPoint = {
       x: this.spirit.position.x,
@@ -88,9 +93,9 @@ class Chapel extends Scene {
       z: this.spirit.position.z,
     };
     const endPoint = {
-      x: object.position.x,
-      y: object.position.y,
-      z: object.position.z,
+      x: flame.position.x,
+      y: flame.position.y + this.flameOffset,
+      z: flame.position.z,
     };
     const controlPoint = {
       x: (startPoint.x + 1 + endPoint.x) / 2,
@@ -121,6 +126,7 @@ class Chapel extends Scene {
         ease: "power1.inOut",
         onUpdate: function (e) {
           const t = this.targets()[0].t;
+
           const newPosition = bezierInterpolation(
             t,
             startPoint,
@@ -130,8 +136,9 @@ class Chapel extends Scene {
           e.position.set(newPosition.x, newPosition.y, newPosition.z);
         },
         onComplete: () => {
-          object.visible = true;
-          this.spiritStand(object);
+          flame.visible = true;
+          flame.show();
+          this.spiritStand(flame);
         },
         onUpdateParams: [this.spirit], // Pass the spirit object to onUpdate
       }
@@ -154,10 +161,6 @@ class Chapel extends Scene {
     //     this.spirit.position.set(newX, object.position.y, newZ);
     //   },
     // });
-  }
-
-  onChangeSceneStep() {
-    this.anim.changeStep();
   }
 
   clear() {

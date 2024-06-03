@@ -16,9 +16,9 @@ class Spirit extends Mesh {
     super()
 
     this.allPos = [
-      { x: 1.0, y: -0.5, z: -0.7 },
-      { x: 0.5, y: -0.7, z: -1.3 },
-      { x: 1.9, y: -0.7, z: -0.9 },
+      { x: 5.8, y: 0.7, z: 1.9 },
+      { x: 5, y: 1, z: 1 },
+      { x: 5.5, y: 0.8, z: 2.4 },
     ]
     this.currentPos = 2
     this.currentLife = 4
@@ -102,9 +102,9 @@ class Dam extends Scene {
             z: 0,
           },
           persoPos: {
-            x: 1.2,
-            y: -1.95,
-            z: 0.4,
+            x: 4.4,
+            y: 0.5,
+            z: 5.6,
           },
           spiritPos: {
             x: 0,
@@ -112,9 +112,9 @@ class Dam extends Scene {
             z: 0,
           },
           rocksPos: {
-            x: -4.7,
-            y: -3.9,
-            z: -1.5,
+            x: -1.1,
+            y: -1.5,
+            z: 2.4,
           }
         }
 
@@ -164,7 +164,6 @@ class Dam extends Scene {
 
   onAttach(){
       this.scene = app.assetsManager.get('dam');
-      this.scene.position.set(this.PARAMS.scenePos.x, this.PARAMS.scenePos.y, this.PARAMS.scenePos.z)
       this.scene.traverse((el) => {
         el.material = new MeshMatcapMaterial({ matcap: app.assetsManager.get('matcap')})
       })
@@ -188,8 +187,7 @@ class Dam extends Scene {
       this.add(this.rocks)
 
 
-      this.anim = new CamAnim(3, this.scene, app.webgl.camera, [0, 0.25, 0.5, 0.75, 1]);
-
+      this.anim = new CamAnim(3, this.scene, [0, 0.25, 0.5, 0.75, 1]);
   }
 
   onPointerDown(e){
@@ -224,10 +222,6 @@ class Dam extends Scene {
         opacity: 0,
       })
     }
-  }
-
-  onChangeSceneStep(){
-    this.anim.changeStep()
   }
 
   clear(){

@@ -5,6 +5,12 @@ import Stats from "three/examples/jsm/libs/stats.module";
 import { Camera } from "./Camera";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
+// Post pros
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js'
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
+
 // Scenes
 import { Intro } from "./scenes/Intro";
 import { Map } from "./scenes/Map";
@@ -14,6 +20,11 @@ import { Dam } from "./scenes/Dam";
 import { Chapel } from "./scenes/Chapel";
 import { Village } from "./scenes/Village";
 import { End } from "./scenes/End";
+import { TransitionPass } from "./pass/TransitionPass/TransitionPass";
+import { app } from "@/App";
+import { Vector4 } from "three";
+import gsap from "gsap";
+import { EVENTS } from "@/utils/constants/events";
 
 export default class WebglController {
   constructor(container) {
@@ -21,11 +32,8 @@ export default class WebglController {
 
     // Webgl
     this.canvasWrapper = container;
-    this.renderer = new Renderer(this.canvasWrapper, 0x988c86, 1);
     this.camera = new Camera();
-
-    // Controls
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.renderer = new Renderer(this.canvasWrapper, 0x988c86, 1);
 
     this.allScene = [
       new Intro(),
@@ -40,12 +48,33 @@ export default class WebglController {
     this.currentScene = INIT_SCENE;
     this.scene = this.allScene[this.currentScene];
     this.scene.init();
+
+    // Post pros
+    this.effectComposer = new EffectComposer(this.renderer);
+    this.effectComposer.setPixelRatio(window.devicePixelRatio);
+    this.effectComposer.setSize(this.canvasWrapper.offsetWidth, this.canvasWrapper.offsetHeight);
+    this.renderPass = new RenderPass(this.scene, this.camera)
+    this.effectComposer.addPass(this.renderPass)
+    this.transitionPass = new ShaderPass(TransitionPass)
+    this.transitionPass.material.uniforms.uResolution.value = new Vector4(this.canvasWrapper.offsetWidth, this.canvasWrapper.offsetHeight, 1, 1)
+    this.effectComposer.addPass(this.transitionPass)
+    this.gammaCorrectionPass = new ShaderPass(GammaCorrectionShader)
+    this.effectComposer.addPass(this.gammaCorrectionPass)
   }
 
   initStats() {
     if (DEV_MODE) {
       this.stats = new Stats();
       this.canvasWrapper.appendChild(this.stats.dom);
+
+      this.scene.pane.addBinding(this.transitionPass.material.uniforms.uProgress, 'value', {
+        min: 0,
+        max: 1,
+        step: 0.001,
+        label: 'Transition progress',
+      }).on('change', (ev) => {
+        this.transitionPass.material.uniforms.uProgress.value = ev.value
+      });
     }
   }
 
@@ -62,6 +91,8 @@ export default class WebglController {
   // UPDATE AND RENDER
   onTick() {
     // console.log('Event onTick')
+    // console.log(this.camera.fov)
+    this.transitionPass.material.uniforms.uTime.value = app.ticker.elapsed
   }
 
   onRender() {
@@ -71,20 +102,48 @@ export default class WebglController {
     if (this.stats && DEV_MODE) this.stats.update();
 
     // render
-    if (this.renderer) {
-      this.renderer.clear();
-      this.renderer.render(this.scene, this.camera);
+    if (this.effectComposer) {
+      this.renderPass.camera = this.camera
+      this.effectComposer.render();
     }
+  }
+
+  onAskChangeScene(e){
+    app.webgl.transitionPass.material.uniforms.uIsColor.value = false;
+    app.webgl.transitionPass.material.uniforms.uProgress.value = 0.;
+    gsap.to(app.webgl.transitionPass.material.uniforms.uProgress, {
+      value: 1.,
+      duration: 3,
+      ease : 'circ.in',
+      onComplete: () => {
+        state.emit(EVENTS.CHANGE_SCENE, e)
+      }
+    })
   }
 
   onChangeScene(e) {
     this.currentScene = e;
-    this.camera = new Camera();
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.enabled = true;
-    this.controls.reset();
     this.scene.clear();
+    if(this.currentScene == 0 || this.currentScene == 1 || this.currentScene == 6 || this.currentScene == 7) {
+      this.camera = new Camera()
+    }
     this.scene = this.allScene[this.currentScene];
+    this.renderPass.scene = this.scene
     this.scene.init();
+
+    app.webgl.transitionPass.material.uniforms.uIsColor.value = true;
+    app.webgl.transitionPass.material.uniforms.uProgress.value = 0.;
+    gsap.to(app.webgl.transitionPass.material.uniforms.uProgress, {
+      delay: 0.3,
+      value: 1.,
+      duration: 3,
+      ease : 'circ.in',
+    })
+  }
+
+  onResize(){
+    this.effectComposer.setSize(this.canvasWrapper.offsetWidth, this.canvasWrapper.offsetHeight);
+		this.effectComposer.setPixelRatio(window.devicePixelRatio);
+    this.transitionPass.material.uniforms.uResolution.value = new Vector4(this.canvasWrapper.offsetWidth, this.canvasWrapper.offsetHeight, 1, 1);
   }
 }

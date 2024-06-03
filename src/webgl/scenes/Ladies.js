@@ -1,5 +1,8 @@
 import {
   Scene,
+  MeshMatcapMaterial,
+  MeshBasicMaterial,
+  DirectionalLight,
   Group,
   CanvasTexture,
   Raycaster,
@@ -136,6 +139,19 @@ class Ladies extends Scene {
     };
 
     this.finish = false;
+
+    this.light = new AmbientLight({ color: 0xffffff });
+    this.add(this.light);
+
+    this.sun = new DirectionalLight(0xffffff);
+    this.sun.intensity = 1;
+    this.sun.position.set(-7, 10, -15);
+    this.add(this.sun);
+
+    this.directionLight = new DirectionalLight(0xffffff);
+    this.directionLight.intensity = 3;
+    this.directionLight.position.set(7, 10, 15);
+    this.add(this.directionLight);
   }
 
   init() {
@@ -215,16 +231,10 @@ class Ladies extends Scene {
     this.anim = new CamAnim(
       2,
       this.ladies,
-      app.webgl.camera,
       [0, 0.33, 0.66, 0.66, 1]
     );
 
     this.add(this.ladies, this.ambient);
-    app.webgl.controls.enabled = false;
-  }
-
-  onChangeSceneStep() {
-    this.anim.changeStep();
   }
 
   clear() {

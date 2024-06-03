@@ -3,25 +3,32 @@ import { EVENTS } from "../../utils/constants/events";
 import { INIT_SCENE } from "../../utils/constants/config";
 import { state } from "../../utils/State";
 import { ref } from "vue";
+import { DialoguesManager } from "@/utils/core/DialoguesManager";
 
 let currentScene = ref(INIT_SCENE);
+
+const dialogueManager = new DialoguesManager();
 
 // functions that mutate state and trigger updates
 function next() {
   currentScene.value = (currentScene.value + 1) % 8;
-  state.emit(EVENTS.CHANGE_SCENE, currentScene.value);
+  state.emit(EVENTS.ASK_CHANGE_SCENE, currentScene.value);
 }
 
 function previous() {
   currentScene.value = (currentScene.value - 1) % 8;
-  state.emit(EVENTS.CHANGE_SCENE, currentScene.value);
+  state.emit(EVENTS.ASK_CHANGE_SCENE, currentScene.value);
 }
 
 function changeStepAnim() {
   state.emit(EVENTS.CHANGE_SCENE_STEP);
 }
 
-state.on(EVENTS.CHANGE_SCENE, (e) => {
+function nextDialogue() {
+  dialogueManager.nextText();
+}
+
+state.on(EVENTS.ASK_CHANGE_SCENE, (e) => {
   currentScene.value = e;
 });
 </script>
@@ -30,7 +37,19 @@ state.on(EVENTS.CHANGE_SCENE, (e) => {
   <div class="wrapper">
     <button @click="previous">Go previous scene</button>
     <button @click="next">Go next scene</button>
-    <button class="wrapper__top" @click="changeStepAnim" v-if="currentScene == 2 || currentScene == 4 || currentScene == 3 || currentScene == 5">Change step scene</button>
+    <button @click="nextDialogue">Go next Dialogue</button>
+    <button
+      class="wrapper__top"
+      @click="changeStepAnim"
+      v-if="
+        currentScene == 2 ||
+        currentScene == 4 ||
+        currentScene == 3 ||
+        currentScene == 5
+      "
+    >
+      Change step scene
+    </button>
   </div>
 </template>
 

@@ -1,7 +1,6 @@
 import { Scene, Vector3 } from "three";
 import { state } from "../../utils/State";
 import TestPlane from "../objects/TestPlane";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Pane } from "tweakpane";
 import { PlaneGeometry } from "three";
 import { MeshBasicMaterial } from "three";

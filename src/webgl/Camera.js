@@ -8,6 +8,8 @@ class Camera extends PerspectiveCamera {
     state.register(this);
 
     this.position.set(0, 0, 2);
+
+    this.userData.name = 'Camera Base'
   }
 
   onResize({ ratio }) {
