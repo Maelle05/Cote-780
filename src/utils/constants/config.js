@@ -1,6 +1,6 @@
 import { TEXTS } from "./texts";
 
-const DEV_MODE = true;
+const DEV_MODE = false;
 const INIT_SCENE = 2;
 
 const TITLES_SCENE = [

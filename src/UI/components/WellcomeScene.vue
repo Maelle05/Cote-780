@@ -54,7 +54,7 @@ state.on(EVENTS.CHANGE_SCENE, (e) => {
   width: 100%;
   height: 100%;
 
-  background-color: #FFFFFFAA;
+  // background-color: #FFFFFFAA;
 
   display: flex;
   flex-direction: column;

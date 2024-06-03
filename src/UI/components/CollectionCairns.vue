@@ -18,7 +18,7 @@ state.on(EVENTS.VIEW_COLLECTION_CAIRNS, (e) => {
           delay: 2,
           opacity: 0,
           onComplete: () => {
-            state.emit(EVENTS.CHANGE_SCENE, ((e + 1) % 7))
+            state.emit(EVENTS.ASK_CHANGE_SCENE, ((e + 1) % 7))
           }
         })
       }

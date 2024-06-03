@@ -1,5 +1,6 @@
 uniform float uTime;
 uniform float uProgress;
+uniform bool uIsColor;
 uniform vec4 uResolution;
 uniform sampler2D tDiffuse;
 varying vec2 vUv;
@@ -49,16 +50,18 @@ void main()
   vec4 bgColor = vec4(0.85, 0.8, 0.7, 1.);
 
   // Noise displacement
-  float disp = fbm(vUv * 50.) * aspect;
+  float disp = fbm(vUv * 100.) * aspect;
   vec4 noiseTex = vec4(vec3(disp), 1.);
 
   // Circle mask
-  vec3 metaballs[5]; // posX, PosY, R
-  metaballs[0] = vec3(0.4 + sin(time) * 0.1, 0.3 + cos(time) * 0.1, 0.2);
-  metaballs[1] = vec3(0.5 + cos(time) * 0.07, 0.5, 0.15);
+  vec3 metaballs[7]; // posX, PosY, R
+  metaballs[0] = vec3(0.2, 0.2, 0.2);
+  metaballs[1] = vec3(0.5, 0.5, 0.15);
   metaballs[2] = vec3(0.25, 0.25, 0.15);
   metaballs[3] = vec3(0.7, 0.7, 0.15);
   metaballs[4] = vec3(0.7, 0.6, 0.09);
+  metaballs[5] = vec3(0.8, 0.2, 0.09);
+  metaballs[6] = vec3(0.8, 0.23, 0.09);
 
   vec2 uv = vec2(vUv.x, vUv.y);
   float paint = 0.0;
@@ -68,13 +71,13 @@ void main()
   }
 
 
-  float marge1 = 1.2;
+  float marge1 = 1.2 + 1. - uProgress;
   float smallMask = (paint >= 1.) ? 1. - ((paint - 1.) / (marge1 - 1.)) : 1.;
   vec4 smallMaskCircle = vec4(vec3(smallMask), 1.0);
   
   paint = clamp(paint, 0.0, 1.0);
 
-  float marge2 = 0.8;
+  float marge2 = 0.8 - (0.3 * (1. - uProgress ));
   float bigMask = (paint > marge2) ? (paint - marge2) / (1. - marge2) : 0.0;
   vec4 bigMaskCircle = vec4(vec3(bigMask), 1.0);
 
@@ -89,7 +92,12 @@ void main()
 
   vec4 finalMix = mix(maskMixBig, vec4(1.), 1. - maskMixSmall);
 
-  vec4 finalColor = mix(bgColor, sceneTex, finalMix);
+  vec4 finalColor = bgColor;
+  if(uIsColor){
+    finalColor = mix(bgColor, sceneTex, finalMix);
+  } else {
+    finalColor = mix(sceneTex, bgColor, finalMix);
+  }
 
   gl_FragColor = finalColor;
 }
