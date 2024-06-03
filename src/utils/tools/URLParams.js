@@ -1,4 +1,4 @@
-const PARAMS_LIST = ['scene'];
+const PARAMS_LIST = ['scene', 'debug'];
 
 class URLParams {
 	params = new Map();
@@ -14,8 +14,12 @@ class URLParams {
 	get(name) {
 		const param = this.params.get(name);
 
-		if (Number(param) === param) {
-			return parseFloat(this.params.get(name));
+		if (this.has(name) === false) {
+			return null;
+		} else if (param === "") {
+			return true;
+		} else if ((+param).toString() !== "NaN") {
+			return +this.params.get(name);
 		} else if (param === "true" || param === "false") {
 			return param === "true";
 		} else {

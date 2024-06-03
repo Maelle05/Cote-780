@@ -11,6 +11,7 @@ import { state } from './utils/State';
 import { EVENTS } from './utils/constants/events';
 import WebglController from './webgl/WebglController';
 import UIWebglController from './webgl/UIWebglController';
+import { URLParams } from './utils/tools/URLParams';
 
 class App {
 	/** @type App */
@@ -24,6 +25,7 @@ class App {
         this.assetsManager = new AssetsManager();
         this.ticker = new Ticker();
         this.audio = new AudioManager();
+		this.url = new URLParams();
     
         // Tools
         this.viewport = new Viewport(this.webglContainer);
