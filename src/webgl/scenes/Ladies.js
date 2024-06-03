@@ -1,14 +1,11 @@
 import {
   Scene,
-  MeshMatcapMaterial,
-  MeshBasicMaterial,
   Group,
   CanvasTexture,
   Raycaster,
   AmbientLight,
 } from "three";
 import { state } from "../../utils/State";
-import WebglController from "../WebglController";
 import { Pane } from "tweakpane";
 import { HeaddressesMaterial } from "../materials/Headdresses/material";
 import { gsap } from "gsap";
@@ -16,6 +13,7 @@ import { DEV_MODE } from "../../utils/constants/config";
 import { EVENTS } from "../../utils/constants/events";
 import { CamAnim } from "../utils/CamAnim";
 import { app } from "@/App";
+import Vegetation from "../objects/Vegetation";
 
 class Demoiselle extends Group {
   constructor(body, top, riseTop) {
@@ -171,8 +169,6 @@ class Ladies extends Scene {
           this.ladies.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
     }
-
-    app.webgl.controls.enabled = false;
   }
 
   onPointerMove() {
@@ -195,7 +191,7 @@ class Ladies extends Scene {
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
 
-    this.ladies = app.assetsManager.get("ladies");
+    this.ladies = app.assetsManager.get("ladies_opti");
     this.ladies.traverse((el) => {
       if (el.name == "dame1" || el.name == "top1") {
         this.D1.push(el);
@@ -207,6 +203,9 @@ class Ladies extends Scene {
         this.D3.push(el);
       }
     });
+
+    this.vegetation = new Vegetation("ladies_opti", "ladies_vg_samples");
+    this.add(this.vegetation);
 
     this.dem1 = new Demoiselle(this.D1[0], this.D1[1], 1.5);
     this.dem2 = new Demoiselle(this.D2[0], this.D2[1], 1.7);
@@ -221,6 +220,7 @@ class Ladies extends Scene {
     );
 
     this.add(this.ladies, this.ambient);
+    app.webgl.controls.enabled = false;
   }
 
   onChangeSceneStep() {
