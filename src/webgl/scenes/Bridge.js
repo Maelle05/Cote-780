@@ -26,6 +26,9 @@ import TargetParticles from "../objects/TargetParticles";
 import Cairn from "../objects/Cairn";
 import { CamAnim } from "../utils/CamAnim";
 import { app } from "@/App";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { PlaneGeometry } from "three";
+import Foam from "../objects/Foam";
 
 class Bridge extends Scene {
   constructor() {
@@ -36,9 +39,9 @@ class Bridge extends Scene {
       posPerso: {
         x: 0,
         y: 0,
-        z: 0
-      }
-    }
+        z: 0,
+      },
+    };
 
     this.light = new AmbientLight({ color: 0xffffff });
     this.add(this.light);
@@ -61,7 +64,7 @@ class Bridge extends Scene {
 
     // this.position.set(2, 0, -1.5);
 
-    //States : off / start / step_1 / step_2 / step_3 / end
+    //States : off / start / step_1 / step_2 / step_3 / completed
     this.state = "off";
     this.init();
   }
@@ -69,25 +72,34 @@ class Bridge extends Scene {
   init() {
     if (DEV_MODE) {
       this.pane = new Pane({ title: "Parameters Bridge", expanded: true });
-      this.pane.addBinding(this.PARAMS, 'posPerso', {
-        min: -10,
-        max: 10,
-        step: 0.01
-      }).on('change', (ev) => {
-        this.player.position.set(ev.value.x, ev.value.y, ev.value.z)
-      });
+      this.pane
+        .addBinding(this.PARAMS, "posPerso", {
+          min: -10,
+          max: 10,
+          step: 0.01,
+        })
+        .on("change", (ev) => {
+          this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
+        });
     }
 
     this.angle = 0;
     this.direction = 1;
-    this.radius = 0.7;
+    this.radius = 0.68;
     this.radiusOffset = 0;
-    this.center = new Vector3(0.67, 0.02, 2.19);
+    this.center = new Vector3(0.67, 0.01, 2.19);
     this.rockIndex = 0;
     this.minSpeed = 0.01;
   }
 
   onAttach() {
+    const controls = new OrbitControls(
+      app.webgl.camera,
+      app.webgl.renderer.domElement
+    );
+
+    this.rocks = [];
+
     this.bridge = app.assetsManager.get("bridge");
     this.add(this.bridge);
 
@@ -97,26 +109,17 @@ class Bridge extends Scene {
         // child.material.metalness = 0;
         child.material.roughness = 1;
       }
+
+      if (child.isMesh && child.name.includes("Rock")) {
+        const plane = new Foam();
+        plane.position.copy(child.position);
+        plane.rotation.x = Math.PI / 2;
+        plane.position.y -= 0.02;
+        this.add(plane);
+
+        this.rocks.push(child);
+      }
     });
-
-    this.rock = app.assetsManager.get("rock");
-    this.rockPos = new Vector3(0.8, 0.02, 2.19);
-    this.rockScale = new Vector3(0.15, 0.15, 0.15);
-    this.rocks = [];
-
-    for (let i = 0; i < 3; i++) {
-      const rockClone = this.rock.clone();
-      rockClone.scale.copy(this.rockScale);
-      rockClone.position.set(
-        this.rockPos.x + this.radius * i,
-        this.rockPos.y,
-        this.rockPos.z
-      );
-      this.add(rockClone);
-      this.rocks.push(rockClone);
-    }
-
-    this.rocks[0].position.set(this.rockPos.x, -1, -1.6);
 
     this.player = app.assetsManager.get("milo").clone();
     this.player.position.set(this.center.x, this.center.y, this.center.z);
@@ -154,11 +157,11 @@ class Bridge extends Scene {
 
     app.audio.playMusic("music_1");
 
-    this.anim = new CamAnim(
-      4,
-      this.bridge,
-      [0, 0.33, 0.66, 0.66, 1]
-    );
+    // this.anim = new CamAnim(
+    //   4,
+    //   this.bridge,
+    //   [0, 0.33, 0.66, 0.66, 1]
+    // );
 
     setTimeout(() => {
       this.#start();
@@ -192,10 +195,10 @@ class Bridge extends Scene {
 
     this.x =
       this.center.x +
-      (this.radius + this.radiusOffset) * Math.cos(this.angle - 0.2);
+      (this.radius + this.radiusOffset) * Math.cos(this.angle - 0.6);
     this.z =
       this.center.z +
-      (this.radius + this.radiusOffset) * Math.sin(this.angle - 0.2);
+      (this.radius + this.radiusOffset) * Math.sin(this.angle - 0.6);
 
     this.spirit.position.set(this.x, this.rocks[0].position.y + 0.2, this.z);
 
@@ -212,35 +215,47 @@ class Bridge extends Scene {
     if (app.webgl.currentScene != 4 || this.state == "off") return;
 
     this.currentRock = this.rocks[this.rockIndex];
-
     this.nextRock = this.rocks[this.rockIndex + 1];
 
     if (!this.currentRock) return;
     if (this.spirit.position.distanceTo(this.target.position) > 0.2) return;
+
+    console.log(this.rockIndex, this.rocks.length);
 
     this.spirit.hide();
     this.target.hide();
 
     gsap.to(this.center, {
       x: this.currentRock.position.x,
-      y: -0.98,
+      y: this.currentRock.position.y,
       z: this.currentRock.position.z,
       duration: 1,
       ease: "power1.out",
       onUpdate: () => {
-        this.player.position.set(this.center.x, -0.95, this.center.z);
+        this.player.position.set(
+          this.center.x,
+          this.center.y + 0.03,
+          this.center.z
+        );
       },
       onComplete: () => {
-        this.rockIndex++;
-        this.spirit.show();
+        if (this.rockIndex + 1 == this.rocks.length) {
+          this.state = "completed";
+        } else {
+          this.radius = this.currentRock.position.distanceTo(
+            this.nextRock.position
+          );
+          this.rockIndex++;
+          this.spirit.show();
 
-        this.target.show(
-          new Vector3(
-            this.nextRock.position.x,
-            this.nextRock.position.y + 0.2,
-            this.nextRock.position.z
-          )
-        );
+          this.target.show(
+            new Vector3(
+              this.nextRock.position.x,
+              this.nextRock.position.y + 0.2,
+              this.nextRock.position.z
+            )
+          );
+        }
       },
     });
 
@@ -249,11 +264,11 @@ class Bridge extends Scene {
       return;
     }
 
-    gsap.to(this.rocks[this.rockIndex + 1].position, {
-      y: -0.98,
-      ease: "power4.out",
-      duration: 1,
-    });
+    // gsap.to(this.rocks[this.rockIndex + 1].position, {
+    //   y: this.center.y,
+    //   ease: "power4.out",
+    //   duration: 1,
+    // });
   }
 
   #off() {}

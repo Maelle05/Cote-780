@@ -19,7 +19,7 @@ export default class Flame extends Mesh {
     super();
     state.register(this);
 
-    this.count = 500;
+    this.count = 100;
     this.resolution = new Vector2(app.viewport.width, app.viewport.height);
     this.time = 0;
     this.objectScale = { value: 0 };
