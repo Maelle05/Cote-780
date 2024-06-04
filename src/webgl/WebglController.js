@@ -3,7 +3,6 @@ import { state } from "../utils/State";
 import { DEV_MODE, INIT_SCENE } from "../utils/constants/config";
 import Stats from "three/examples/jsm/libs/stats.module";
 import { Camera } from "./Camera";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 // Post pros
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';

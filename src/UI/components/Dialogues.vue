@@ -1,33 +1,31 @@
 <script setup>
-import { DialoguesManager } from "@/utils/core/DialoguesManager";
-import { watch } from "vue";
-import { ref, reactive, watchEffect } from "vue";
-import { useI18n } from "vue-i18n";
+import { EVENTS } from "@/utils/constants/events";
+import { state } from "@/utils/State";
+import { ref } from "vue";
 
-const { t } = useI18n();
+const hasDialogue = ref(false)
+const person = ref('')
+const text = ref('')
 
-const props = defineProps({
-  sceneIndex: Number,
-});
+state.on(EVENTS.UPDATE_DIALOGUE, (e) => {
+  if(e){
+    person.value = e.person
+    text.value = e.text
+    hasDialogue.value = true
+  } else {
+    hasDialogue.value = false
+  }
+})
 
-const dialogues = new DialoguesManager();
-dialogues.toggle();
 </script>
 
 <template>
-  <div class="wrapper" :aria-hidden="dialogues.hidden.value">
+  <div class="wrapper" v-if="hasDialogue">
     <div class="person">
-      {{
-        t(
-          "scene_" + (sceneIndex - 1) + ".person_" + dialogues.personIndex.value
-        )
-      }}
-      :
+      {{ person }} :
     </div>
     <div class="text">
-      {{
-        t("scene_" + (sceneIndex - 1) + ".text_" + dialogues.textIndex.value)
-      }}
+      {{ text }}
     </div>
   </div>
 </template>

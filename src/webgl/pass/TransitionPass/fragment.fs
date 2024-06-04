@@ -71,13 +71,13 @@ void main()
   }
 
 
-  float marge1 = 1.2 + 1. - uProgress;
+  float marge1 = 1. + 1. - uProgress;
   float smallMask = (paint >= 1.) ? 1. - ((paint - 1.) / (marge1 - 1.)) : 1.;
   vec4 smallMaskCircle = vec4(vec3(smallMask), 1.0);
   
   paint = clamp(paint, 0.0, 1.0);
 
-  float marge2 = 0.8 - (0.3 * (1. - uProgress ));
+  float marge2 = 0.8 - (0.1 * (1. - uProgress ));
   float bigMask = (paint > marge2) ? (paint - marge2) / (1. - marge2) : 0.0;
   vec4 bigMaskCircle = vec4(vec3(bigMask), 1.0);
 
