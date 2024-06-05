@@ -23,7 +23,7 @@ const manifest = {
     ladies_opti: { path: `assets/models/ladies_opti.glb` },
     ladies_vg_samples: { path: `assets/models/ladies_vg_samples.glb` },
     dam: { path: `assets/models/dam.glb` },
-    bridge: { path: `assets/models/bridge_2.glb` },
+    bridge: { path: `assets/models/bridge.glb` },
     chapel: { path: `assets/models/chapel.glb` },
     rock: { path: `assets/models/rock.glb` },
     milo: { path: `assets/models/milo.glb` },

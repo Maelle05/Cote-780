@@ -30,7 +30,7 @@ const onClickCtaStart = () => {
 }
 
 const onClickCtaEnd = () => {
-  state.emit(EVENTS.CHANGE_SCENE, 1)
+  state.emit(EVENTS.GO_NEXT)
 }
 
 const handleScroll = (e) => {

@@ -1,55 +1,21 @@
 <script setup>
 import { EVENTS } from "../../utils/constants/events";
-import { INIT_SCENE } from "../../utils/constants/config";
 import { state } from "../../utils/State";
-import { ref } from "vue";
-import { DialoguesManager } from "@/utils/core/DialoguesManager";
 
-let currentScene = ref(INIT_SCENE);
-
-const dialogueManager = new DialoguesManager();
-
-// functions that mutate state and trigger updates
 function next() {
-  currentScene.value = (currentScene.value + 1) % 8;
-  state.emit(EVENTS.ASK_CHANGE_SCENE, currentScene.value);
+  state.emit(EVENTS.GO_NEXT);
 }
 
 function previous() {
-  currentScene.value = (currentScene.value - 1) % 8;
-  state.emit(EVENTS.ASK_CHANGE_SCENE, currentScene.value);
+  state.emit(EVENTS.GO_PREV);
 }
 
-function changeStepAnim() {
-  state.emit(EVENTS.CHANGE_SCENE_STEP);
-}
-
-function nextDialogue() {
-  dialogueManager.nextText();
-}
-
-state.on(EVENTS.ASK_CHANGE_SCENE, (e) => {
-  currentScene.value = e;
-});
 </script>
 
 <template>
   <div class="wrapper">
-    <button @click="previous">Go previous scene</button>
-    <button @click="next">Go next scene</button>
-    <button @click="nextDialogue">Go next Dialogue</button>
-    <button
-      class="wrapper__top"
-      @click="changeStepAnim"
-      v-if="
-        currentScene == 2 ||
-        currentScene == 4 ||
-        currentScene == 3 ||
-        currentScene == 5
-      "
-    >
-      Change step scene
-    </button>
+    <button @click="previous"> Prev </button>
+    <button @click="next"> Next </button>
   </div>
 </template>
 

@@ -11,6 +11,7 @@ import { state } from './utils/State';
 import { EVENTS } from './utils/constants/events';
 import WebglController from './webgl/WebglController';
 import UIWebglController from './webgl/UIWebglController';
+import HandleScenes from './utils/tools/HandleScenes';
 import { URLParams } from './utils/tools/URLParams';
 
 class App {
@@ -21,20 +22,22 @@ class App {
 		this.webglContainer = document.getElementById('webgl-app');
 		this.uiWebglContainer = document.getElementById('ui-webgl-app');
 
-        // Core
-        this.assetsManager = new AssetsManager();
-        this.ticker = new Ticker();
-        this.audio = new AudioManager();
-		this.url = new URLParams();
-    
-        // Tools
-        this.viewport = new Viewport(this.webglContainer);
-        this.mouse = new Mouse(this.viewport);
-        this.keyboard = new Keyboard();
-        this.scroll = new Scroll(this.viewport);
+    // Core
+    this.assetsManager = new AssetsManager();
+    this.ticker = new Ticker();
+    this.audio = new AudioManager();
+    this.url = new URLParams();
 
-        this.webgl = new WebglController(this.webglContainer);
-        this.uiWebgl = new UIWebglController(this.uiWebglContainer);
+    // Tools
+    this.viewport = new Viewport(this.webglContainer);
+    this.mouse = new Mouse(this.viewport);
+    this.keyboard = new Keyboard();
+    this.scroll = new Scroll(this.viewport);
+
+    this.webgl = new WebglController(this.webglContainer);
+    this.uiWebgl = new UIWebglController(this.uiWebglContainer);
+
+    this.sceneshandler = new HandleScenes();
 
 		window.addEventListener('click', this.handleFirstClick);
 

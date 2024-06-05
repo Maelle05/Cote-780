@@ -93,10 +93,10 @@ class Bridge extends Scene {
   }
 
   onAttach() {
-    const controls = new OrbitControls(
-      app.webgl.camera,
-      app.webgl.renderer.domElement
-    );
+    // const controls = new OrbitControls(
+    //   app.webgl.camera,
+    //   app.webgl.renderer.domElement
+    // );
 
     this.rocks = [];
 
@@ -173,11 +173,11 @@ class Bridge extends Scene {
 
     app.audio.playMusic("music_1");
 
-    // this.anim = new CamAnim(
-    //   4,
-    //   this.bridge,
-    //   [0, 0.33, 0.66, 0.66, 1]
-    // );
+    this.anim = new CamAnim(
+      4,
+      this.bridge,
+      [0, 0.33, 0.66, 0.66, 1]
+    );
 
     setTimeout(() => {
       this.#start();

@@ -7,23 +7,173 @@
     "start": "Démarrer l'expérience"
   },
   "scene_0": {
-    "text_1": "Mon cher Milo, si tu lis ces mots, c'est que je ne suis malheureusement plus avec vous...,",
-    "text_2": "Il y a une histoire que je dois te raconter, une histoire qui remonte à la création du barrage...,",
-    "text_3": "La Durance, capricieuse et indomptable, a lancé son baroud d'honneur.,",
-    "text_4": "Grâce au lien de notre famille avec la vallée, j'ai pu l'apaiser.,",
-    "text_5": "La porte de Savines a été créée pour maintenir l'équilibre de la vallée, et j'en fus la gardienne.,",
-    "text_6": "C'est à toi que revient ce rôle désormais.,",
-    "text_7": "Prends la pierre et la carte que je t'ai laissée et va rencontrer les Demoiselles Coiffées.,",
-    "text_8": "Elles t'expliqueront tout.,"
-  },
-  "scene_1": {
-    "person_1": "Milo",
-    "text_1": "Bonjour, je suis Milo. Ma grand-mère m’a conduit vers vous. Pourquoi êtes-vous triste ? (À revoir ?)",
-    "person_2": "Demoiselles",
-    "text_2": "L'équilibre de la vallée a été rompue., à cause de cela, Dès lors, nous avons perdu nos chapeaux."
+    "text_1": "Mon cher Milo… Si tu lis ces mots, c’est que je ne suis malheureusement plus avec vous.",
+    "text_2": "Il y a une histoire que tu dois connaître…",
+    "text_3": "Lors de la création du barrage, la Durance, capricieuse et indomptable, a lancé une dernière offensive.",
+    "text_4": "Grâce au lien de notre famille avec la vallée, j'ai réussi à rétablir l’harmonie entre les hommes et la Durance.",
+    "text_5": "Le Passage de Savines est le symbole de cette union entre les hommes et la nature. Ses pierres maintiennent l’équilibre autour du lac.",
+    "text_6": "J’étais la dernière gardienne du Passage, mon rôle était de protéger cet équilibre fragile.",
+    "text_7": "Sans personne pour veiller sur lui, je crains que les cairns qui le composent ne se dispersent aux quatre coins de la vallée…",
+    "text_8": "La Durance pourrait alors représenter de nouveau un danger pour la région.",
+    "text_9": "C'est à toi, Milo, que revient le devoir de retrouver ces cairns pour rétablir l’harmonie entre tous.",
+    "text_10": "Prends la carte que je t’ai laissée et pars à la rencontre des Demoiselles Coiffées, ces ancestrales pierres de la montagne.",
+    "text_11": "Elles pourront te guider dans ta quête."
   },
   "scene_2": {
-    "person_1": "Durance",
-    "text_1": "Tu as peut-être réussi à convaincre”______”, mais si tu veux me prouver ta détermination, il va falloir me rejoindre sur les flots."
+    "text_1": {
+      "person": "Milo",
+      "text": "Bonjour, je suis Milo. Ma grand-mère m’a dit de venir vous voir. Pourquoi êtes-vous triste ?",
+      "camera": "0"
+    },
+    "text_2": {
+      "person": "Demoiselles",
+      "text": "L'équilibre de la vallée a été rompu et nous avons perdu nos chapeaux. Peux-tu nous aider à les retrouver ?",
+      "camera": "1"
+    },
+    "text_3": {
+      "person": "Demoiselles",
+      "text": "Merci pour ton aide, jeune homme.",
+      "camera": "4"
+    },
+    "text_4": {
+      "person": "Demoiselles",
+      "text": "Dans ce grand désarroi, ta grand-mère est partie en laissant s’écrouler avec elle le Passage de Savines. Toi seul détiens le pouvoir de les reconstruire.",
+      "camera": "4"
+    },
+    "text_5": {
+      "person": "Demoiselles",
+      "text": "Tu dois maintenant retrouver les cinq cairns qui la composent. Voici le premier.",
+      "camera": "4"
+    },
+    "text_6": {
+      "person": "Demoiselles",
+      "text": "Le second cairn se trouve là où tout à commencé, au barrage",
+      "camera": "4"
+    },
+    "text_7": {
+      "person": "Demoiselles",
+      "text": "Bon courage dans ta quête. Gagne la confiance de la Durance, mais attention, elle peut être très capricieuse…",
+      "camera": "4"
+    }
+  },
+  "scene_3": {
+    "text_1": {
+      "person": "Milo",
+      "text": "Mais qu’est-ce que c’est ?",
+      "camera": "1"
+    },
+    "text_2": {
+      "person": "Durance",
+      "text": "À présent, il va falloir me rejoindre sur les flots.",
+      "camera": "4"
+    },
+    "text_3": {
+      "person": "Esprit",
+      "text": "Viens, je vais t’accompagner dans cette quête",
+      "camera": "4"
+    }
+  },
+  "scene_4": {
+    "text_1": {
+      "person": "Durance",
+      "text": "Tu en es digne, suis-moi, il faut que je te montre.",
+      "camera": "4"
+    }
+  },
+  "scene_5": {
+    "text_1": {
+      "person": "Esprit",
+      "text": "Cette chapelle est le souvenir d’une vallée engloutie. À l’intérieur t’attends ton destin.",
+      "camera": "1"
+    },
+    "text_2": {
+      "person": "Esprit",
+      "text": "Par ici ! Si tu décides de traverser ce portail, tu découvriras un lieu que le temps tente d'effacer.",
+      "camera": "3"
+    }
+  },
+  "scene_6": {
+    "text_1": {
+      "person": "Esprit",
+      "text": "J’ai vécu ici avec ta grand-mère avant la création du barrage. J’étais son voisin. Viens avec moi, je vais te montrer.",
+      "camera": "0"
+    },
+    "text_2": {
+      "person": "Esprit",
+      "text": "Elle tenait une auberge au cœur de ce petit village : l'Hôtel de la Durance.  C’était le rendez-vous quotidien des gens du coin.",
+      "camera": "0"
+    },
+    "text_3": {
+      "person": "Esprit",
+      "text": "On y passait de bons moments. On rigolait bien avec ta grand-mère.",
+      "camera": "0"
+    },
+    "text_4": {
+      "person": "Esprit",
+      "text": "C’est ici ! Regarde ! Un journal !",
+      "camera": "0"
+    },
+    "text_5": {
+      "person": "DATE : 00/00/1954",
+      "text": "L’état vient de lancer la construction d’un barrage pour maîtriser l’indomptable Durance… Ils racontent qu’ils veulent engloutir la vallée jusqu’à la cote 780 ! C’est absurde !",
+      "camera": "1"
+    },
+    "text_6": {
+      "person": "DATE : 00/00/1956",
+      "text": "L’autre soir, la Durance a bien failli mettre fin au chantier ! Elle s’est rebellée contre ceux qui essayent de la contrôler. Malheureusement… il sont bien décidé, ça n’a pas eu beaucoup d’effets hormis retarder le chantier.",
+      "camera": "1"
+    },
+    "text_7": {
+      "person": "DATE : 00/00/1956",
+      "text": "Toutes les habitations vont être dynamitées il paraît/ paraît-il… il vont même déplacer le cimetière…",
+      "camera": "1"
+    },
+    "text_8": {
+      "person": "DATE : 00/00/1957",
+      "text": "… Au début, personne ne croyait à ce barrage. Même lorsque la construction a été lancée, on se disait qu’il ne verrait jamais le jour. Maintenant que les gens commencent à quitter le village, tout devient réel…",
+      "camera": "1"
+    },
+    "text_9": {
+      "person": "DATE : 00/00/1955",
+      "text": "Aujourd’hui j’ai eu la visite d’EDF au sujet du barrage. Ils m’ont proposé un logement et de l’argent… beaucoup.. pour m'installer dans le nouveau village… Mais comment vivre, avec nos souvenirs engloutis sous les yeux ?",
+      "camera": "1"
+    },
+    "text_10": {
+      "person": "DATE : 00/00/1957",
+      "text": "… Ils ont commencé à reconstruire le village au-dessus de la cote 780…et je suis bien triste de devoir quitter mon Hôtel. Mais comme les autres, je crois que j’ai fini par m’y résoudre.",
+      "camera": "1"
+    },
+    "text_11": {
+      "person": "DATE : 00/00/1957",
+      "text": "Mon voisin, lui, ne bougera jamais. Il me raconte comment, pendant la nuit, il va gêner et démolir le chantier.",
+      "camera": "1"
+    }
+  },
+  "scene_7": {
+    "text_1": {
+      "person": "Esprit",
+      "text": "Bravo Milo ! À travers cette quête tu as pu t’immerger dans l’histoire de la contrée et regagner la confiance de la Durance. La vallée peut désormais retrouver sa tranquillité.",
+      "camera": "0"
+    },
+    "text_2": {
+      "person": "Esprit",
+      "text": "L’édifice qu’est le Passage de Savines a regagné sa beauté en mémoire de ta grand-mère et de tous ceux qui ont vécu dans ces villages engloutis.",
+      "camera": "0"
+    },
+    "text_3": {
+      "person": "Esprit",
+      "text": "Nous ne les oublierons pas.",
+      "camera": "0"
+    },
+    "text_4": {
+      "person": "Esprit",
+      "text": "À présent le lac de Serre Ponçon est une nouvelle page qui se tourne pour la plus grande joie des vacanciers et amoureux de la nature !",
+      "camera": "0"
+    },
+    "text_5": {
+      "person": "Esprit",
+      "text": "Entre paysage montagneux et riche végétation, ce projet titanesque offre aujourd’hui, avec son vaste lac, de nouvelles perspectives pour la région. Pour la plus grande joie des vacanciers et amoureux de la nature !",
+      "camera": "0"
+    }
   }
 }
