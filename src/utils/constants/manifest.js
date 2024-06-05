@@ -25,6 +25,7 @@ const manifest = {
     dam: { path: `assets/models/dam.glb` },
     bridge: { path: `assets/models/bridge.glb` },
     chapel: { path: `assets/models/chapel.glb` },
+    village: { path: `assets/models/village.glb` },
     rock: { path: `assets/models/rock.glb` },
     milo: { path: `assets/models/milo.glb` },
     rocks: { path: `assets/models/rocks.glb` },

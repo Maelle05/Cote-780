@@ -63,11 +63,6 @@ export default class HandleScenes {
         state.emit(EVENTS.ASK_CHANGE_SCENE, 2)
         break;
 
-      case 6:
-        this.currentScene = 7
-        state.emit(EVENTS.ASK_CHANGE_SCENE, 7)
-        break;
-
       case 7:
         this.currentScene = 0
         state.emit(EVENTS.ASK_CHANGE_SCENE, 0)

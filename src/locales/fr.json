@@ -96,57 +96,57 @@
     "text_1": {
       "person": "Esprit",
       "text": "J’ai vécu ici avec ta grand-mère avant la création du barrage. J’étais son voisin. Viens avec moi, je vais te montrer.",
-      "camera": "0"
+      "camera": "1"
     },
     "text_2": {
       "person": "Esprit",
       "text": "Elle tenait une auberge au cœur de ce petit village : l'Hôtel de la Durance.  C’était le rendez-vous quotidien des gens du coin.",
-      "camera": "0"
+      "camera": "1"
     },
     "text_3": {
       "person": "Esprit",
       "text": "On y passait de bons moments. On rigolait bien avec ta grand-mère.",
-      "camera": "0"
+      "camera": "1"
     },
     "text_4": {
       "person": "Esprit",
       "text": "C’est ici ! Regarde ! Un journal !",
-      "camera": "0"
+      "camera": "2"
     },
     "text_5": {
       "person": "DATE : 00/00/1954",
       "text": "L’état vient de lancer la construction d’un barrage pour maîtriser l’indomptable Durance… Ils racontent qu’ils veulent engloutir la vallée jusqu’à la cote 780 ! C’est absurde !",
-      "camera": "1"
+      "camera": "3"
     },
     "text_6": {
       "person": "DATE : 00/00/1956",
       "text": "L’autre soir, la Durance a bien failli mettre fin au chantier ! Elle s’est rebellée contre ceux qui essayent de la contrôler. Malheureusement… il sont bien décidé, ça n’a pas eu beaucoup d’effets hormis retarder le chantier.",
-      "camera": "1"
+      "camera": "3"
     },
     "text_7": {
       "person": "DATE : 00/00/1956",
       "text": "Toutes les habitations vont être dynamitées il paraît/ paraît-il… il vont même déplacer le cimetière…",
-      "camera": "1"
+      "camera": "3"
     },
     "text_8": {
       "person": "DATE : 00/00/1957",
       "text": "… Au début, personne ne croyait à ce barrage. Même lorsque la construction a été lancée, on se disait qu’il ne verrait jamais le jour. Maintenant que les gens commencent à quitter le village, tout devient réel…",
-      "camera": "1"
+      "camera": "3"
     },
     "text_9": {
       "person": "DATE : 00/00/1955",
       "text": "Aujourd’hui j’ai eu la visite d’EDF au sujet du barrage. Ils m’ont proposé un logement et de l’argent… beaucoup.. pour m'installer dans le nouveau village… Mais comment vivre, avec nos souvenirs engloutis sous les yeux ?",
-      "camera": "1"
+      "camera": "3"
     },
     "text_10": {
       "person": "DATE : 00/00/1957",
       "text": "… Ils ont commencé à reconstruire le village au-dessus de la cote 780…et je suis bien triste de devoir quitter mon Hôtel. Mais comme les autres, je crois que j’ai fini par m’y résoudre.",
-      "camera": "1"
+      "camera": "3"
     },
     "text_11": {
       "person": "DATE : 00/00/1957",
       "text": "Mon voisin, lui, ne bougera jamais. Il me raconte comment, pendant la nuit, il va gêner et démolir le chantier.",
-      "camera": "1"
+      "camera": "3"
     }
   },
   "scene_7": {
