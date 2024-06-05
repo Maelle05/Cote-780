@@ -28,6 +28,7 @@ import { app } from "@/App";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Foam from "../objects/Foam";
 import { RockMaterial } from "../materials/Rock/material";
+import Milo from "../objects/Milo";
 
 class Bridge extends Scene {
   constructor() {
@@ -110,11 +111,11 @@ class Bridge extends Scene {
       }
 
       if (child.isMesh && child.name.includes("Rock")) {
-        const plane = new Foam();
-        plane.position.copy(child.position);
-        plane.rotation.x = Math.PI / 2;
-        plane.position.y -= 0.02;
-        this.add(plane);
+        // const plane = new Foam();
+        // plane.position.copy(child.position);
+        // plane.rotation.x = Math.PI / 2;
+        // plane.position.y -= 0.02;
+        // this.add(plane);
 
         child.material = new RockMaterial({
           uniforms: {
@@ -130,10 +131,14 @@ class Bridge extends Scene {
 
     this.rocks[0].material.uniforms.uProgress.value = 1;
 
-    this.player = app.assetsManager.get("milo").clone();
+    this.playerTest = new Milo();
+    this.player = this.playerTest.milo;
     this.player.position.set(this.center.x, this.center.y, this.center.z);
     this.player.scale.set(0.1, 0.1, 0.1);
     this.player.rotation.y = -45 / (180 / Math.PI);
+    this.player.anims.idle();
+
+    console.log(this.player);
 
     this.add(this.player);
 
@@ -233,6 +238,7 @@ class Bridge extends Scene {
 
     this.spirit.hide();
     this.target.hide();
+    this.player.anims.jump();
 
     gsap.to(this.center, {
       x: this.currentRock.position.x,
@@ -264,6 +270,7 @@ class Bridge extends Scene {
               this.nextRock.position.z
             )
           );
+          // this.player.anims.idle();
         }
       },
     });
@@ -276,7 +283,7 @@ class Bridge extends Scene {
     gsap.to(this.rocks[this.rockIndex + 1].material.uniforms.uProgress, {
       value: 1,
       ease: "power1.in",
-      duration: 2,
+      duration: 1,
     });
   }
 

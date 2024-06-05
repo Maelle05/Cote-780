@@ -28,6 +28,7 @@ const manifest = {
     village: { path: `assets/models/village.glb` },
     rock: { path: `assets/models/rock.glb` },
     milo: { path: `assets/models/milo.glb` },
+    milo_anim: { path: `assets/models/milo-anims.glb` },
     rocks: { path: `assets/models/rocks.glb` },
   },
   jsons: {},

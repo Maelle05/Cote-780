@@ -54,15 +54,16 @@ float snoise(vec2 v) {
 }
 
 void main() {
+	float yOffset = 1.7;
 	float noise = snoise(vUv * 20.0 + uProgress * 0.2);
 	float noise2 = snoise(vUv * 20.0 + uProgress * 0.5);
-	float edge0 = uProgress + noise * 0.01;
-	float edge1 = uProgress + clamp(0.02 * uProgress, 0., 1.) + noise2 * 0.01;
+	float edge0 = uProgress + noise * 0.05 - yOffset * (1. - uProgress);
+	float edge1 = uProgress + clamp(0.3 * uProgress, 0., 1.) + noise2 * 0.05 - yOffset * (1. - uProgress);
 
-	if(vUv.x < edge0) {
+	if(vPosition.y < edge0) {
 		gl_FragColor = vec4(0.44, 0.44, 0.44, 1.0);
-	} else if(vUv.x < edge1) {
-		gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+	} else if(vPosition.y < edge1) {
+		gl_FragColor = vec4(0.0, 1.0, 0.35, 1.0);
 	} else {
 		discard;
 	}
