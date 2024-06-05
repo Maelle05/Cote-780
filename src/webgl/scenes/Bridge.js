@@ -66,7 +66,6 @@ class Bridge extends Scene {
 
     //States : off / start / step_1 / step_2 / step_3 / completed
     this.state = "off";
-    this.init();
   }
 
   init() {
@@ -83,6 +82,8 @@ class Bridge extends Scene {
         });
     }
 
+    console.log("init");
+
     this.angle = 0;
     this.direction = 1;
     this.radius = 0.68;
@@ -97,6 +98,14 @@ class Bridge extends Scene {
     //   app.webgl.camera,
     //   app.webgl.renderer.domElement
     // );
+
+    this.milo = new Milo();
+    this.player = this.milo.model;
+    this.player.position.set(this.center.x, this.center.y, this.center.z);
+    this.player.scale.set(0.1, 0.1, 0.1);
+    // this.player.rotation.y = -45 / (180 / Math.PI);
+    this.player.anims.idle();
+    this.add(this.player);
 
     this.rocks = [];
 
@@ -131,17 +140,6 @@ class Bridge extends Scene {
 
     this.rocks[0].material.uniforms.uProgress.value = 1;
 
-    this.playerTest = new Milo();
-    this.player = this.playerTest.milo;
-    this.player.position.set(this.center.x, this.center.y, this.center.z);
-    this.player.scale.set(0.1, 0.1, 0.1);
-    this.player.rotation.y = -45 / (180 / Math.PI);
-    this.player.anims.idle();
-
-    console.log(this.player);
-
-    this.add(this.player);
-
     this.spirit = new Spirit();
     this.spirit.rotation.x = Math.PI / 2;
     this.spirit.scale.set(0, 0, 0);
@@ -173,15 +171,14 @@ class Bridge extends Scene {
 
     app.audio.playMusic("music_1");
 
-    this.anim = new CamAnim(
-      4,
-      this.bridge,
-      [0, 0.33, 0.66, 0.66, 1]
-    );
+    this.anim = new CamAnim(4, this.bridge, [0, 0.33, 0.66, 0.66, 1]);
+    this.anim.onChangeSceneStep(2);
 
     setTimeout(() => {
       this.#start();
     }, 1000);
+
+    // this.init();
   }
 
   onTick() {
@@ -270,7 +267,7 @@ class Bridge extends Scene {
               this.nextRock.position.z
             )
           );
-          // this.player.anims.idle();
+          this.player.anims.idle();
         }
       },
     });
