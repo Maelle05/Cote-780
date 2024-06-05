@@ -60,6 +60,8 @@ class Map extends Scene {
     this.text.color = "red";
     this.add(this.text);
     this.text.sync();
+
+    if(app.webgl.currentScene === 1) this.init() 
   }
 
   onPointerDown(e) {

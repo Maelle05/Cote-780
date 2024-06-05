@@ -7,6 +7,7 @@ import { MeshBasicMaterial } from "three";
 import { Mesh } from "three";
 import Fireworks from "../objects/Fireworks";
 import { DEV_MODE } from "../../utils/constants/config";
+import { app } from "@/App";
 
 class End extends Scene {
   constructor() {
@@ -24,6 +25,8 @@ class End extends Scene {
 
   onAttach() {
     this.add(this.fireworks);
+
+    if(app.webgl.currentScene === 7) this.init() 
   }
 
   clear() {

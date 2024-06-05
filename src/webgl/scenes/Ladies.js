@@ -235,6 +235,8 @@ class Ladies extends Scene {
     );
 
     this.add(this.ladies, this.ambient);
+    
+    if(app.webgl.currentScene === 2) this.init() 
   }
 
   clear() {

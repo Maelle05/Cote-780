@@ -121,7 +121,39 @@ class Dam extends Scene {
         this.nbClick = 0
 	}
 
+  onAttach(){
+      // console.log('Attach Dam')
+      this.scene = app.assetsManager.get('dam');
+      this.scene.traverse((el) => {
+        el.material = new MeshMatcapMaterial({ matcap: app.assetsManager.get('matcap')})
+      })
+      this.add(this.scene);
+
+      this.light = new AmbientLight({ color: 0xffffff });
+      this.add(this.light);
+
+      this.player = app.assetsManager.get("milo").clone();
+      this.player.position.set(this.PARAMS.persoPos.x, this.PARAMS.persoPos.y, this.PARAMS.persoPos.z)
+      this.player.scale.set(0.15, 0.15, 0.15)
+      this.add(this.player);
+
+      this.spirit = new Spirit()
+      this.add(this.spirit)
+
+      this.rocks = app.assetsManager.get('rocks')
+      this.rocks.traverse((el) => { el.material = new MeshMatcapMaterial({ matcap: app.assetsManager.get('matcap'), transparent: true})})
+      this.rocks.position.set(this.PARAMS.rocksPos.x, this.PARAMS.rocksPos.y, this.PARAMS.rocksPos.z)
+      this.rocks.scale.set(1.5, 1.5, 1.5)
+      this.add(this.rocks)
+
+
+      this.anim = new CamAnim(3, this.scene, [0, 0.25, 0.5, 0.75, 1]);
+
+      if(app.webgl.currentScene === 3) this.init()  
+  }
+
   init(){
+    // console.log('Init Dam')
     if (DEV_MODE) {
       this.pane = new Pane({ title: 'Parameters Dam', expanded: false });
       this.pane.addBinding(this.PARAMS, 'sceneRot', {
@@ -160,34 +192,6 @@ class Dam extends Scene {
         this.rocks.position.set(ev.value.x, ev.value.y, ev.value.z)
       });
     }
-  }
-
-  onAttach(){
-      this.scene = app.assetsManager.get('dam');
-      this.scene.traverse((el) => {
-        el.material = new MeshMatcapMaterial({ matcap: app.assetsManager.get('matcap')})
-      })
-      this.add(this.scene);
-
-      this.light = new AmbientLight({ color: 0xffffff });
-      this.add(this.light);
-
-      this.player = app.assetsManager.get("milo").clone();
-      this.player.position.set(this.PARAMS.persoPos.x, this.PARAMS.persoPos.y, this.PARAMS.persoPos.z)
-      this.player.scale.set(0.15, 0.15, 0.15)
-      this.add(this.player);
-
-      this.spirit = new Spirit()
-      this.add(this.spirit)
-
-      this.rocks = app.assetsManager.get('rocks')
-      this.rocks.traverse((el) => { el.material = new MeshMatcapMaterial({ matcap: app.assetsManager.get('matcap'), transparent: true})})
-      this.rocks.position.set(this.PARAMS.rocksPos.x, this.PARAMS.rocksPos.y, this.PARAMS.rocksPos.z)
-      this.rocks.scale.set(1.5, 1.5, 1.5)
-      this.add(this.rocks)
-
-
-      this.anim = new CamAnim(3, this.scene, [0, 0.25, 0.5, 0.75, 1]);
   }
 
   onPointerDown(e){
