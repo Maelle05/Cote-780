@@ -1,20 +1,39 @@
 import {
   Mesh,
   PlaneGeometry,
-  MeshBasicMaterial,
-  DoubleSide,
-  SphereGeometry,
 } from "three";
-import { TestPlaneMaterial } from "../materials/TestPlane/material";
 import gsap from "gsap";
-import { Vector3 } from "three";
+import { state } from "@/utils/State";
+import { app } from "@/App";
+import { SpiritMaterial } from "../materials/Spirit/material";
+import { Vector2 } from "three";
 
 export default class Spirit extends Mesh {
   constructor() {
     super();
+    state.register(this)
+
+    this.config = {
+      dotsNumber: 11,
+      dotsBaseRadius: window.innerHeight * .1,
+      tailSpring: .35,
+      tailGravity: window.innerHeight * .005,
+      tailGravityBonds: [window.innerHeight * .005, window.innerHeight * .01],
+      tailFriction: .5,
+      faceExpression: 0,
+      catchingSpeed: window.innerWidth * .0001,
+    };
 
     this.geometry = this.#createGeometry();
     this.material = this.#createMaterial();
+
+    gsap.to(this.position, {
+      x: 0.5,
+      ease: 'power2.inOut',
+      duration: 3,
+      repeat: -1,
+      yoyo: true,
+    })
   }
 
   show() {
@@ -45,16 +64,28 @@ export default class Spirit extends Mesh {
   }
 
   #createGeometry() {
-    const geometry = new SphereGeometry(0.03, 20, 20);
+    const geometry = new PlaneGeometry(0.5, 0.5);
     return geometry;
   }
 
   #createMaterial() {
-    const material = new MeshBasicMaterial({
-      color: 0xffffff,
-      side: DoubleSide,
-    });
-
+    const material = new SpiritMaterial({
+        uniforms: {
+          u_touch_texture: {type: 't', value: this.touchTexture},
+          u_mouse: { type: 'v2', value: new Vector2(0, 0) },
+          u_target_mouse: { type: 'v2', value: new Vector2(0, 0) },
+          u_resolution: { type: 'v2', value: new Vector2(0, 0) },
+          u_time: { type: 'f', value: 0 },
+          u_face_expression: { type: 'f', value: this.config.faceExpression },
+          u_ratio: { type: 'f', value: window.innerWidth / window.innerHeight },
+        }
+      });
     return material;
+  }
+
+  onTick(){
+    this.lookAt(app.webgl.camera.position)
+
+    this.material.uniforms.u_time.value = app.ticker.elapsed * 0.001
   }
 }
