@@ -6,6 +6,7 @@ class AnimManager {
   constructor(mesh) {
     state.register(this);
 
+    console.log(mesh);
     this.mesh = mesh;
     this.animations = this.mesh.animations;
     this.mixer = new AnimationMixer(this.mesh);
@@ -34,11 +35,8 @@ class AnimManager {
 
     if (this.isAnimating == true) return;
 
-    action.play();
-    action.setEffectiveWeight(1);
-    action.setEffectiveTimeScale(1);
-    console.log(action);
-    action.enabled = true;
+    action.reset().play().setEffectiveWeight(1).setEffectiveTimeScale(1);
+    // action.enabled = true;
     this.currentAction.crossFadeTo(action, duration);
     this.previousAction = this.currentAction;
     this.currentAction = action;

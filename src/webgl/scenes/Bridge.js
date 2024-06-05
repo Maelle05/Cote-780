@@ -84,6 +84,8 @@ class Bridge extends Scene {
         });
     }
 
+    console.log("init");
+
     this.angle = 0;
     this.direction = 1;
     this.radius = 0.68;
@@ -143,7 +145,7 @@ class Bridge extends Scene {
     this.rocks[0].material.uniforms.uProgress.value = 1;
 
     this.playerTest = new Milo();
-    this.player = this.playerTest.milo;
+    this.player = this.playerTest.model;
     this.player.position.set(this.center.x, this.center.y, this.center.z);
     this.player.scale.set(0.1, 0.1, 0.1);
     this.player.rotation.y = -45 / (180 / Math.PI);
@@ -182,16 +184,15 @@ class Bridge extends Scene {
 
     app.audio.playMusic("music_1");
 
-    this.anim = new CamAnim(
-      4,
-      this.bridge,
-      [0, 0.33, 0.66, 0.66, 1]
-    );
+    this.anim = new CamAnim(4, this.bridge, [0, 0.33, 0.66, 0.66, 1]);
+    this.anim.onChangeSceneStep(2);
 
     if(app.webgl.currentScene === 4) this.init()  
     setTimeout(() => {
       this.#start();
     }, 1000);
+
+    // this.init();
   }
 
   onTick() {
@@ -280,7 +281,7 @@ class Bridge extends Scene {
               this.nextRock.position.z
             )
           );
-          // this.player.anims.idle();
+          this.player.anims.idle();
         }
       },
     });

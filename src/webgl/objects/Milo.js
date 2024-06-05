@@ -6,14 +6,36 @@ import { app } from "@/App";
 import { AnimManager } from "../utils/AnimManager";
 
 export default class Milo {
+  static instance = null;
   constructor() {
+    if (Milo.instance) {
+      return Milo.instance;
+    }
+
     state.register(this);
 
-    this.milo = app.assetsManager.get("milo_anim");
-    this.milo.anims = new AnimManager(this.milo);
+    this.model = app.assetsManager.get("milo_anim");
+    this.model.anims = new AnimManager(this.model);
+
+    Milo.instance = this;
+  }
+
+  static getInstance() {
+    if (!Milo.instance) {
+      Milo.instance = new Milo();
+    }
+    return Milo.instance;
   }
 
   onTick(e) {
     // this.material.uniforms.uTime.value = e.et / 1000;
+  }
+
+  clone() {
+    let clone = this.model.clone();
+    clone.anims = this.model.anims;
+    clone.name = "multiclonaaage !";
+
+    return clone;
   }
 }
