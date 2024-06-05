@@ -1,4 +1,4 @@
-import { Scene } from "three";
+import { AmbientLight, FogExp2, Scene } from "three";
 import { state } from "../../utils/State";
 import { Pane } from "tweakpane";
 import { DEV_MODE } from "../../utils/constants/config";
@@ -20,16 +20,17 @@ class Village extends Scene {
 
   onAttach() {
     this.scene = app.assetsManager.get('village');
-    this.scene.traverse((el) => {
-      el.material = new MeshMatcapMaterial({ matcap: app.assetsManager.get('matcap')})
-    })
+
+    this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
+
+    this.fog = new FogExp2("#1A4D93", 0.08);
 
     this.anim = new CamAnim(
       6,
       this.scene,
       [0, 0.33, 0.66, 1]
     );
-    this.add(this.scene);
+    this.add(this.scene, this.ambient);
 
     if(app.webgl.currentScene === 6) this.init() 
   }
