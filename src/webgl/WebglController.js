@@ -46,7 +46,6 @@ export default class WebglController {
     ];
     this.currentScene = INIT_SCENE;
     this.scene = this.allScene[this.currentScene];
-    this.scene.init();
 
     // Post pros
     this.effectComposer = new EffectComposer(this.renderer);
@@ -85,6 +84,7 @@ export default class WebglController {
     this.initStats();
     this.canvasWrapper.appendChild(this.renderer.domElement);
     this.onRender();
+    this.scene.init();
   }
 
   // UPDATE AND RENDER

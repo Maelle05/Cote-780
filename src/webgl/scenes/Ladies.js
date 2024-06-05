@@ -194,7 +194,7 @@ class Ladies extends Scene {
       this.dem3.topIsDraw &&
       !this.finish
     ) {
-      state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, 2);
+      state.emit(EVENTS.GO_NEXT);
       this.finish = true;
     }
   }
