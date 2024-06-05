@@ -14,26 +14,22 @@ export default class Spirit extends Mesh {
     state.register(this)
 
     this.config = {
-      dotsNumber: 11,
-      dotsBaseRadius: window.innerHeight * .1,
-      tailSpring: .35,
-      tailGravity: window.innerHeight * .005,
-      tailGravityBonds: [window.innerHeight * .005, window.innerHeight * .01],
-      tailFriction: .5,
       faceExpression: 0,
-      catchingSpeed: window.innerWidth * .0001,
     };
 
     this.geometry = this.#createGeometry();
     this.material = this.#createMaterial();
 
-    gsap.to(this.position, {
-      x: 0.5,
-      ease: 'power2.inOut',
-      duration: 3,
-      repeat: -1,
-      yoyo: true,
-    })
+    // gsap.to(this.position, {
+    //   x: 0.5,
+    //   ease: 'power2.inOut',
+    //   duration: 3,
+    //   repeat: -1,
+    //   yoyo: true,
+    // })
+
+    // Var
+    this.lastPos = 0
   }
 
   show() {
@@ -64,20 +60,16 @@ export default class Spirit extends Mesh {
   }
 
   #createGeometry() {
-    const geometry = new PlaneGeometry(0.5, 0.5);
+    const geometry = new PlaneGeometry(0.4, 0.4);
     return geometry;
   }
 
   #createMaterial() {
     const material = new SpiritMaterial({
         uniforms: {
-          u_touch_texture: {type: 't', value: this.touchTexture},
-          u_mouse: { type: 'v2', value: new Vector2(0, 0) },
-          u_target_mouse: { type: 'v2', value: new Vector2(0, 0) },
-          u_resolution: { type: 'v2', value: new Vector2(0, 0) },
-          u_time: { type: 'f', value: 0 },
-          u_face_expression: { type: 'f', value: this.config.faceExpression },
-          u_ratio: { type: 'f', value: window.innerWidth / window.innerHeight },
+          u_time: { value: 0 },
+          u_mouve: { value: 0 },
+          u_face_expression: { value: this.config.faceExpression },
         }
       });
     return material;
@@ -87,5 +79,19 @@ export default class Spirit extends Mesh {
     this.lookAt(app.webgl.camera.position)
 
     this.material.uniforms.u_time.value = app.ticker.elapsed * 0.001
+    this.material.uniforms.u_mouve.value = this.valueMove(this.position.x)
+  }
+
+  valueMove(currentPos){
+    let strength = 0
+
+    if (currentPos != this.lastPos) {
+      const diff = (currentPos - this.lastPos) * 40
+      strength = (diff > 1) ? 1 : (diff < -1) ? -1 : diff
+      strength = -strength
+      this.lastPos = currentPos
+    }
+
+    return strength // entre -1 et 1
   }
 }

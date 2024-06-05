@@ -1,10 +1,7 @@
 varying vec2 vUv;
-uniform float u_ratio;
 uniform float u_time;
-uniform vec2 u_mouse;
-uniform vec2 u_target_mouse;
+uniform float u_mouve;
 uniform float u_face_expression;
-uniform sampler2D u_touch_texture;
 
   // --------------------------------
   // Ghost face
@@ -92,30 +89,31 @@ uniform sampler2D u_touch_texture;
     vec4 color = vec4(.945, .945, .902, 1.);
 
     // Create base shape with circle mask
-    vec3 metaballs[2]; // posX, PosY, R
-    metaballs[0] = vec3(0.5, 0.25, 0.05);
-    metaballs[1] = vec3(0.5, 0.65, 0.15);
+    vec3 metaballs[3]; // posX, PosY, R
+    metaballs[0] = vec3(0.5, 0.65, 0.12);
+    metaballs[1] = vec3(0.5 + u_mouve * 0.2, 0.40 + abs(u_mouve) * 0.17, 0.05);
+    metaballs[2] = vec3(0.5 + u_mouve * 0.42, 0.20 + abs(u_mouve) * 0.3, 0.03);
     float paint = 0.0;
     for(int i = 0; i < metaballs.length(); i++){
       paint += metaballs[i].z / distance(metaballs[i].xy, vUv);
     }
-    float marge = 0.75;
-    float smallMask = (paint >= marge) ? paint : 0.;
-    paint = clamp(paint, 0.0, 1.0);
-    vec4 shapeMask = vec4(vec3(smallMask), 1.0);
+    vec4 shapeMask = vec4(smoothstep(.6, .85, paint));
   
 
     // Noise
     vec2 noise_pos = vec2(st * 6.);
     float noise = snoise(noise_pos + vec2(0., u_time)) * .25 + .25;
     noise += snoise(noise_pos) * .25 + .3;
+    vec4 noiseTex = mix(transparent, color, smoothstep(.3, .6, noise));
 
     // Add face
-    // noise -= 1.2 * face(mouse - .1 * (mouse - mouse_target));
+    float faceBall = smoothstep(.7, .85, 1. - distance( st, metaballs[0].xy ));
+    // vec4(1.2 * face(vec2(u_mouve)))
+    vec4 faceTex = vec4(faceBall);
 
     // Apply color scheme
-    vec4 result = mix(transparent, color, smoothstep(.01, .38, noise));
-    result = mix(transparent, result, shapeMask);
+    vec4 resultNoiseBaseShape = mix(transparent, noiseTex, shapeMask);
+    vec4 result = mix(resultNoiseBaseShape, color, faceTex);
 
     gl_FragColor = result;
   }
