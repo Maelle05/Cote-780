@@ -69,6 +69,8 @@ class Bridge extends Scene {
   }
 
   init() {
+    console.log('Init Bridge')
+
     if (DEV_MODE) {
       this.pane = new Pane({ title: "Parameters Bridge", expanded: true });
       this.pane
@@ -94,18 +96,20 @@ class Bridge extends Scene {
   }
 
   onAttach() {
+    console.log('Attach Bridge')
+
     // const controls = new OrbitControls(
     //   app.webgl.camera,
     //   app.webgl.renderer.domElement
     // );
 
-    this.milo = new Milo();
-    this.player = this.milo.model;
-    this.player.position.set(this.center.x, this.center.y, this.center.z);
-    this.player.scale.set(0.1, 0.1, 0.1);
-    // this.player.rotation.y = -45 / (180 / Math.PI);
-    this.player.anims.idle();
-    this.add(this.player);
+    this.angle = 0;
+    this.direction = 1;
+    this.radius = 0.68;
+    this.radiusOffset = 0;
+    this.center = new Vector3(0.67, 0.01, 2.19);
+    this.rockIndex = 0;
+    this.minSpeed = 0.01;
 
     this.rocks = [];
 
@@ -139,6 +143,15 @@ class Bridge extends Scene {
     });
 
     this.rocks[0].material.uniforms.uProgress.value = 1;
+
+    this.playerTest = new Milo();
+    this.player = this.playerTest.model;
+    this.player.position.set(this.center.x, this.center.y, this.center.z);
+    this.player.scale.set(0.1, 0.1, 0.1);
+    this.player.rotation.y = -45 / (180 / Math.PI);
+    this.player.anims.idle();
+
+    this.add(this.player);
 
     this.spirit = new Spirit();
     this.spirit.rotation.x = Math.PI / 2;
@@ -174,6 +187,7 @@ class Bridge extends Scene {
     this.anim = new CamAnim(4, this.bridge, [0, 0.33, 0.66, 0.66, 1]);
     this.anim.onChangeSceneStep(2);
 
+    if(app.webgl.currentScene === 4) this.init()  
     setTimeout(() => {
       this.#start();
     }, 1000);

@@ -30,6 +30,8 @@ class Village extends Scene {
       [0, 0.33, 0.66, 1]
     );
     this.add(this.scene);
+
+    if(app.webgl.currentScene === 6) this.init() 
   }
 
   clear() {
