@@ -2,7 +2,7 @@
 import { EVENTS } from "../../utils/constants/events"
 import { INTRO_SECTIONS } from "../../utils/constants/config"
 import { state } from "../../utils/State"
-import { ref, watch, onMounted, onUnmounted } from "vue"
+import { ref, reactive, onMounted, onUnmounted } from "vue"
 import { gsap, ScrollTrigger } from "gsap/all"
 import { useI18n } from "vue-i18n"
 import IntroText from "../components/IntroText.vue" // Adjust the path as necessary
@@ -15,16 +15,10 @@ const isStarted = ref(false)
 const hasScrolled = ref(false)
 const activeSection = ref("")
 
-const onActiveSectionChange = (newVal, oldVal) => {
-  state.emit(EVENTS.INTRO_CHANGE_SECTION, newVal)
-
-  const updatedText = INTRO_SECTIONS[newVal]?.text
-  if (updatedText !== undefined) {
-    state.emit(EVENTS.INTRO_UPDATE_TEXT, { text: updatedText })
-  }
-}
-
-watch(activeSection, onActiveSectionChange)
+const scrollProgress = reactive([])
+INTRO_SECTIONS.forEach((_, index) => {
+  scrollProgress[index] = 0;
+});
 
 const onClickCtaStart = () => {
   isStarted.value = true
@@ -133,8 +127,8 @@ onMounted(() => {
   INTRO_SECTIONS.forEach((section, index) => {
     ScrollTrigger.create({
       trigger: `.section--${index}`,
-      start: "top bottom",
-      end: "+100%",
+      start: "top center",
+      end: "bottom center",
       animation: timelines[index],
       scrub: 1,
       onEnter: () => {
@@ -148,6 +142,9 @@ onMounted(() => {
       },
       onLeaveBack: () => {
         activeSection.value = index - 1
+      },
+      onUpdate: (self) => {
+        scrollProgress[index] = self.progress
       },
     })
   })
@@ -167,7 +164,11 @@ onMounted(() => {
     ${hasScrolled ? 'intro-container--has-scrolled' : ''}`"
   >
     <div
-      :class="`section section--${index}`"
+      :class="`
+      section 
+      section--${index}
+      section--${activeSection === index ? 'active' : 'inactive'}`
+      "
       :key="section.text"
       v-for="(section, index) in INTRO_SECTIONS"
     >
@@ -185,7 +186,7 @@ onMounted(() => {
         </div>
       </div>
       <div class="section__text">
-        <IntroText :text="section.text" />
+        <IntroText :text="section.text" :section="index" :sectionProgress="scrollProgress[index]" />
       </div>
     </div>
     <p class="intro-cta intro-cta--end" @click="onClickCtaEnd">Compris !</p>
@@ -294,13 +295,29 @@ onMounted(() => {
   height: 150vh;
   width: 100%;
   background-color: #fff;
-  /* border-top: 2px solid red; */
+  position: relative;
+}
+
+/* .section {
+  border: 2px solid red;
+}
+
+.section.section--active {
+  background-color: #ff00ff4e;
+} */
+
+.section__text {
+  position: fixed;
+  top: 0;
+}
+
+.section__elements {
   display: grid;
   align-items: center;
   justify-content: center;
 }
 
-.section > * {
+.section__elements > * {
   grid-area: 1 / -1;
 }
 
