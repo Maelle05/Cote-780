@@ -24,11 +24,7 @@ export default class UIWebglController {
 
     this.allScene = [new Null()]
     this.currentScene = INIT_SCENE
-    if (this.currentScene == 0) {
-      this.scene = this.allScene[0]
-    } else {
-      this.scene = this.allScene[1]
-    }
+    this.scene = this.allScene[0]
     this.scene.init()
   }
 

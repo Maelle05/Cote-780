@@ -86,7 +86,7 @@ export default class Spirit extends Mesh {
     let strength = 0
 
     if (currentPos != this.lastPos) {
-      const diff = (currentPos - this.lastPos) * 40
+      const diff = (currentPos - this.lastPos) * 20
       strength = (diff > 1) ? 1 : (diff < -1) ? -1 : diff
       strength = -strength
       this.lastPos = currentPos
