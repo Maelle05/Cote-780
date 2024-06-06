@@ -70,7 +70,7 @@ class Chapel extends Scene {
 
     this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 1]);
 
-    this.anim.onChangeSceneStep(0);
+    // this.anim.onChangeSceneStep(2);
 
     if(app.webgl.currentScene === 5) this.init() 
   }
