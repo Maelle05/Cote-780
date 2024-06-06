@@ -56,9 +56,9 @@ float snoise(vec2 v) {
 
 void main() {
 	//Distance between UV and center of the plane
-	float dist = distance(vec2(uSize), vUv);
 
 	float noise = snoise(vUv * 20.0 + uTime * 0.2);
+	float dist = distance(vec2(uSize), vUv);
 	float noisyRadius = radius + noise * 0.01;
 
 	//Create a circle with noise moving

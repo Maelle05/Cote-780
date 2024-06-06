@@ -41,6 +41,8 @@ class Bridge extends Scene {
         y: 0,
         z: 0,
       },
+      targetProgress: 0,
+      targetNoise: 2,
     };
 
     this.light = new AmbientLight({ color: 0xffffff });
@@ -69,8 +71,6 @@ class Bridge extends Scene {
   }
 
   init() {
-    console.log('Init Bridge')
-
     if (DEV_MODE) {
       this.pane = new Pane({ title: "Parameters Bridge", expanded: true });
       this.pane
@@ -82,76 +82,86 @@ class Bridge extends Scene {
         .on("change", (ev) => {
           this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
-    }
+      this.pane
+        .addBinding(this.PARAMS, "targetProgress", {
+          min: 0,
+          max: 1,
+          step: 0.001,
+        })
+        .on("change", (ev) => {
+          this.target.material.uniforms.uProgress.value = ev.value;
+        });
 
-    console.log("init");
+      this.pane
+        .addBinding(this.PARAMS, "targetNoise", {
+          min: 0,
+          max: 10,
+          step: 0.001,
+        })
+        .on("change", (ev) => {
+          this.target.material.uniforms.uNoiseOffset.value = ev.value;
+        });
+    }
 
     this.angle = 0;
     this.direction = 1;
     this.radius = 0.68;
     this.radiusOffset = 0;
-    this.center = new Vector3(0.67, 0.01, 2.19);
     this.rockIndex = 0;
     this.minSpeed = 0.01;
+
+    this.milo = new Milo();
+    this.player = this.milo.model;
+    this.player.position.set(this.center.x, this.center.y, this.center.z);
+    this.player.scale.set(0.1, 0.1, 0.1);
+    this.player.rotation.y = Math.PI - 45;
+    this.player.anims.idle();
+
+    this.add(this.player);
   }
 
   onAttach() {
-    console.log('Attach Bridge')
-
     // const controls = new OrbitControls(
     //   app.webgl.camera,
     //   app.webgl.renderer.domElement
     // );
 
-    this.angle = 0;
-    this.direction = 1;
-    this.radius = 0.68;
-    this.radiusOffset = 0;
     this.center = new Vector3(0.67, 0.01, 2.19);
-    this.rockIndex = 0;
-    this.minSpeed = 0.01;
-
     this.rocks = [];
 
     this.bridge = app.assetsManager.get("bridge");
     this.add(this.bridge);
 
-    //Remove reflection from material
     this.bridge.traverse((child) => {
+      //Remove reflection from material
       if ((child.isMesh && child.name === "Water") || child.name == "Ground") {
-        // child.material.metalness = 0;
         child.material.roughness = 1;
       }
 
       if (child.isMesh && child.name.includes("Rock")) {
-        // const plane = new Foam();
-        // plane.position.copy(child.position);
-        // plane.rotation.x = Math.PI / 2;
-        // plane.position.y -= 0.02;
-        // this.add(plane);
+        const plane = new Foam();
+        plane.position.copy(child.position);
+        plane.rotation.x = Math.PI / 2;
+        plane.position.y -= 0.02;
+        this.add(plane);
 
         child.material = new RockMaterial({
           uniforms: {
             uProgress: { value: 0 },
           },
           side: DoubleSide,
-          transparent: true,
         });
 
         this.rocks.push(child);
       }
+
+      //Remove 2cnd Milo because here for no reasons
+      if (child.isMesh && child.name.includes("Milo")) {
+        child.visible = false;
+      }
     });
 
     this.rocks[0].material.uniforms.uProgress.value = 1;
-
-    this.playerTest = new Milo();
-    this.player = this.playerTest.model;
-    this.player.position.set(this.center.x, this.center.y, this.center.z);
-    this.player.scale.set(0.1, 0.1, 0.1);
-    this.player.rotation.y = -45 / (180 / Math.PI);
-    this.player.anims.idle();
-
-    this.add(this.player);
 
     this.spirit = new Spirit();
     this.spirit.rotation.x = Math.PI / 2;
@@ -166,9 +176,13 @@ class Bridge extends Scene {
         this.rocks[0].position.y + 0.2,
         this.rocks[0].position.z
       ),
-      0.02
+      0.02,
+      new Vector3(
+        this.rocks[1].position.x,
+        this.rocks[1].position.y + 0.2,
+        this.rocks[1].position.z
+      )
     );
-    this.target.rotation.x = 4;
     this.add(this.target);
 
     this.cairn = new Cairn();
@@ -180,19 +194,17 @@ class Bridge extends Scene {
 
     this.add(this.cairn);
 
-    this.radius = this.player.position.distanceTo(this.rocks[0].position);
+    this.radius = this.center.distanceTo(this.rocks[0].position);
 
     app.audio.playMusic("music_1");
 
     this.anim = new CamAnim(4, this.bridge, [0, 0.33, 0.66, 0.66, 1]);
     this.anim.onChangeSceneStep(2);
 
-    if(app.webgl.currentScene === 4) this.init()  
+    if (app.webgl.currentScene === 4) this.init();
     setTimeout(() => {
       this.#start();
     }, 1000);
-
-    // this.init();
   }
 
   onTick() {
@@ -248,7 +260,7 @@ class Bridge extends Scene {
     if (this.spirit.position.distanceTo(this.target.position) > 0.2) return;
 
     this.spirit.hide();
-    this.target.hide();
+    this.target.next();
     this.player.anims.jump();
 
     gsap.to(this.center, {
@@ -274,13 +286,13 @@ class Bridge extends Scene {
           this.rockIndex++;
           this.spirit.show();
 
-          this.target.show(
-            new Vector3(
-              this.nextRock.position.x,
-              this.nextRock.position.y + 0.2,
-              this.nextRock.position.z
-            )
-          );
+          // this.target.show(
+          //   new Vector3(
+          //     this.nextRock.position.x,
+          //     this.nextRock.position.y + 0.2,
+          //     this.nextRock.position.z
+          //   )
+          // );
           this.player.anims.idle();
         }
       },
@@ -309,13 +321,13 @@ class Bridge extends Scene {
     this.spirit.show();
 
     //launch Particles
-    this.target.show(
-      new Vector3(
-        this.rocks[0].position.x,
-        this.rocks[0].position.y + 0.2,
-        this.rocks[0].position.z
-      )
-    );
+    // this.target.show(
+    //   new Vector3(
+    //     this.rocks[0].position.x,
+    //     this.rocks[0].position.y + 0.2,
+    //     this.rocks[0].position.z
+    //   )
+    // );
   }
 
   clear() {

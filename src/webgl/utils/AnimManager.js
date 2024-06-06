@@ -6,7 +6,6 @@ class AnimManager {
   constructor(mesh) {
     state.register(this);
 
-    console.log(mesh);
     this.mesh = mesh;
     this.animations = this.mesh.animations;
     this.mixer = new AnimationMixer(this.mesh);
@@ -53,7 +52,6 @@ class AnimManager {
   }
 
   jump() {
-    console.log("first");
     this.changeAction(this.jumpAction);
   }
 
