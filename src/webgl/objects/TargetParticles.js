@@ -103,7 +103,7 @@ export default class TargetParticles extends Points {
       // alphaTest: 0.01,
       // depthTest: true,
       depthWrite: true,
-      blending: AdditiveBlending,
+      // blending: AdditiveBlending,
     });
 
     return material;

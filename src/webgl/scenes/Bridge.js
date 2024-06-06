@@ -166,6 +166,7 @@ class Bridge extends Scene {
     this.spirit = new Spirit();
     this.spirit.rotation.x = Math.PI / 2;
     this.spirit.scale.set(0, 0, 0);
+    this.spirit.visible = false;
 
     this.add(this.spirit);
 
