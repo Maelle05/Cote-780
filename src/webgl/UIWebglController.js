@@ -4,7 +4,7 @@ import { state } from '../utils/State';
 import { INIT_SCENE } from '../utils/constants/config'
 
 // UI
-import { Intro } from "./UI/Intro";
+// import { Intro } from "./UI/Intro";
 import { Null } from './UI/Null';
 import { app } from '@/App';
 
@@ -22,7 +22,7 @@ export default class UIWebglController {
     this.renderer = new Renderer(this.canvasWrapper, 0x000000, 0);
     this.camera = new Camera();
 
-    this.allScene = [new Intro(), new Null()]
+    this.allScene = [new Null()]
     this.currentScene = INIT_SCENE
     if (this.currentScene == 0) {
       this.scene = this.allScene[0]
