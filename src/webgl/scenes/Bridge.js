@@ -198,6 +198,8 @@ class Bridge extends Scene {
 
     app.audio.playMusic("music_1");
 
+    this.radius = this.center.distanceTo(this.rocks[0].position);
+
     this.anim = new CamAnim(4, this.bridge, [0, 0.33, 0.66, 0.66, 1]);
     this.anim.onChangeSceneStep(2);
 

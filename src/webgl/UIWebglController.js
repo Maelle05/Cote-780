@@ -1,13 +1,12 @@
-import { Renderer } from './Renderer';
-import { Camera } from './Camera';
-import { state } from '../utils/State';
-import { INIT_SCENE } from '../utils/constants/config'
+import { Renderer } from "./Renderer";
+import { Camera } from "./Camera";
+import { state } from "../utils/State";
+import { INIT_SCENE } from "../utils/constants/config";
 
 // UI
 // import { Intro } from "./UI/Intro";
-import { Null } from './UI/Null';
-import { app } from '@/App';
-
+import { Null } from "./UI/Null";
+import { app } from "@/App";
 
 export default class UIWebglController {
   constructor(container) {
@@ -36,11 +35,11 @@ export default class UIWebglController {
     this.onRender();
   }
 
-  onChangeScene(e){
-    this.currentScene = e
-    this.scene.clear()
-    this.scene = this.allScene[0]
-    this.scene.init()
+  onChangeScene(e) {
+    this.currentScene = e;
+    this.scene.clear();
+    this.scene = this.allScene[0];
+    this.scene.init();
   }
 
   onRender() {
