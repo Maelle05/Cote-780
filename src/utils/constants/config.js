@@ -5,15 +5,15 @@ const DEV_MODE = true;
 const INIT_SCENE = 4;
 
 const TITLES_SCENE = [
-  "Intro",
-  "Map",
-  "Demoiselles",
-  "Barrage",
-  "Pont",
-  "Chapelle",
-  "Village",
-  "Fin",
-];
+  [dataText["scene_0"].title],
+  [dataText["scene_1"].title],
+  [dataText["scene_2"].title_0, dataText["scene_2"].title_1],
+  [dataText["scene_3"].title],
+  [dataText["scene_4"].title_0, dataText["scene_4"].title_1],
+  [dataText["scene_5"].title_0, dataText["scene_5"].title_1],
+  [dataText["scene_6"].title_0, dataText["scene_6"].title_1],
+  [dataText["scene_7"].title],
+]
 
 const introTexts = dataText['scene_0']
 
