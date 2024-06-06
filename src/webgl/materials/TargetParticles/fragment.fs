@@ -1,9 +1,12 @@
 uniform float uTime;
 uniform float uProgress;
+uniform float uSize;
+
+uniform vec3 uP1;
 
 varying vec2 vUv;
-varying vec3 vPosition;
 varying float vIndex;
+varying vec3 vPosition;
 
 float PI = 3.141592653589793238;
 
@@ -13,11 +16,20 @@ float rand(float seed) {
 
 void main() {
     //make particles circle
-    float dist = distance(gl_PointCoord, vec2(0.2, 0.2));
-    if(dist < uProgress) {
-        discard;
-    }
-    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0); 
+    vec2 center = vPosition.xy;
+
+    // vec2 center = vec2(0);
+    // center.x += uSize;
+    // center.y -= uSize;
+    // float dist = distance(center, gl_PointCoord);
+    // float radius = 0.5;
+
+    // if(dist > radius) {
+    //     discard;
+    // }
+
+    // gl_FragColor = vec4(gl_PointCoord, 1.0, 1.0); 
+    gl_FragColor = vec4(vec3(uProgress), 1.0); 
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
 }

@@ -4,9 +4,10 @@ import { INTRO_SECTIONS } from "../../utils/constants/config"
 import { state } from "../../utils/State"
 import { ref, watch, onMounted, onUnmounted } from "vue"
 import { gsap, ScrollTrigger } from "gsap/all"
-import { useI18n } from "vue-i18n";
+import { useI18n } from "vue-i18n"
+import IntroText from "../components/IntroText.vue" // Adjust the path as necessary
 
-const { t } = useI18n();
+const { t } = useI18n()
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -151,7 +152,7 @@ onMounted(() => {
     })
   })
 
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener("scroll", handleScroll)
 
   onUnmounted(() => {
     window.removeEventListener("scroll", handleScroll)
@@ -162,27 +163,29 @@ onMounted(() => {
 <template>
   <div
     :class="`intro-container 
-    intro-container--${
-      isStarted ? 'started' : 'not-started'
-    } 
-    ${hasScrolled ? 'intro-container--has-scrolled' : ''}`
-    "
+    intro-container--${isStarted ? 'started' : 'not-started'} 
+    ${hasScrolled ? 'intro-container--has-scrolled' : ''}`"
   >
     <div
       :class="`section section--${index}`"
       :key="section.text"
       v-for="(section, index) in INTRO_SECTIONS"
     >
-      <div
-        :class="`
+      <div class="section__elements">
+        <div
+          :class="`
       section__element 
       section__element--${index} 
       section__element--${element.id}
       `"
-        :key="element.src"
-        v-for="(element, index) in section.elements"
-      >
-        <img :src="element.src" />
+          :key="element.src"
+          v-for="(element, index) in section.elements"
+        >
+          <img :src="element.src" />
+        </div>
+      </div>
+      <div class="section__text">
+        <IntroText :text="section.text" />
       </div>
     </div>
     <p class="intro-cta intro-cta--end" @click="onClickCtaEnd">Compris !</p>
@@ -190,7 +193,7 @@ onMounted(() => {
       <div class="intro-title-screen__ui">
         <img src="/src/assets/logo/cote-780.png" alt="Cote 780" />
         <p class="intro-cta intro-cta--start" @click="onClickCtaStart">
-          {{ t('intro.start') }}
+          {{ t("intro.start") }}
         </p>
       </div>
       <div class="intro-title-screen__scroll">

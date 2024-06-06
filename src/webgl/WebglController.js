@@ -73,29 +73,25 @@ export default class WebglController {
       this.stats = new Stats();
       this.canvasWrapper.appendChild(this.stats.dom);
 
-      this.scene.pane
-        .addBinding(this.transitionPass.material.uniforms.uProgress, "value", {
-          min: 0,
-          max: 1,
-          step: 0.001,
-          label: "Transition progress",
-        })
-        .on("change", (ev) => {
-          this.transitionPass.material.uniforms.uProgress.value = ev.value;
-        });
+      // this.scene.pane.addBinding(this.transitionPass.material.uniforms.uProgress, 'value', {
+      //   min: 0,
+      //   max: 1,
+      //   step: 0.001,
+      //   label: 'Transition progress',
+      // }).on('change', (ev) => {
+      //   this.transitionPass.material.uniforms.uProgress.value = ev.value
+      // });
     }
   }
 
   onAttach() {
-    // console.log('Event onAttach')
+    console.log("Event onAttach");
     // clear canvas
     this.canvasWrapper.innerHTML = "";
     // add canvas to dom
-    this.initStats();
     this.canvasWrapper.appendChild(this.renderer.domElement);
     this.onRender();
-    console.log("onAttach");
-    this.scene.init();
+    this.initStats();
   }
 
   // UPDATE AND RENDER

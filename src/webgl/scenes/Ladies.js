@@ -231,6 +231,8 @@ class Ladies extends Scene {
     this.anim = new CamAnim(2, this.ladies, [0, 0.33, 0.66, 0.66, 1]);
 
     this.add(this.ladies, this.ambient);
+    
+    if(app.webgl.currentScene === 2) this.init() 
   }
 
   clear() {
