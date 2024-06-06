@@ -43,11 +43,7 @@ export default class UIWebglController {
   onChangeScene(e){
     this.currentScene = e
     this.scene.clear()
-    if (this.currentScene == 0) {
-      this.scene = this.allScene[0]
-    } else {
-      this.scene = this.allScene[1]
-    }
+    this.scene = this.allScene[0]
     this.scene.init()
   }
 
