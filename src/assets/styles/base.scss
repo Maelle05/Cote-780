@@ -7,11 +7,18 @@
   --c-yellow: #CD8F26;
   --c-blue: #204062;
 
+  --c-turquoise-light: #A1BAC3;
+  --c-turquoise-medium: #7995A5;
+  --c-turquoise-dark: #3D5873;
+
   // Texts
   --c-text-white: #FFFFFF;
   --c-text-dark: #OOOOOO;
+  --c-text-turquoise: var(--c-turquoise-dark);
 
   // Fonts
+  --ff-eczar: "Eczar";
+  --ff-rubik: "Rubik";
 }
 
 * {

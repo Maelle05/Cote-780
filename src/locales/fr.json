@@ -4,6 +4,9 @@
     "description": "Bla Bli Bla Blou"
   },
   "intro": {
+    "text_1": "Ce conte vous plonge au cœur des Hautes-Alpes, dans la vallée de la Durance.",
+    "text_2": "Un barrage y fut construit à la fin des années 1950 pour apaiser les colères de l’imposante rivière qui donne son nom à la vallée. Cet événement bouleversa de nombreuses vies dans la région, et trois villages furent engloutis sous les eaux.",
+    "text_3": "Ce fut la naissance du Lac de Serre-Ponçon.",
     "start": "Démarrer l'expérience"
   },
   "scene_0": {

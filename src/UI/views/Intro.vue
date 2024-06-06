@@ -1,11 +1,14 @@
 <script setup>
-import { EVENTS } from "../../utils/constants/events"
-import { INTRO_SECTIONS } from "../../utils/constants/config"
-import { state } from "../../utils/State"
 import { ref, reactive, onMounted, onUnmounted } from "vue"
 import { gsap, ScrollTrigger } from "gsap/all"
 import { useI18n } from "vue-i18n"
+
+import { EVENTS } from "../../utils/constants/events"
+import { INTRO_SECTIONS } from "../../utils/constants/config"
+import { state } from "../../utils/State"
+
 import IntroText from "../components/IntroText.vue" // Adjust the path as necessary
+import PreIntro from "../components/PreIntro.vue"
 
 const { t } = useI18n()
 
@@ -20,9 +23,9 @@ INTRO_SECTIONS.forEach((_, index) => {
   scrollProgress[index] = 0;
 });
 
-const onClickCtaStart = () => {
+state.on(EVENTS.START_EXP, (e) => {
   isStarted.value = true
-}
+})
 
 const onClickCtaEnd = () => {
   state.emit(EVENTS.GO_NEXT)
@@ -163,6 +166,7 @@ onMounted(() => {
     intro-container--${isStarted ? 'started' : 'not-started'} 
     ${hasScrolled ? 'intro-container--has-scrolled' : ''}`"
   >
+    <PreIntro :isVisible="isStarted ? false : true" />
     <div
       :class="`
       section 
@@ -193,9 +197,6 @@ onMounted(() => {
     <div class="intro-title-screen">
       <div class="intro-title-screen__ui">
         <img src="/src/assets/logo/cote-780.png" alt="Cote 780" />
-        <p class="intro-cta intro-cta--start" @click="onClickCtaStart">
-          {{ t("intro.start") }}
-        </p>
       </div>
       <div class="intro-title-screen__scroll">
         <span></span>
@@ -356,9 +357,9 @@ onMounted(() => {
   display: none;
 }
 
-.intro-container.intro-container--started .intro-title-screen__ui {
+/* .intro-container.intro-container--started .intro-title-screen__ui {
   opacity: 0;
   transform: translateY(-40vh);
   pointer-events: none;
-}
+} */
 </style>
