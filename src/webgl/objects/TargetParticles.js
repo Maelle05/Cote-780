@@ -1,4 +1,10 @@
-import { Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide } from "three";
+import {
+  Mesh,
+  PlaneGeometry,
+  MeshBasicMaterial,
+  DoubleSide,
+  AdditiveBlending,
+} from "three";
 import { BufferGeometry } from "three";
 import { Float32BufferAttribute } from "three";
 import { PointsMaterial } from "three";
@@ -93,6 +99,11 @@ export default class TargetParticles extends Points {
         uP4: { value: this.p4 },
         uNoiseOffset: { value: 2 },
       },
+      transparent: true,
+      // alphaTest: 0.01,
+      // depthTest: true,
+      depthWrite: true,
+      blending: AdditiveBlending,
     });
 
     return material;

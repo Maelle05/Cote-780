@@ -73,7 +73,7 @@ vec3 getSpherePosition(float idx, vec3 center) {
 }
 
 vec3 getCirclePosition(float idx, float progress, vec3 center) {
-  float turns = 10.0;
+  float turns = 3.0;
   float radius = uRadius + 0.1;
   float baseAngle = calculateAngle(uP2, uP3, radius);
   float angle = 2.0 * PI * progress * turns + baseAngle;
