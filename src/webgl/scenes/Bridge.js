@@ -113,7 +113,7 @@ class Bridge extends Scene {
     this.milo = new Milo();
     this.player = this.milo.model;
     this.player.position.set(this.center.x, this.center.y, this.center.z);
-    this.player.scale.set(0.1, 0.1, 0.1);
+    // this.player.scale.set(0.1, 0.1, 0.1);
     this.player.rotation.y = Math.PI - 45;
     this.player.anims.idle();
 
@@ -121,11 +121,6 @@ class Bridge extends Scene {
   }
 
   onAttach() {
-    const controls = new OrbitControls(
-      app.webgl.camera,
-      app.webgl.renderer.domElement
-    );
-
     this.center = new Vector3(0.67, 0.01, 2.19);
     this.rocks = [];
 
@@ -143,6 +138,7 @@ class Bridge extends Scene {
         plane.position.copy(child.position);
         plane.rotation.x = Math.PI / 2;
         plane.position.y -= 0.02;
+        plane.visible = false;
         this.add(plane);
 
         child.material = new RockMaterial({
@@ -166,7 +162,7 @@ class Bridge extends Scene {
     this.spirit = new Spirit();
     this.spirit.rotation.x = Math.PI / 2;
     this.spirit.scale.set(0, 0, 0);
-    this.spirit.visible = false;
+    // this.spirit.visible = false;
 
     this.add(this.spirit);
 
@@ -201,8 +197,15 @@ class Bridge extends Scene {
 
     this.radius = this.center.distanceTo(this.rocks[0].position);
 
-    // this.anim = new CamAnim(4, this.bridge, [0, 0.33, 0.66, 0.66, 1]);
-    // this.anim.onChangeSceneStep(2);
+    this.anim = new CamAnim(4, this.bridge, [0, 0.33, 0.66, 0.66, 1]);
+    this.anim.onChangeSceneStep(2);
+
+    if (!this.anim) {
+      const controls = new OrbitControls(
+        app.webgl.camera,
+        app.webgl.renderer.domElement
+      );
+    }
 
     if (app.webgl.currentScene === 4) this.init();
     setTimeout(() => {
@@ -262,15 +265,20 @@ class Bridge extends Scene {
     if (!this.currentRock) return;
     if (this.spirit.position.distanceTo(this.target.position) > 0.2) return;
 
-    this.spirit.hide();
-    this.target.next();
-    this.player.anims.jump();
+    const targetAnimDuration = 3;
 
+    //Particle animation
+    this.spirit.hide();
+    this.target.next(targetAnimDuration);
+    // this.player.anims.jump();
+
+    //Milo Jump
     gsap.to(this.center, {
       x: this.currentRock.position.x,
       y: this.currentRock.position.y,
       z: this.currentRock.position.z,
       duration: 1,
+      delay: targetAnimDuration,
       ease: "power1.out",
       onUpdate: () => {
         this.player.position.set(
@@ -279,6 +287,7 @@ class Bridge extends Scene {
           this.center.z
         );
       },
+      onStart: () => this.player.anims.jump(),
       onComplete: () => {
         if (this.rockIndex + 1 == this.rocks.length) {
           this.state = "completed";
@@ -288,6 +297,23 @@ class Bridge extends Scene {
           );
           this.rockIndex++;
           this.spirit.show();
+          this.target.position.set(
+            this.nextRock.position.x,
+            this.nextRock.position.y + 0.2,
+            this.nextRock.position.z
+          );
+
+          this.player.anims.idle();
+
+          if (!this.rocks[this.rockIndex + 1]) return;
+
+          const nextRockPos = new Vector3(
+            this.rocks[this.rockIndex + 1].position.x,
+            this.rocks[this.rockIndex + 1].position.y + 0.2,
+            this.rocks[this.rockIndex + 1].position.z
+          );
+
+          this.target.calculatePos(this.nextRock.position, nextRockPos);
 
           // this.target.show(
           //   new Vector3(
@@ -296,7 +322,6 @@ class Bridge extends Scene {
           //     this.nextRock.position.z
           //   )
           // );
-          this.player.anims.idle();
         }
       },
     });
@@ -306,6 +331,7 @@ class Bridge extends Scene {
       return;
     }
 
+    //NextRock
     gsap.to(this.rocks[this.rockIndex + 1].material.uniforms.uProgress, {
       value: 1,
       ease: "power1.in",

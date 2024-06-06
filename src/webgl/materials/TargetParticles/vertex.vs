@@ -117,7 +117,7 @@ void main() {
 
   progress = clamp(uProgress * noise * 2.0, 0.0, 1.0);
 
-  vec3 spherePos = getSpherePosition(particleIndex, uP1);
+  vec3 spherePos = getSpherePosition(particleIndex, position);
 
   vec3 pos;
   if(progress < step1End) {
