@@ -5,10 +5,10 @@ import Stats from "three/examples/jsm/libs/stats.module";
 import { Camera } from "./Camera";
 
 // Post pros
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js'
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { GammaCorrectionShader } from "three/examples/jsm/shaders/GammaCorrectionShader.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 
 // Scenes
 import { Intro } from "./scenes/Intro";
@@ -50,14 +50,22 @@ export default class WebglController {
     // Post pros
     this.effectComposer = new EffectComposer(this.renderer);
     this.effectComposer.setPixelRatio(window.devicePixelRatio);
-    this.effectComposer.setSize(this.canvasWrapper.offsetWidth, this.canvasWrapper.offsetHeight);
-    this.renderPass = new RenderPass(this.scene, this.camera)
-    this.effectComposer.addPass(this.renderPass)
-    this.transitionPass = new ShaderPass(TransitionPass)
-    this.transitionPass.material.uniforms.uResolution.value = new Vector4(this.canvasWrapper.offsetWidth, this.canvasWrapper.offsetHeight, 1, 1)
-    this.effectComposer.addPass(this.transitionPass)
-    this.gammaCorrectionPass = new ShaderPass(GammaCorrectionShader)
-    this.effectComposer.addPass(this.gammaCorrectionPass)
+    this.effectComposer.setSize(
+      this.canvasWrapper.offsetWidth,
+      this.canvasWrapper.offsetHeight
+    );
+    this.renderPass = new RenderPass(this.scene, this.camera);
+    this.effectComposer.addPass(this.renderPass);
+    this.transitionPass = new ShaderPass(TransitionPass);
+    this.transitionPass.material.uniforms.uResolution.value = new Vector4(
+      this.canvasWrapper.offsetWidth,
+      this.canvasWrapper.offsetHeight,
+      1,
+      1
+    );
+    this.effectComposer.addPass(this.transitionPass);
+    this.gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);
+    this.effectComposer.addPass(this.gammaCorrectionPass);
   }
 
   initStats() {
@@ -65,14 +73,16 @@ export default class WebglController {
       this.stats = new Stats();
       this.canvasWrapper.appendChild(this.stats.dom);
 
-      this.scene.pane.addBinding(this.transitionPass.material.uniforms.uProgress, 'value', {
-        min: 0,
-        max: 1,
-        step: 0.001,
-        label: 'Transition progress',
-      }).on('change', (ev) => {
-        this.transitionPass.material.uniforms.uProgress.value = ev.value
-      });
+      this.scene.pane
+        .addBinding(this.transitionPass.material.uniforms.uProgress, "value", {
+          min: 0,
+          max: 1,
+          step: 0.001,
+          label: "Transition progress",
+        })
+        .on("change", (ev) => {
+          this.transitionPass.material.uniforms.uProgress.value = ev.value;
+        });
     }
   }
 
@@ -84,6 +94,7 @@ export default class WebglController {
     this.initStats();
     this.canvasWrapper.appendChild(this.renderer.domElement);
     this.onRender();
+    console.log("onAttach");
     this.scene.init();
   }
 
@@ -91,7 +102,7 @@ export default class WebglController {
   onTick() {
     // console.log('Event onTick')
     // console.log(this.camera.fov)
-    this.transitionPass.material.uniforms.uTime.value = app.ticker.elapsed
+    this.transitionPass.material.uniforms.uTime.value = app.ticker.elapsed;
   }
 
   onRender() {
@@ -102,47 +113,61 @@ export default class WebglController {
 
     // render
     if (this.effectComposer) {
-      this.renderPass.camera = this.camera
+      this.renderPass.camera = this.camera;
       this.effectComposer.render();
     }
   }
 
-  onAskChangeScene(e){
+  onAskChangeScene(e) {
     app.webgl.transitionPass.material.uniforms.uIsColor.value = false;
-    app.webgl.transitionPass.material.uniforms.uProgress.value = 0.;
+    app.webgl.transitionPass.material.uniforms.uProgress.value = 0;
     gsap.to(app.webgl.transitionPass.material.uniforms.uProgress, {
-      value: 1.,
+      value: 1,
       duration: 3,
-      ease : 'circ.in',
+      ease: "circ.in",
       onComplete: () => {
-        state.emit(EVENTS.CHANGE_SCENE, e)
-      }
-    })
+        state.emit(EVENTS.CHANGE_SCENE, e);
+      },
+    });
   }
 
   onChangeScene(e) {
     this.currentScene = e;
     this.scene.clear();
-    if(this.currentScene == 0 || this.currentScene == 1 || this.currentScene == 6 || this.currentScene == 7) {
-      this.camera = new Camera()
+    if (
+      this.currentScene == 0 ||
+      this.currentScene == 1 ||
+      this.currentScene == 6 ||
+      this.currentScene == 7
+    ) {
+      this.camera = new Camera();
     }
     this.scene = this.allScene[this.currentScene];
-    this.renderPass.scene = this.scene
+    this.renderPass.scene = this.scene;
+    console.log("onCHange scene");
     this.scene.init();
 
     app.webgl.transitionPass.material.uniforms.uIsColor.value = true;
-    app.webgl.transitionPass.material.uniforms.uProgress.value = 0.;
+    app.webgl.transitionPass.material.uniforms.uProgress.value = 0;
     gsap.to(app.webgl.transitionPass.material.uniforms.uProgress, {
       delay: 0.3,
-      value: 1.,
+      value: 1,
       duration: 3,
-      ease : 'circ.in',
-    })
+      ease: "circ.in",
+    });
   }
 
-  onResize(){
-    this.effectComposer.setSize(this.canvasWrapper.offsetWidth, this.canvasWrapper.offsetHeight);
-		this.effectComposer.setPixelRatio(window.devicePixelRatio);
-    this.transitionPass.material.uniforms.uResolution.value = new Vector4(this.canvasWrapper.offsetWidth, this.canvasWrapper.offsetHeight, 1, 1);
+  onResize() {
+    this.effectComposer.setSize(
+      this.canvasWrapper.offsetWidth,
+      this.canvasWrapper.offsetHeight
+    );
+    this.effectComposer.setPixelRatio(window.devicePixelRatio);
+    this.transitionPass.material.uniforms.uResolution.value = new Vector4(
+      this.canvasWrapper.offsetWidth,
+      this.canvasWrapper.offsetHeight,
+      1,
+      1
+    );
   }
 }

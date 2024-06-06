@@ -91,13 +91,6 @@ class Bridge extends Scene {
     this.center = new Vector3(0.67, 0.01, 2.19);
     this.rockIndex = 0;
     this.minSpeed = 0.01;
-  }
-
-  onAttach() {
-    // const controls = new OrbitControls(
-    //   app.webgl.camera,
-    //   app.webgl.renderer.domElement
-    // );
 
     this.milo = new Milo();
     this.player = this.milo.model;
@@ -106,7 +99,15 @@ class Bridge extends Scene {
     // this.player.rotation.y = -45 / (180 / Math.PI);
     this.player.anims.idle();
     this.add(this.player);
+  }
 
+  onAttach() {
+    // const controls = new OrbitControls(
+    //   app.webgl.camera,
+    //   app.webgl.renderer.domElement
+    // );
+
+    console.log("attach Bridge");
     this.rocks = [];
 
     this.bridge = app.assetsManager.get("bridge");
@@ -167,9 +168,9 @@ class Bridge extends Scene {
 
     this.add(this.cairn);
 
-    this.radius = this.player.position.distanceTo(this.rocks[0].position);
-
     app.audio.playMusic("music_1");
+
+    this.radius = this.center.distanceTo(this.rocks[0].position);
 
     this.anim = new CamAnim(4, this.bridge, [0, 0.33, 0.66, 0.66, 1]);
     this.anim.onChangeSceneStep(2);

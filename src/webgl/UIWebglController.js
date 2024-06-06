@@ -1,13 +1,12 @@
-import { Renderer } from './Renderer';
-import { Camera } from './Camera';
-import { state } from '../utils/State';
-import { INIT_SCENE } from '../utils/constants/config'
+import { Renderer } from "./Renderer";
+import { Camera } from "./Camera";
+import { state } from "../utils/State";
+import { INIT_SCENE } from "../utils/constants/config";
 
 // UI
 import { Intro } from "./UI/Intro";
-import { Null } from './UI/Null';
-import { app } from '@/App';
-
+import { Null } from "./UI/Null";
+import { app } from "@/App";
 
 export default class UIWebglController {
   constructor(container) {
@@ -22,14 +21,14 @@ export default class UIWebglController {
     this.renderer = new Renderer(this.canvasWrapper, 0x000000, 0);
     this.camera = new Camera();
 
-    this.allScene = [new Intro(), new Null()]
-    this.currentScene = INIT_SCENE
+    this.allScene = [new Intro(), new Null()];
+    this.currentScene = INIT_SCENE;
     if (this.currentScene == 0) {
-      this.scene = this.allScene[0]
+      this.scene = this.allScene[0];
     } else {
-      this.scene = this.allScene[1]
+      this.scene = this.allScene[1];
     }
-    this.scene.init()
+    this.scene.init();
   }
 
   onAttach() {
@@ -40,15 +39,15 @@ export default class UIWebglController {
     this.onRender();
   }
 
-  onChangeScene(e){
-    this.currentScene = e
-    this.scene.clear()
+  onChangeScene(e) {
+    this.currentScene = e;
+    this.scene.clear();
     if (this.currentScene == 0) {
-      this.scene = this.allScene[0]
+      this.scene = this.allScene[0];
     } else {
-      this.scene = this.allScene[1]
+      this.scene = this.allScene[1];
     }
-    this.scene.init()
+    // this.scene.init()
   }
 
   onRender() {
