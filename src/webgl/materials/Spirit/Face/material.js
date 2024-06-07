@@ -2,7 +2,7 @@ import { ShaderMaterial } from "three";
 import fs from "./fragment.fs";
 import vs from "./vertex.vs";
 
-class SpiritMaterial extends ShaderMaterial {
+class SpiritFaceMaterial extends ShaderMaterial {
   /**
    *
    * @param {import("three").ShaderMaterialParameters} options
@@ -17,4 +17,4 @@ class SpiritMaterial extends ShaderMaterial {
   }
 }
 
-export { SpiritMaterial };
+export { SpiritFaceMaterial };

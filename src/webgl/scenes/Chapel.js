@@ -92,8 +92,6 @@ class Chapel extends Scene {
     });
     this.add(this.chapel, this.ambient);
 
-    console.log(this.chapel);
-
     this.torchs = this.chapel.children.filter((child) =>
       child.name.includes("Torch")
     );
@@ -114,11 +112,11 @@ class Chapel extends Scene {
     });
 
     this.spirit = new Spirit();
-    this.spirit.position.set(-1, this.torchs[0].position.y + 0.1, 0);
+    this.spirit.position.set(-1, this.torchs[0].position.y + 0.4, 0);
     this.add(this.spirit);
 
-    // this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 1]);
-    // this.anim.onChangeSceneStep(3);
+    this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 1]);
+    this.anim.onChangeSceneStep(2);
 
     if (!this.anim) {
       const controls = new OrbitControls(
