@@ -91,7 +91,7 @@ class Chapel extends Scene {
         });
       }
     });
-    this.add(this.chapel);
+    this.add(this.chapel, this.ambient);
 
     console.log(this.chapel);
 
