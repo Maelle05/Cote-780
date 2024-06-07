@@ -13,6 +13,11 @@ const manifest = {
   images: {},
   textures: {
     matcap: { path: `/assets/textures/matcap.png` },
+    spiritFace: { path: `/assets/textures/Spirit/spirit-face.png` },
+    spiritBody: { path: `/assets/textures/Spirit/spirit-body.png` },
+    spiritArm: { path: `/assets/textures/Spirit/spirit-arm.png` },
+    spiritTex: { path: `/assets/textures/Spirit/spirit-tex.png` },
+    spiritNoise: { path: `/assets/textures/Noise/Super Perlin/SuperPerlin_02-256x256.png` },
     doorTexture: { path: `/assets/textures/DoorTexture.jpg` },
     doorNoise: {
       path: `/assets/textures/Noise/Swirl/Swirl_01-256x256.png`,
