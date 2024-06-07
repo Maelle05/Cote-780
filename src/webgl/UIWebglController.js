@@ -21,10 +21,10 @@ export default class UIWebglController {
     this.renderer = new Renderer(this.canvasWrapper, 0x000000, 0);
     this.camera = new Camera();
 
-    this.allScene = [new Null()]
-    this.currentScene = INIT_SCENE
-    this.scene = this.allScene[0]
-    this.scene.init()
+    this.allScene = [new Null()];
+    this.currentScene = INIT_SCENE;
+    this.scene = this.allScene[0];
+    this.scene.init();
   }
 
   onAttach() {

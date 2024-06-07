@@ -157,7 +157,7 @@ class Dam extends Scene {
       this.PARAMS.persoPos.y,
       this.PARAMS.persoPos.z
     );
-    this.player.scale.set(0.15, 0.15, 0.15);
+    // this.player.scale.set(0.15, 0.15, 0.15);
     this.add(this.player);
 
     this.spirit = new Spirit();

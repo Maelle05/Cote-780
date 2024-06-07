@@ -44,13 +44,13 @@ void main() {
   // Create base shape with circle mask
   vec3 metaballs[3]; // posX, PosY, R
   metaballs[0] = vec3(0.5, 0.65, 0.10 - abs(u_mouve) * 0.01);
-  metaballs[1] = vec3(0.5 + u_mouve * 0.2, 0.40 + abs(u_mouve) * 0.17, 0.03 - abs(u_mouve) * 0.01);
-  metaballs[2] = vec3(0.5 + u_mouve * 0.42, 0.25 + abs(u_mouve) * 0.3, 0.015 - abs(u_mouve) * 0.01);
+  metaballs[1] = vec3(0.5 + u_mouve * 0.2 + sin(u_time) * 0.03, 0.40 + abs(u_mouve) * 0.17, 0.03 - abs(u_mouve) * 0.01);
+  metaballs[2] = vec3(0.5 + u_mouve * 0.42 + sin(u_time) * 0.05, 0.25 + abs(u_mouve) * 0.3, 0.015 - abs(u_mouve) * 0.01);
   float paint = 0.0;
   for(int i = 0; i < metaballs.length(); i++){
     paint += metaballs[i].z / distance(metaballs[i].xy, vUv);
   }
-  vec4 shapeMask = vec4(smoothstep(.6, .85, paint));
+  vec4 shapeMask = vec4(smoothstep(.65, .85, paint));
 
 
   // Noise
@@ -61,6 +61,10 @@ void main() {
 
   // Add face
   float faceBall = smoothstep(.83 + abs(u_mouve) * 0.05, .86 + abs(u_mouve) * 0.05, 1. - distance( st, metaballs[0].xy ));
+  float eye1 = smoothstep(.98, .99, 1. - distance( st, vec2(metaballs[0].x - 0.05, metaballs[0].y + 0.02)));
+  float eye2 = smoothstep(.98, .99, 1. - distance( st, vec2(metaballs[0].x + 0.05, metaballs[0].y + 0.02)));
+  faceBall -= eye1;
+  faceBall -= eye2;
   vec4 faceTex = vec4(faceBall);
 
   // Apply color scheme

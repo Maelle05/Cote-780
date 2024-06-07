@@ -21,15 +21,15 @@ void main() {
     // vec2 center = vec2(0);
     // center.x += uSize;
     // center.y -= uSize;
-    // float dist = distance(center, gl_PointCoord);
-    // float radius = 0.5;
+    float dist = distance(vec2(0.5, 0.5), gl_PointCoord);
+    float radius = 0.5;
 
-    // if(dist > radius) {
-    //     discard;
-    // }
+    if(dist > radius) {
+        discard;
+    }
 
     // gl_FragColor = vec4(gl_PointCoord, 1.0, 1.0); 
-    gl_FragColor = vec4(vec3(uProgress), 1.0); 
+    gl_FragColor = vec4(1., 1., 1., 1. - dist); 
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
 }

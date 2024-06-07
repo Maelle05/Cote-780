@@ -24,6 +24,7 @@ import { app } from "@/App";
 import { Vector4 } from "three";
 import gsap from "gsap";
 import { EVENTS } from "@/utils/constants/events";
+import { RenderTarget } from "three";
 
 export default class WebglController {
   constructor(container) {
@@ -48,7 +49,8 @@ export default class WebglController {
     this.scene = this.allScene[this.currentScene];
 
     // Post pros
-    this.effectComposer = new EffectComposer(this.renderer);
+    const renderTarget = new RenderTarget(0, 0, { samples: 4 });
+    this.effectComposer = new EffectComposer(this.renderer, renderTarget);
     this.effectComposer.setPixelRatio(window.devicePixelRatio);
     this.effectComposer.setSize(
       this.canvasWrapper.offsetWidth,
@@ -73,14 +75,7 @@ export default class WebglController {
       this.stats = new Stats();
       this.canvasWrapper.appendChild(this.stats.dom);
 
-      // this.scene.pane.addBinding(this.transitionPass.material.uniforms.uProgress, 'value', {
-      //   min: 0,
-      //   max: 1,
-      //   step: 0.001,
-      //   label: 'Transition progress',
-      // }).on('change', (ev) => {
-      //   this.transitionPass.material.uniforms.uProgress.value = ev.value
-      // });
+
     }
   }
 
@@ -165,5 +160,7 @@ export default class WebglController {
       1,
       1
     );
+
+    console.log(this.transitionPass.material.uniforms.uResolution.value);
   }
 }

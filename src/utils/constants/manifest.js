@@ -13,6 +13,10 @@ const manifest = {
   images: {},
   textures: {
     matcap: { path: `/assets/textures/matcap.png` },
+    doorTexture: { path: `/assets/textures/DoorTexture.jpg` },
+    doorNoise: {
+      path: `/assets/textures/Noise/Swirl/Swirl_01-256x256.png`,
+    },
   },
   envMaps: {
     // envmap: { path: `/assets/textures/envmap.hdr` },

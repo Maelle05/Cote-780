@@ -5,6 +5,17 @@ uniform vec4 uResolution;
 uniform sampler2D tDiffuse;
 varying vec2 vUv;
 
+vec2 resizeUvCover(vec2 uv, vec2 size, vec2 resolution) {
+    vec2 ratio = vec2(
+        min((resolution.x / resolution.y) / (size.x / size.y), 1.0),
+        min((resolution.y / resolution.x) / (size.y / size.x), 1.0)
+    );
+
+    return vec2(
+        uv.x * ratio.x + (1.0 - ratio.x) * 0.5,
+        uv.y * ratio.y + (1.0 - ratio.y) * 0.5
+    );
+}
 
 float random (in vec2 _st) {
     return fract(sin(dot(_st.xy, vec2(12.9898,78.233)))* 43758.5453123);
@@ -50,6 +61,9 @@ void main()
   vec4 bgColor = vec4(0.85, 0.8, 0.7, 1.);
 
   // Noise displacement
+  vec2 resizedUv = resizeUvCover(vUv, vec2(1.0, 1.0), uResolution.xy);
+  // resizedUv.x *= aspect;
+  // resizedUv.y = resizedUv.x / aspect;
   float disp = fbm(vUv * 100.) * aspect;
   vec4 noiseTex = vec4(vec3(disp), 1.);
 
@@ -67,7 +81,7 @@ void main()
   float paint = 0.0;
   for(int i = 0; i < metaballs.length(); i++){
       metaballs[i].z *= uProgress;
-      paint += metaballs[i].z / distance(metaballs[i].xy, uv);
+      paint += metaballs[i].z / distance(metaballs[i].xy, resizedUv);
   }
 
 
