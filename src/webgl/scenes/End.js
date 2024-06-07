@@ -1,4 +1,4 @@
-import { Scene, Vector3 } from "three";
+import { AmbientLight, Scene, Vector3 } from "three";
 import { state } from "../../utils/State";
 import TestPlane from "../objects/TestPlane";
 import { Pane } from "tweakpane";
@@ -8,6 +8,7 @@ import { Mesh } from "three";
 import Fireworks from "../objects/Fireworks";
 import { DEV_MODE } from "../../utils/constants/config";
 import { app } from "@/App";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 class End extends Scene {
   constructor() {
@@ -24,6 +25,17 @@ class End extends Scene {
   }
 
   onAttach() {
+    const controls = new OrbitControls(
+      app.webgl.camera,
+      app.webgl.renderer.domElement
+    );
+    
+    this.end = app.assetsManager.get("end");
+
+    this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
+
+    this.add(this.end, this.ambient);
+
     this.add(this.fireworks);
 
     if(app.webgl.currentScene === 7) this.init() 

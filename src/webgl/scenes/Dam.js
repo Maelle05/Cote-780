@@ -144,11 +144,7 @@ class Dam extends Scene {
   onAttach() {
     // console.log('Attach Dam')
     this.scene = app.assetsManager.get("dam");
-    this.scene.traverse((el) => {
-      el.material = new MeshMatcapMaterial({
-        matcap: app.assetsManager.get("matcap"),
-      });
-    });
+
     this.add(this.scene);
 
     this.light = new AmbientLight({ color: 0xffffff });

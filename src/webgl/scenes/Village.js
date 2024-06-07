@@ -23,7 +23,7 @@ class Village extends Scene {
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
 
-    this.fog = new FogExp2("#1A4D93", 0.08);
+    this.fog = new FogExp2("#0F4185", 0.08);
 
     this.anim = new CamAnim(
       6,
