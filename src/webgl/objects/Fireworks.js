@@ -8,16 +8,32 @@ import { FireworkMaterial } from "../materials/Firework/material";
 import { Uniform } from "three";
 import { Vector2 } from "three";
 import { app } from "@/App";
+import Explosion from "./Explosion";
 
 export default class Fireworks {
   constructor(position) {
     // console.log(this.webgl);
+    const explosionCount = 6;
+    const explosionSpriteSheets = [];
+
+    for (let i = 1; i <= explosionCount; i++) {
+      const explosion = {
+        spritesheet: app.assetsManager.get(`explosion` + i),
+        data: app.assetsManager.get(`explosion` + i + "_data"),
+      };
+
+      explosionSpriteSheets.push(explosion);
+    }
+
+    const explosion = new Explosion(explosionSpriteSheets[0]);
 
     // this.position.copy(position);
     this.resolution = new Vector2(app.viewport.width, app.viewport.height);
 
     // this.geometry = this.#createGeometry();
     // this.material = this.#createMaterial();
+
+    return explosion;
   }
 
   #createGeometry() {
