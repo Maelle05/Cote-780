@@ -20,7 +20,10 @@ class End extends Scene {
     this.allPos = [
       { x: -10, y: 0.01, z: 6 },
       { x: -15, y: 0.01, z: 3 },
-      { x: -9, y: 0.01, z: 3 },
+      { x: -9, y: 0.01, z: -3 },
+      { x: -8, y: 0.01, z: 3 },
+      { x: -12, y: 0.01, z: 0 },
+      { x: -11, y: 0.01, z: 3 },
     ];
 
     this.PARAMS = {
@@ -48,9 +51,19 @@ class End extends Scene {
   }
 
   onAttach() {
-    this.fireworks = new Fireworks(new Vector3());
+    this.fireworks = new Fireworks(this.allPos);
+    this.fireworks.launchers.forEach((launcher) => this.add(launcher));
+    this.fireworks.explosions.forEach((explosions) => this.add(explosions));
+
+    console.log(this.fireworks);
+
+    setTimeout(() => {
+      this.fireworks.launchers.forEach((launcher) =>
+        this.fireworks.play(launcher)
+      );
+    }, 2000);
+
     this.test = new SpritesheetPlayer("explosion1");
-    console.log(this.test);
 
     this.testSprite = new Mesh(
       new PlaneGeometry(1, 1, 1, 1),
@@ -78,16 +91,14 @@ class End extends Scene {
 
     this.add(this.end, this.ambient);
 
-    this.anim = new CamAnim(7, this.end, [0, 0.33, 0.66, 1]);
+    // this.anim = new CamAnim(7, this.end, [0, 0.33, 0.66, 1]);
 
-    if (this.anim) {
+    if (!this.anim) {
       const controls = new OrbitControls(
         app.webgl.camera,
         app.webgl.renderer.domElement
       );
     }
-
-    this.add(this.fireworks);
 
     if (app.webgl.currentScene === 7) this.init();
   }

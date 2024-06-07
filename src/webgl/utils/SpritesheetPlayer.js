@@ -7,7 +7,7 @@ class SpritesheetPlayer {
   frameRate = 24;
   playing = false;
   time = 0;
-  loop = true;
+  loop = false;
   //   onStarted = new Signal<void>();
   //   onEnded = new Signal<void>();
 
