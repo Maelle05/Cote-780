@@ -1,4 +1,4 @@
-import { Scene, MeshMatcapMaterial } from "three";
+import { Scene, MeshMatcapMaterial, AmbientLight } from "three";
 import { state } from "../../utils/State";
 import { Pane } from "tweakpane";
 import { DEV_MODE } from "../../utils/constants/config";
@@ -34,13 +34,12 @@ class Chapel extends Scene {
 
   onAttach() {
     this.chapel = app.assetsManager.get("chapel");
+
+    this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
+
     this.doorTexture = app.assetsManager.get("doorTexture");
     this.doorTexture = app.assetsManager.get("doorTexture");
     this.chapel.traverse((el) => {
-      el.material = new MeshMatcapMaterial({
-        matcap: app.assetsManager.get("matcap"),
-      });
-
       if (el.name == "Door") {
         this.door = el;
 
@@ -55,7 +54,7 @@ class Chapel extends Scene {
         });
       }
     });
-    this.add(this.chapel);
+    this.add(this.chapel, this.ambient);
 
     console.log(this.chapel);
 
