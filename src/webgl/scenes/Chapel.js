@@ -26,9 +26,6 @@ class Chapel extends Scene {
 
     this.raycaster = new Raycaster();
 
-    this.light = new AmbientLight({ color: 0xffffff });
-    this.add(this.light);
-
     this.init();
     this.torchs = [];
     this.flames = [];
@@ -52,6 +49,8 @@ class Chapel extends Scene {
   }
 
   onAttach() {
+    this.ambient = new AmbientLight({ color: 0xffffff });
+
     this.chapel = app.assetsManager.get("chapel");
     this.portalTexture = app.assetsManager.get("doorTexture");
     this.chapel.traverse((el) => {

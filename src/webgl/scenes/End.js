@@ -15,7 +15,7 @@ class End extends Scene {
     super();
     state.register(this);
 
-    this.fireworks = new Fireworks(100, new Vector3(), 0.05);
+    // this.fireworks = new Fireworks(100, new Vector3(), 0.05);
   }
 
   init() {
@@ -29,16 +29,14 @@ class End extends Scene {
       app.webgl.camera,
       app.webgl.renderer.domElement
     );
-    
+
     this.end = app.assetsManager.get("end");
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
 
     this.add(this.end, this.ambient);
 
-    this.add(this.fireworks);
-
-    if(app.webgl.currentScene === 7) this.init() 
+    if (app.webgl.currentScene === 7) this.init();
   }
 
   clear() {
@@ -47,9 +45,7 @@ class End extends Scene {
     }
   }
 
-  onResize() {
-    this.fireworks.resize();
-  }
+  onResize() {}
 }
 
 export { End };
