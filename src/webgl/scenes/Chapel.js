@@ -1,4 +1,4 @@
-import { Scene, MeshMatcapMaterial } from "three";
+import { Scene, MeshMatcapMaterial, RepeatWrapping } from "three";
 import { state } from "../../utils/State";
 import { Pane } from "tweakpane";
 import { DEV_MODE } from "../../utils/constants/config";
@@ -12,13 +12,22 @@ import gsap from "gsap";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { app } from "@/App";
 import { PortalMaterial } from "../materials/Portal/material";
+import { AmbientLight } from "three";
+import { WaterMaterial } from "../materials/Water/material";
 
 class Chapel extends Scene {
   constructor() {
     super();
     state.register(this);
 
+    this.PARAMS = {
+      portalProgress: 0,
+    };
+
     this.raycaster = new Raycaster();
+
+    this.light = new AmbientLight({ color: 0xffffff });
+    this.add(this.light);
 
     this.init();
     this.torchs = [];
@@ -29,26 +38,53 @@ class Chapel extends Scene {
   init() {
     if (DEV_MODE) {
       this.pane = new Pane({ title: "Parameters Chapel", expanded: true });
+
+      this.pane
+        .addBinding(this.PARAMS, "portalProgress", {
+          min: 0,
+          max: 1,
+          step: 0.001,
+        })
+        .on("change", (ev) => {
+          this.portal.material.uniforms.uProgress.value = ev.value;
+        });
     }
   }
 
   onAttach() {
     this.chapel = app.assetsManager.get("chapel");
-    this.doorTexture = app.assetsManager.get("doorTexture");
-    this.doorTexture = app.assetsManager.get("doorTexture");
+    this.portalTexture = app.assetsManager.get("doorTexture");
     this.chapel.traverse((el) => {
-      el.material = new MeshMatcapMaterial({
-        matcap: app.assetsManager.get("matcap"),
-      });
+      // el.material = new MeshMatcapMaterial({
+      //   matcap: app.assetsManager.get("matcap"),
+      // });
 
-      if (el.name == "Door") {
-        this.door = el;
+      const noiseText = app.assetsManager.get("doorNoise");
+      noiseText.wrapS = RepeatWrapping;
+      noiseText.wrapT = RepeatWrapping;
+
+      if (el.name == "WaterSurface") {
+        this.water = el;
+
+        el.material = new WaterMaterial({
+          uniforms: {
+            uProgress: { value: 0 },
+            uTexture: { value: el.material.map },
+            uNoiseTexture: { value: noiseText },
+            uTime: { value: 0 },
+          },
+          transparent: true,
+        });
+      }
+
+      if (el.name == "Portal") {
+        this.portal = el;
 
         el.material = new PortalMaterial({
           uniforms: {
             uProgress: { value: 0 },
-            uTexture: { value: this.doorTexture },
-            uNoiseTexture: { value: app.assetsManager.get("doorNoise") },
+            uTexture: { value: this.portalTexture },
+            uNoiseTexture: { value: noiseText },
             uTime: { value: 0 },
           },
           transparent: true,
@@ -82,8 +118,8 @@ class Chapel extends Scene {
     this.spirit.position.set(-1, this.torchs[0].position.y + 0.1, 0);
     this.add(this.spirit);
 
-    this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 1]);
-    this.anim.onChangeSceneStep(3);
+    // this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 1]);
+    // this.anim.onChangeSceneStep(3);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -185,9 +221,10 @@ class Chapel extends Scene {
   onTick() {
     if (app.webgl.currentScene != 5) return;
 
-    if (!this.door) return;
+    if (!this.portal) return;
 
-    this.door.material.uniforms.uTime.value += 0.05;
+    this.portal.material.uniforms.uTime.value += 0.05;
+    this.water.material.uniforms.uTime.value += 0.05;
   }
 
   clear() {
