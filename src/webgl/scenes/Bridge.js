@@ -248,9 +248,9 @@ class Bridge extends Scene {
     this.spirit.position.set(this.x, this.rocks[0].position.y + 0.2, this.z);
 
     if (this.spirit.position.distanceTo(this.target.position) < 0.15) {
-      this.spirit.material.color = new Color("red");
+      // this.spirit.material.color = new Color("red");
     } else {
-      this.spirit.material.color = new Color("white");
+      // this.spirit.material.color = new Color("white");
     }
 
     this.target.material.uniforms.uTime.value += 0.05;
