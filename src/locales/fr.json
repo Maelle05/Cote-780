@@ -1,12 +1,18 @@
 {
   "global": {
     "title": "Cote 780",
-    "description": "Bla Bli Bla Blou"
+    "description": "Bla Bli Bla Blou",
+    "more": "En savoir plus",
+    "chapter": "Chapitre"
   },
   "intro": {
+    "text_1": "Ce conte vous plonge au cœur des Hautes-Alpes, dans la vallée de la Durance.",
+    "text_2": "Un barrage y fut construit à la fin des années 1950 pour apaiser les colères de l’imposante rivière qui donne son nom à la vallée. Cet événement bouleversa de nombreuses vies dans la région, et trois villages furent engloutis sous les eaux.",
+    "text_3": "Ce fut la naissance du Lac de Serre-Ponçon.",
     "start": "Démarrer l'expérience"
   },
   "scene_0": {
+    "title": "Intro",
     "text_1": "Mon cher Milo… Si tu lis ces mots, c’est que je ne suis malheureusement plus avec vous.",
     "text_2": "Il y a une histoire que tu dois connaître…",
     "text_3": "Lors de la création du barrage, la Durance, capricieuse et indomptable, a lancé une dernière offensive.",
@@ -19,7 +25,12 @@
     "text_10": "Prends la carte que je t’ai laissée et pars à la rencontre des Demoiselles Coiffées, ces ancestrales pierres de la montagne.",
     "text_11": "Elles pourront te guider dans ta quête."
   },
+  "scene_1": {
+    "title": "Map"
+  },
   "scene_2": {
+    "title_0": "Les Demoiselles",
+    "title_1": "Coiffées",
     "text_1": {
       "person": "Milo",
       "text": "Bonjour, je suis Milo. Ma grand-mère m’a dit de venir vous voir. Pourquoi êtes-vous triste ?",
@@ -54,9 +65,11 @@
       "person": "Demoiselles",
       "text": "Bon courage dans ta quête. Gagne la confiance de la Durance, mais attention, elle peut être très capricieuse…",
       "camera": "4"
-    }
+    },
+    "infos": "En savoir plus demoiselles coiffées"
   },
   "scene_3": {
+    "title": "Le Barrage",
     "text_1": {
       "person": "Milo",
       "text": "Mais qu’est-ce que c’est ?",
@@ -71,16 +84,22 @@
       "person": "Esprit",
       "text": "Viens, je vais t’accompagner dans cette quête",
       "camera": "4"
-    }
+    },
+    "infos": "En savoir plus village"
   },
   "scene_4": {
+    "title_0": "Le Pont de",
+    "title_1": "Chanteloube",
     "text_1": {
       "person": "Durance",
       "text": "Tu en es digne, suis-moi, il faut que je te montre.",
       "camera": "4"
-    }
+    },
+    "infos": "En savoir plus pont"
   },
   "scene_5": {
+    "title_0": "La Chapelle",
+    "title_1": "Saint-Michel",
     "text_1": {
       "person": "Esprit",
       "text": "Cette chapelle est le souvenir d’une vallée engloutie. À l’intérieur t’attends ton destin.",
@@ -90,9 +109,12 @@
       "person": "Esprit",
       "text": "Par ici ! Si tu décides de traverser ce portail, tu découvriras un lieu que le temps tente d'effacer.",
       "camera": "3"
-    }
+    },
+    "infos": "En savoir plus chapelle"
   },
   "scene_6": {
+    "title_0": "Le Village",
+    "title_1": "englouti",
     "text_1": {
       "person": "Esprit",
       "text": "J’ai vécu ici avec ta grand-mère avant la création du barrage. J’étais son voisin. Viens avec moi, je vais te montrer.",
@@ -150,6 +172,7 @@
     }
   },
   "scene_7": {
+    "title": "Fin",
     "text_1": {
       "person": "Esprit",
       "text": "Bravo Milo ! À travers cette quête tu as pu t’immerger dans l’histoire de la contrée et regagner la confiance de la Durance. La vallée peut désormais retrouver sa tranquillité.",
@@ -174,6 +197,7 @@
       "person": "Esprit",
       "text": "Entre paysage montagneux et riche végétation, ce projet titanesque offre aujourd’hui, avec son vaste lac, de nouvelles perspectives pour la région. Pour la plus grande joie des vacanciers et amoureux de la nature !",
       "camera": "0"
-    }
+    },
+    "infos": "En savoir plus fin ?"
   }
 }

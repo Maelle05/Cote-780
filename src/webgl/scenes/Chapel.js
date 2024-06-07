@@ -11,6 +11,7 @@ import { Group } from "three";
 import gsap from "gsap";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { app } from "@/App";
+import { PortalMaterial } from "../materials/Portal/material";
 
 class Chapel extends Scene {
   constructor() {
@@ -32,18 +33,31 @@ class Chapel extends Scene {
   }
 
   onAttach() {
-    // const controls = new OrbitControls(
-    //   app.webgl.camera,
-    //   app.webgl.renderer.domElement
-    // );
-
     this.chapel = app.assetsManager.get("chapel");
+    this.doorTexture = app.assetsManager.get("doorTexture");
+    this.doorTexture = app.assetsManager.get("doorTexture");
     this.chapel.traverse((el) => {
       el.material = new MeshMatcapMaterial({
         matcap: app.assetsManager.get("matcap"),
       });
+
+      if (el.name == "Door") {
+        this.door = el;
+
+        el.material = new PortalMaterial({
+          uniforms: {
+            uProgress: { value: 0 },
+            uTexture: { value: this.doorTexture },
+            uNoiseTexture: { value: app.assetsManager.get("doorNoise") },
+            uTime: { value: 0 },
+          },
+          transparent: true,
+        });
+      }
     });
     this.add(this.chapel);
+
+    console.log(this.chapel);
 
     this.torchs = this.chapel.children.filter((child) =>
       child.name.includes("Torch")
@@ -69,10 +83,16 @@ class Chapel extends Scene {
     this.add(this.spirit);
 
     this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 1]);
+    this.anim.onChangeSceneStep(3);
 
-    this.anim.onChangeSceneStep(2);
+    if (!this.anim) {
+      const controls = new OrbitControls(
+        app.webgl.camera,
+        app.webgl.renderer.domElement
+      );
+    }
 
-    if(app.webgl.currentScene === 5) this.init() 
+    if (app.webgl.currentScene === 5) this.init();
   }
 
   onPointerDown(e) {
@@ -88,7 +108,7 @@ class Chapel extends Scene {
   }
 
   goTo(flame) {
-    // Define start point, control point, and end point
+    //Spirit Anim
     const startPoint = {
       x: this.spirit.position.x,
       y: this.spirit.position.y,
@@ -105,10 +125,8 @@ class Chapel extends Scene {
       z: (startPoint.z + 1 + endPoint.z) / 2,
     };
 
-    // Define the duration of the animation
     const duration = 1;
 
-    // Define the Bezier interpolation function
     function bezierInterpolation(t, p0, p1, p2) {
       const x =
         (1 - t) * (1 - t) * p0.x + 2 * (1 - t) * t * p1.x + t * t * p2.x;
@@ -119,7 +137,6 @@ class Chapel extends Scene {
       return { x, y, z };
     }
 
-    // Animate using GSAP with a custom onUpdate function
     gsap.to(
       { t: 0 },
       {
@@ -163,6 +180,14 @@ class Chapel extends Scene {
     //     this.spirit.position.set(newX, object.position.y, newZ);
     //   },
     // });
+  }
+
+  onTick() {
+    if (app.webgl.currentScene != 5) return;
+
+    if (!this.door) return;
+
+    this.door.material.uniforms.uTime.value += 0.05;
   }
 
   clear() {

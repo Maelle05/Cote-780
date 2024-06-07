@@ -23,6 +23,7 @@ const EVENTS = {
   WHEEL: i++,
 
   // COTE 780
+  START_EXP: i++,
   GO_NEXT: i++,
   GO_PREV: i++,
   ASK_CHANGE_SCENE: i++,

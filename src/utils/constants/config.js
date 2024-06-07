@@ -5,33 +5,33 @@ const DEV_MODE = true;
 const INIT_SCENE = 5;
 
 const TITLES_SCENE = [
-  "Intro",
-  "Map",
-  "Demoiselles",
-  "Barrage",
-  "Pont",
-  "Chapelle",
-  "Village",
-  "Fin",
+  [dataText["scene_0"].title],
+  [dataText["scene_1"].title],
+  [dataText["scene_2"].title_0, dataText["scene_2"].title_1],
+  [dataText["scene_3"].title],
+  [dataText["scene_4"].title_0, dataText["scene_4"].title_1],
+  [dataText["scene_5"].title_0, dataText["scene_5"].title_1],
+  [dataText["scene_6"].title_0, dataText["scene_6"].title_1],
+  [dataText["scene_7"].title],
 ];
 
-const introTexts = dataText['scene_0']
+const introTexts = dataText["scene_0"];
 
 const INTRO_SECTIONS = [
   {
     elements: [{ id: "lac", src: "/assets/images/intro/1_lac.png" }],
-    text: '',
+    text: "",
   },
   {
     elements: [{ id: "maison", src: "/assets/images/intro/2_maison.png" }],
-    text: '',
+    text: "",
   },
   {
     elements: [
       { id: "chambre", src: "/assets/images/intro/3_chambre.png" },
       { id: "lettre", src: "/assets/images/intro/4_lettre.png" },
     ],
-    text: introTexts['text_1'],
+    text: introTexts["text_1"],
   },
   {
     elements: [
@@ -44,11 +44,11 @@ const INTRO_SECTIONS = [
         src: "/assets/images/intro/6_durance-colere.png",
       },
     ],
-    text: introTexts['text_2'],
+    text: introTexts["text_2"],
   },
   {
     elements: [],
-    text: introTexts['text_3'],
+    text: introTexts["text_3"],
   },
   {
     elements: [
@@ -61,24 +61,24 @@ const INTRO_SECTIONS = [
         src: "/assets/images/intro/8_mamie-lien-durance-1.png",
       },
     ],
-    text: introTexts['text_4'],
+    text: introTexts["text_4"],
   },
   {
     elements: [
       { id: "passage-lac", src: "/assets/images/intro/9_passage-lac.png" },
     ],
-    text: introTexts['text_5'],
+    text: introTexts["text_5"],
   },
   {
     elements: [{ id: "milo", src: "/assets/images/intro/10_milo.png" }],
-    text: introTexts['text_6'],
+    text: introTexts["text_6"],
   },
   {
     elements: [
       { id: "carte", src: "/assets/images/intro/11_carte.png" },
       { id: "collier", src: "/assets/images/intro/12_collier.png" },
     ],
-    text: introTexts['text_7'],
+    text: introTexts["text_7"],
   },
 ];
 
