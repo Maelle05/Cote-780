@@ -1,4 +1,4 @@
-import { ShaderMaterial, Vector2 } from "three";
+import { DoubleSide, ShaderMaterial, Vector2 } from "three";
 import fs from "./fragment.fs";
 import vs from "./vertex.vs";
 import { app } from "@/App";
@@ -30,6 +30,7 @@ export class SpritesheetMaterial extends ShaderMaterial {
     this.frames = frames;
     this.length = framesOrder.length;
     this.currentFrame = 0;
+    this.side = DoubleSide;
 
     state.register(this);
   }

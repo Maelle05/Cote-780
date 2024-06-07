@@ -9,53 +9,95 @@ import { Uniform } from "three";
 import { Vector2 } from "three";
 import { app } from "@/App";
 import Explosion from "./Explosion";
+import { SpritesheetPlayer } from "../utils/SpritesheetPlayer";
+import { Group } from "three";
+import gsap from "gsap";
 
 export default class Fireworks {
-  constructor(position) {
-    // console.log(this.webgl);
+  constructor(positions) {
     const explosionCount = 6;
-    const explosionSpriteSheets = [];
+    this.launchers = [];
+    this.explosions = [];
 
     for (let i = 1; i <= explosionCount; i++) {
-      const explosion = {
-        spritesheet: app.assetsManager.get(`explosion` + i),
-        data: app.assetsManager.get(`explosion` + i + "_data"),
-      };
+      //Create explosion mesh
+      const explosion = this.#createExplosion(
+        new SpritesheetPlayer("explosion" + i)
+      );
 
-      explosionSpriteSheets.push(explosion);
+      this.explosions.push(explosion);
     }
 
-    const explosion = new Explosion(explosionSpriteSheets[0]);
+    for (let i = 0; i < positions.length; i++) {
+      //Create launch mesh
+      const mesh = this.#createMesh();
+      mesh.position.copy(positions[i]);
+      mesh.rotation.x = -Math.PI / 2;
+      mesh.lookAt(app.webgl.camera.position);
 
-    // this.position.copy(position);
+      this.launchers.push(mesh);
+    }
+
+    return {
+      launchers: this.launchers,
+      explosions: this.explosions,
+      play: this.play,
+      getRandom: this.getRandom,
+    };
+
     this.resolution = new Vector2(app.viewport.width, app.viewport.height);
-
-    // this.geometry = this.#createGeometry();
-    // this.material = this.#createMaterial();
-
-    return explosion;
   }
 
-  #createGeometry() {
+  #createMesh() {
     const geometry = new PlaneGeometry(1, 1, 1, 1);
-
-    return geometry;
-  }
-
-  #createMaterial() {
-    // Material
     const material = new FireworkMaterial({
-      uniforms: {
-        tSpritesheet: { value: spritesheet },
-        uOffset: { value: new Vector2() },
-        uSize: { value: new Vector2(frameWidth / width, frameHeight / height) },
-        uScale: { value: new Vector2() },
-        uPosition: { value: new Vector2() },
-      },
+      uniforms: {},
       transparent: true,
     });
 
-    return material;
+    const mesh = new Mesh(geometry, material);
+    mesh.scale.set(0.1, 0.1, 0.1);
+
+    return mesh;
+  }
+
+  #createExplosion(spritesheet) {
+    const geometry = new PlaneGeometry(1, 1, 1, 1);
+    const material = spritesheet.material;
+
+    const mesh = new Mesh(geometry, material);
+    mesh.spritesheet = spritesheet;
+
+    return mesh;
+  }
+
+  play(launcher) {
+    const randomY = this.getRandom(4);
+    const randomExplo = Math.round(
+      Math.random() * (this.explosions.length - 1)
+    );
+
+    const explosion = this.explosions[randomExplo];
+
+    //Anim the launcher
+    gsap.to(launcher.position, {
+      y: `+= ${randomY}`,
+      duration: 1,
+      onComplete: () => {
+        explosion.position.copy(launcher.position);
+        explosion.lookAt(app.webgl.camera.position);
+        explosion.spritesheet.playing = true;
+      },
+    });
+
+    //When launcher finished play explosion
+  }
+
+  getRandom(value) {
+    const max = value + 1;
+    const min = value - 1;
+
+    return Math.random() * (max - min) + min;
   }
 
   resize() {
