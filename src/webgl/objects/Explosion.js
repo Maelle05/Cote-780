@@ -8,16 +8,24 @@ import { FireworkMaterial } from "../materials/Firework/material";
 import { Uniform } from "three";
 import { Vector2 } from "three";
 import { app } from "@/App";
+import { state } from "@/utils/State";
 
-export default class Fireworks {
-  constructor(position) {
-    // console.log(this.webgl);
+export default class Explosion extends Mesh {
+  constructor(spritesheet, data) {
+    super();
+    state.register(this);
 
-    // this.position.copy(position);
+    this.size = data.meta.size;
+    this.frameOrder = Object.values(data.animations);
+    this.frames = data;
+    this.frameSize = frames[framesOrder[0]].sourceSize;
+    this.spritesheet = spritesheet;
+
+    this.position.copy(position);
     this.resolution = new Vector2(app.viewport.width, app.viewport.height);
 
-    // this.geometry = this.#createGeometry();
-    // this.material = this.#createMaterial();
+    this.geometry = this.#createGeometry();
+    this.material = this.#createMaterial();
   }
 
   #createGeometry() {
@@ -30,9 +38,14 @@ export default class Fireworks {
     // Material
     const material = new FireworkMaterial({
       uniforms: {
-        tSpritesheet: { value: spritesheet },
+        tSpritesheet: { value: this.spritesheet },
         uOffset: { value: new Vector2() },
-        uSize: { value: new Vector2(frameWidth / width, frameHeight / height) },
+        uSize: {
+          value: new Vector2(
+            this.frameSize.frameWidth / this.size.width,
+            this.frameSize.frameHeight / this.size.height
+          ),
+        },
         uScale: { value: new Vector2() },
         uPosition: { value: new Vector2() },
       },
