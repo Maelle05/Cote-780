@@ -10,6 +10,7 @@ import { DEV_MODE } from "../../utils/constants/config";
 import { app } from "@/App";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { SpritesheetPlayer } from "../utils/SpritesheetPlayer";
+import { CamAnim } from "../utils/CamAnim";
 
 class End extends Scene {
   constructor() {
@@ -47,11 +48,6 @@ class End extends Scene {
   }
 
   onAttach() {
-    const controls = new OrbitControls(
-      app.webgl.camera,
-      app.webgl.renderer.domElement
-    );
-
     this.fireworks = new Fireworks(new Vector3());
     this.test = new SpritesheetPlayer("explosion1");
     console.log(this.test);
@@ -81,6 +77,17 @@ class End extends Scene {
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
 
     this.add(this.end, this.ambient);
+
+    this.anim = new CamAnim(7, this.end, [0, 0.33, 0.66, 1]);
+
+    if (this.anim) {
+      const controls = new OrbitControls(
+        app.webgl.camera,
+        app.webgl.renderer.domElement
+      );
+    }
+
+    this.add(this.fireworks);
 
     if (app.webgl.currentScene === 7) this.init();
   }
