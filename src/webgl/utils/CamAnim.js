@@ -13,7 +13,7 @@ export class CamAnim {
     this.refCam = scene.children.find(el => el.name == "Camera")
     this.refCam.userData.name = 'Ref cam scene : ' + idScene
     this.baseFov = this.refCam.fov
-    this.animationClip = scene.animations[0]
+    this.animationClip = scene.animations.find((el) => el.name == "CameraAction")
     this.keyframes = keyframes
     this.currentKeyfame = 0
 
@@ -50,7 +50,7 @@ export class CamAnim {
     this.currentProgressAnim = MathUtils.lerp(
       this.currentProgressAnim,
       this.targetProgressAnim,
-      0.03
+      0.02
     );
 
     this.animationAction.paused = false;
@@ -63,8 +63,8 @@ export class CamAnim {
     // Set position
     // this.pos.copy(this.refCam.position)
     this.posTarget.copy(this.refCam.position)
-    this.posTarget.x -= this.cursorOffset.x * 0.1;
-    this.posTarget.y += this.cursorOffset.y * 0.1;
+    // this.posTarget.x -= this.cursorOffset.x * 0.1;
+    // this.posTarget.y += this.cursorOffset.y * 0.1;
     // this.pos.lerp(this.posTarget, 0.8 );
     // console.log(this.pos, this.posResult);
     app.webgl.camera.position.copy(this.posTarget)

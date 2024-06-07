@@ -62,11 +62,6 @@ export default class HandleScenes {
         this.currentScene = 2
         state.emit(EVENTS.ASK_CHANGE_SCENE, 2)
         break;
-
-      case 7:
-        this.currentScene = 0
-        state.emit(EVENTS.ASK_CHANGE_SCENE, 0)
-        break;
     
       default:
         this.currentStepText = this.currentStepText + 1

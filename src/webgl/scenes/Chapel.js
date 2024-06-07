@@ -54,15 +54,14 @@ class Chapel extends Scene {
   onAttach() {
     this.chapel = app.assetsManager.get("chapel");
     this.portalTexture = app.assetsManager.get("doorTexture");
+    const noiseText = app.assetsManager.get("doorNoise");
+    noiseText.wrapS = RepeatWrapping;
+    noiseText.wrapT = RepeatWrapping;
+
     this.chapel.traverse((el) => {
       // el.material = new MeshMatcapMaterial({
       //   matcap: app.assetsManager.get("matcap"),
       // });
-
-      const noiseText = app.assetsManager.get("doorNoise");
-      noiseText.wrapS = RepeatWrapping;
-      noiseText.wrapT = RepeatWrapping;
-
       if (el.name == "WaterSurface") {
         this.water = el;
 
@@ -91,7 +90,7 @@ class Chapel extends Scene {
         });
       }
     });
-    this.add(this.chapel, this.ambient);
+    this.add(this.chapel);
 
     this.torchs = this.chapel.children.filter((child) =>
       child.name.includes("Torch")
@@ -117,7 +116,7 @@ class Chapel extends Scene {
     this.add(this.spirit);
 
     this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 1]);
-    this.anim.onChangeSceneStep(2);
+    // this.anim.onChangeSceneStep(2);
 
     if (!this.anim) {
       const controls = new OrbitControls(
