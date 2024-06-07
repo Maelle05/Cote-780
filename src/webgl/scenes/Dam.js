@@ -17,8 +17,9 @@ import { EVENTS } from "../../utils/constants/events";
 import { CamAnim } from "../utils/CamAnim";
 import { app } from "@/App";
 import Milo from "../objects/Milo";
+import Spirit from "../objects/Spirit";
 
-class Spirit extends Mesh {
+class ColorSpirit extends Spirit {
   constructor() {
     super();
 
@@ -30,12 +31,6 @@ class Spirit extends Mesh {
     this.currentPos = 2;
     this.currentLife = 4;
     this.isCaptured = false;
-
-    this.geometry = new SphereGeometry(0.1, 32, 16);
-    this.material = new MeshBasicMaterial({
-      color: "white",
-      transparent: true,
-    });
 
     this.position.set(
       this.allPos[this.currentPos].x,
@@ -93,13 +88,18 @@ class Spirit extends Mesh {
   }
 
   changePos() {
-    this.currentPos = (this.currentPos + 1) % this.allPos.length;
-    this.position.set(
-      this.allPos[this.currentPos].x,
-      this.allPos[this.currentPos].y,
-      this.allPos[this.currentPos].z
-    );
-    this.anim();
+    this.hide()
+    setTimeout(() => {
+      this.currentPos = (this.currentPos + 1) % this.allPos.length;
+      this.position.set(
+        this.allPos[this.currentPos].x,
+        this.allPos[this.currentPos].y,
+        this.allPos[this.currentPos].z
+      );
+      this.show()
+      this.anim();
+    }, 700)
+    
   }
 }
 
@@ -160,7 +160,7 @@ class Dam extends Scene {
     // this.player.scale.set(0.15, 0.15, 0.15);
     this.add(this.player);
 
-    this.spirit = new Spirit();
+    this.spirit = new ColorSpirit();
     this.add(this.spirit);
 
     this.rocks = app.assetsManager.get("rocks");

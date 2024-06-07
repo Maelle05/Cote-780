@@ -1,4 +1,6 @@
 varying vec2 vUv;
+uniform vec3 u_color;
+uniform float u_gOpacity;
 uniform float u_time;
 uniform float u_move;
 uniform sampler2D u_faceMask;
@@ -7,6 +9,7 @@ uniform sampler2D u_noise;
 
 void main() {
   vec2 uv = vUv;
+  uv.x -= u_move * smoothstep(0.3, 1., (vUv.y)) * 0.4;
 
   // Color
   vec4 transparent = vec4(0., 0., 0., 0.);
@@ -31,7 +34,8 @@ void main() {
   noiseTex.w = noiseTex.x;
 
   // Texture
-  vec4 baseTex = texture2D(u_texture, uv);
+  // vec4 baseTex = texture2D(u_texture, uv);
+  vec4 baseTex = vec4(u_color, 1.);
   vec4 transFlameMask = mix(noiseTex, transparent, transMask);
 
   baseTex.w = transMask.x;
@@ -42,6 +46,7 @@ void main() {
   // Apply color scheme
   // TO - DO test avec distence et cercle
   vec4 result = mix(baseTex, transparent, smoothstep(0.65, 0.85, vUv.y));
+  result.w *= u_gOpacity;
 
   gl_FragColor = result;
 }

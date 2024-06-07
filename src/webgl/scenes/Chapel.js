@@ -115,7 +115,7 @@ class Chapel extends Scene {
     this.add(this.spirit);
 
     this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 1]);
-    // this.anim.onChangeSceneStep(2);
+    this.anim.onChangeSceneStep(2);
 
     if (!this.anim) {
       const controls = new OrbitControls(
