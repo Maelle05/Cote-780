@@ -37,6 +37,7 @@ const manifest = {
     milo: { path: `assets/models/milo.glb` },
     milo_anim: { path: `assets/models/milo-anims.glb` },
     rocks: { path: `assets/models/rocks.glb` },
+    end: { path: `assets/models/end.glb` },
   },
   jsons: {},
   sounds: {
