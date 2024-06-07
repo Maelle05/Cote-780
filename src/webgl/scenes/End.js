@@ -16,7 +16,7 @@ class End extends Scene {
     super();
     state.register(this);
 
-    this.fireworks = new Fireworks(100, new Vector3(), 0.05);
+    // this.fireworks = new Fireworks(100, new Vector3(), 0.05);
   }
 
   init() {
@@ -50,9 +50,7 @@ class End extends Scene {
     }
   }
 
-  onResize() {
-    this.fireworks.resize();
-  }
+  onResize() {}
 }
 
 export { End };

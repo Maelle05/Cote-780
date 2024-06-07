@@ -9,36 +9,19 @@ import { Uniform } from "three";
 import { Vector2 } from "three";
 import { app } from "@/App";
 
-export default class Fireworks extends Points {
-  constructor(count, position, size) {
-    super();
-
+export default class Fireworks {
+  constructor(position) {
     // console.log(this.webgl);
 
-    this.count = count;
-    this.position.copy(position);
-    this.particleSize = size;
+    // this.position.copy(position);
     this.resolution = new Vector2(app.viewport.width, app.viewport.height);
 
-    this.geometry = this.#createGeometry();
-    this.material = this.#createMaterial();
+    // this.geometry = this.#createGeometry();
+    // this.material = this.#createMaterial();
   }
 
   #createGeometry() {
-    const positionsArray = new Float32Array(this.count * 3);
-    for (let i = 0; i < this.count; i++) {
-      const i3 = i * 3;
-
-      positionsArray[i3] = Math.random() - 0.5;
-      positionsArray[i3 + 1] = Math.random() - 0.5;
-      positionsArray[i3 + 2] = Math.random() - 0.5;
-    }
-
-    const geometry = new BufferGeometry();
-    geometry.setAttribute(
-      "position",
-      new Float32BufferAttribute(positionsArray, 3)
-    );
+    const geometry = new PlaneGeometry(1, 1, 1, 1);
 
     return geometry;
   }
@@ -47,9 +30,13 @@ export default class Fireworks extends Points {
     // Material
     const material = new FireworkMaterial({
       uniforms: {
-        uSize: { value: this.particleSize },
-        uResolution: { value: this.resolution },
+        tSpritesheet: { value: spritesheet },
+        uOffset: { value: new Vector2() },
+        uSize: { value: new Vector2(frameWidth / width, frameHeight / height) },
+        uScale: { value: new Vector2() },
+        uPosition: { value: new Vector2() },
       },
+      transparent: true,
     });
 
     return material;

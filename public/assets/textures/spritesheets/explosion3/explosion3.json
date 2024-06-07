@@ -1,0 +1,215 @@
+{"frames": {
+
+"explosion-03_00000.png":
+{
+	"frame": {"x":384,"y":931,"w":87,"h":56},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":24,"y":37,"w":87,"h":56},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00001.png":
+{
+	"frame": {"x":451,"y":1,"w":23,"h":45},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":24,"y":37,"w":23,"h":45},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00002.png":
+{
+	"frame": {"x":399,"y":839,"w":98,"h":90},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":21,"y":35,"w":98,"h":90},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00003.png":
+{
+	"frame": {"x":399,"y":734,"w":104,"h":103},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":19,"y":22,"w":104,"h":103},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00004.png":
+{
+	"frame": {"x":288,"y":734,"w":109,"h":111},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":19,"w":109,"h":111},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00005.png":
+{
+	"frame": {"x":264,"y":857,"w":118,"h":118},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":14,"y":15,"w":118,"h":118},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00006.png":
+{
+	"frame": {"x":136,"y":878,"w":126,"h":126},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":11,"w":126,"h":126},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00007.png":
+{
+	"frame": {"x":1,"y":878,"w":133,"h":132},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":6,"y":8,"w":133,"h":132},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00008.png":
+{
+	"frame": {"x":147,"y":593,"w":138,"h":136},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":7,"w":138,"h":136},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00009.png":
+{
+	"frame": {"x":1,"y":734,"w":145,"h":142},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":4,"w":145,"h":142},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00010.png":
+{
+	"frame": {"x":151,"y":299,"w":148,"h":145},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":148,"h":145},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00011.png":
+{
+	"frame": {"x":1,"y":1,"w":148,"h":147},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":148,"h":147},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00012.png":
+{
+	"frame": {"x":151,"y":1,"w":148,"h":147},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":148,"h":147},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00013.png":
+{
+	"frame": {"x":301,"y":1,"w":148,"h":147},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":148,"h":147},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00014.png":
+{
+	"frame": {"x":1,"y":150,"w":148,"h":147},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":148,"h":147},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00015.png":
+{
+	"frame": {"x":151,"y":150,"w":148,"h":147},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":148,"h":147},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00016.png":
+{
+	"frame": {"x":301,"y":150,"w":148,"h":147},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":148,"h":147},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00017.png":
+{
+	"frame": {"x":1,"y":299,"w":148,"h":147},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":148,"h":147},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00018.png":
+{
+	"frame": {"x":301,"y":299,"w":148,"h":145},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":3,"w":148,"h":145},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00019.png":
+{
+	"frame": {"x":151,"y":446,"w":148,"h":145},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":3,"w":148,"h":145},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00020.png":
+{
+	"frame": {"x":1,"y":448,"w":148,"h":143},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":4,"w":148,"h":143},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00021.png":
+{
+	"frame": {"x":301,"y":446,"w":148,"h":143},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":4,"w":148,"h":143},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00022.png":
+{
+	"frame": {"x":301,"y":591,"w":148,"h":141},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":5,"w":148,"h":141},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00023.png":
+{
+	"frame": {"x":1,"y":593,"w":144,"h":137},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":7,"w":144,"h":137},
+	"sourceSize": {"w":148,"h":148}
+},
+"explosion-03_00024.png":
+{
+	"frame": {"x":148,"y":731,"w":138,"h":124},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":19,"w":138,"h":124},
+	"sourceSize": {"w":148,"h":148}
+}},
+"animations": {
+	"explosion-03": ["explosion-03_00000.png","explosion-03_00001.png","explosion-03_00002.png","explosion-03_00003.png","explosion-03_00004.png","explosion-03_00005.png","explosion-03_00006.png","explosion-03_00007.png","explosion-03_00008.png","explosion-03_00009.png","explosion-03_00010.png","explosion-03_00011.png","explosion-03_00012.png","explosion-03_00013.png","explosion-03_00014.png","explosion-03_00015.png","explosion-03_00016.png","explosion-03_00017.png","explosion-03_00018.png","explosion-03_00019.png","explosion-03_00020.png","explosion-03_00021.png","explosion-03_00022.png","explosion-03_00023.png","explosion-03_00024.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "explosion3.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":1024},
+	"scale": "0.58",
+	"smartupdate": "$TexturePacker:SmartUpdate:f160aac4fd9c3d688962100ce00fe7bd:e53fc3a7d5fa857b6c44acf6f1534866:966c03c80a258accabf1e4cde9b4eee7$"
+}
+}

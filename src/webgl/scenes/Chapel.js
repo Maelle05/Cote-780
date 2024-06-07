@@ -26,9 +26,6 @@ class Chapel extends Scene {
 
     this.raycaster = new Raycaster();
 
-    this.light = new AmbientLight({ color: 0xffffff });
-    this.add(this.light);
-
     this.init();
     this.torchs = [];
     this.flames = [];
@@ -52,6 +49,8 @@ class Chapel extends Scene {
   }
 
   onAttach() {
+    this.ambient = new AmbientLight({ color: 0xffffff });
+
     this.chapel = app.assetsManager.get("chapel");
     this.portalTexture = app.assetsManager.get("doorTexture");
     const noiseText = app.assetsManager.get("doorNoise");
@@ -90,7 +89,7 @@ class Chapel extends Scene {
         });
       }
     });
-    this.add(this.chapel);
+    this.add(this.chapel, this.ambient);
 
     this.torchs = this.chapel.children.filter((child) =>
       child.name.includes("Torch")

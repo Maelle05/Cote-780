@@ -22,13 +22,19 @@ const manifest = {
     doorNoise: {
       path: `/assets/textures/Noise/Swirl/Swirl_01-256x256.png`,
     },
+    explosion1: { path: `/assets/textures/spritesheets/explosion1/explosion1.png` },
+    explosion2: { path: `/assets/textures/spritesheets/explosion2/explosion2.png` },
+    explosion3: { path: `/assets/textures/spritesheets/explosion3/explosion3.png` },
+    explosion4: { path: `/assets/textures/spritesheets/explosion4/explosion4.png` },
+    explosion5: { path: `/assets/textures/spritesheets/explosion5/explosion5.png` },
+    explosion6: { path: `/assets/textures/spritesheets/explosion6/explosion6.png` },
   },
   envMaps: {
     // envmap: { path: `/assets/textures/envmap.hdr` },
   },
   models: {
     map: { path: `assets/models/map.glb` },
-    ladies_opti: { path: `assets/models/ladies_opti.glb` },
+    ladies: { path: `assets/models/ladies.glb` },
     ladies_vg_samples: { path: `assets/models/ladies_vg_samples.glb` },
     dam: { path: `assets/models/dam.glb` },
     bridge: { path: `assets/models/bridge.glb` },
@@ -39,7 +45,14 @@ const manifest = {
     rocks: { path: `assets/models/rocks.glb` },
     end: { path: `assets/models/end.glb` },
   },
-  jsons: {},
+  jsons: {
+    explosion1_data: { path: `/assets/textures/spritesheets/explosion1/explosion1.json` },
+    explosion2_data: { path: `/assets/textures/spritesheets/explosion2/explosion2.json` },
+    explosion3_data: { path: `/assets/textures/spritesheets/explosion3/explosion3.json` },
+    explosion4_data: { path: `/assets/textures/spritesheets/explosion4/explosion4.json` },
+    explosion5_data: { path: `/assets/textures/spritesheets/explosion5/explosion5.json` },
+    explosion6_data: { path: `/assets/textures/spritesheets/explosion6/explosion6.json` },
+  },
   sounds: {
     // playerRotation: { path: `/assets/sounds/player_rotation.mp3`, params: { volume: 0.05 } },
   },
