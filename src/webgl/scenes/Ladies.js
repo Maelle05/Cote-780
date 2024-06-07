@@ -229,7 +229,7 @@ class Ladies extends Scene {
       }
     });
 
-    this.vegetation = new Vegetation("ladies", "ladies_vg_samples");
+    this.vegetation = new Vegetation("ladies");
     this.add(this.vegetation);
 
     this.dem1 = new Demoiselle(this.D1[1], this.D1[0], 0.9);
