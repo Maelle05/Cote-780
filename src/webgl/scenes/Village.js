@@ -1,4 +1,4 @@
-import { AmbientLight, FogExp2, Scene } from "three";
+import { AmbientLight, FogExp2, MathUtils, Scene, Vector3 } from "three";
 import { state } from "../../utils/State";
 import { Pane } from "tweakpane";
 import { DEV_MODE } from "../../utils/constants/config";
@@ -56,6 +56,32 @@ class Village extends Scene {
   }
 
   onTick(){
+    console.log(app.sceneshandler.currentStepCam);
+    if(this.spirit){
+      switch (app.sceneshandler.currentStepCam) {
+        case 0:
+          this.spiritTargetPos = new Vector3(-9.5, 0.7, 6)
+          break;
+
+        case 1:
+          this.spiritTargetPos = new Vector3(-2, 0.7, 0.5)
+          break;
+
+        case 2:
+          this.spiritTargetPos = new Vector3(8, 0.7, -3)
+          break;
+
+        case 3:
+          this.spiritTargetPos = new Vector3(8, 0.7, -3.5)
+          break;
+      
+        default:
+          this.spiritTargetPos = new Vector3(-9.5, 0.7, 6)
+          break;
+      }
+      const newPos = this.spirit.position.lerp(this.spiritTargetPos, 0.03)
+      this.spirit.position.set(newPos.x, newPos.y, newPos.z)
+    }
   }
 
   addGodRays(){
