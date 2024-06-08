@@ -7,6 +7,7 @@ import { CamAnim } from "../utils/CamAnim";
 import { MeshMatcapMaterial } from "three";
 import GodRays from "../objects/GodRays";
 import { Group } from "three";
+import Spirit from "../objects/Spirit";
 
 class Village extends Scene {
   constructor() {
@@ -27,6 +28,28 @@ class Village extends Scene {
 
     this.fog = new FogExp2("#0F4185", 0.08);
 
+    this.addGodRays()
+
+    this.spirit = new Spirit()
+    this.spirit.position.set(-9.5, 0.7, 6)
+    
+
+    this.anim = new CamAnim(
+      6,
+      this.scene,
+      [0, 0.33, 0.66, 1]
+    );
+
+
+    this.add(this.scene, this.spirit, this.ambient);
+
+    if(app.webgl.currentScene === 6) this.init() 
+  }
+
+  onTick(){
+  }
+
+  addGodRays(){
     this.godRays = new Group();
     this.godRay1 = new GodRays();
     this.godRay1.position.set(-9, 1.7, 6)
@@ -39,19 +62,7 @@ class Village extends Scene {
     this.godRay4.material.uniforms.g_alpha.value = 0.5
     this.godRays.add(this.godRay1, this.godRay2, this.godRay3, this.godRay4)
 
-    this.anim = new CamAnim(
-      6,
-      this.scene,
-      [0, 0.33, 0.66, 1]
-    );
-
-
-    this.add(this.scene, this.ambient, this.godRays);
-
-    if(app.webgl.currentScene === 6) this.init() 
-  }
-
-  onTick(){
+    this.add(this.godRays)
   }
 
   clear() {

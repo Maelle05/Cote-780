@@ -25,6 +25,7 @@ import { Vector4 } from "three";
 import gsap from "gsap";
 import { EVENTS } from "@/utils/constants/events";
 import { RenderTarget } from "three";
+import { WaterPass } from "./pass/WaterPass/TransitionPass";
 
 export default class WebglController {
   constructor(container) {
@@ -58,6 +59,17 @@ export default class WebglController {
     );
     this.renderPass = new RenderPass(this.scene, this.camera);
     this.effectComposer.addPass(this.renderPass);
+    this.waterPass = new ShaderPass(WaterPass);
+    this.waterPass.material.uniforms.uResolution.value = new Vector4(
+      this.canvasWrapper.offsetWidth,
+      this.canvasWrapper.offsetHeight,
+      1,
+      1
+    );
+    if (this.currentScene == 6) {
+      this.waterPass.material.uniforms.uIsWater.value = true;
+    }
+    this.effectComposer.addPass(this.waterPass);
     this.transitionPass = new ShaderPass(TransitionPass);
     this.transitionPass.material.uniforms.uResolution.value = new Vector4(
       this.canvasWrapper.offsetWidth,
@@ -94,6 +106,7 @@ export default class WebglController {
     // console.log('Event onTick')
     // console.log(this.camera.fov)
     this.transitionPass.material.uniforms.uTime.value = app.ticker.elapsed;
+    this.waterPass.material.uniforms.uTime.value = app.ticker.elapsed;
   }
 
   onRender() {
@@ -127,20 +140,21 @@ export default class WebglController {
     this.scene.clear();
     if (
       this.currentScene == 0 ||
-      this.currentScene == 1 ||
-      this.currentScene == 6 ||
-      this.currentScene == 7
+      this.currentScene == 1
     ) {
       this.camera = new Camera();
     }
     this.scene = this.allScene[this.currentScene];
     this.renderPass.scene = this.scene;
-    console.log("onCHange scene");
     this.scene.init();
-
-    app.webgl.transitionPass.material.uniforms.uIsColor.value = true;
-    app.webgl.transitionPass.material.uniforms.uProgress.value = 0;
-    gsap.to(app.webgl.transitionPass.material.uniforms.uProgress, {
+    if (this.currentScene == 6) {
+      this.waterPass.material.uniforms.uIsWater.value = true;
+    } else {
+      this.waterPass.material.uniforms.uIsWater.value = false;
+    }
+    this.transitionPass.material.uniforms.uIsColor.value = true;
+    this.transitionPass.material.uniforms.uProgress.value = 0;
+    gsap.to(this.transitionPass.material.uniforms.uProgress, {
       delay: 0.3,
       value: 1,
       duration: 3,
