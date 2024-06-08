@@ -13,6 +13,7 @@ import {
   HemisphereLight,
   Vector3,
   Color,
+  RepeatWrapping,
 } from "three";
 import { state } from "../../utils/State";
 import { EVENTS } from "../../utils/constants/events";
@@ -29,6 +30,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Foam from "../objects/Foam";
 import { RockMaterial } from "../materials/Rock/material";
 import Milo from "../objects/Milo";
+import { WaterMaterial } from "../materials/Water/material";
 
 class Bridge extends Scene {
   constructor() {
@@ -48,21 +50,10 @@ class Bridge extends Scene {
     this.light = new AmbientLight({ color: 0xffffff });
     this.add(this.light);
 
-    this.sun = new DirectionalLight(0xffffff);
-    this.sun.intensity = 1;
-    this.sun.position.set(-7, 10, -15);
-    this.add(this.sun);
-
     this.directionLight = new DirectionalLight(0xffffff);
-    this.directionLight.intensity = 3;
+    this.directionLight.intensity = 2;
     this.directionLight.position.set(7, 10, 15);
     this.add(this.directionLight);
-
-    // const sunHelper = new DirectionalLightHelper(this.sun, 3);
-    // this.add(sunHelper);
-
-    // const helper = new DirectionalLightHelper(this.directionLight, 3);
-    // this.add(helper);
 
     // this.position.set(2, 0, -1.5);
 
@@ -129,8 +120,19 @@ class Bridge extends Scene {
 
     this.bridge.traverse((child) => {
       //Remove reflection from material
-      if ((child.isMesh && child.name === "Water") || child.name == "Ground") {
-        child.material.roughness = 1;
+      // if ((child.isMesh && child.name === "Water") || child.name == "Ground") {
+      //   child.material.roughness = 1;
+      // }
+      
+      if (child.name == "WaterSurface") {
+        this.water = child;
+        child.material = new WaterMaterial({
+          uniforms: {
+            uTexture: { value: child.material.map },
+            uTime: { value: 0 },
+          },
+          transparent: true,
+        });
       }
 
       if (child.isMesh && child.name.includes("Rock")) {
@@ -213,6 +215,9 @@ class Bridge extends Scene {
 
   onTick() {
     if (app.webgl.currentScene != 4) return;
+    if (this.target) this.target.material.uniforms.uTime.value = app.ticker.elapsed;
+    if (this.water) this.water.material.uniforms.uTime.value = app.ticker.elapsed;
+
     // if (this.anim.currentKeyfame != 2) return;
     if (this.state == "off") return;
     let normalizedAngle = this.angle / (Math.PI / 2);
@@ -251,7 +256,7 @@ class Bridge extends Scene {
       // this.spirit.material.color = new Color("white");
     }
 
-    this.target.material.uniforms.uTime.value += 0.05;
+    
   }
 
   onPointerDown() {

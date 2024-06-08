@@ -1,6 +1,5 @@
 uniform float uTime;
 uniform sampler2D uTexture;
-uniform sampler2D uNoiseTexture;
 
 varying vec2 vUv;
 varying float vIndex;
@@ -8,26 +7,29 @@ varying vec3 vPosition;
 
 float PI = 3.141592653589793238;
 
-float rand(float seed) {
-    return fract(sin(seed) * 43758.5453123);
+float rand(vec2 n) { 
+	return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+}
+
+float noise(vec2 p){
+	vec2 ip = floor(p);
+	vec2 u = fract(p);
+	u = u*u*(3.0-2.0*u);
+	
+	float res = mix(
+		mix(rand(ip),rand(ip+vec2(1.0,0.0)),u.x),
+		mix(rand(ip+vec2(0.0,1.0)),rand(ip+vec2(1.0,1.0)),u.x),u.y);
+	return res*res;
 }
 
 void main() {
-    // vec2 nUv1 = vUv * 0.2;
-    // nUv1.y += uTime * 0.005;
-    // vec4 noise1Color = texture2D(uNoiseTexture, nUv1);
+    float time = uTime * 0.0001;
+    vec2 displacedUv = vec2(vUv.x, vUv.y);
 
-    // vec2 nUv2 = vUv * 0.5;
-    // nUv2.x += uTime * 0.005;
-    // vec4 noise2Color = texture2D(uNoiseTexture, nUv2);
-
-    // vec4 finalNoise = noise1Color * noise2Color;
-
-    // vec2 displacedUv = vUv + (finalNoise.rg - 0.5) * 0.2;
-    vec4 textureColor = texture2D(uTexture, vUv);
+    vec4 textureColor = texture2D(uTexture, displacedUv);
+    float noise = noise(displacedUv  * 20. * sin(time)) * noise(displacedUv  * 20.);
+    textureColor += noise * 0.3;
+    textureColor.w = 0.92;
 
     gl_FragColor = textureColor;
-
-    #include <tonemapping_fragment>
-    #include <colorspace_fragment>
 }

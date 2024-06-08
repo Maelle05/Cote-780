@@ -143,13 +143,8 @@ class Ladies extends Scene {
     this.light = new AmbientLight({ color: 0xffffff });
     this.add(this.light);
 
-    this.sun = new DirectionalLight(0xffffff);
-    this.sun.intensity = 1;
-    this.sun.position.set(-7, 10, -15);
-    this.add(this.sun);
-
     this.directionLight = new DirectionalLight(0xffffff);
-    this.directionLight.intensity = 3;
+    this.directionLight.intensity = 2;
     this.directionLight.position.set(7, 10, 15);
     this.add(this.directionLight);
   }

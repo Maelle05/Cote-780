@@ -11,6 +11,8 @@ import { app } from "@/App";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { SpritesheetPlayer } from "../utils/SpritesheetPlayer";
 import { CamAnim } from "../utils/CamAnim";
+import { DirectionalLight } from "three";
+import { WaterMaterial } from "../materials/Water/material";
 
 class End extends Scene {
   constructor() {
@@ -33,6 +35,14 @@ class End extends Scene {
         z: 0,
       },
     };
+
+    this.light = new AmbientLight({ color: 0xffffff });
+    this.add(this.light);
+
+    this.directionLight = new DirectionalLight(0xffffff);
+    this.directionLight.intensity = 2;
+    this.directionLight.position.set(7, 10, 15);
+    this.add(this.directionLight);
   }
 
   init() {
@@ -85,7 +95,18 @@ class End extends Scene {
     this.add(this.planePos);
 
     this.end = app.assetsManager.get("end");
-    // this.end.visible = false;
+    this.end.traverse((el)=>{
+      if (el.name == "WaterSurface") {
+        this.water = el;
+        el.material = new WaterMaterial({
+          uniforms: {
+            uTexture: { value: el.material.map },
+            uTime: { value: 0 },
+          },
+          transparent: true,
+        });
+      }
+    })
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
 
@@ -101,6 +122,10 @@ class End extends Scene {
     }
 
     if (app.webgl.currentScene === 7) this.init();
+  }
+
+  onTick(){
+    if(this.water) this.water.material.uniforms.uTime.value = app.ticker.elapsed;
   }
 
   clear() {

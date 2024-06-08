@@ -18,6 +18,8 @@ import { CamAnim } from "../utils/CamAnim";
 import { app } from "@/App";
 import Milo from "../objects/Milo";
 import Spirit from "../objects/Spirit";
+import { DirectionalLight } from "three";
+import { WaterMaterial } from "../materials/Water/material";
 
 class ColorSpirit extends Spirit {
   constructor() {
@@ -110,6 +112,15 @@ class Dam extends Scene {
 
     this.raycaster = new Raycaster();
 
+
+    this.light = new AmbientLight({ color: 0xffffff });
+    this.add(this.light);
+
+    this.directionLight = new DirectionalLight(0xffffff);
+    this.directionLight.intensity = 2;
+    this.directionLight.position.set(7, 10, 15);
+    this.add(this.directionLight);
+
     this.PARAMS = {
       scenePos: {
         x: -3.2,
@@ -144,6 +155,18 @@ class Dam extends Scene {
   onAttach() {
     // console.log('Attach Dam')
     this.scene = app.assetsManager.get("dam");
+    this.scene.traverse((el)=>{
+      if (el.name == "WaterSurface") {
+        this.water = el;
+        el.material = new WaterMaterial({
+          uniforms: {
+            uTexture: { value: el.material.map },
+            uTime: { value: 0 },
+          },
+          transparent: true,
+        });
+      }
+    })
 
     this.add(this.scene);
 
@@ -279,6 +302,10 @@ class Dam extends Scene {
         }
       );
     }
+  }
+
+  onTick(){
+    if(this.water) this.water.material.uniforms.uTime.value = app.ticker.elapsed;
   }
 
   clear() {

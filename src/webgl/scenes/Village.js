@@ -8,11 +8,20 @@ import { MeshMatcapMaterial } from "three";
 import GodRays from "../objects/GodRays";
 import { Group } from "three";
 import Spirit from "../objects/Spirit";
+import { DirectionalLight } from "three";
 
 class Village extends Scene {
   constructor() {
     super();
     state.register(this);
+
+    this.light = new AmbientLight({ color: 0xffffff });
+    this.add(this.light);
+
+    this.directionLight = new DirectionalLight(0xffffff);
+    this.directionLight.intensity = 2;
+    this.directionLight.position.set(7, 10, 15);
+    this.add(this.directionLight);
   }
 
   init() {

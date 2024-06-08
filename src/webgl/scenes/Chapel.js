@@ -14,6 +14,7 @@ import { app } from "@/App";
 import { PortalMaterial } from "../materials/Portal/material";
 import { AmbientLight } from "three";
 import { WaterMaterial } from "../materials/Water/material";
+import { DirectionalLight } from "three";
 
 class Chapel extends Scene {
   constructor() {
@@ -25,6 +26,14 @@ class Chapel extends Scene {
     };
 
     this.raycaster = new Raycaster();
+
+    this.light = new AmbientLight({ color: 0xffffff });
+    this.add(this.light);
+
+    this.directionLight = new DirectionalLight(0xffffff);
+    this.directionLight.intensity = 2;
+    this.directionLight.position.set(7, 10, 15);
+    this.add(this.directionLight);
 
     this.init();
     this.torchs = [];
@@ -58,17 +67,11 @@ class Chapel extends Scene {
     noiseText.wrapT = RepeatWrapping;
 
     this.chapel.traverse((el) => {
-      // el.material = new MeshMatcapMaterial({
-      //   matcap: app.assetsManager.get("matcap"),
-      // });
       if (el.name == "WaterSurface") {
         this.water = el;
-
         el.material = new WaterMaterial({
           uniforms: {
-            uProgress: { value: 0 },
             uTexture: { value: el.material.map },
-            uNoiseTexture: { value: noiseText },
             uTime: { value: 0 },
           },
           transparent: true,
@@ -103,7 +106,6 @@ class Chapel extends Scene {
         torch.position.z
       );
 
-      // console.log(flame);
       torch.flame = flame;
       flame.visible = false;
       this.flames.push(flame);
@@ -115,7 +117,7 @@ class Chapel extends Scene {
     this.add(this.spirit);
 
     this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 1]);
-    this.anim.onChangeSceneStep(2);
+    // this.anim.onChangeSceneStep(2);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -219,8 +221,8 @@ class Chapel extends Scene {
 
     if (!this.portal) return;
 
-    this.portal.material.uniforms.uTime.value += 0.05;
-    this.water.material.uniforms.uTime.value += 0.05;
+    this.portal.material.uniforms.uTime.value = app.ticker.elapsed;
+    this.water.material.uniforms.uTime.value = app.ticker.elapsed;
   }
 
   clear() {
