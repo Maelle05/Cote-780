@@ -40,7 +40,7 @@ class Village extends Scene {
     this.addGodRays()
 
     this.spirit = new Spirit()
-    this.spirit.position.set(-9.5, 0.7, 6)
+    this.spirit.position.set(-10, 0.7, 7)
     
 
     this.anim = new CamAnim(
@@ -56,11 +56,10 @@ class Village extends Scene {
   }
 
   onTick(){
-    console.log(app.sceneshandler.currentStepCam);
     if(this.spirit){
       switch (app.sceneshandler.currentStepCam) {
         case 0:
-          this.spiritTargetPos = new Vector3(-9.5, 0.7, 6)
+          this.spiritTargetPos = new Vector3(-10, 0.7, 7)
           break;
 
         case 1:

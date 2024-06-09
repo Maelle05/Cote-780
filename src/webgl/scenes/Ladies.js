@@ -179,16 +179,18 @@ class Ladies extends Scene {
         .on("change", (ev) => {
           this.ladies.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
+
+      this.pane.addBinding( app.webgl.transitionPass.material.uniforms.uProgress, 'value', {
+        min: 0,
+        max: 1,
+        step: 0.001,
+        label: 'Transition progress',
+      }).on('change', (ev) => {
+        this.transitionPass.material.uniforms.uProgress.value = ev.value
+      });
     }
 
-    this.pane.addBinding( app.webgl.transitionPass.material.uniforms.uProgress, 'value', {
-      min: 0,
-      max: 1,
-      step: 0.001,
-      label: 'Transition progress',
-    }).on('change', (ev) => {
-      this.transitionPass.material.uniforms.uProgress.value = ev.value
-    });
+    
   }
 
   onPointerMove() {

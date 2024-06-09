@@ -4,6 +4,7 @@ import {
   AmbientLight,
   DoubleSide,
   Raycaster,
+  Color,
 } from "three";
 import { state } from "../../utils/State";
 import { Pane } from "tweakpane";
@@ -20,6 +21,7 @@ import Milo from "../objects/Milo";
 import Spirit from "../objects/Spirit";
 import { DirectionalLight } from "three";
 import { WaterMaterial } from "../materials/Water/material";
+import { Vector4 } from "three";
 
 class ColorSpirit extends Spirit {
   constructor() {
@@ -33,6 +35,13 @@ class ColorSpirit extends Spirit {
     this.currentPos = 2;
     this.currentLife = 4;
     this.isCaptured = false;
+
+    this.allColors = [
+      new Color(0xacc8e4),
+      new Color(0x809bbf),
+      new Color(0x53a0ec),
+      new Color(0x1a80e6),
+    ]
 
     this.position.set(
       this.allPos[this.currentPos].x,
@@ -64,22 +73,22 @@ class ColorSpirit extends Spirit {
     this.currentLife = this.currentLife - 1;
     switch (this.currentLife) {
       case 3:
-        this.material.color.setHex(0xacc8e4);
+        this.targetSpiritColor = new Vector4(this.allColors[0].r, this.allColors[0].g, this.allColors[0].b, 1);
         this.changePos();
         break;
 
       case 2:
-        this.material.color.setHex(0x809bbf);
+        this.targetSpiritColor = new Vector4(this.allColors[1].r, this.allColors[1].g, this.allColors[1].b, 1);
         this.changePos();
         break;
 
       case 1:
-        this.material.color.setHex(0x53a0ec);
+        this.targetSpiritColor = new Vector4(this.allColors[2].r, this.allColors[2].g, this.allColors[2].b, 1);
         this.changePos();
         break;
 
       case 0:
-        this.material.color.setHex(0x1a80e6);
+        this.targetSpiritColor = new Vector4(this.allColors[3].r, this.allColors[3].g, this.allColors[3].b, 1);
         this.isCaptured = true;
         state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, app.webgl.currentScene);
         break;

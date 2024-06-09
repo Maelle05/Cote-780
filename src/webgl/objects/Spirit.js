@@ -12,17 +12,21 @@ import { SpiritBodyMaterial } from "../materials/Spirit/Body/material";
 import { Vector2 } from "three";
 import { Group } from "three";
 import { Vector3 } from "three";
+import { Vector4 } from "three";
 
 export default class Spirit extends Group {
   constructor() {
     super();
     state.register(this)
+    this.name = 'Spirit'
 
     const noise = app.assetsManager.get('spiritNoise');
     noise.wrapS = RepeatWrapping
     noise.wrapT = RepeatWrapping
     const tex = app.assetsManager.get('spiritTex');
-    let spiritColor = { value : new Vector3(1, 1, 1)}
+    const texBody = app.assetsManager.get('spiritTexBody');
+    this.currentSpiritColor = new Vector4(1, 1, 1, 1);
+    this.targetSpiritColor = new Vector4(1, 1, 1, 1);
 
     // Face
     this.faceGeometry = new PlaneGeometry(0.25, 0.25);
@@ -33,7 +37,7 @@ export default class Spirit extends Group {
         u_faceMask: { value: app.assetsManager.get('spiritFace')},
         u_texture: { value: tex},
         u_noise: { value: noise},
-        u_color: { value: spiritColor.value },
+        u_color: { value: this.currentSpiritColor },
         u_gOpacity: { value: 1 }
       }
     });
@@ -47,9 +51,9 @@ export default class Spirit extends Group {
         u_time: { value: 0 },
         u_move: { value: 0 },
         u_faceMask: { value: app.assetsManager.get('spiritBody')},
-        u_texture: { value: tex},
+        u_texture: { value: texBody},
         u_noise: { value: noise},
-        u_color: { value: spiritColor.value },
+        u_color: { value: this.currentSpiritColor },
         u_gOpacity: { value: 1 }
       }
     });
@@ -68,7 +72,7 @@ export default class Spirit extends Group {
         u_faceMask: { value: app.assetsManager.get('spiritArm')},
         u_texture: { value: tex},
         u_noise: { value: noise},
-        u_color: { value: spiritColor.value },
+        u_color: { value: this.currentSpiritColor },
         u_gOpacity: { value: 1 }
       }
     });
@@ -125,9 +129,16 @@ export default class Spirit extends Group {
       this.faceMaterial.uniforms.u_time.value = time
       this.bodyMaterial.uniforms.u_time.value = time
       this.armMaterial.uniforms.u_time.value = time
+      
       const move = this.valueMove(this.position.x)
       this.faceMaterial.uniforms.u_move.value = move
       this.bodyMaterial.uniforms.u_move.value = move
+
+      const newColor = this.currentSpiritColor.lerp(this.targetSpiritColor, 0.5);
+      this.faceMaterial.uniforms.u_color.value = newColor;
+      this.bodyMaterial.uniforms.u_color.value = newColor;
+      this.currentSpiritColor = newColor;
+
 
       this.arm1.rotation.z = this.arm1Base.rotZ + ((move * 30.) * (Math.PI / 180))
       this.arm2.rotation.z = this.arm2Base.rotZ + ((move * 30.) * (Math.PI / 180))
@@ -144,7 +155,7 @@ export default class Spirit extends Group {
       strength = -strength
       this.lastPos = currentPos
     } else {
-      strength = Math.sin(app.ticker.elapsed * 0.001) * 0.1
+      strength = Math.sin(app.ticker.elapsed * 0.001) * 0.3
     }
 
     return strength // entre -1 et 1

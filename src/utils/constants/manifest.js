@@ -17,6 +17,7 @@ const manifest = {
     spiritBody: { path: `/assets/textures/Spirit/spirit-body.png` },
     spiritArm: { path: `/assets/textures/Spirit/spirit-arm.png` },
     spiritTex: { path: `/assets/textures/Spirit/spirit-tex.png` },
+    spiritTexBody: { path: `/assets/textures/Spirit/spirit-body-tex.png` },
     spiritNoise: { path: `/assets/textures/Noise/Super Perlin/SuperPerlin_02-256x256.png` },
     doorTexture: { path: `/assets/textures/DoorTexture.jpg` },
     doorNoise: {
