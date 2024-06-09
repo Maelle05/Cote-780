@@ -50,82 +50,39 @@ onMounted(() => {
     timelines.push(gsap.timeline())
   })
 
-  timelines[1].fromTo(
-    ".section__element--maison",
-    { opacity: 0.5 },
-    { duration: 0.5, y: "-50vh", opacity: 1 },
-    "-=1"
-  )
+  timelines[1]
+    .fromTo(".section__element--1-arbre", { y: "30vh" }, { duration: 1, y: "-30vh" })
+    .fromTo(".section__element--1-colline-1", { y: "10vh" }, { duration: 1, y: "-10vh" }, "<")
+    .fromTo(".section__element--1-colline-2", { y: "15vh" }, { duration: 1, y: "-15vh" }, "<")
+    .fromTo(".section__element--1-maison", { y: "20vh" }, { duration: 1, y: "-20vh" }, "<")
+    .fromTo(".section__element--1-buisson-droite", { x: "-10vh", y: "25vh" }, { duration: 1, x: "0vh", y: "-25vh" }, "<")
+    .fromTo(".section__element--1-buisson-gauche", { x: "10vh", y: "25vh" }, { duration: 1, x: "0vh", y: "-25vh" }, "<")
 
-  timelines[2].fromTo(
-    ".section__element--chambre",
-    { opacity: 0.5, scale: 0.8 },
-    { duration: 0.5, y: "-100vh", opacity: 1, scale: 1 },
-    "-=1"
-  )
+  timelines[2]
+    .fromTo(".section__element--2-lumiere", { opacity: 0 }, { duration: 0.5, opacity: 1 }, "-=0.2")
+    .fromTo(".section__element--2-enveloppe, .section__element--2-lettre", { opacity: 0 }, { duration: 0.2, opacity: 1 }, "<")
+    .fromTo(".section__element--2-enveloppe", { x: "30vw" }, { duration: 0.5, x: "20vw" }, "<")
+    .fromTo(".section__element--2-lettre", { x: "40vw" }, { duration: 0.5, x: "20vw" }, "<")
 
-  timelines[2].fromTo(
-    ".section__element--lettre",
-    { y: "150vh", x: "50vw" },
-    { duration: 0.5, y: "-50vh", x: "0" },
-    "-=1"
-  )
+  timelines[4]
+  .fromTo(".section__element--4-durance-1", { y: "50vh" }, { duration: 0.2, y: "0vh" })
+  .fromTo(".section__element--4-durance-3", { y: "55vh" }, { duration: 0.2, y: "0vh" }, "<")
+  .fromTo(".section__element--4-durance-2", { y: "60vh" }, { duration: 0.2, y: "-5vh" }, "<")
+  .fromTo(".section__element--4-grandma", { y: "100vh" }, { duration: 0.2, y: "-25vh" }, "<")
+  .fromTo(".section__element--4-cairn", { y: "-40vh" }, { duration: 0.1, y: "-23vh" }, "<")
+  .fromTo(".section__element--4-cairn", { opacity: 0 }, { duration: 0.1, opacity: 1 }, "-=0.1")
 
-  timelines[3].fromTo(
-    ".section__element--construction-barrage",
-    { scale: 0.4, opacity: 0, x: "-100vh", y: "60vh" },
-    { duration: 0.3, scale: 0.9, opacity: 1, x: "0vh", y: "-20vh" },
-    "-=0.9"
-  )
+  timelines[5]
+  .fromTo(".section__element--5-collines", { y: "10vh" }, { duration: 0.1, y: "0vh" })
+  .fromTo(".section__element--5-passage", { y: "20vh" }, { duration: 0.1, y: "-10vh" }, "<")
 
-  timelines[3].fromTo(
-    ".section__element--durance-colere",
-    { scale: 0.4, opacity: 0, x: "50vh", y: "100vh" },
-    { duration: 0.2, scale: 0.9, opacity: 1, x: "0vh", y: "40vh" },
-    "-=0.7"
-  )
+  timelines[6]
+  .fromTo(".section__element--6-milo", { scale: "0.8" }, { duration: 0.2, scale: "1.1" })
 
-  timelines[5].fromTo(
-    ".section__element--mamie-lien-durance-1",
-    { x: "-100vh" },
-    { duration: 0.02, x: "0vh" },
-    "-=1"
-  )
+  timelines[8]
+  .fromTo(".section__element--collier", { opacity: 0, x: "-50vw" }, { duration: 0.2, opacity: 1, x: "0vw" })
+  .fromTo(".section__element--carte", { opacity: 0, x: "50vw" }, { duration: 0.2, opacity: 1, x: "0vw" }, "<")
 
-  timelines[5].fromTo(
-    ".section__element--mamie-lien-durance-2",
-    { x: "100vh" },
-    { duration: 0.02, x: "0vh" },
-    "-=1"
-  )
-
-  timelines[6].fromTo(
-    ".section__element--passage-lac",
-    { y: "60vh" },
-    { duration: 1, y: "-20vh" },
-    "-=1"
-  )
-
-  timelines[7].fromTo(
-    ".section__element--milo",
-    { y: "60vh" },
-    { duration: 0.5, y: "-20vh" },
-    "-=1"
-  )
-
-  timelines[8].fromTo(
-    ".section__element--collier",
-    { x: "-60vh", y: "80vh" },
-    { duration: 0.5, x: "0vh", y: "0vh" },
-    "-=1"
-  )
-
-  timelines[8].fromTo(
-    ".section__element--carte",
-    { x: "60vh" },
-    { duration: 0.5, x: "0vh" },
-    "-=1"
-  )
 
   INTRO_SECTIONS.forEach((section, index) => {
     ScrollTrigger.create({
@@ -173,7 +130,7 @@ onMounted(() => {
       section--${index}
       section--${activeSection === index ? 'active' : 'inactive'}`
       "
-      :key="section.text"
+      :key="index"
       v-for="(section, index) in INTRO_SECTIONS"
     >
       <div class="section__elements">
@@ -183,14 +140,15 @@ onMounted(() => {
       section__element--${index} 
       section__element--${element.id}
       `"
+          :style="`z-index: ${index};`"
           :key="element.src"
           v-for="(element, index) in section.elements"
         >
           <img :src="element.src" />
         </div>
       </div>
-      <div class="section__text">
-        <IntroText :text="section.text" :section="index" :sectionProgress="scrollProgress[index]" />
+      <div :class="`section__text section__text--${id}`" v-for="(text, id) in section.texts">
+        <IntroText :text="text" :index="id" :section="index" :sectionProgress="scrollProgress[index]" />
       </div>
     </div>
     <p class="intro-cta intro-cta--end" @click="onClickCtaEnd">Compris !</p>
@@ -216,7 +174,9 @@ onMounted(() => {
   position: absolute;
   top: 0;
   overflow: hidden;
+  width: 100%;
   color: #000;
+  background-color: var(--c-background-beige);
 }
 
 .intro-title-screen {
@@ -240,7 +200,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 320px;
+  max-width: 420px;
   gap: 42px;
   transition: transform 800ms, opacity 800ms;
 }
@@ -283,6 +243,7 @@ onMounted(() => {
   font-family: sans-serif;
   border-radius: 4px;
   background-color: #eee;
+  z-index: 20;
 }
 
 .intro-cta--end {
@@ -293,9 +254,8 @@ onMounted(() => {
 }
 
 .section {
-  height: 150vh;
-  width: 100%;
-  background-color: #fff;
+  min-height: 100vh;
+  width: 100vw;
   position: relative;
 }
 
@@ -310,12 +270,23 @@ onMounted(() => {
 .section__text {
   position: fixed;
   top: 0;
+  z-index: 10;
+  pointer-events: none;
+  width: fit-content;
+}
+
+.section__text + .section__text {
+  top: unset;
+  bottom: 0;
+  right: 0;
 }
 
 .section__elements {
   display: grid;
   align-items: center;
   justify-content: center;
+  margin: 0 !important;
+  transition: opacity 800ms;
 }
 
 .section__elements > * {
@@ -324,12 +295,20 @@ onMounted(() => {
 
 .section__element {
   align-self: flex-start;
+  pointer-events: none;
 }
 
 .section__element img {
   width: 100%;
 }
 
+.section__element img,
+.section__element {
+  margin: 0 !important;
+  font-size: 0 !important;
+}
+
+/* 
 .section__element--lac {
   position: sticky;
   top: 0;
@@ -338,7 +317,11 @@ onMounted(() => {
 .section.section--5,
 .section.section--6 {
   height: 100vh;
-}
+} */
+
+/* .section--2.section--active .section__elements {
+  opacity: 1;
+} */
 
 .intro-container.intro-container--not-started {
   height: 100vh;
@@ -362,4 +345,113 @@ onMounted(() => {
   transform: translateY(-40vh);
   pointer-events: none;
 } */
+
+.section__element--0-milo {
+  z-index: 20 !important;
+}
+
+.section--2 .section__elements {
+  position: fixed;
+  top: 0;
+  opacity: 0;
+  transition: 1200ms;
+}
+
+.section--2.section--active .section__elements {
+  opacity: 1;
+}
+
+.section--3.section--inactive .section__elements {
+  opacity: 0;
+}
+
+.section--4 .section__elements {
+  position: fixed;
+  top: 0;
+  opacity: 0;
+  transition: 1200ms;
+}
+
+.section--4.section--active .section__elements {
+  opacity: 1;
+}
+
+.section--5 .section__elements {
+  position: absolute;
+  bottom: 0;
+}
+
+.section--6 .section__element--6-milo {
+  position: fixed;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity 600ms;
+}
+
+:has(.section--7.section--active) .section__element--6-milo,
+.section--6.section--active .section__element--6-milo {
+  opacity: 1;
+}
+
+.section--2 .section__text--0 {
+  top: 10vh;
+  left: 10vh;
+}
+
+.section--2 .section__text--1 {
+  top: 25vh;
+  left: 20vh;
+}
+
+.section--3 .section__text--0 {
+  width: 100%;
+  text-align: center;
+  top: 5vh;
+}
+
+.section--4 .section__text--0 {
+  top: unset;
+  bottom: 8vh;
+  right: 5vh;
+  text-align: right;
+}
+
+.section--5 .section__text--0 {
+  text-align: center;
+  width: 100%;
+  top: 5vh;
+}
+
+.section--5 .section__text--1 {
+  text-align: center;
+  width: 100%;
+  top: 20vh;
+}
+
+.section--6 .section__text--0 {
+  top: 5vh;
+  left: 5vh;
+}
+
+.section--6 .section__text--1 {
+  top: 22vh;
+  left: 5vh;
+}
+
+.section--7 .section__text--0 {
+  top: unset;
+  text-align: center;
+  width: 100%;
+  bottom: 20vh;
+}
+
+.section--8 .section__text--0 {
+  top: 5vh;
+  left: 5vh;
+}
+
+.section--8 .section__text--1 {
+  top: 22vh;
+  left: 5vh;
+}
 </style>
