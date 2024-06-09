@@ -22,6 +22,7 @@ import Spirit from "../objects/Spirit";
 import { DirectionalLight } from "three";
 import { WaterMaterial } from "../materials/Water/material";
 import { Vector4 } from "three";
+import Durance from "../objects/Durance";
 
 class ColorSpirit extends Spirit {
   constructor() {
@@ -195,6 +196,12 @@ class Dam extends Scene {
     this.spirit = new ColorSpirit();
     this.add(this.spirit);
 
+    this.durance = new Durance();
+    this.durance.hide()
+    this.durance.scale.set(2.5, 2.5, 2.5);
+    this.durance.position.set(1.5, 0, 0)
+    this.add(this.durance)
+
     this.rocks = app.assetsManager.get("rocks");
     this.rocks.traverse((el) => {
       el.material = new MeshMatcapMaterial({
@@ -314,7 +321,14 @@ class Dam extends Scene {
   }
 
   onTick(){
+    if(app.sceneshandler.currentScene != 3) return
     if(this.water) this.water.material.uniforms.uTime.value = app.ticker.elapsed;
+    if(app.sceneshandler.currentStepCam == 3 && !this.durance.isActive) {
+      this.durance.isActive = true
+      setTimeout(()=>{
+        this.durance.show()
+      }, 1000)
+    }
   }
 
   clear() {

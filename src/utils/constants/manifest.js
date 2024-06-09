@@ -43,6 +43,7 @@ const manifest = {
     village: { path: `assets/models/village.glb` },
     milo: { path: `assets/models/milo.glb` },
     milo_anim: { path: `assets/models/milo-anims.glb` },
+    durance: { path: `/assets/models/durance.glb` },
     rocks: { path: `assets/models/rocks.glb` },
     end: { path: `assets/models/end.glb` },
   },
