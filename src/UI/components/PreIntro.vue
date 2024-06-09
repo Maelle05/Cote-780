@@ -52,16 +52,53 @@ const onClickCtaStart = () => {
 }
 
 .pre-intro__text {
-    max-width: 860px;
-    font-family: var(--ff-eczar);
-    line-height: 1.4;
-    font-size: 24px;
-    text-align: center;
-    color: var(--c-text-turquoise);
-    margin-bottom: 48px;
+  max-width: 860px;
+  font-family: var(--ff-eczar);
+  line-height: 1.4;
+  font-size: 24px;
+  text-align: center;
+  color: var(--c-text-turquoise);
+  margin-bottom: 48px;
+  margin-top: -160px;
 }
 
 .pre-intro__text p + p {
-    margin-top: 0.66em;
+  margin-top: 0.66em;
+}
+
+
+.intro-button,
+.pre-intro__text p {
+  --anim-delay: 0ms;
+  --anim-duration: 1200ms;
+  opacity: 0;
+  animation: fadeIn var(--anim-duration) var(--anim-delay) forwards ease-in-out;
+}
+
+.pre-intro__text p:nth-child(1) {
+  --anim-delay: 200ms;
+}
+
+.pre-intro__text p:nth-child(2) {
+  --anim-delay: 800ms;
+}
+
+.pre-intro__text p:nth-child(3) {
+  --anim-delay: 1400ms;
+}
+
+.intro-button {
+  --anim-delay: 2200ms;
+}
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 </style>
