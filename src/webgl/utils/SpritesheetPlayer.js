@@ -1,6 +1,7 @@
 import { app } from "@/App.js";
 import { SpritesheetMaterial } from "../materials/Spritesheet/SpritesheetMaterial.js";
 import { state } from "@/utils/State.js";
+import { EVENTS } from "@/utils/constants/events.js";
 
 class SpritesheetPlayer {
   material;
@@ -19,7 +20,7 @@ class SpritesheetPlayer {
       app.assetsManager.get(this.textureID),
       app.assetsManager.get(this.textureID + "_data")
     );
-    this.play();
+    // this.play();
   }
 
   play() {
@@ -30,6 +31,8 @@ class SpritesheetPlayer {
 
   stop() {
     this.reset();
+
+    state.emit(EVENTS.FIREWORKS_ANIM_STOP, this.textureID);
 
     if (this.loop) {
       this.play();

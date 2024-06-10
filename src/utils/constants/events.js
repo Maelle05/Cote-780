@@ -31,6 +31,7 @@ const EVENTS = {
   CHANGE_SCENE_STEP: i++,
   UPDATE_DIALOGUE: i++,
   VIEW_COLLECTION_CAIRNS: i++,
+  FIREWORKS_ANIM_STOP: i++,
 };
 
 const EVENTS_MAP = Object.fromEntries(

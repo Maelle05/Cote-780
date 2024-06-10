@@ -65,27 +65,6 @@ class End extends Scene {
     this.fireworks.launchers.forEach((launcher) => this.add(launcher));
     this.fireworks.explosions.forEach((explosions) => this.add(explosions));
 
-    console.log(this.fireworks);
-
-    setTimeout(() => {
-      this.fireworks.launchers.forEach((launcher) =>
-        this.fireworks.play(launcher)
-      );
-    }, 2000);
-
-    this.test = new SpritesheetPlayer("explosion1");
-
-    this.testSprite = new Mesh(
-      new PlaneGeometry(1, 1, 1, 1),
-      this.test.material
-    );
-
-    this.testSprite.lookAt(app.webgl.camera.position);
-
-    this.testSprite.position.set(-5, 2, 0);
-    this.testSprite.rotation.y = Math.PI / 2;
-    this.add(this.testSprite);
-
     this.planePos = new Mesh(
       new PlaneGeometry(1, 1, 1, 1),
       new MeshBasicMaterial({ color: 0xff0000, side: DoubleSide })
@@ -95,7 +74,7 @@ class End extends Scene {
     this.add(this.planePos);
 
     this.end = app.assetsManager.get("end");
-    this.end.traverse((el)=>{
+    this.end.traverse((el) => {
       if (el.name == "WaterSurface") {
         this.water = el;
         el.material = new WaterMaterial({
@@ -106,13 +85,13 @@ class End extends Scene {
           transparent: true,
         });
       }
-    })
+    });
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
 
     this.add(this.end, this.ambient);
 
-    this.anim = new CamAnim(7, this.end, [0, 0.33, 0.66, 1]);
+    // this.anim = new CamAnim(7, this.end, [0, 0.33, 0.66, 1]);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -124,8 +103,9 @@ class End extends Scene {
     if (app.webgl.currentScene === 7) this.init();
   }
 
-  onTick(){
-    if(this.water) this.water.material.uniforms.uTime.value = app.ticker.elapsed;
+  onTick() {
+    if (this.water)
+      this.water.material.uniforms.uTime.value = app.ticker.elapsed;
   }
 
   clear() {
