@@ -13,6 +13,12 @@ const letters = ref([])
 const wrapperRef = ref(null)
 const wrapperHeight = ref(0)
 
+let isNewScene = false
+
+const props = defineProps({
+  sceneIndex: Number,
+})
+
 let isAnimationInProgress = false
 
 const assignRef = (ref, element, match) => {
@@ -49,27 +55,42 @@ onMounted(() => {
   })
 })
 
+state.on(EVENTS.CHANGE_SCENE, (e) => {
+  isNewScene = true
+})
+
+state.on(EVENTS.CHANGE_SCENE_STEP, (e) => {
+  isNewScene = false
+})
+
 state.on(EVENTS.UPDATE_DIALOGUE, (e) => {
-  if (e) {
-    gsap.to(".wrapper--original .letter", {
-      opacity: 0,
-      duration: hasDialogue.value === true ? 0.1 : 0.001,
-      onComplete: () => {
-        person.value = e.person
-        text.value = e.text
-        letters.value = text.value.split("")
+  const updateDialogueDelay = isNewScene ? 3000 : 0
+  
+  setTimeout(
+    () => {
+      if (e) {
+        gsap.to(".wrapper--original .letter", {
+          opacity: 0,
+          duration: hasDialogue.value === true ? 0.1 : 0.001,
+          onComplete: () => {
+            person.value = e.person
+            text.value = e.text
+            letters.value = text.value.split("")
 
-        nextTick(() => {
-          updateHeight()
-          animateLettersApparition()
+            nextTick(() => {
+              updateHeight()
+              animateLettersApparition()
+            })
+          },
         })
-      },
-    })
 
-    hasDialogue.value = true
-  } else {
-    hasDialogue.value = false
-  }
+        hasDialogue.value = true
+      } else {
+        hasDialogue.value = false
+      }
+    },
+    updateDialogueDelay
+  )
 })
 
 const onClickDialogue = () => {
@@ -87,7 +108,9 @@ const onClickDialogue = () => {
   <div
     @click="onClickDialogue"
     :ref="(ref) => assignRef(ref, element, 'clone')"
-    :class="`wrapper wrapper--${element} wrapper--${hasDialogue ? 'visible' : 'hidden'}`"
+    :class="`wrapper wrapper--${element} wrapper--${
+      hasDialogue ? 'visible' : 'hidden'
+    }`"
     :style="`--wrapper-height: ${wrapperHeight}px;`"
     v-for="element in ['original', 'clone']"
   >
@@ -122,7 +145,7 @@ const onClickDialogue = () => {
   pointer-events: all;
   width: 500px;
   height: var(--wrapper-height);
-  transition: opacity 600ms, height 800ms;
+  transition: opacity 1000ms, height 800ms;
   box-sizing: border-box;
 
   &.wrapper--clone {
