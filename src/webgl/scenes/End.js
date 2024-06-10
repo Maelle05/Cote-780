@@ -13,6 +13,7 @@ import { SpritesheetPlayer } from "../utils/SpritesheetPlayer";
 import { CamAnim } from "../utils/CamAnim";
 import { DirectionalLight } from "three";
 import { WaterMaterial } from "../materials/Water/material";
+import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 
 class End extends Scene {
   constructor() {
@@ -58,6 +59,8 @@ class End extends Scene {
           this.planePos.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
     }
+
+    app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
   }
 
   onAttach() {
@@ -133,6 +136,8 @@ class End extends Scene {
     if (DEV_MODE) {
       this.pane.dispose();
     }
+
+    app.audio.fadeOutAmbient();
   }
 
   onResize() {}

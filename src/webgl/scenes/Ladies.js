@@ -22,6 +22,7 @@ import Vegetation from "../objects/Vegetation";
 import { Mesh } from "three";
 import { TearsMaterial } from "../materials/Tears/material";
 import { Vector3 } from "three";
+import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 
 class Demoiselle extends Group {
   constructor(body, top, riseTop) {
@@ -204,6 +205,8 @@ class Ladies extends Scene {
         this.tears.position.set(ev.value.x, ev.value.y, ev.value.z);
       });
     }
+
+    app.audio.playMusic(MUSIC_IDS.AMBIENT_FOREST);
   }
 
   onTick(){
@@ -296,6 +299,8 @@ class Ladies extends Scene {
     if (DEV_MODE) {
       this.pane.dispose();
     }
+
+    app.audio.fadeOutAmbient();
   }
 }
 

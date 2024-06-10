@@ -10,6 +10,7 @@ import { Group } from "three";
 import Spirit from "../objects/Spirit";
 import { DirectionalLight } from "three";
 import { AnimationMixer } from "three";
+import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 
 class Village extends Scene {
   constructor() {
@@ -29,6 +30,8 @@ class Village extends Scene {
     if (DEV_MODE) {
       this.pane = new Pane({ title: "Parameters Village", expanded: true });
     }
+
+    app.audio.playMusic(MUSIC_IDS.AMBIENT_UNDERWATER);
   }
 
   onAttach() {
@@ -133,6 +136,8 @@ class Village extends Scene {
     if (DEV_MODE) {
       this.pane.dispose();
     }
+
+    app.audio.fadeOutAmbient();
   }
 }
 

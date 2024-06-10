@@ -15,6 +15,7 @@ import { PortalMaterial } from "../materials/Portal/material";
 import { AmbientLight } from "three";
 import { WaterMaterial } from "../materials/Water/material";
 import { DirectionalLight } from "three";
+import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 
 class Chapel extends Scene {
   constructor() {
@@ -56,6 +57,8 @@ class Chapel extends Scene {
           this.portal.material.uniforms.uProgress.value = ev.value;
         });
     }
+
+    app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
   }
 
   onAttach() {
@@ -248,6 +251,8 @@ class Chapel extends Scene {
     if (DEV_MODE) {
       this.pane.dispose();
     }
+
+    app.audio.fadeOutAmbient();
   }
 }
 
