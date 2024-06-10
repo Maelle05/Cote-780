@@ -86,8 +86,6 @@ export default class WebglController {
     if (DEV_MODE) {
       this.stats = new Stats();
       this.canvasWrapper.appendChild(this.stats.dom);
-
-
     }
   }
 
@@ -175,6 +173,6 @@ export default class WebglController {
       1
     );
 
-    console.log(this.transitionPass.material.uniforms.uResolution.value);
+    // console.log(this.transitionPass.material.uniforms.uResolution.value);
   }
 }

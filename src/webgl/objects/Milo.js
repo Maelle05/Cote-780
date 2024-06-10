@@ -15,7 +15,7 @@ export default class Milo {
     state.register(this);
 
     this.model = app.assetsManager.get("milo_anim");
-    console.log(this.model);
+    // console.log(this.model);
     this.model.scale.set(0.07, 0.07, 0.07);
     this.model.anims = new AnimManager(this.model);
 

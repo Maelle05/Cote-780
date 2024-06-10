@@ -9,6 +9,7 @@ import GodRays from "../objects/GodRays";
 import { Group } from "three";
 import Spirit from "../objects/Spirit";
 import { DirectionalLight } from "three";
+import { AnimationMixer } from "three";
 
 class Village extends Scene {
   constructor() {
@@ -32,6 +33,18 @@ class Village extends Scene {
 
   onAttach() {
     this.scene = app.assetsManager.get('village');
+    
+
+    this.bookAnim = this.scene.animations.find(el => el.name == 'Armature.001Action')
+    this.animationMixer = new AnimationMixer(this.scene);
+    this.animationAction = this.animationMixer.clipAction(this.bookAnim);
+    this.animationAction.play();
+    this.animationAction.paused = true;
+    this.animationMixer.setTime(0);
+    this.animationAction.paused = true;
+    this.animationMixer.update(app.ticker.delta)
+    this.targetProgressAnim = 0;
+    this.currentProgressAnim = 0;
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
 
@@ -48,6 +61,7 @@ class Village extends Scene {
       this.scene,
       [0, 0.33, 0.66, 1]
     );
+    this.targetProgressAnim = 1;
 
 
     this.add(this.scene, this.spirit, this.ambient);
@@ -56,6 +70,7 @@ class Village extends Scene {
   }
 
   onTick(){
+    if (app.sceneshandler.currentScene != 6) return
     if(this.spirit){
       switch (app.sceneshandler.currentStepCam) {
         case 0:
@@ -80,6 +95,21 @@ class Village extends Scene {
       }
       const newPos = this.spirit.position.lerp(this.spiritTargetPos, 0.03)
       this.spirit.position.set(newPos.x, newPos.y, newPos.z)
+    }
+
+    if(this.animationMixer && this.bookAnim && app.sceneshandler.currentStepCam == 3 && app.sceneshandler.currentStepText == 3) {
+      this.currentProgressAnim = MathUtils.lerp(
+        this.currentProgressAnim,
+        this.targetProgressAnim,
+        0.01
+      );
+  
+      this.animationAction.paused = false;
+      this.animationMixer.setTime(
+        this.bookAnim.duration * this.currentProgressAnim
+      );
+      this.animationAction.paused = true;
+      this.animationMixer.update(app.ticker.delta)
     }
   }
 

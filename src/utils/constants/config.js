@@ -1,7 +1,7 @@
 import dataText from "../../locales/fr.json";
 
-const DEV_MODE = false;
-const INIT_SCENE = 3;
+const DEV_MODE = true;
+const INIT_SCENE = 0;
 
 const TITLES_SCENE = [
   [dataText["scene_0"].title],

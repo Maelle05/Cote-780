@@ -15,7 +15,7 @@ export default class Explosion extends Mesh {
     super();
     state.register(this);
 
-    console.log(data);
+    // console.log(data);
 
     const { w: width, h: height } = data.meta.size;
     const [framesOrder] = Object.values(data.animations);
