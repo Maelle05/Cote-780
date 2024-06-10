@@ -2,7 +2,7 @@ import { app } from "@/App";
 import { Group, InstancedMesh } from "three";
 
 export default class Vegetation extends Group {
-  constructor(sceneId, sampleSceneId) {
+  constructor(sceneId) {
     super();
 
     this.empties = new Map(); // Map of empties representing the position, scale and rotation of the vegetation
@@ -21,11 +21,13 @@ export default class Vegetation extends Group {
       }
     });
 
-    this.sampleScene = app.assetsManager.get(sampleSceneId);
+    this.sampleScene = app.assetsManager.get("vegetation");
     this.sampleScene.traverse((el) => {
       if (el.name.startsWith("VG-")) {
         const id = el.name.split("-")[1].split("0")[0];
         this.samples.set(id, el);
+
+        if (!this.empties.has(id)) return;
 
         const instancedMesh = new InstancedMesh(el.geometry, el.material, this.empties.get(id).length);
         this.meshes.set(id, instancedMesh);
@@ -34,6 +36,12 @@ export default class Vegetation extends Group {
 
     this.empties.forEach((empties, id) => {
       const instancedMesh = this.meshes.get(id);
+
+      if (!instancedMesh) {
+        console.warn(`No sample found for vegetation id ${id}`);
+        return;
+      }
+
       empties.forEach((empty, i) => {
         instancedMesh.setMatrixAt(i, empty.matrix);
       });

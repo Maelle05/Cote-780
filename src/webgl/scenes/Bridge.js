@@ -31,6 +31,7 @@ import Foam from "../objects/Foam";
 import { RockMaterial } from "../materials/Rock/material";
 import Milo from "../objects/Milo";
 import { WaterMaterial } from "../materials/Water/material";
+import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 
 class Bridge extends Scene {
   constructor() {
@@ -109,6 +110,8 @@ class Bridge extends Scene {
     this.player.anims.idle();
 
     this.add(this.player);
+
+    app.audio.playMusic(MUSIC_IDS.AMBIENT_FOREST);
   }
 
   onAttach() {
@@ -192,8 +195,6 @@ class Bridge extends Scene {
     this.add(this.cairn);
 
     this.radius = this.center.distanceTo(this.rocks[0].position);
-
-    app.audio.playMusic("music_1");
 
     this.radius = this.center.distanceTo(this.rocks[0].position);
 
@@ -366,6 +367,8 @@ class Bridge extends Scene {
     if (DEV_MODE) {
       this.pane.dispose();
     }
+
+    app.audio.fadeOutAmbient();
   }
 }
 

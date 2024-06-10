@@ -23,6 +23,7 @@ import { DirectionalLight } from "three";
 import { WaterMaterial } from "../materials/Water/material";
 import { Vector4 } from "three";
 import Durance from "../objects/Durance";
+import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 
 class ColorSpirit extends Spirit {
   constructor() {
@@ -276,6 +277,8 @@ class Dam extends Scene {
           this.rocks.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
     }
+
+    app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
   }
 
   onPointerDown(e) {
@@ -335,6 +338,8 @@ class Dam extends Scene {
     if (DEV_MODE) {
       this.pane.dispose();
     }
+
+    app.audio.fadeOutAmbient();
   }
 }
 
