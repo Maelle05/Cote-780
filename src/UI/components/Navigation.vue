@@ -1,7 +1,5 @@
 <script setup>
-import MapButton from "./MapButton.vue"
-import LearnMoreButton from "./LearnMoreButton.vue"
-import SoundButton from "./SoundButton.vue"
+import NavigationElement from "./NavigationElement.vue"
 import LearnMorePanel from "./LearnMorePanel.vue"
 
 import { state } from "../../utils/State"
@@ -15,28 +13,46 @@ const props = defineProps({
 
 const isLearnMorePanelOpen = ref(false)
 
-state.on(EVENTS.OPEN_LEARN_MORE_PANEL, () => {
-  isLearnMorePanelOpen.value = true
-})
+// [WIP] à brancher
+const isSoundOn = ref(true)
 
-state.on(EVENTS.CLOSE_LEARN_MORE_PANEL, () => {
-  isLearnMorePanelOpen.value = false
-})
+const isOnMap = computed(() => (props.sceneIndex === 1 ? true : false))
 
-const isOnMap = computed(() =>
-  props.sceneIndex === 1 ? true : false
-)
+const onClickMap = () => {
+  state.emit(EVENTS.ASK_CHANGE_SCENE, 1)
+}
+
+const onClickSound = () => {
+  console.log("toggle sound")
+}
+
+const onClickLearnMore = () => {
+  if (isLearnMorePanelOpen.value === false) {
+    isLearnMorePanelOpen.value = true
+  } else {
+    isLearnMorePanelOpen.value = false
+  }
+}
 </script>
 
 <template lang="">
   <div class="navigation__container">
     <div class="navigation">
-      <MapButton v-if="!isOnMap" class="navigation__element"></MapButton>
-      <SoundButton class="navigation__element"></SoundButton>
-      <LearnMoreButton
-        v-if="!isOnMap"
-        class="navigation__element"
-      ></LearnMoreButton>
+      <NavigationElement
+        @click="onClickLearnMore"
+        :icon="isLearnMorePanelOpen ? 'close' : 'learn-more'"
+        :isVisible="!isOnMap"
+      ></NavigationElement>
+      <NavigationElement
+        @click="onClickMap"
+        icon="map"
+        :isVisible="!isOnMap"
+      ></NavigationElement>
+      <NavigationElement
+        @click="onClickSound"
+        :icon="isSoundOn ? 'sound-on' : 'sound-off'"
+        :isVisible="true"
+      ></NavigationElement>
     </div>
     <LearnMorePanel
       :sceneIndex="props.sceneIndex"
@@ -65,11 +81,7 @@ const isOnMap = computed(() =>
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 24px;
-}
-
-.navigation__element {
-  cursor: pointer;
+  gap: 16px;
 }
 
 .navigation__learn-more {

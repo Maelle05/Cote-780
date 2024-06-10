@@ -31,10 +31,6 @@ const EVENTS = {
   CHANGE_SCENE_STEP: i++,
   UPDATE_DIALOGUE: i++,
   VIEW_COLLECTION_CAIRNS: i++,
-  INTRO_CHANGE_SECTION: i++,
-  INTRO_UPDATE_TEXT: i++,
-  OPEN_LEARN_MORE_PANEL: i++,
-  CLOSE_LEARN_MORE_PANEL: i++,
 };
 
 const EVENTS_MAP = Object.fromEntries(

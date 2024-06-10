@@ -74,7 +74,7 @@ const props = defineProps({
   }
 
   a::before {
-    content: url("/assets/images/icons/loupe-icon.svg");
+    content: url("/assets/images/icons/loupe.svg");
   }
 
   &::before {
