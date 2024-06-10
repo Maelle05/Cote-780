@@ -1,6 +1,5 @@
 <script setup>
 import { defineProps, watchEffect, ref } from "vue"
-import { gsap } from "gsap/all"
 
 const props = defineProps({
   text: String,
@@ -49,12 +48,12 @@ watchEffect(() => {
   padding: 24px;
   opacity: 0;
   max-width: 560px;
-  text-shadow: 
+  /* text-shadow: 
     0 0 50px var(--c-shadow), 
     0 0 40px var(--c-shadow), 
     0 0 20px var(--c-shadow), 
     0 0 5px var(--c-shadow), 
-    0 0 2px var(--c-shadow);
+    0 0 2px var(--c-shadow); */
   margin: 0 auto;
   opacity: 0;
   transition: opacity 1000ms;

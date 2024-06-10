@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
   <div class="chapter-element" :class="{ active: props.active }">
-    <img :src="'/assets/images/icons/' + props.id  + '.png'" />
+    <img :src="'/assets/images/chapter-icons/' + props.id  + '.png'" />
     <h4 class="chapter-element__title">{{ TITLES_SCENE[props.id] }}</h4>
   </div>
 </template>

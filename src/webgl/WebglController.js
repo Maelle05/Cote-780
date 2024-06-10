@@ -48,6 +48,7 @@ export default class WebglController {
     ];
     this.currentScene = INIT_SCENE;
     this.scene = this.allScene[this.currentScene];
+    // this.scene = new Chapel();
 
     // Post pros
     const renderTarget = new RenderTarget(0, 0, { samples: 4 });
@@ -90,7 +91,6 @@ export default class WebglController {
   }
 
   onAttach() {
-    console.log("Event onAttach");
     // clear canvas
     this.canvasWrapper.innerHTML = "";
     // add canvas to dom
@@ -136,10 +136,7 @@ export default class WebglController {
   onChangeScene(e) {
     this.currentScene = e;
     this.scene.clear();
-    if (
-      this.currentScene == 0 ||
-      this.currentScene == 1
-    ) {
+    if (this.currentScene == 0 || this.currentScene == 1) {
       this.camera = new Camera();
     }
     this.scene = this.allScene[this.currentScene];
