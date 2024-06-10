@@ -7,7 +7,7 @@ const props = defineProps({
 
 <template lang="">
   <div :class="`navigation-element navigation-element--${isVisible ? 'visible' : 'hidden'}`">
-    <img :src="`/assets/images/icons/${icon}.png`" alt="">
+    <img :src="`/assets/images/icons/${icon}.svg`" alt="">
   </div>
 </template>
 
@@ -23,6 +23,11 @@ const props = defineProps({
     justify-content: center;
     overflow: hidden;
     transition: opacity 800ms;
+
+    img {
+      height: 26px;
+      width: 26px;
+    }
   }
 
   .navigation-element--hidden {
