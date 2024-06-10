@@ -1,9 +1,9 @@
-import { WebGLRenderer } from 'three';
-import { state } from '../utils/State';
+import { WebGLRenderer } from "three";
+import { state } from "../utils/State";
 
 class Renderer extends WebGLRenderer {
-	constructor(container, color, alpha) {
-    super({ antialias: true, powerPreference: 'high-performance' });
+  constructor(container, color, alpha) {
+    super({ antialias: true, powerPreference: "high-performance" });
     state.register(this);
 
     this.width = container.offsetWidth;
@@ -15,12 +15,12 @@ class Renderer extends WebGLRenderer {
     this.autoClear = false;
 
     // this.shadowMap.enabled = true;
-	}
+  }
 
   onResize({ width, height, dpr }) {
-		this.setSize(width, height);
-		this.setPixelRatio(dpr);
-	}
+    this.setSize(width, height);
+    this.setPixelRatio(dpr);
+  }
 }
 
 export { Renderer };

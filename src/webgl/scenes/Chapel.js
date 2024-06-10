@@ -39,6 +39,7 @@ class Chapel extends Scene {
     this.torchs = [];
     this.flames = [];
     this.flameOffset = 0.15;
+    this.index = 0;
   }
 
   init() {
@@ -107,6 +108,7 @@ class Chapel extends Scene {
       );
 
       torch.flame = flame;
+      // flame.lookAt(app.webgl.camera.position);
       flame.visible = false;
       this.flames.push(flame);
       this.add(flame);
@@ -117,7 +119,7 @@ class Chapel extends Scene {
     this.add(this.spirit);
 
     this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 1]);
-    // this.anim.onChangeSceneStep(2);
+    this.anim.onChangeSceneStep(2);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -137,8 +139,11 @@ class Chapel extends Scene {
     const intersects = this.raycaster.intersectObjects(this.torchs);
 
     if (intersects.length != 0) {
+      this.index++;
       this.goTo(intersects[0].object.flame);
     }
+
+    //Create the portal & give the cairn when all torchs are on
   }
 
   goTo(flame) {
@@ -150,12 +155,12 @@ class Chapel extends Scene {
     };
     const endPoint = {
       x: flame.position.x,
-      y: flame.position.y + this.flameOffset,
+      y: flame.position.y + this.flameOffset + 0.2,
       z: flame.position.z,
     };
     const controlPoint = {
       x: (startPoint.x + 1 + endPoint.x) / 2,
-      y: startPoint.y + 0.5,
+      y: startPoint.y + 0.7,
       z: (startPoint.z + 1 + endPoint.z) / 2,
     };
 
@@ -192,10 +197,24 @@ class Chapel extends Scene {
           flame.visible = true;
           flame.show();
           this.spiritStand(flame);
+
+          if (this.index == this.torchs.length) {
+            //TODO : PLAY THE CAIRN ANIMATION THEN CREATE PORTAL
+            this.createPortal();
+          }
         },
         onUpdateParams: [this.spirit], // Pass the spirit object to onUpdate
       }
     );
+  }
+
+  createPortal() {
+    gsap.to(this.portal.material.uniforms.uProgress, {
+      value: 1,
+      duration: 2,
+      delay: 1,
+      ease: "power2.in",
+    });
   }
 
   spiritStand(object) {
@@ -216,12 +235,12 @@ class Chapel extends Scene {
     // });
   }
 
-  onTick() {
+  onTick(e) {
     if (app.webgl.currentScene != 5) return;
 
     if (!this.portal) return;
 
-    this.portal.material.uniforms.uTime.value = app.ticker.elapsed;
+    this.portal.material.uniforms.uTime.value += e.dt;
     this.water.material.uniforms.uTime.value = app.ticker.elapsed;
   }
 

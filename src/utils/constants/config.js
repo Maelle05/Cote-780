@@ -1,7 +1,7 @@
 import dataText from "../../locales/fr.json";
 
 const DEV_MODE = false;
-const INIT_SCENE = 3;
+const INIT_SCENE = 5;
 
 const TITLES_SCENE = [
   [dataText["scene_0"].title],
@@ -30,8 +30,14 @@ const INTRO_SECTIONS = [
       { id: "1-colline-1", src: "/assets/images/intro/1_colline-1.png" },
       { id: "1-colline-2", src: "/assets/images/intro/1_colline-2.png" },
       { id: "1-maison", src: "/assets/images/intro/1_maison.png" },
-      { id: "1-buisson-gauche", src: "/assets/images/intro/1_buisson-droite.png" },
-      { id: "1-buisson-droite", src: "/assets/images/intro/1_buisson-gauche.png" },
+      {
+        id: "1-buisson-gauche",
+        src: "/assets/images/intro/1_buisson-droite.png",
+      },
+      {
+        id: "1-buisson-droite",
+        src: "/assets/images/intro/1_buisson-gauche.png",
+      },
       { id: "1-arbre", src: "/assets/images/intro/1_arbre.png" },
     ],
     texts: [],
@@ -50,7 +56,6 @@ const INTRO_SECTIONS = [
   },
   {
     elements: [
-
       {
         id: "3-durance-colere",
         src: "/assets/images/intro/3_durance-colere.png",

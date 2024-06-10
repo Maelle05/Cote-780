@@ -65,8 +65,8 @@ export default class TargetParticles extends Points {
   }
 
   #createMaterial() {
-    console.log("createa this : " + this.position.x);
-    console.log("create Next : " + this.nextRockPos.x);
+    // console.log("createa this : " + this.position.x);
+    // console.log("create Next : " + this.nextRockPos.x);
 
     this.p1 = this.calculatePointRadiusDirection(
       this.position,
