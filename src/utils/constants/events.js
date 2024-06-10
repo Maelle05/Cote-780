@@ -33,6 +33,7 @@ const EVENTS = {
   VIEW_COLLECTION_CAIRNS: i++,
   INTRO_CHANGE_SECTION: i++,
   INTRO_UPDATE_TEXT: i++,
+  FIREWORKS_ANIM_STOP: i++,
 };
 
 const EVENTS_MAP = Object.fromEntries(

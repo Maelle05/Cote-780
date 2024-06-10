@@ -12,21 +12,27 @@ import Explosion from "./Explosion";
 import { SpritesheetPlayer } from "../utils/SpritesheetPlayer";
 import { Group } from "three";
 import gsap from "gsap";
+import { state } from "@/utils/State";
 
 export default class Fireworks {
   constructor(positions) {
+    state.register(this);
     const explosionCount = 6;
     this.launchers = [];
     this.explosions = [];
+    this.tempExplosions = [];
 
     for (let i = 1; i <= explosionCount; i++) {
       //Create explosion mesh
       const explosion = this.#createExplosion(
-        new SpritesheetPlayer("explosion" + i)
+        new SpritesheetPlayer("explosion" + i),
+        "explosion" + i
       );
 
       this.explosions.push(explosion);
     }
+
+    // this.tempExplosions = this.explosions.slice();
 
     for (let i = 0; i < positions.length; i++) {
       //Create launch mesh
@@ -61,36 +67,38 @@ export default class Fireworks {
     return mesh;
   }
 
-  #createExplosion(spritesheet) {
+  #createExplosion(spritesheet, id) {
     const geometry = new PlaneGeometry(1, 1, 1, 1);
     const material = spritesheet.material;
 
     const mesh = new Mesh(geometry, material);
     mesh.spritesheet = spritesheet;
+    mesh.textureID = id;
 
     return mesh;
   }
 
   play(launcher) {
     const randomY = this.getRandom(4);
-    const randomExplo = Math.round(
-      Math.random() * (this.explosions.length - 1)
-    );
+    const randomIndex = Math.floor(Math.random() * this.explosions.length);
 
-    const explosion = this.explosions[randomExplo];
+    // console.log(this.tempExplosions);
+
+    const explosion = this.explosions[randomIndex];
+
+    // console.log(explosion);
 
     //Anim the launcher
     gsap.to(launcher.position, {
-      y: `+= ${randomY}`,
+      y: `${randomY}`,
       duration: 1,
       onComplete: () => {
+        //When launcher finished play explosion
         explosion.position.copy(launcher.position);
         explosion.lookAt(app.webgl.camera.position);
         explosion.spritesheet.playing = true;
       },
     });
-
-    //When launcher finished play explosion
   }
 
   getRandom(value) {
@@ -98,6 +106,10 @@ export default class Fireworks {
     const min = value - 1;
 
     return Math.random() * (max - min) + min;
+  }
+
+  onFireworksAnimStop(e) {
+    // console.log(e);
   }
 
   resize() {
