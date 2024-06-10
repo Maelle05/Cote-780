@@ -14,6 +14,7 @@ import { app } from "@/App";
 import { PortalMaterial } from "../materials/Portal/material";
 import { AmbientLight } from "three";
 import { WaterMaterial } from "../materials/Water/material";
+import { DirectionalLight } from "three";
 
 class Chapel extends Scene {
   constructor() {
@@ -26,10 +27,19 @@ class Chapel extends Scene {
 
     this.raycaster = new Raycaster();
 
+    this.light = new AmbientLight({ color: 0xffffff });
+    this.add(this.light);
+
+    this.directionLight = new DirectionalLight(0xffffff);
+    this.directionLight.intensity = 2;
+    this.directionLight.position.set(7, 10, 15);
+    this.add(this.directionLight);
+
     this.init();
     this.torchs = [];
     this.flames = [];
     this.flameOffset = 0.15;
+    this.index = 0;
   }
 
   init() {
@@ -53,23 +63,16 @@ class Chapel extends Scene {
 
     this.chapel = app.assetsManager.get("chapel");
     this.portalTexture = app.assetsManager.get("doorTexture");
+    const noiseText = app.assetsManager.get("doorNoise");
+    noiseText.wrapS = RepeatWrapping;
+    noiseText.wrapT = RepeatWrapping;
+
     this.chapel.traverse((el) => {
-      // el.material = new MeshMatcapMaterial({
-      //   matcap: app.assetsManager.get("matcap"),
-      // });
-
-      const noiseText = app.assetsManager.get("doorNoise");
-      noiseText.wrapS = RepeatWrapping;
-      noiseText.wrapT = RepeatWrapping;
-
       if (el.name == "WaterSurface") {
         this.water = el;
-
         el.material = new WaterMaterial({
           uniforms: {
-            uProgress: { value: 0 },
             uTexture: { value: el.material.map },
-            uNoiseTexture: { value: noiseText },
             uTime: { value: 0 },
           },
           transparent: true,
@@ -104,8 +107,8 @@ class Chapel extends Scene {
         torch.position.z
       );
 
-      // console.log(flame);
       torch.flame = flame;
+      // flame.lookAt(app.webgl.camera.position);
       flame.visible = false;
       this.flames.push(flame);
       this.add(flame);
@@ -136,8 +139,11 @@ class Chapel extends Scene {
     const intersects = this.raycaster.intersectObjects(this.torchs);
 
     if (intersects.length != 0) {
+      this.index++;
       this.goTo(intersects[0].object.flame);
     }
+
+    //Create the portal & give the cairn when all torchs are on
   }
 
   goTo(flame) {
@@ -149,12 +155,12 @@ class Chapel extends Scene {
     };
     const endPoint = {
       x: flame.position.x,
-      y: flame.position.y + this.flameOffset,
+      y: flame.position.y + this.flameOffset + 0.2,
       z: flame.position.z,
     };
     const controlPoint = {
       x: (startPoint.x + 1 + endPoint.x) / 2,
-      y: startPoint.y + 0.5,
+      y: startPoint.y + 0.7,
       z: (startPoint.z + 1 + endPoint.z) / 2,
     };
 
@@ -191,10 +197,24 @@ class Chapel extends Scene {
           flame.visible = true;
           flame.show();
           this.spiritStand(flame);
+
+          if (this.index == this.torchs.length) {
+            //TODO : PLAY THE CAIRN ANIMATION THEN CREATE PORTAL
+            this.createPortal();
+          }
         },
         onUpdateParams: [this.spirit], // Pass the spirit object to onUpdate
       }
     );
+  }
+
+  createPortal() {
+    gsap.to(this.portal.material.uniforms.uProgress, {
+      value: 1,
+      duration: 2,
+      delay: 1,
+      ease: "power2.in",
+    });
   }
 
   spiritStand(object) {
@@ -215,13 +235,13 @@ class Chapel extends Scene {
     // });
   }
 
-  onTick() {
+  onTick(e) {
     if (app.webgl.currentScene != 5) return;
 
     if (!this.portal) return;
 
-    this.portal.material.uniforms.uTime.value += 0.05;
-    this.water.material.uniforms.uTime.value += 0.05;
+    this.portal.material.uniforms.uTime.value += e.dt;
+    this.water.material.uniforms.uTime.value = app.ticker.elapsed;
   }
 
   clear() {

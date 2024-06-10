@@ -4,6 +4,7 @@ import {
   AmbientLight,
   DoubleSide,
   Raycaster,
+  Color,
 } from "three";
 import { state } from "../../utils/State";
 import { Pane } from "tweakpane";
@@ -17,8 +18,13 @@ import { EVENTS } from "../../utils/constants/events";
 import { CamAnim } from "../utils/CamAnim";
 import { app } from "@/App";
 import Milo from "../objects/Milo";
+import Spirit from "../objects/Spirit";
+import { DirectionalLight } from "three";
+import { WaterMaterial } from "../materials/Water/material";
+import { Vector4 } from "three";
+import Durance from "../objects/Durance";
 
-class Spirit extends Mesh {
+class ColorSpirit extends Spirit {
   constructor() {
     super();
 
@@ -31,11 +37,12 @@ class Spirit extends Mesh {
     this.currentLife = 4;
     this.isCaptured = false;
 
-    this.geometry = new SphereGeometry(0.1, 32, 16);
-    this.material = new MeshBasicMaterial({
-      color: "white",
-      transparent: true,
-    });
+    this.allColors = [
+      new Color(0xacc8e4),
+      new Color(0x809bbf),
+      new Color(0x53a0ec),
+      new Color(0x1a80e6),
+    ]
 
     this.position.set(
       this.allPos[this.currentPos].x,
@@ -67,22 +74,22 @@ class Spirit extends Mesh {
     this.currentLife = this.currentLife - 1;
     switch (this.currentLife) {
       case 3:
-        this.material.color.setHex(0xacc8e4);
+        this.targetSpiritColor = new Vector4(this.allColors[0].r, this.allColors[0].g, this.allColors[0].b, 1);
         this.changePos();
         break;
 
       case 2:
-        this.material.color.setHex(0x809bbf);
+        this.targetSpiritColor = new Vector4(this.allColors[1].r, this.allColors[1].g, this.allColors[1].b, 1);
         this.changePos();
         break;
 
       case 1:
-        this.material.color.setHex(0x53a0ec);
+        this.targetSpiritColor = new Vector4(this.allColors[2].r, this.allColors[2].g, this.allColors[2].b, 1);
         this.changePos();
         break;
 
       case 0:
-        this.material.color.setHex(0x1a80e6);
+        this.targetSpiritColor = new Vector4(this.allColors[3].r, this.allColors[3].g, this.allColors[3].b, 1);
         this.isCaptured = true;
         state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, app.webgl.currentScene);
         break;
@@ -93,13 +100,18 @@ class Spirit extends Mesh {
   }
 
   changePos() {
-    this.currentPos = (this.currentPos + 1) % this.allPos.length;
-    this.position.set(
-      this.allPos[this.currentPos].x,
-      this.allPos[this.currentPos].y,
-      this.allPos[this.currentPos].z
-    );
-    this.anim();
+    this.hide()
+    setTimeout(() => {
+      this.currentPos = (this.currentPos + 1) % this.allPos.length;
+      this.position.set(
+        this.allPos[this.currentPos].x,
+        this.allPos[this.currentPos].y,
+        this.allPos[this.currentPos].z
+      );
+      this.show()
+      this.anim();
+    }, 700)
+    
   }
 }
 
@@ -109,6 +121,15 @@ class Dam extends Scene {
     state.register(this);
 
     this.raycaster = new Raycaster();
+
+
+    this.light = new AmbientLight({ color: 0xffffff });
+    this.add(this.light);
+
+    this.directionLight = new DirectionalLight(0xffffff);
+    this.directionLight.intensity = 2;
+    this.directionLight.position.set(7, 10, 15);
+    this.add(this.directionLight);
 
     this.PARAMS = {
       scenePos: {
@@ -144,6 +165,18 @@ class Dam extends Scene {
   onAttach() {
     // console.log('Attach Dam')
     this.scene = app.assetsManager.get("dam");
+    this.scene.traverse((el)=>{
+      if (el.name == "WaterSurface") {
+        this.water = el;
+        el.material = new WaterMaterial({
+          uniforms: {
+            uTexture: { value: el.material.map },
+            uTime: { value: 0 },
+          },
+          transparent: true,
+        });
+      }
+    })
 
     this.add(this.scene);
 
@@ -160,8 +193,14 @@ class Dam extends Scene {
     // this.player.scale.set(0.15, 0.15, 0.15);
     this.add(this.player);
 
-    this.spirit = new Spirit();
+    this.spirit = new ColorSpirit();
     this.add(this.spirit);
+
+    this.durance = new Durance();
+    this.durance.hide()
+    this.durance.scale.set(2.5, 2.5, 2.5);
+    this.durance.position.set(1.5, 0, 0)
+    this.add(this.durance)
 
     this.rocks = app.assetsManager.get("rocks");
     this.rocks.traverse((el) => {
@@ -278,6 +317,17 @@ class Dam extends Scene {
           opacity: 0,
         }
       );
+    }
+  }
+
+  onTick(){
+    if(app.sceneshandler.currentScene != 3) return
+    if(this.water) this.water.material.uniforms.uTime.value = app.ticker.elapsed;
+    if(app.sceneshandler.currentStepCam == 3 && !this.durance.isActive) {
+      this.durance.isActive = true
+      setTimeout(()=>{
+        this.durance.show()
+      }, 1000)
     }
   }
 

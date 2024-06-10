@@ -1,5 +1,6 @@
 uniform sampler2D uBaseTex;
 uniform sampler2D uMaskTex;
+uniform float u_gAlpha;
 
 varying vec2 vUv;
 varying vec3 vPosition;
@@ -13,5 +14,6 @@ void main()	{
   vec4 resultTex = mix(maskTex, baseTex, maskTex);
 
   vec4 final = vec4(resultTex.x, resultTex.y, resultTex.z, 1. * maskTex.z + 0.2);
+  final.w += u_gAlpha;
 	gl_FragColor = final;
 }
