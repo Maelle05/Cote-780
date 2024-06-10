@@ -33,7 +33,7 @@ const props = defineProps({
   background-color: var(--c-background-beige-light);
   border: 1px solid var(--c-stroke-beige-light);
   padding: 24px 32px 32px 32px;
-  border-radius: 24px;
+  border-radius: 16px;
   color: var(--c-text-dark);
   max-width: 320px;
   display: flex;

@@ -3,6 +3,7 @@ import fs from "./fragment.fs";
 import vs from "./vertex.vs";
 import { app } from "@/App";
 import { state } from "@/utils/State";
+import { Vector3 } from "three";
 
 export class SpritesheetMaterial extends ShaderMaterial {
   constructor(spritesheet, data) {
@@ -18,6 +19,7 @@ export class SpritesheetMaterial extends ShaderMaterial {
         uSize: { value: new Vector2(frameWidth / width, frameHeight / height) },
         uScale: { value: new Vector2() },
         uPosition: { value: new Vector2() },
+        uColor: { value: new Vector3(0, 0, 0) },
       },
       vertexShader: vs.toString(),
       fragmentShader: fs.toString(),

@@ -68,27 +68,6 @@ class End extends Scene {
     this.fireworks.launchers.forEach((launcher) => this.add(launcher));
     this.fireworks.explosions.forEach((explosions) => this.add(explosions));
 
-    console.log(this.fireworks);
-
-    setTimeout(() => {
-      this.fireworks.launchers.forEach((launcher) =>
-        this.fireworks.play(launcher)
-      );
-    }, 2000);
-
-    this.test = new SpritesheetPlayer("explosion1");
-
-    this.testSprite = new Mesh(
-      new PlaneGeometry(1, 1, 1, 1),
-      this.test.material
-    );
-
-    this.testSprite.lookAt(app.webgl.camera.position);
-
-    this.testSprite.position.set(-5, 2, 0);
-    this.testSprite.rotation.y = Math.PI / 2;
-    this.add(this.testSprite);
-
     this.planePos = new Mesh(
       new PlaneGeometry(1, 1, 1, 1),
       new MeshBasicMaterial({ color: 0xff0000, side: DoubleSide })

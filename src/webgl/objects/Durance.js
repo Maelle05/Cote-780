@@ -12,7 +12,7 @@ export default class Durance extends Group{
 
   onAttach(){
     this.model = app.assetsManager.get('durance');
-    this.model.children[0].material = new MeshBasicMaterial({ color: 'white', transparent: true, opacity: 0})
+    this.model.children[0].material = new MeshBasicMaterial({ map: this.baseTex, transparent: true, opacity: 0})
     this.add(this.model)
 
     this.isActive = false;

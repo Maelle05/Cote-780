@@ -60,7 +60,7 @@ const manifest = {
     milo_anim: { path: `assets/models/milo-anims.glb` },
     durance: { path: `/assets/models/durance.glb` },
     rocks: { path: `assets/models/rocks.glb` },
-    end: { path: `assets/models/end.glb` },
+    end: { path: `assets/models/end-anim.glb` },
   },
   jsons: {
     explosion1_data: {
