@@ -66,7 +66,9 @@
       "text": "Bon courage dans ta quête. Gagne la confiance de la Durance, mais attention, elle peut être très capricieuse…",
       "camera": "4"
     },
-    "infos": "En savoir plus demoiselles coiffées"
+    "infos": "En savoir plus demoiselles coiffées",
+    "alt": "Les Demoiselles coiffées",
+    "url": "https://www.serreponcon.com/patrimoine-naturel/demoiselles-coiffees-pontis/"
   },
   "scene_3": {
     "title": "Le Barrage",
@@ -85,7 +87,9 @@
       "text": "Viens, je vais t’accompagner dans cette quête",
       "camera": "4"
     },
-    "infos": "En savoir plus village"
+    "infos": "En savoir plus barrage",
+    "alt": "Le Barrage",
+    "url": "https://www.serreponcon.com/patrimoine-culturel/barrage-de-serre-poncon-rousset/"
   },
   "scene_4": {
     "title_0": "Le Pont de",
@@ -95,7 +99,9 @@
       "text": "Tu en es digne, suis-moi, il faut que je te montre.",
       "camera": "4"
     },
-    "infos": "En savoir plus pont"
+    "infos": "En savoir plus pont",
+    "alt": "Le Pont de Chanteloube",
+    "url": "https://www.serreponcon.com/patrimoine-culturel/viaduc-de-chanteloube-chorges/"
   },
   "scene_5": {
     "title_0": "La Chapelle",
@@ -110,7 +116,9 @@
       "text": "Par ici ! Si tu décides de traverser ce portail, tu découvriras un lieu que le temps tente d'effacer.",
       "camera": "3"
     },
-    "infos": "En savoir plus chapelle"
+    "infos": "En savoir plus chapelle",
+    "alt": "La Chapelle Saint-Michel",
+    "url": "https://www.serreponcon.com/patrimoine-culturel/chapelle-saint-michel-prunieres/"
   },
   "scene_6": {
     "title_0": "Le Village",
@@ -169,7 +177,10 @@
       "person": "DATE : 00/00/1957",
       "text": "Mon voisin, lui, ne bougera jamais. Il me raconte comment, pendant la nuit, il va gêner et démolir le chantier.",
       "camera": "3"
-    }
+    },
+    "infos": "En savoir plus village",
+    "alt": "Le village de Savines",
+    "url": "https://www.serreponcon.com/notre-lac/"
   },
   "scene_7": {
     "title": "Fin",
