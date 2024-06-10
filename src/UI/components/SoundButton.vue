@@ -1,12 +1,8 @@
 <script setup></script>
 
 <template lang="">
-  <div class="icon">Son !</div>
+  <div>Sound</div>
 </template>
 
 <style scoped lang="scss">
-.icon {
-  position: absolute;
-  right: 5vh;
-}
 </style>

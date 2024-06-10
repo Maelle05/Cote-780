@@ -43,7 +43,7 @@ const onClickCtaStart = () => {
   align-items: center;
   justify-content: center;
   gap: 24px;
-  background-color: var(--c-turquoise-light);
+  background-color: var(--c-background-beige);
 }
 
 .pre-intro.pre-intro--hidden {
