@@ -115,7 +115,7 @@ class Bridge extends Scene {
     this.player.goTo(this.center, walkDuration);
     this.add(this.player);
 
-    //End of the walk
+    //End of the walk & Start Tuto
     setTimeout(() => {
       this.#start();
     }, walkDuration * 1000);
@@ -411,8 +411,10 @@ class Bridge extends Scene {
       duration: 1,
     });
 
-    if (this.rockIndex === 0) app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0]);
-    else if (this.rockIndex === 2) app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0]);
+    if (this.rockIndex === 0)
+      app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0]);
+    else if (this.rockIndex === 2)
+      app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0]);
   }
 
   #off() {}

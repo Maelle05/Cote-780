@@ -122,6 +122,7 @@ class ColorSpirit extends Spirit {
   }
 
   changePos() {
+    if (app.webgl.currentScene != 3) return;
     this.hide();
     setTimeout(() => {
       this.currentPos = (this.currentPos + 1) % this.allPos.length;
@@ -183,7 +184,6 @@ class Dam extends Scene {
   }
 
   onAttach() {
-    // console.log('Attach Dam')
     this.scene = app.assetsManager.get("dam");
     this.scene.traverse((el) => {
       if (el.name == "WaterSurface") {
@@ -250,7 +250,6 @@ class Dam extends Scene {
   }
 
   init() {
-    // console.log('Init Dam')
     if (DEV_MODE) {
       this.pane = new Pane({ title: "Parameters Dam", expanded: false });
       this.pane
