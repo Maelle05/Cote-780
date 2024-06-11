@@ -30,7 +30,8 @@ class LayerManager {
     
     Object.values(audioFiles).map((file) => file.name).forEach((path) => {
       const name = path.split("/").pop().split(".")[0].split("_")[0];
-      this.layers.set(name, new Howl({ src: path, loop: true, volume: 0 }));
+      const src = path.split("public")[1];
+      this.layers.set(name, new Howl({ src, loop: true, volume: 0 }));
     });
 
     this.layers.forEach((layer, index) => {
