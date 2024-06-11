@@ -81,7 +81,6 @@ export default class TargetParticles extends Points {
     );
 
     this.p1 = new Vector3().subVectors(this.p1, this.position);
-    // this.p2 = this.p2.subVectors(this.p2, this.nextRockPos);
     this.p2 = new Vector3().subVectors(this.p2, this.position);
     this.p3 = new Vector3().subVectors(this.nextRockPos, this.position);
     this.p4 = new Vector3().subVectors(this.nextRockPos, this.position);
@@ -102,6 +101,7 @@ export default class TargetParticles extends Points {
         uP4: { value: this.p4 },
         uNoiseOffset: { value: 2 },
       },
+      transparent: true,
     });
 
     return material;
@@ -131,8 +131,8 @@ export default class TargetParticles extends Points {
     this.p2 = new Vector3().subVectors(this.p2, this.position);
     this.p3 = new Vector3().subVectors(nextRockPos, this.position);
     this.p4 = new Vector3().subVectors(nextRockPos, this.position);
-    this.p2.y -= 0.2;
-    this.p3.y -= 0.2;
+
+    this.p4.y += 0.2;
 
     this.material.uniforms.uP1.value = this.p1;
     this.material.uniforms.uP2.value = this.p2;

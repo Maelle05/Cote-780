@@ -327,7 +327,7 @@ class Dam extends Scene {
       this.player.goTo(
         new Vector3(5.7, this.PARAMS.persoPos.y, 1.8),
         7,
-        this.durance.position
+        -Math.PI / 2
       );
     }
 

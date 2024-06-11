@@ -6,6 +6,7 @@ uniform vec3 uP1;
 
 varying vec2 vUv;
 varying float vIndex;
+varying float vStep4Progress;
 varying vec3 vPosition;
 
 float PI = 3.141592653589793238;
@@ -29,7 +30,7 @@ void main() {
     }
 
     // gl_FragColor = vec4(gl_PointCoord, 1.0, 1.0); 
-    gl_FragColor = vec4(1., 1., 1., 1. - dist); 
+    gl_FragColor = vec4(1., 1., 1., 1. - vStep4Progress); 
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
 }

@@ -14,6 +14,7 @@ attribute float particleIndex;
 varying vec2 vUv;
 varying vec3 vPosition;
 varying float vIndex;
+varying float vStep4Progress;
 
 const float PI = 3.141592653589793238;
 const float step1Duration = 0.1;
@@ -123,12 +124,12 @@ void main() {
   if(progress < step1End) {
     // Step 1: Sphere to uP1
     float adjustedProgress = progress / step1Duration;
-    pos = mix(spherePos, uP1, adjustedProgress);
+    pos = mix(position, uP1, adjustedProgress);
   } else if(progress < step2End) {
     // Step 2: uP1 to uP2
     float adjustedProgress = (progress - step1End) / step2Duration;
     vec3 controlPoint = mix(uP1, uP2, 0.5);
-    controlPoint.y -= 0.1;
+    controlPoint.y += 0.1;
     pos = quadraticBezier(uP1, controlPoint, uP2, adjustedProgress);
     // pos = mix(uP1, uP2, adjustedProgress);
   } else if(progress < step3End) {
@@ -138,6 +139,7 @@ void main() {
   } else {
     // Step 4: Circle to sphere centered at uP4
     float adjustedProgress = (progress - step3End) / step4Duration;
+    vStep4Progress = adjustedProgress;
     vec3 circlePos = getCirclePosition(particleIndex, 1.0, uP3); // Position on circle
     vec3 finalSpherePos = getSpherePosition(particleIndex, uP4);
     pos = mix(circlePos, finalSpherePos, adjustedProgress);
