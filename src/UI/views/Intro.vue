@@ -148,7 +148,7 @@ onMounted(() => {
         </div>
       </div>
       <div :class="`section__text section__text--${id}`" v-for="(text, id) in section.texts">
-        <IntroText :text="text" :index="id" :section="index" :sectionProgress="scrollProgress[index]" />
+        <IntroText :text="text" :audio="section.audios[id]" :index="id" :section="index" :sectionProgress="scrollProgress[index]" />
       </div>
     </div>
     <p class="intro-cta intro-cta--end" @click="onClickCtaEnd">Compris !</p>

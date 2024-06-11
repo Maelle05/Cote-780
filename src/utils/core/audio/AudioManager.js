@@ -1,7 +1,8 @@
 import { Howl, Howler } from "howler";
 import { state } from "../../State";
-import SOUNDS_MUSIC from "./musics.json";
+import SOUNDS_MUSIC from "./jsons/musics.json";
 import { LayerManager } from "./LayerManager";
+import { DialogManager } from "./DialogManager";
 
 const MUSIC_VOLUME = 0.5;
 const UI_VOLUME = 0.7;
@@ -29,7 +30,8 @@ class AudioManager {
   constructor() {
     state.register(this);
 
-    this.layers = new LayerManager(); 
+    this.layers = new LayerManager();
+    this.dialog = new DialogManager();
   }
 
   onFirstClick() {

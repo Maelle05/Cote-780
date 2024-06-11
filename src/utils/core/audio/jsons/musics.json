@@ -1,0 +1,16 @@
+{
+  "sources": [
+    {
+      "name": "ambient_underwater",
+      "src": "ambient_underwater.mp3"
+    },
+    {
+      "name": "ambient_lake",
+      "src": "ambient_lake.mp3"
+    },
+    {
+      "name": "ambient_forest",
+      "src": "ambient_forest.mp3"
+    }
+  ]
+}

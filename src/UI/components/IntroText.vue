@@ -1,11 +1,13 @@
 <script setup>
-import { defineProps, watchEffect, ref } from "vue"
+import { app } from "@/App";
+import { defineProps, watchEffect, ref } from "vue";
 
 const props = defineProps({
   text: String,
   index: Number,
   section: Number,
   sectionProgress: Number,
+  audio: String,
 })
 
 const isVisible = ref(false)
@@ -20,6 +22,7 @@ watchEffect(() => {
     props.sectionProgress < LIMIT_DISAPPEAR
   ) {
     isVisible.value = true
+    app.audio.dialog.play(props.audio);
   } else if (
     isVisible.value === true &&
     (props.sectionProgress > LIMIT_DISAPPEAR ||
