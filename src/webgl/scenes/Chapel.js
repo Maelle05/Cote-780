@@ -204,6 +204,7 @@ class Chapel extends Scene {
           if (this.index == this.torchs.length) {
             //TODO : PLAY THE CAIRN ANIMATION THEN CREATE PORTAL
             this.createPortal();
+            app.audio.layers.playVolumes([0, 0, 0, 0.3, 0, 0, 0, 0, 0, 0, 0]);
           }
         },
         onUpdateParams: [this.spirit], // Pass the spirit object to onUpdate
