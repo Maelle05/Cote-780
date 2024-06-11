@@ -27,7 +27,7 @@ export default class Durance extends Group{
 
     this.add(this.model)
 
-    console.log(this.model);
+    // console.log(this.model);
 
     this.isActive = false;
 
