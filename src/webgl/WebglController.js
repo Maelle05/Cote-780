@@ -48,7 +48,6 @@ export default class WebglController {
     ];
     this.currentScene = INIT_SCENE;
     this.scene = this.allScene[this.currentScene];
-    // this.scene = new End();
 
     // Post pros
     const renderTarget = new RenderTarget(0, 0, { samples: 4 });

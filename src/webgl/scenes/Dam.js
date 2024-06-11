@@ -175,33 +175,39 @@ class Dam extends Scene {
             uTime: { value: 0 },
           },
           transparent: true,
+          depthWrite: false,
+          // depthTest: false
         });
       }
     })
+    this.water.renderOrder = 0
 
-    this.add(this.scene);
-
+    
     this.light = new AmbientLight({ color: 0xffffff });
     this.add(this.light);
-
+    
     this.milo = new Milo();
     this.player = this.milo.model;
     this.player.position.set(
       this.PARAMS.persoPos.x,
       this.PARAMS.persoPos.y,
       this.PARAMS.persoPos.z
-    );
-    // this.player.scale.set(0.15, 0.15, 0.15);
-    this.add(this.player);
+      );
+      // this.player.scale.set(0.15, 0.15, 0.15);
+      this.add(this.player);
+      
+      this.spirit = new ColorSpirit();
+      this.add(this.spirit);
+      
+      this.duranceTex = app.assetsManager.get('duranceSide');
+      this.durance = new Durance(this.duranceTex);
+      this.durance.hide()
+      this.durance.scale.set(2.5, 2.5, 2.5);
+      this.durance.position.set(1.5, 0, 0)
+      this.durance.renderOrder = 1
 
-    this.spirit = new ColorSpirit();
-    this.add(this.spirit);
-
-    this.durance = new Durance();
-    this.durance.hide()
-    this.durance.scale.set(2.5, 2.5, 2.5);
-    this.durance.position.set(1.5, 0, 0)
-    this.add(this.durance)
+      this.add(this.durance)
+      this.add(this.scene);
 
     this.rocks = app.assetsManager.get("rocks");
     this.rocks.traverse((el) => {
