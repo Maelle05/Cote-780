@@ -27,7 +27,7 @@ void main() {
 	vec4 textureColor = texture2D(uTexture, displacedUv);
 	float noise = noise(displacedUv * 20. * sin(time)) * noise(displacedUv * 20.);
 	textureColor += noise * 0.3;
-	textureColor.w = 0.92;
+	textureColor.w = 0.82;
 
 	gl_FragColor = textureColor;
 }

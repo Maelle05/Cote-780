@@ -109,8 +109,8 @@ export default class TargetParticles extends Points {
 
   calculatePos(position, nextRockPos) {
     // this.newPos = position;
-    console.log("position : " + position.x);
-    console.log("Next : " + nextRockPos.x);
+    // console.log("position : " + position.x);
+    // console.log("Next : " + nextRockPos.x);
     // this.nextRockPos = nextRockPos;
     this.progress = 0;
 

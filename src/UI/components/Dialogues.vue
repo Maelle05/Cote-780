@@ -149,6 +149,11 @@ const onClickDialogue = () => {
   height: var(--wrapper-height);
   transition: opacity 1000ms, height 800ms;
   box-sizing: border-box;
+  user-select: none;
+  
+  span {
+    pointer-events: none;
+  }
 
   &.wrapper--clone {
     opacity: 0;
@@ -157,9 +162,12 @@ const onClickDialogue = () => {
   }
 
   &.wrapper--hidden {
-    height: 0;
     opacity: 0;
     pointer-events: none;
+
+    .text {
+      opacity: 0;
+    }
   }
 }
 
@@ -196,6 +204,7 @@ const onClickDialogue = () => {
 .text {
   font-size: 18px;
   letter-spacing: 0.02em;
+  transition: opacity 600ms;
 
   .letter {
     opacity: 0;

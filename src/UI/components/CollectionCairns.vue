@@ -1,64 +1,33 @@
 <script setup>
-import { state } from "../../utils/State"
-import { EVENTS } from "../../utils/constants/events";
-import { gsap } from "gsap/gsap-core";
-import { ref, onMounted } from 'vue'
-import ChapterEl from './ChapterEl.vue'
-
-const container = ref(null)
-const stateProgress = ref([false, false, false, false, false])
-
-state.on(EVENTS.VIEW_COLLECTION_CAIRNS, (e) => {
-    stateProgress.value[e - 2] = true
-    gsap.to(container.value, {
-      opacity: 1,
-      duration: 1,
-      onComplete: () => {
-        gsap.to(container.value, {
-          delay: 2,
-          opacity: 0,
-          onComplete: () => {
-            state.emit(EVENTS.ASK_CHANGE_SCENE, ((e + 1) % 7))
-          }
-        })
-      }
-    })
+const props = defineProps({
+  sceneIndex: Number,
+  isVisible: Boolean,
 })
-
 </script>
 
 <template lang="">
-  <div ref='container' class='collection-cairns-container'>
-    <div class='collection-cairns-container__chapters'>
-      <ChapterEl :id='2' :active='stateProgress[0]'/>
-      <ChapterEl :id='3' :active='stateProgress[1]'/>
-      <ChapterEl :id='4' :active='stateProgress[2]'/>
-      <ChapterEl :id='5' :active='stateProgress[3]'/>
-      <ChapterEl :id='6' :active='stateProgress[4]'/>
+  <div ref='container' :class="`collection-cairns__container collection-cairns__container--${isVisible ? 'visible' : 'hidden'}`">
+    <div class="collection-cairns">
+      <p>COLLECTION CAIRNS</p>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.collection-cairns-container {
-  position: absolute;
+.collection-cairns__container {
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
-  background-color: #FFFFFFAA;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  height: 100vh;
+  color: #fff;
+  font-family: var(--ff-rubik);
+  display: grid;
   align-items: center;
+  justify-content: center;
 
-  color: black;
-  opacity: 0;
-
-  &__chapters {
-    display: flex;
-    flex-direction: row;
+  &.collection-cairns__container--hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 }
 </style>

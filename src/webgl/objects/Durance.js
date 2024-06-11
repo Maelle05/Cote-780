@@ -1,19 +1,33 @@
 import { app } from "@/App";
 import { state } from "@/utils/State";
-import { MeshBasicMaterial } from "three";
-import { AnimationMixer, MathUtils } from "three";
+import { AnimationMixer, MathUtils, MeshBasicMaterial } from "three";
 import { Group } from "three";
+import { DuranceMaterial } from "../materials/Durance/material";
 
 export default class Durance extends Group{
-  constructor() {
+  constructor(baseTex) {
     super()
     state.register(this);
+
+    this.baseTex = baseTex
   }
 
   onAttach(){
     this.model = app.assetsManager.get('durance');
-    this.model.children[0].material = new MeshBasicMaterial({ map: this.baseTex, transparent: true, opacity: 0})
+    this.model.children[0].material = new DuranceMaterial({ 
+      uniforms: { 
+        uBaseTex: { value: this.baseTex },
+        uProgress: { value: 0 }
+      },
+      transparent: true,
+      
+    })
+    // this.model.children[0].material = new MeshBasicMaterial({ map: this.baseTex})
+    this.model.children[0].renderOrder = 1
+
     this.add(this.model)
+
+    console.log(this.model);
 
     this.isActive = false;
 
@@ -46,6 +60,7 @@ export default class Durance extends Group{
     this.animationMixer.update(app.ticker.delta);
 
     this.model.children[0].material.opacity = this.currentProgressAnim * 1.5;
+    // this.model.children[0].material.uniforms.uProgress.value = this.currentProgressAnim;
   }
 
   show(){

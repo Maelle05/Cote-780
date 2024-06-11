@@ -32,6 +32,8 @@ import { RockMaterial } from "../materials/Rock/material";
 import Milo from "../objects/Milo";
 import { WaterMaterial } from "../materials/Water/material";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
+import { ShakiraMaterial } from "../materials/Shakira/material";
+import { Vector2 } from "three";
 
 class Bridge extends Scene {
   constructor() {
@@ -101,6 +103,8 @@ class Bridge extends Scene {
     this.radiusOffset = 0;
     this.rockIndex = 0;
     this.minSpeed = 0.01;
+    this.elapsedTime = 0;
+    this.interval = 1000;
 
     this.milo = new Milo();
     this.player = this.milo.model;
@@ -117,6 +121,7 @@ class Bridge extends Scene {
   onAttach() {
     this.center = new Vector3(0.67, 0.01, 2.19);
     this.rocks = [];
+    this.shakePlanes = [];
 
     this.bridge = app.assetsManager.get("bridge");
     this.add(this.bridge);
@@ -126,7 +131,7 @@ class Bridge extends Scene {
       // if ((child.isMesh && child.name === "Water") || child.name == "Ground") {
       //   child.material.roughness = 1;
       // }
-      
+
       if (child.name == "WaterSurface") {
         this.water = child;
         child.material = new WaterMaterial({
@@ -159,6 +164,18 @@ class Bridge extends Scene {
       //Remove 2cnd Milo because here for no reasons
       if (child.isMesh && child.name.includes("Milo")) {
         child.visible = false;
+      }
+
+      if (child.isMesh && child.name.includes("Plane")) {
+        child.material = new ShakiraMaterial({
+          uniforms: {
+            uTexture: { value: child.material.map },
+            uTime: { value: 0 },
+            uOffset: { value: new Vector2() },
+          },
+        });
+
+        this.shakePlanes.push(child);
       }
     });
 
@@ -198,7 +215,7 @@ class Bridge extends Scene {
 
     this.radius = this.center.distanceTo(this.rocks[0].position);
 
-    this.anim = new CamAnim(4, this.bridge, [0, 0.25, 0.50, 0.75, 1]);
+    this.anim = new CamAnim(4, this.bridge, [0, 0.25, 0.50, 0.75, 1, 1]);
     // this.anim.onChangeSceneStep(2);
 
     if (!this.anim) {
@@ -214,11 +231,27 @@ class Bridge extends Scene {
     }, 1000);
   }
 
-  onTick() {
+  onTick(e) {
     if (app.webgl.currentScene != 4) return;
-    if (this.target) this.target.material.uniforms.uTime.value = app.ticker.elapsed;
-    if (this.water) this.water.material.uniforms.uTime.value = app.ticker.elapsed;
+    if (this.target)
+      this.target.material.uniforms.uTime.value = app.ticker.elapsed;
+    if (this.water)
+      this.water.material.uniforms.uTime.value = app.ticker.elapsed;
 
+    // console.log(e.et % 1000);
+    this.elapsedTime += e.dt;
+
+    //Shake UVS
+    if (this.shakePlanes && this.elapsedTime > 0.3) {
+      this.shakePlanes.forEach((plane) => {
+        plane.material.uniforms.uOffset.value = this.#getRandomOffset(
+          0.008,
+          0.002
+        );
+      });
+
+      this.elapsedTime = 0;
+    }
     // if (this.anim.currentKeyfame != 2) return;
     if (this.state == "off") return;
     let normalizedAngle = this.angle / (Math.PI / 2);
@@ -256,8 +289,6 @@ class Bridge extends Scene {
     } else {
       // this.spirit.material.color = new Color("white");
     }
-
-    
   }
 
   onPointerDown() {
@@ -361,6 +392,16 @@ class Bridge extends Scene {
     //     this.rocks[0].position.z
     //   )
     // );
+  }
+
+  #getRandomOffset(value, interval) {
+    const max = value + interval;
+    const min = value - interval;
+
+    const randomX = Math.random() * (max - min) + min;
+    const randomY = Math.random() * (max - min) + min;
+
+    return new Vector2(randomX, randomY);
   }
 
   clear() {

@@ -78,7 +78,7 @@ class Chapel extends Scene {
             uTexture: { value: el.material.map },
             uTime: { value: 0 },
           },
-          transparent: true,
+          // transparent: true,
         });
       }
 
@@ -121,7 +121,7 @@ class Chapel extends Scene {
     this.spirit.position.set(-1, this.torchs[0].position.y + 0.4, 0);
     this.add(this.spirit);
 
-    this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 1]);
+    this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 0.66, 1, 1]);
     this.anim.onChangeSceneStep(2);
 
     if (!this.anim) {
@@ -131,7 +131,7 @@ class Chapel extends Scene {
       );
     }
 
-    if (app.webgl.currentScene === 5) this.init();
+    // if (app.webgl.currentScene === 5) this.init();
   }
 
   onPointerDown(e) {

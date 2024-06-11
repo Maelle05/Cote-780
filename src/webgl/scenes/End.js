@@ -94,7 +94,7 @@ class End extends Scene {
 
     this.add(this.end, this.ambient);
 
-    // this.anim = new CamAnim(7, this.end, [0, 0.33, 0.66, 1]);
+    this.anim = new CamAnim(7, this.end, [0, 0.33, 0.66, 1]);
 
     if (!this.anim) {
       const controls = new OrbitControls(
