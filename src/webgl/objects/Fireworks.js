@@ -99,7 +99,7 @@ export default class Fireworks {
     explosion.material.uniforms.uColor.value = new Color(
       ...this.getRandomColor()
     );
-    console.log(explosion.material.uniforms);
+
     //Anim the launcher
     gsap.to(launcher.position, {
       y: `${randomY}`,

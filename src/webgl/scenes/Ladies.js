@@ -23,6 +23,7 @@ import { Mesh } from "three";
 import { TearsMaterial } from "../materials/Tears/material";
 import { Vector3 } from "three";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
+import Milo from "../objects/Milo";
 
 class Demoiselle extends Group {
   constructor(body, top, riseTop) {
@@ -47,7 +48,7 @@ class Demoiselle extends Group {
       uniforms: {
         uBaseTex: { value: this.baseTexture },
         uMaskTex: { value: this.canvasTex },
-        u_gAlpha: { value: 0 }
+        u_gAlpha: { value: 0 },
       },
     });
 
@@ -141,6 +142,11 @@ class Ladies extends Scene {
         y: -1.0,
         z: 0.9,
       },
+      miloPos: {
+        x: 8.3,
+        y: 0.0,
+        z: -5.2,
+      },
       rotateY: -86.1,
       rotateX: -3.9,
     };
@@ -187,47 +193,71 @@ class Ladies extends Scene {
           this.ladies.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
 
-      this.pane.addBinding( app.webgl.transitionPass.material.uniforms.uProgress, 'value', {
-        min: 0,
-        max: 1,
-        step: 0.001,
-        label: 'Transition progress',
-      }).on('change', (ev) => {
-        this.transitionPass.material.uniforms.uProgress.value = ev.value
-      });
+      this.pane
+        .addBinding(this.PARAMS, "miloPos", {
+          min: -10,
+          max: 10,
+          step: 0.1,
+        })
+        .on("change", (ev) => {
+          this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
+        });
 
-      this.pane.addBinding(this.tears, "position", {
-        min: -10,
-        max: 10,
-        step: 0.1,
-      })
-      .on("change", (ev) => {
-        this.tears.position.set(ev.value.x, ev.value.y, ev.value.z);
-      });
+      this.pane
+        .addBinding(
+          app.webgl.transitionPass.material.uniforms.uProgress,
+          "value",
+          {
+            min: 0,
+            max: 1,
+            step: 0.001,
+            label: "Transition progress",
+          }
+        )
+        .on("change", (ev) => {
+          this.transitionPass.material.uniforms.uProgress.value = ev.value;
+        });
+
+      this.pane
+        .addBinding(this.tears, "position", {
+          min: -10,
+          max: 10,
+          step: 0.1,
+        })
+        .on("change", (ev) => {
+          this.tears.position.set(ev.value.x, ev.value.y, ev.value.z);
+        });
     }
 
     app.audio.playMusic(MUSIC_IDS.AMBIENT_FOREST);
+
+    this.milo = new Milo();
+    this.player = this.milo.model;
+    this.player.position.set(8.3, 0.0, -5.2);
+
+    this.add(this.player);
   }
 
-  onTick(){
-    if(app.sceneshandler.currentScene != 2) return
+  onTick() {
+    if (app.sceneshandler.currentScene != 2) return;
 
-    if(this.tears && this.tears.userData.isActive) {
-      this.tears.lookAt(app.webgl.camera.position)
-      this.tears.material.uniforms.u_time.value = app.ticker.elapsed * 0.001
+    if (this.tears && this.tears.userData.isActive) {
+      this.tears.lookAt(app.webgl.camera.position);
+      this.tears.material.uniforms.u_time.value = app.ticker.elapsed * 0.001;
 
       if (app.sceneshandler.currentStepCam == 3) {
-        this.tears.userData.isActive = false
-        this.tears.material.uniforms.u_gAlpha.value = 0
+        this.tears.userData.isActive = false;
+        this.tears.material.uniforms.u_gAlpha.value = 0;
       }
     }
 
-    if(app.sceneshandler.currentStepCam == 2){
-      this.demoiselles.children.forEach(dem => {
-        dem.top.material.uniforms.u_gAlpha.value = (Math.sin(app.ticker.elapsed * 0.005) * 0.5 + 0.5) * 0.4;
+    if (app.sceneshandler.currentStepCam == 2) {
+      this.demoiselles.children.forEach((dem) => {
+        dem.top.material.uniforms.u_gAlpha.value =
+          (Math.sin(app.ticker.elapsed * 0.005) * 0.5 + 0.5) * 0.4;
       });
-    } else if(app.sceneshandler.currentStepCam == 3) {
-      this.demoiselles.children.forEach(dem => {
+    } else if (app.sceneshandler.currentStepCam == 3) {
+      this.demoiselles.children.forEach((dem) => {
         dem.top.material.uniforms.u_gAlpha.value = 0;
       });
     }
@@ -274,25 +304,24 @@ class Ladies extends Scene {
     this.dem3 = new Demoiselle(this.D3[1], this.D3[0], 1.2);
     this.demoiselles.add(this.dem1, this.dem2, this.dem3);
 
-    this.tears = new Mesh(new PlaneGeometry(0.2, 0.2), new TearsMaterial({
-      uniforms: {
-        u_color: { value: new Vector3(0.27, 0.39, 0.36) },
-        u_time: { value: app.ticker.elapsed * 0.001},
-        u_gAlpha: { value: 1 }
-      }
-    }));
-    this.tears.userData.isActive = true
-    this.tears.position.set(
-      2.05,
-      2.84,
-      1.7
-    )
+    this.tears = new Mesh(
+      new PlaneGeometry(0.2, 0.2),
+      new TearsMaterial({
+        uniforms: {
+          u_color: { value: new Vector3(0.27, 0.39, 0.36) },
+          u_time: { value: app.ticker.elapsed * 0.001 },
+          u_gAlpha: { value: 1 },
+        },
+      })
+    );
+    this.tears.userData.isActive = true;
+    this.tears.position.set(2.05, 2.84, 1.7);
 
     this.anim = new CamAnim(2, this.ladies, [0, 0.25, 0.5, 0.75, 1]);
 
     this.add(this.ladies, this.ambient, this.tears);
-    
-    if(app.webgl.currentScene === 2) this.init() 
+
+    if (app.webgl.currentScene === 2) this.init();
   }
 
   clear() {

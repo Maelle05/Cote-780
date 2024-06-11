@@ -131,7 +131,7 @@ class Chapel extends Scene {
       );
     }
 
-    if (app.webgl.currentScene === 5) this.init();
+    // if (app.webgl.currentScene === 5) this.init();
   }
 
   onPointerDown(e) {

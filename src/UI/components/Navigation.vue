@@ -1,38 +1,38 @@
 <script setup>
-import NavigationElement from "./NavigationElement.vue"
-import LearnMorePanel from "./LearnMorePanel.vue"
+import NavigationElement from "./NavigationElement.vue";
+import LearnMorePanel from "./LearnMorePanel.vue";
 
-import { state } from "../../utils/State"
-import { EVENTS } from "../../utils/constants/events"
+import { state } from "../../utils/State";
+import { EVENTS } from "../../utils/constants/events";
 
-import { ref, computed } from "vue"
+import { ref, computed } from "vue";
 
 const props = defineProps({
   sceneIndex: Number,
-})
+});
 
-const isLearnMorePanelOpen = ref(false)
+const isLearnMorePanelOpen = ref(false);
 
 // [WIP] à brancher
-const isSoundOn = ref(true)
+const isSoundOn = ref(true);
 
-const isOnMap = computed(() => (props.sceneIndex === 1 ? true : false))
+const isOnMap = computed(() => (props.sceneIndex === 1 ? true : false));
 
 const onClickMap = () => {
-  state.emit(EVENTS.ASK_CHANGE_SCENE, 1)
-}
+  state.emit(EVENTS.ASK_CHANGE_SCENE, 1);
+};
 
 const onClickSound = () => {
-  console.log("toggle sound")
-}
+  console.log("toggle sound");
+};
 
 const onClickLearnMore = () => {
   if (isLearnMorePanelOpen.value === false) {
-    isLearnMorePanelOpen.value = true
+    isLearnMorePanelOpen.value = true;
   } else {
-    isLearnMorePanelOpen.value = false
+    isLearnMorePanelOpen.value = false;
   }
-}
+};
 </script>
 
 <template lang="">
