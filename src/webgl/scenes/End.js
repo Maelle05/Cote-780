@@ -1,4 +1,4 @@
-import { AmbientLight, DoubleSide, Scene, Vector3 } from "three";
+import { AmbientLight, DoubleSide, MathUtils, Scene, Vector3 } from "three";
 import { state } from "../../utils/State";
 import TestPlane from "../objects/TestPlane";
 import { Pane } from "tweakpane";
@@ -14,6 +14,8 @@ import { CamAnim } from "../utils/CamAnim";
 import { DirectionalLight } from "three";
 import { WaterMaterial } from "../materials/Water/material";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
+import { AnimationMixer } from "three";
+import { EVENTS } from "@/utils/constants/events";
 
 class End extends Scene {
   constructor() {
@@ -89,12 +91,13 @@ class End extends Scene {
         });
       }
     });
+    this.initAnimPorte();
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
 
     this.add(this.end, this.ambient);
 
-    this.anim = new CamAnim(7, this.end, [0, 0.33, 0.66, 1]);
+    this.anim = new CamAnim(7, this.end, [0, 0, 0.33, 0.66, 1]);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -106,9 +109,49 @@ class End extends Scene {
     if (app.webgl.currentScene === 7) this.init();
   }
 
+  initAnimPorte(){
+    this.allAnimCairn = this.end.animations.filter(el => el.name.includes('Cube.'))
+    this.allMixerCairn = []
+    this.allActionCairn = []
+    this.currentProgressCairn = 0
+    
+    this.allAnimCairn.forEach(cairnAnim => {
+      const mixer = new AnimationMixer(this.end)
+      const action = mixer.clipAction(cairnAnim)
+      action.play()
+      action.paused = true;
+
+      this.allMixerCairn.push(mixer)
+      this.allActionCairn.push(action)
+    });
+  }
+
   onTick() {
+    if(app.sceneshandler.currentScene != 7) return
+
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
+
+    if(this.allAnimCairn.length == this.allActionCairn.length && app.sceneshandler.currentStepCam == 1) {
+      this.currentProgressCairn = MathUtils.lerp(
+        this.currentProgressCairn,
+        1,
+        0.02
+      );
+
+      this.allActionCairn.forEach((action, i) => {
+        action.paused = false;
+        this.allMixerCairn[i].setTime(
+          this.allAnimCairn[i].duration * this.currentProgressCairn
+        );
+        action.paused = true;
+        this.allMixerCairn[i].update(app.ticker.delta)
+      });
+
+      if (this.currentProgressCairn > 0.98) {
+        // state.emit(EVENTS.GO_NEXT)
+      }
+    }
   }
 
   clear() {
