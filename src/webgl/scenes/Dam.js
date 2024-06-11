@@ -224,7 +224,7 @@ class Dam extends Scene {
     this.rocks.scale.set(1.5, 1.5, 1.5);
     this.add(this.rocks);
 
-    this.anim = new CamAnim(3, this.scene, [0, 0.25, 0.5, 0.75, 1]);
+    this.anim = new CamAnim(3, this.scene, [0, 0.25, 0.5, 0.5, 0.75, 1]);
 
     if (app.webgl.currentScene === 3) this.init();
   }
