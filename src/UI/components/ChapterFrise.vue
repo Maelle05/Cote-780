@@ -13,11 +13,11 @@ function handleError(event) {
 <template>
   <div class="chapter-frise">
     <img
-      :src="`/assets/images/frise/frise_${sceneIndex - 1}.png`"
+      :src="`/assets/images/frise/frise_${sceneIndex - 2}.png`"
       @error="handleError"
     />
     <img
-      :src="`/assets/images/frise/frise_${sceneIndex}.png`"
+      :src="`/assets/images/frise/frise_${sceneIndex - 1}.png`"
       @error="handleError"
     />
   </div>
