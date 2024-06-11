@@ -226,6 +226,7 @@ class Ladies extends Scene {
       this.demoiselles.children.forEach(dem => {
         dem.top.material.uniforms.u_gAlpha.value = (Math.sin(app.ticker.elapsed * 0.005) * 0.5 + 0.5) * 0.4;
       });
+      app.audio.layers.playVolumes([0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]);
     } else if(app.sceneshandler.currentStepCam == 3) {
       this.demoiselles.children.forEach(dem => {
         dem.top.material.uniforms.u_gAlpha.value = 0;

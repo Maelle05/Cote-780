@@ -1,8 +1,7 @@
 import { Howl, Howler } from "howler";
 import { state } from "../../State";
 import SOUNDS_MUSIC from "./musics.json";
-// import SOUNDS_UI from './ui-spritesheet.json';
-// import SOUNDS_UI from "./ui.json";
+import { LayerManager } from "./LayerManager";
 
 const MUSIC_VOLUME = 0.5;
 const UI_VOLUME = 0.7;
@@ -29,11 +28,11 @@ class AudioManager {
 
   constructor() {
     state.register(this);
+
+    this.layers = new LayerManager(); 
   }
 
   onFirstClick() {
-    this.audioContext = new window.AudioContext();
-
     Howler.autoSuspend = false;
     Howler.html5PoolSize = 0;
     Howler.usingWebAudio = true;
@@ -44,7 +43,7 @@ class AudioManager {
       this._musics.set(
         music.name,
         new Howl({
-          src: `src/assets/audio/musics/${music.src}`,
+          src: `/assets/audio/musics/${music.src}`,
           loop: true,
           volume: MUSIC_VOLUME,
         })
