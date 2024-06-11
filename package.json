@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "i18n": "node ./node_modules/mmp-tool-i18n/lib/index.js --prettify"
+    "i18n": "node ./node_modules/mmp-tool-i18n/lib/index.js --prettify",
+		"audiosprite": "sh ./assets/audio/create-spritesheet.sh"
   },
   "dependencies": {
     "@intlify/unplugin-vue-i18n": "^4.0.0",

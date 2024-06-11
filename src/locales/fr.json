@@ -19,16 +19,27 @@
   "scene_0": {
     "title": "Intro",
     "text_1": "Mon cher Milo… Si tu lis ces mots, c’est que je ne suis malheureusement plus avec vous.",
+    "audio_1": "grandma_1",
     "text_2": "Il y a une histoire que tu dois connaître…",
+    "audio_2": "grandma_2",
     "text_3": "Lors de la création du barrage, la Durance, capricieuse et indomptable, a lancé une dernière offensive.",
+    "audio_3": "grandma_3",
     "text_4": "Grâce au lien de notre famille avec la vallée, j'ai réussi à rétablir l’harmonie entre les hommes et la Durance.",
+    "audio_4": "grandma_4",
     "text_5": "Le Passage de Savines est le symbole de cette union entre les hommes et la nature. Ses pierres maintiennent l’équilibre autour du lac.",
+    "audio_5": "grandma_5",
     "text_6": "J’étais la dernière gardienne du Passage, mon rôle était de protéger cet équilibre fragile.",
+    "audio_6": "grandma_6",
     "text_7": "Sans personne pour veiller sur lui, je crains que les cairns qui le composent ne se dispersent aux quatre coins de la vallée…",
+    "audio_7": "grandma_7",
     "text_8": "La Durance pourrait alors représenter de nouveau un danger pour la région.",
+    "audio_8": "grandma_8",
     "text_9": "C'est à toi, Milo, que revient le devoir de retrouver ces cairns pour rétablir l’harmonie entre tous.",
+    "audio_9": "grandma_9",
     "text_10": "Prends la carte que je t’ai laissée et pars à la rencontre des Demoiselles Coiffées, ces ancestrales pierres de la montagne.",
-    "text_11": "Elles pourront te guider dans ta quête."
+    "audio_10": "grandma_10",
+    "text_11": "Elles pourront te guider dans ta quête.",
+    "audio_11": "grandma_11"
   },
   "scene_1": {
     "title": "Map"
@@ -45,32 +56,38 @@
     "text_2": {
       "person": "Demoiselles",
       "text": "L'équilibre de la vallée a été rompu et nous avons perdu nos chapeaux. Peux-tu nous aider à les retrouver ?",
-      "camera": "1"
+      "camera": "1",
+      "audio": "demoiselles_1"
     },
     "text_3": {
       "person": "Demoiselles",
       "text": "Merci pour ton aide, jeune homme.",
-      "camera": "4"
+      "camera": "4",
+      "audio": "demoiselles_2"
     },
     "text_4": {
       "person": "Demoiselles",
-      "text": "Dans ce grand désarroi, ta grand-mère est partie en laissant s’écrouler avec elle le Passage de Savines. Toi seul détiens le pouvoir de les reconstruire.",
-      "camera": "4"
+      "text": "Dans ce grand désarroi, ta grand-mère est partie en laissant s’écrouler avec elle le Passage de Savines. Toi seul détiens le pouvoir de le reconstruire.",
+      "camera": "4",
+      "audio": "demoiselles_3"
     },
     "text_5": {
       "person": "Demoiselles",
-      "text": "Tu dois maintenant retrouver les cinq cairns qui la composent. Voici le premier.",
-      "camera": "4"
+      "text": "Tu dois maintenant retrouver les cinq cairns qui le composent. Voici le premier.",
+      "camera": "4",
+      "audio": "demoiselles_4"
     },
     "text_6": {
       "person": "Demoiselles",
       "text": "Le second cairn se trouve là où tout à commencé, au barrage.",
-      "camera": "6"
+      "camera": "6",
+      "audio": "demoiselles_5"
     },
     "text_7": {
       "person": "Demoiselles",
       "text": "Bon courage dans ta quête. Gagne la confiance de la Durance, mais attention, elle peut être très capricieuse…",
-      "camera": "6"
+      "camera": "6",
+      "audio": "demoiselles_6"
     },
     "tuto": "Révèle les coiffes des demoiselles à l'aide de ton curseur",
     "infos": "En savoir plus demoiselles coiffées",
@@ -87,12 +104,14 @@
     "text_2": {
       "person": "Durance",
       "text": "À présent, il va falloir me rejoindre sur les flots.",
-      "camera": "4"
+      "camera": "4",
+      "audio": "durance_1"
     },
     "text_3": {
       "person": "Esprit",
       "text": "Viens, je vais t’accompagner dans cette quête !",
-      "camera": "4"
+      "camera": "4",
+      "audio": "esprit_1"
     },
     "tuto": "Clique sur l’esprit pour dégager le barrage",
     "infos": "En savoir plus barrage",
@@ -105,7 +124,8 @@
     "text_1": {
       "person": "Durance",
       "text": "Tu en es digne, suis-moi, il faut que je te montre.",
-      "camera": "4"
+      "camera": "4",
+      "audio": "durance_2"
     },
     "tuto": "Clique au bon moment pour aider Milo à avancer",
     "infos": "En savoir plus pont",
@@ -118,12 +138,14 @@
     "text_1": {
       "person": "Esprit",
       "text": "Cette chapelle est le souvenir d’une vallée engloutie. À l’intérieur t’attend ton destin.",
-      "camera": "1"
+      "camera": "1",
+      "audio": "esprit_2"
     },
     "text_2": {
       "person": "Esprit",
       "text": "Par ici ! Si tu décides de traverser ce portail, tu découvriras un lieu que le temps tente d'effacer.",
-      "camera": "4"
+      "camera": "4",
+      "audio": "esprit_3"
     },
     "tuto": "Clique sur les torches pour les allumer et pénétrer dans la chapelle",
     "infos": "En savoir plus chapelle",
@@ -136,57 +158,68 @@
     "text_1": {
       "person": "Esprit",
       "text": "J’ai vécu ici avec ta grand-mère avant la création du barrage. J’étais son voisin. Viens avec moi, je vais te montrer.",
-      "camera": "1"
+      "camera": "1",
+      "audio": "esprit_4"
     },
     "text_2": {
       "person": "Esprit",
       "text": "Elle tenait une auberge au cœur de ce petit village : l'Hôtel de la Durance. C’était le rendez-vous quotidien des gens du coin.",
-      "camera": "2"
+      "camera": "2",
+      "audio": "esprit_5"
     },
     "text_3": {
       "person": "Esprit",
       "text": "On y passait de bons moments. On rigolait bien avec ta grand-mère.",
-      "camera": "2"
+      "camera": "2",
+      "audio": "esprit_6"
     },
     "text_4": {
       "person": "Esprit",
       "text": "C’est ici ! Regarde ! Un journal !",
-      "camera": "3"
+      "camera": "3",
+      "audio": "esprit_7"
     },
     "text_5": {
       "person": "DATE : 00/00/1954",
       "text": "L’état vient de lancer la construction d’un barrage pour maîtriser l’indomptable Durance… Ils racontent qu’ils veulent engloutir la vallée jusqu’à la cote 780 ! C’est absurde !",
-      "camera": "4"
+      "camera": "4",
+      "audio": "grandma_13"
     },
     "text_6": {
       "person": "DATE : 00/00/1956",
       "text": "L’autre soir, la Durance a bien failli mettre fin au chantier ! Elle s’est rebellée contre ceux qui essayent de la contrôler. Malheureusement… il sont bien décidés, ça n’a pas eu beaucoup d’effets hormis retarder le chantier.",
-      "camera": "4"
+      "camera": "4",
+      "audio": "grandma_14"
     },
     "text_7": {
       "person": "DATE : 00/00/1956",
       "text": "Toutes les habitations vont être dynamitées il paraît/ paraît-il… ils vont même déplacer le cimetière…",
-      "camera": "4"
+      "camera": "4",
+      "audio": "grandma_15"
     },
     "text_8": {
       "person": "DATE : 00/00/1957",
       "text": "… Au début, personne ne croyait à ce barrage. Même lorsque la construction a été lancée, on se disait qu’il ne verrait jamais le jour. Maintenant que les gens commencent à quitter le village, tout devient réel…",
-      "camera": "4"
+      "camera": "4",
+      "audio": "grandma_16"
     },
     "text_9": {
       "person": "DATE : 00/00/1955",
       "text": "Aujourd’hui j’ai eu la visite d’EDF au sujet du barrage. Ils m’ont proposé un logement et de l’argent… beaucoup... pour m'installer dans le nouveau village… Mais comment vivre, avec nos souvenirs engloutis sous les yeux ?",
-      "camera": "4"
+      "camera": "4",
+      "audio": "grandma_17"
     },
     "text_10": {
       "person": "DATE : 00/00/1957",
       "text": "… Ils ont commencé à reconstruire le village au-dessus de la cote 780… et je suis bien triste de devoir quitter mon Hôtel. Mais comme les autres, je crois que j’ai fini par m’y résoudre.",
-      "camera": "4"
+      "camera": "4",
+      "audio": "grandma_18"
     },
     "text_11": {
       "person": "DATE : 00/00/1957",
       "text": "Mon voisin, lui, ne bougera jamais. Il me raconte comment, pendant la nuit, il va gêner et démolir le chantier.",
-      "camera": "4"
+      "camera": "4",
+      "audio": "grandma_19"
     },
     "tuto": "Clique sur l'esprit pour le suivre dans le village",
     "infos": "En savoir plus village",
@@ -198,27 +231,32 @@
     "text_1": {
       "person": "Esprit",
       "text": "Bravo Milo ! À travers cette quête tu as pu t’immerger dans l’histoire de la contrée et regagner la confiance de la Durance. La vallée peut désormais retrouver sa tranquillité.",
-      "camera": "1"
+      "camera": "1",
+      "audio": "esprit_8"
     },
     "text_2": {
       "person": "Esprit",
       "text": "L’édifice qu’est le Passage de Savines a regagné sa beauté en mémoire de ta grand-mère et de tous ceux qui ont vécu dans ces villages engloutis.",
-      "camera": "1"
+      "camera": "1",
+      "audio": "esprit_9"
     },
     "text_3": {
       "person": "Esprit",
       "text": "Nous ne les oublierons pas.",
-      "camera": "2"
+      "camera": "2",
+      "audio": "esprit_10"
     },
     "text_4": {
       "person": "Esprit",
       "text": "À présent le lac de Serre Ponçon est une nouvelle page qui se tourne pour la plus grande joie des vacanciers et amoureux de la nature !",
-      "camera": "2"
+      "camera": "2",
+      "audio": "esprit_11"
     },
     "text_5": {
       "person": "Esprit",
       "text": "Entre paysage montagneux et riche végétation, ce projet titanesque offre aujourd’hui, avec son vaste lac, de nouvelles perspectives pour la région. Pour la plus grande joie des vacanciers et amoureux de la nature !",
-      "camera": "2"
+      "camera": "2",
+      "audio": "esprit_12"
     },
     "infos": "En savoir plus fin ?"
   }

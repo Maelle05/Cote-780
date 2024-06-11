@@ -4,6 +4,7 @@ import { state } from "@/utils/State"
 
 import { ref, onMounted, nextTick, computed } from "vue"
 import { gsap } from "gsap"
+import { app } from "@/App";
 
 const hasDialogue = ref(false)
 const person = ref("")
@@ -85,6 +86,7 @@ state.on(EVENTS.UPDATE_DIALOGUE, (e) => {
         })
 
         hasDialogue.value = true
+        if (e.audio) app.audio.dialog.play(e.audio);
       } else {
         hasDialogue.value = false
       }

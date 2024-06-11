@@ -24,6 +24,7 @@ const INTRO_SECTIONS = [
       { id: "0-buisson", src: "/assets/images/intro/0_buisson.png" },
     ],
     texts: [],
+    audios: [],
   },
   {
     elements: [
@@ -41,6 +42,7 @@ const INTRO_SECTIONS = [
       { id: "1-arbre", src: "/assets/images/intro/1_arbre.png" },
     ],
     texts: [],
+    audios: [],
   },
   {
     elements: [
@@ -53,6 +55,7 @@ const INTRO_SECTIONS = [
       { id: "2-lettre", src: "/assets/images/intro/2_lettre.png" },
     ],
     texts: [introTexts["text_1"], introTexts["text_2"]],
+    audios: [introTexts["audio_1"], introTexts["audio_2"]],
   },
   {
     elements: [
@@ -62,6 +65,7 @@ const INTRO_SECTIONS = [
       },
     ],
     texts: [introTexts["text_3"]],
+    audios: [introTexts["audio_3"]],
   },
   {
     elements: [
@@ -72,6 +76,7 @@ const INTRO_SECTIONS = [
       { id: "4-cairn", src: "/assets/images/intro/4_cairn.png" },
     ],
     texts: [introTexts["text_4"]],
+    audios: [introTexts["audio_4"]],
   },
   {
     elements: [
@@ -80,6 +85,7 @@ const INTRO_SECTIONS = [
       { id: "5-passage", src: "/assets/images/intro/5_passage.png" },
     ],
     texts: [introTexts["text_5"], introTexts["text_6"]],
+    audios: [introTexts["audio_5"], introTexts["audio_6"]],
   },
   {
     elements: [
@@ -87,10 +93,12 @@ const INTRO_SECTIONS = [
       { id: "6-milo", src: "/assets/images/intro/6_milo.png" },
     ],
     texts: [introTexts["text_7"], introTexts["text_8"]],
+    audios: [introTexts["audio_7"], introTexts["audio_8"]],
   },
   {
     elements: [],
     texts: [introTexts["text_9"]],
+    audios: [introTexts["audio_9"]],
   },
   {
     elements: [
@@ -98,6 +106,7 @@ const INTRO_SECTIONS = [
       { id: "collier", src: "/assets/images/intro/12_collier.png" },
     ],
     texts: [introTexts["text_10"], introTexts["text_11"]],
+    audios: [introTexts["audio_10"], introTexts["audio_11"]],
   },
 ];
 
