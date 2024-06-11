@@ -92,7 +92,7 @@ class ColorSpirit extends Spirit {
       case 0:
         this.targetSpiritColor = new Vector4(this.allColors[3].r, this.allColors[3].g, this.allColors[3].b, 1);
         this.isCaptured = true;
-        state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, app.webgl.currentScene);
+        state.emit(EVENTS.GO_NEXT);
         break;
 
       default:
