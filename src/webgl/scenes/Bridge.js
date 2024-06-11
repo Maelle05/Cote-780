@@ -410,6 +410,9 @@ class Bridge extends Scene {
       ease: "power1.in",
       duration: 1,
     });
+
+    if (this.rockIndex === 0) app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0]);
+    else if (this.rockIndex === 2) app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0]);
   }
 
   #off() {}

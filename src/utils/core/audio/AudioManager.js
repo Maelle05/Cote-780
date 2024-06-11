@@ -4,7 +4,7 @@ import SOUNDS_MUSIC from "./jsons/musics.json";
 import { LayerManager } from "./LayerManager";
 import { DialogManager } from "./DialogManager";
 
-const MUSIC_VOLUME = 0.5;
+const MUSIC_VOLUME = 1;
 const UI_VOLUME = 0.7;
 
 //MUSIC EFFECTS

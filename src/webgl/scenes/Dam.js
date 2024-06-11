@@ -377,6 +377,7 @@ class Dam extends Scene {
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
     if (app.sceneshandler.currentStepCam == 4 && !this.durance.isActive) {
       this.durance.isActive = true;
+      app.audio.layers.playVolumes([1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0]);
       setTimeout(() => {
         this.durance.show();
       }, 1000);

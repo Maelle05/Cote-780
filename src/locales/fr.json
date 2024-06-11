@@ -7,8 +7,13 @@
     "alt": {
       "close": "Fermer",
       "learn-more": "En savoir plus",
-      "map": "Aller à la carte"
-    }
+      "map": "Aller à la carte",
+      "sound-on": "Son activé",
+      "sound-off": "Son désactivé"
+    },
+    "new-cairn_1": "Tu viens d'obtenir un",
+    "new-cairn_2": "nouveau",
+    "new-cairn_3": "cairn"
   },
   "intro": {
     "text_1": "",
@@ -49,7 +54,7 @@
     "title_1": "Coiffées",
     "text_1": {
       "person": "Milo",
-      "text": "Bonjour, je suis Milo. Ma grand-mère m’a dit de venir vous voir. Pourquoi êtes-vous triste ?",
+      "text": "Bonjour, je suis Milo. Ma grand-mère m’a dit de venir vous voir. Pourquoi êtes-vous tristes ?",
       "camera": "0",
       "audio": "1"
     },

@@ -36,7 +36,7 @@ const isTutorialVisible = () => {
 }
 
 const isCollectionCairnsVisible = () => {
-  if ([2, 3, 4, 5, 6].includes(props.sceneIndex) && props.stepIndex === 5) {
+  if ([2, 3, 4, 5].includes(props.sceneIndex) && props.stepIndex === 5) {
     return true
   }
 
