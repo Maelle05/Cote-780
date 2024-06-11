@@ -10,6 +10,7 @@ import { EVENTS } from "./utils/constants/events";
 const isIntro = ref(false);
 const isScenes = ref(false);
 const sceneIndex = ref(INIT_SCENE);
+const stepIndex = ref(0);
 
 if (INIT_SCENE == 0) {
   isIntro.value = true;
@@ -19,6 +20,7 @@ if (INIT_SCENE == 0) {
 
 state.on(EVENTS.CHANGE_SCENE, (e) => {
   sceneIndex.value = e;
+  stepIndex.value = 0;
 
   if (e == 0) {
     isIntro.value = true;
@@ -28,6 +30,10 @@ state.on(EVENTS.CHANGE_SCENE, (e) => {
     isIntro.value = false;
   }
 });
+
+state.on(EVENTS.CHANGE_SCENE_STEP, (e) => {
+  stepIndex.value++
+})
 </script>
 
 <template>
@@ -38,7 +44,7 @@ state.on(EVENTS.CHANGE_SCENE, (e) => {
       <img class="logo" src="/assets/images/logo.png" />
     </div>
     <Intro v-if="isIntro" />
-    <Scenes v-if="isScenes" :sceneIndex="sceneIndex" />
+    <Scenes v-if="isScenes" :sceneIndex="sceneIndex" :stepIndex="stepIndex" />
     <BtnChangeScene />
   </main>
 </template>

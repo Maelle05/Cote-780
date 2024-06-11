@@ -62,7 +62,7 @@ class Village extends Scene {
     this.anim = new CamAnim(
       6,
       this.scene,
-      [0, 0.33, 0.66, 1]
+      [0, 0, 0.33, 0.66, 1, 1]
     );
     this.targetProgressAnim = 1;
 
@@ -77,18 +77,19 @@ class Village extends Scene {
     if(this.spirit){
       switch (app.sceneshandler.currentStepCam) {
         case 0:
+        case 1:
           this.spiritTargetPos = new Vector3(-10, 0.7, 7)
           break;
 
-        case 1:
+        case 2:
           this.spiritTargetPos = new Vector3(-2, 0.7, 0.5)
           break;
 
-        case 2:
+        case 3:
           this.spiritTargetPos = new Vector3(8, 0.7, -3)
           break;
 
-        case 3:
+        case 4:
           this.spiritTargetPos = new Vector3(8, 0.7, -3.5)
           break;
       

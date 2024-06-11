@@ -15,6 +15,7 @@ import { DirectionalLight } from "three";
 import { WaterMaterial } from "../materials/Water/material";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { AnimationMixer } from "three";
+import { EVENTS } from "@/utils/constants/events";
 
 class End extends Scene {
   constructor() {
@@ -96,7 +97,7 @@ class End extends Scene {
 
     this.add(this.end, this.ambient);
 
-    this.anim = new CamAnim(7, this.end, [0, 0.33, 0.66, 1]);
+    this.anim = new CamAnim(7, this.end, [0, 0, 0.33, 0.66, 1]);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -146,6 +147,10 @@ class End extends Scene {
         action.paused = true;
         this.allMixerCairn[i].update(app.ticker.delta)
       });
+
+      if (this.currentProgressCairn > 0.98) {
+        // state.emit(EVENTS.GO_NEXT)
+      }
     }
   }
 
