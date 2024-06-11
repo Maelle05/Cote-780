@@ -78,7 +78,7 @@ class Chapel extends Scene {
             uTexture: { value: el.material.map },
             uTime: { value: 0 },
           },
-          transparent: true,
+          // transparent: true,
         });
       }
 

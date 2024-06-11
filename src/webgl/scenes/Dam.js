@@ -113,7 +113,7 @@ class ColorSpirit extends Spirit {
           1
         );
         this.isCaptured = true;
-        state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, app.webgl.currentScene);
+        state.emit(EVENTS.GO_NEXT);
         break;
 
       default:
@@ -194,23 +194,38 @@ class Dam extends Scene {
             uTime: { value: 0 },
           },
           transparent: true,
+          depthWrite: false,
+          // depthTest: false
         });
       }
     });
-
-    this.add(this.scene);
+    this.water.renderOrder = 0;
 
     this.light = new AmbientLight({ color: 0xffffff });
     this.add(this.light);
 
+    // this.milo = new Milo();
+    // this.player = this.milo.model;
+    // this.player.position.set(
+    //   this.PARAMS.persoPos.x,
+    //   this.PARAMS.persoPos.y,
+    //   this.PARAMS.persoPos.z
+    //   );
+    //   // this.player.scale.set(0.15, 0.15, 0.15);
+    //   this.add(this.player);
+
     this.spirit = new ColorSpirit();
     this.add(this.spirit);
 
-    this.durance = new Durance();
+    this.duranceTex = app.assetsManager.get("duranceSide");
+    this.durance = new Durance(this.duranceTex);
     this.durance.hide();
     this.durance.scale.set(2.5, 2.5, 2.5);
     this.durance.position.set(1.5, 0, 0);
+    this.durance.renderOrder = 1;
+
     this.add(this.durance);
+    this.add(this.scene);
 
     this.rocks = app.assetsManager.get("rocks");
     this.rocks.traverse((el) => {
@@ -229,7 +244,7 @@ class Dam extends Scene {
     this.rocks.scale.set(1.5, 1.5, 1.5);
     this.add(this.rocks);
 
-    this.anim = new CamAnim(3, this.scene, [0, 0.25, 0.5, 0.75, 1]);
+    this.anim = new CamAnim(3, this.scene, [0, 0.25, 0.5, 0.5, 0.75, 1]);
 
     if (app.webgl.currentScene === 3) this.init();
   }
