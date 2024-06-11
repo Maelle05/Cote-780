@@ -317,7 +317,7 @@ class Ladies extends Scene {
     this.tears.userData.isActive = true;
     this.tears.position.set(2.05, 2.84, 1.7);
 
-    this.anim = new CamAnim(2, this.ladies, [0, 0.25, 0.5, 0.75, 1]);
+    this.anim = new CamAnim(2, this.ladies, [0, 0.25, 0.5, 0.75, 1, 1, 1]);
 
     this.add(this.ladies, this.ambient, this.tears);
 

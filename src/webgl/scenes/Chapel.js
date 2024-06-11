@@ -121,7 +121,7 @@ class Chapel extends Scene {
     this.spirit.position.set(-1, this.torchs[0].position.y + 0.4, 0);
     this.add(this.spirit);
 
-    this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 1]);
+    this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 0.66, 1, 1]);
     this.anim.onChangeSceneStep(2);
 
     if (!this.anim) {

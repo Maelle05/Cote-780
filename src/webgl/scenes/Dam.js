@@ -323,7 +323,7 @@ class Dam extends Scene {
     if (app.webgl.currentScene != 3) return;
 
     //Move Milo after interraction
-    if (this.anim.currentKeyfame === 2) {
+    if (this.anim.currentKeyfame === 3) {
       this.player.goTo(
         new Vector3(5.7, this.PARAMS.persoPos.y, 1.8),
         7,
@@ -331,7 +331,7 @@ class Dam extends Scene {
       );
     }
 
-    if (this.anim.currentKeyfame != 2) return;
+    if (this.anim.currentKeyfame != 3) return;
 
     this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
     const intersects = this.raycaster.intersectObject(this.spirit);
@@ -375,7 +375,7 @@ class Dam extends Scene {
     if (app.sceneshandler.currentScene != 3) return;
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
-    if (app.sceneshandler.currentStepCam == 3 && !this.durance.isActive) {
+    if (app.sceneshandler.currentStepCam == 4 && !this.durance.isActive) {
       this.durance.isActive = true;
       setTimeout(() => {
         this.durance.show();

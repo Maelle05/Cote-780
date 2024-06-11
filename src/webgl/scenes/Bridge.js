@@ -215,7 +215,7 @@ class Bridge extends Scene {
 
     this.radius = this.center.distanceTo(this.rocks[0].position);
 
-    this.anim = new CamAnim(4, this.bridge, [0, 0.25, 0.5, 0.75, 1]);
+    this.anim = new CamAnim(4, this.bridge, [0, 0.25, 0.50, 0.75, 1, 1]);
     // this.anim.onChangeSceneStep(2);
 
     if (!this.anim) {

@@ -2,11 +2,16 @@
   "global": {
     "title": "Cote 780",
     "description": "Bla Bli Bla Blou",
-    "more": "En savoir plus",
-    "chapter": "Chapitre"
+    "chapter": "Chapitre",
+    "learn-more": "En savoir plus",
+    "alt": {
+      "close": "Fermer",
+      "learn-more": "En savoir plus",
+      "map": "Aller à la carte"
+    }
   },
   "intro": {
-    "text_1": "Ce conte vous plonge au cœur des Hautes-Alpes, dans la vallée de la Durance.",
+    "text_1": "",
     "text_2": "Un barrage y fut construit à la fin des années 1950 pour apaiser les colères de l’imposante rivière qui donne son nom à la vallée. Cet événement bouleversa de nombreuses vies dans la région, et trois villages furent engloutis sous les eaux.",
     "text_3": "Ce fut la naissance du Lac de Serre-Ponçon.",
     "start": "Démarrer l'expérience"
@@ -34,7 +39,8 @@
     "text_1": {
       "person": "Milo",
       "text": "Bonjour, je suis Milo. Ma grand-mère m’a dit de venir vous voir. Pourquoi êtes-vous triste ?",
-      "camera": "0"
+      "camera": "0",
+      "audio": "1"
     },
     "text_2": {
       "person": "Demoiselles",
@@ -58,14 +64,15 @@
     },
     "text_6": {
       "person": "Demoiselles",
-      "text": "Le second cairn se trouve là où tout à commencé, au barrage",
-      "camera": "4"
+      "text": "Le second cairn se trouve là où tout à commencé, au barrage.",
+      "camera": "6"
     },
     "text_7": {
       "person": "Demoiselles",
       "text": "Bon courage dans ta quête. Gagne la confiance de la Durance, mais attention, elle peut être très capricieuse…",
-      "camera": "4"
+      "camera": "6"
     },
+    "tuto": "Révèle les coiffes des demoiselles à l'aide de ton curseur",
     "infos": "En savoir plus demoiselles coiffées",
     "alt": "Les Demoiselles coiffées",
     "url": "https://www.serreponcon.com/patrimoine-naturel/demoiselles-coiffees-pontis/"
@@ -84,9 +91,10 @@
     },
     "text_3": {
       "person": "Esprit",
-      "text": "Viens, je vais t’accompagner dans cette quête",
+      "text": "Viens, je vais t’accompagner dans cette quête !",
       "camera": "4"
     },
+    "tuto": "Clique sur l’esprit pour dégager le barrage",
     "infos": "En savoir plus barrage",
     "alt": "Le Barrage",
     "url": "https://www.serreponcon.com/patrimoine-culturel/barrage-de-serre-poncon-rousset/"
@@ -99,6 +107,7 @@
       "text": "Tu en es digne, suis-moi, il faut que je te montre.",
       "camera": "4"
     },
+    "tuto": "Clique au bon moment pour aider Milo à avancer",
     "infos": "En savoir plus pont",
     "alt": "Le Pont de Chanteloube",
     "url": "https://www.serreponcon.com/patrimoine-culturel/viaduc-de-chanteloube-chorges/"
@@ -108,14 +117,15 @@
     "title_1": "Saint-Michel",
     "text_1": {
       "person": "Esprit",
-      "text": "Cette chapelle est le souvenir d’une vallée engloutie. À l’intérieur t’attends ton destin.",
+      "text": "Cette chapelle est le souvenir d’une vallée engloutie. À l’intérieur t’attend ton destin.",
       "camera": "1"
     },
     "text_2": {
       "person": "Esprit",
       "text": "Par ici ! Si tu décides de traverser ce portail, tu découvriras un lieu que le temps tente d'effacer.",
-      "camera": "3"
+      "camera": "4"
     },
+    "tuto": "Clique sur les torches pour les allumer et pénétrer dans la chapelle",
     "infos": "En savoir plus chapelle",
     "alt": "La Chapelle Saint-Michel",
     "url": "https://www.serreponcon.com/patrimoine-culturel/chapelle-saint-michel-prunieres/"
@@ -130,54 +140,55 @@
     },
     "text_2": {
       "person": "Esprit",
-      "text": "Elle tenait une auberge au cœur de ce petit village : l'Hôtel de la Durance.  C’était le rendez-vous quotidien des gens du coin.",
-      "camera": "1"
+      "text": "Elle tenait une auberge au cœur de ce petit village : l'Hôtel de la Durance. C’était le rendez-vous quotidien des gens du coin.",
+      "camera": "2"
     },
     "text_3": {
       "person": "Esprit",
       "text": "On y passait de bons moments. On rigolait bien avec ta grand-mère.",
-      "camera": "1"
+      "camera": "2"
     },
     "text_4": {
       "person": "Esprit",
       "text": "C’est ici ! Regarde ! Un journal !",
-      "camera": "2"
+      "camera": "3"
     },
     "text_5": {
       "person": "DATE : 00/00/1954",
       "text": "L’état vient de lancer la construction d’un barrage pour maîtriser l’indomptable Durance… Ils racontent qu’ils veulent engloutir la vallée jusqu’à la cote 780 ! C’est absurde !",
-      "camera": "3"
+      "camera": "4"
     },
     "text_6": {
       "person": "DATE : 00/00/1956",
-      "text": "L’autre soir, la Durance a bien failli mettre fin au chantier ! Elle s’est rebellée contre ceux qui essayent de la contrôler. Malheureusement… il sont bien décidé, ça n’a pas eu beaucoup d’effets hormis retarder le chantier.",
-      "camera": "3"
+      "text": "L’autre soir, la Durance a bien failli mettre fin au chantier ! Elle s’est rebellée contre ceux qui essayent de la contrôler. Malheureusement… il sont bien décidés, ça n’a pas eu beaucoup d’effets hormis retarder le chantier.",
+      "camera": "4"
     },
     "text_7": {
       "person": "DATE : 00/00/1956",
-      "text": "Toutes les habitations vont être dynamitées il paraît/ paraît-il… il vont même déplacer le cimetière…",
-      "camera": "3"
+      "text": "Toutes les habitations vont être dynamitées il paraît/ paraît-il… ils vont même déplacer le cimetière…",
+      "camera": "4"
     },
     "text_8": {
       "person": "DATE : 00/00/1957",
       "text": "… Au début, personne ne croyait à ce barrage. Même lorsque la construction a été lancée, on se disait qu’il ne verrait jamais le jour. Maintenant que les gens commencent à quitter le village, tout devient réel…",
-      "camera": "3"
+      "camera": "4"
     },
     "text_9": {
       "person": "DATE : 00/00/1955",
-      "text": "Aujourd’hui j’ai eu la visite d’EDF au sujet du barrage. Ils m’ont proposé un logement et de l’argent… beaucoup.. pour m'installer dans le nouveau village… Mais comment vivre, avec nos souvenirs engloutis sous les yeux ?",
-      "camera": "3"
+      "text": "Aujourd’hui j’ai eu la visite d’EDF au sujet du barrage. Ils m’ont proposé un logement et de l’argent… beaucoup... pour m'installer dans le nouveau village… Mais comment vivre, avec nos souvenirs engloutis sous les yeux ?",
+      "camera": "4"
     },
     "text_10": {
       "person": "DATE : 00/00/1957",
-      "text": "… Ils ont commencé à reconstruire le village au-dessus de la cote 780…et je suis bien triste de devoir quitter mon Hôtel. Mais comme les autres, je crois que j’ai fini par m’y résoudre.",
-      "camera": "3"
+      "text": "… Ils ont commencé à reconstruire le village au-dessus de la cote 780… et je suis bien triste de devoir quitter mon Hôtel. Mais comme les autres, je crois que j’ai fini par m’y résoudre.",
+      "camera": "4"
     },
     "text_11": {
       "person": "DATE : 00/00/1957",
       "text": "Mon voisin, lui, ne bougera jamais. Il me raconte comment, pendant la nuit, il va gêner et démolir le chantier.",
-      "camera": "3"
+      "camera": "4"
     },
+    "tuto": "Clique sur l'esprit pour le suivre dans le village",
     "infos": "En savoir plus village",
     "alt": "Le village de Savines",
     "url": "https://www.serreponcon.com/notre-lac/"
@@ -187,27 +198,27 @@
     "text_1": {
       "person": "Esprit",
       "text": "Bravo Milo ! À travers cette quête tu as pu t’immerger dans l’histoire de la contrée et regagner la confiance de la Durance. La vallée peut désormais retrouver sa tranquillité.",
-      "camera": "0"
+      "camera": "1"
     },
     "text_2": {
       "person": "Esprit",
       "text": "L’édifice qu’est le Passage de Savines a regagné sa beauté en mémoire de ta grand-mère et de tous ceux qui ont vécu dans ces villages engloutis.",
-      "camera": "0"
+      "camera": "1"
     },
     "text_3": {
       "person": "Esprit",
       "text": "Nous ne les oublierons pas.",
-      "camera": "0"
+      "camera": "2"
     },
     "text_4": {
       "person": "Esprit",
       "text": "À présent le lac de Serre Ponçon est une nouvelle page qui se tourne pour la plus grande joie des vacanciers et amoureux de la nature !",
-      "camera": "0"
+      "camera": "2"
     },
     "text_5": {
       "person": "Esprit",
       "text": "Entre paysage montagneux et riche végétation, ce projet titanesque offre aujourd’hui, avec son vaste lac, de nouvelles perspectives pour la région. Pour la plus grande joie des vacanciers et amoureux de la nature !",
-      "camera": "0"
+      "camera": "2"
     },
     "infos": "En savoir plus fin ?"
   }
