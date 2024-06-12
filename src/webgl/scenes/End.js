@@ -142,7 +142,7 @@ class End extends Scene {
       this.currentProgressCairn = MathUtils.lerp(
         this.currentProgressCairn,
         1,
-        0.02
+        0.005
       );
 
       this.allActionCairn.forEach((action, i) => {
