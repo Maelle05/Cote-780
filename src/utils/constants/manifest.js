@@ -45,7 +45,6 @@ const manifest = {
     },
     flamme: { path: `/assets/textures/flamme.png` },
     duranceSide: { path: `/assets/textures/Durance/duranceSide.png` },
-    duranceFace: { path: `/assets/textures/Durance/duranceFace.png` },
   },
   envMaps: {
     // envmap: { path: `/assets/textures/envmap.hdr` },
