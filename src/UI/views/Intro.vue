@@ -154,7 +154,7 @@ onMounted(() => {
     <p class="intro-cta intro-cta--end" @click="onClickCtaEnd">Compris !</p>
     <div class="intro-title-screen">
       <div class="intro-title-screen__ui">
-        <img src="/src/assets/logo/cote-780.png" alt="Cote 780" />
+        <img src="/assets/images/logo.svg" alt="Cote 780" />
       </div>
       <div class="intro-title-screen__scroll">
         <span></span>

@@ -41,7 +41,7 @@ state.on(EVENTS.CHANGE_SCENE_STEP, (e) => {
 
   <main>
     <div>
-      <img class="logo" src="/assets/images/logo.png" />
+      <img class="logo" src="/assets/images/logo.svg" />
     </div>
     <Intro v-if="isIntro" />
     <Scenes v-if="isScenes" :sceneIndex="sceneIndex" :stepIndex="stepIndex" />

@@ -6,7 +6,7 @@ varying float vElevation;
 void main() {
   vec4 baseTex = texture2D(uBaseTex, vUv);
 
-  float mask = smoothstep(0., 0.12, vElevation);
+  float mask = smoothstep(0.02, 0.07, vElevation);
 
   vec4 final = mix(vec4(0.), baseTex, mask);
 

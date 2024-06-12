@@ -4,9 +4,12 @@ import { AnimationMixer, MathUtils, MeshBasicMaterial } from "three";
 import { Group } from "three";
 import { DuranceMaterial } from "../materials/Durance/material";
 
+let duranceInstence = null
 export default class Durance extends Group{
   constructor(baseTex) {
     super()
+    if (duranceInstence) return duranceInstence
+    duranceInstence = this
     state.register(this);
 
     this.baseTex = baseTex

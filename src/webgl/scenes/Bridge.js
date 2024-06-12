@@ -35,6 +35,7 @@ import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { ShakiraMaterial } from "../materials/Shakira/material";
 import { Vector2 } from "three";
 import { Vector4 } from "three";
+import Durance from "../objects/Durance";
 
 class Bridge extends Scene {
   constructor() {
@@ -116,6 +117,13 @@ class Bridge extends Scene {
     this.player.goTo(this.center, walkDuration);
     this.add(this.player);
 
+    this.durance = new Durance(app.assetsManager.get('duranceFace'));
+    this.durance.rotation.y = -30 * Math.PI / 180;
+    this.durance.scale.set(1.3, 1.3, 1.3)
+    this.durance.hide();
+    this.durance.position.set(0, 0, 0);
+    this.add(this.durance);
+
     //End of the walk & Start Tuto
     setTimeout(() => {
       this.#start();
@@ -180,7 +188,6 @@ class Bridge extends Scene {
 
     this.spirit = new Spirit();
     this.spirit.hide();
-
     this.add(this.spirit);
 
     this.target = new TargetParticles(
@@ -202,7 +209,7 @@ class Bridge extends Scene {
     this.radius = this.center.distanceTo(this.rocks[0].position);
 
     this.anim = new CamAnim(4, this.bridge, [0, 0.25, 0.5, 0.75, 1, 1]);
-    this.anim.onChangeSceneStep(2);
+    // this.anim.onChangeSceneStep(2);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -220,6 +227,14 @@ class Bridge extends Scene {
       this.target.material.uniforms.uTime.value = app.ticker.elapsed;
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
+    if (app.sceneshandler.currentStepCam == 4 && !this.durance.isActive) {
+      this.durance.isActive = true;
+      this.durance.show();
+    }
+    if (app.sceneshandler.currentStepCam == 5 && this.durance.isActive) {
+      this.durance.isActive = false;
+      this.durance.hide();
+    }
 
     if (this.anim && this.anim.currentKeyfame != 2) return;
 
@@ -403,6 +418,8 @@ class Bridge extends Scene {
     //Milo gain the cairn
     //Milo rotation look at Durance
     //Durance Apparition
+
+    state.emit(EVENTS.GO_NEXT);
   }
 
   clear() {

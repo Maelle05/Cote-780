@@ -23,7 +23,7 @@ const props = defineProps({
       />
     </div>
     <div class="learn-more-panel__url">
-      <a :href="t(`scene_${props.sceneIndex}.url`)">{{ t(`global.more`) }}</a>
+      <a :href="t(`scene_${props.sceneIndex}.url`)">{{ t(`global.learn-more`) }}</a>
     </div>
   </div>
 </template>

@@ -218,14 +218,6 @@ class Dam extends Scene {
     this.spirit = new ColorSpirit();
     this.add(this.spirit);
 
-    this.duranceTex = app.assetsManager.get("duranceSide");
-    this.durance = new Durance(this.duranceTex);
-    this.durance.hide();
-    this.durance.scale.set(2.5, 2.5, 2.5);
-    this.durance.position.set(1.5, 0, 0);
-    this.durance.renderOrder = 1;
-
-    this.add(this.durance);
     this.add(this.scene);
 
     this.rocks = app.assetsManager.get("rocks");
@@ -317,6 +309,14 @@ class Dam extends Scene {
     // this.player.scale.set(0.15, 0.15, 0.15);
     this.add(this.player);
 
+    this.duranceTex = app.assetsManager.get("duranceSide");
+    this.durance = new Durance(this.duranceTex);
+    this.durance.hide();
+    this.durance.scale.set(2.5, 2.5, 2.5);
+    this.durance.position.set(1.5, 0, 0);
+    this.durance.renderOrder = 1;
+    this.add(this.durance);
+
     this.player.goTo(new Vector3(4.3, this.PARAMS.persoPos.y, 5.6), 7);
   }
 
@@ -379,9 +379,11 @@ class Dam extends Scene {
     if (app.sceneshandler.currentStepCam == 4 && !this.durance.isActive) {
       this.durance.isActive = true;
       app.audio.layers.playVolumes([1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0]);
-      setTimeout(() => {
         this.durance.show();
-      }, 1000);
+    }
+    if (app.sceneshandler.currentStepCam == 5 && this.durance.isActive) {
+      this.durance.isActive = false;
+      this.durance.hide();
     }
   }
 
