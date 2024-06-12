@@ -26,6 +26,7 @@ import gsap from "gsap";
 import { EVENTS } from "@/utils/constants/events";
 import { RenderTarget } from "three";
 import { WaterPass } from "./pass/WaterPass/TransitionPass";
+import { Shake } from "./utils/Shake";
 
 export default class WebglController {
   constructor(container) {
@@ -81,6 +82,8 @@ export default class WebglController {
     this.effectComposer.addPass(this.transitionPass);
     this.gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);
     this.effectComposer.addPass(this.gammaCorrectionPass);
+
+    this.shake = new Shake();
   }
 
   initStats() {

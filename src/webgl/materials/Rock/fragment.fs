@@ -1,4 +1,5 @@
 uniform float uProgress;
+uniform sampler2D uTexture;
 
 varying vec2 vUv;
 varying vec3 vPosition;
@@ -60,8 +61,10 @@ void main() {
 	float edge0 = uProgress + noise * 0.05 - yOffset * (1. - uProgress);
 	float edge1 = uProgress + clamp(0.3 * uProgress, 0., 1.) + noise2 * 0.05 - yOffset * (1. - uProgress);
 
+	vec4 texture = texture2D(uTexture, vUv);
+
 	if(vPosition.y < edge0) {
-		gl_FragColor = vec4(0.44, 0.44, 0.44, 1.0);
+		gl_FragColor = texture;
 	} else if(vPosition.y < edge1) {
 		gl_FragColor = vec4(0.62, 0.39, 0.19, 1.0);
 	} else {

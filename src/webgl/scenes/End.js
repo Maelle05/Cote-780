@@ -62,6 +62,7 @@ class End extends Scene {
         });
     }
 
+    app.webgl.shake.startShake();
     app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
   }
 
@@ -79,6 +80,7 @@ class End extends Scene {
     this.add(this.planePos);
 
     this.end = app.assetsManager.get("end");
+    app.webgl.shake.initShake(this.end);
     this.end.traverse((el) => {
       if (el.name == "WaterSurface") {
         this.water = el;
@@ -183,6 +185,7 @@ class End extends Scene {
     }
 
     app.audio.fadeOutAmbient();
+    app.webgl.shake.stopShake();
   }
 
   onResize() {}
