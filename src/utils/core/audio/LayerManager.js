@@ -5,7 +5,7 @@ import { app } from "@/App";
 const LAYER_MAX_VOLUME = 0.3;
 
 const LAYERS_SCENES = {
-  0: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  0: [0, 0, 0, 0.3, 0, 0, 0, 0, 0, 0, 0],
   1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   2: [0, 0, 0, 0, 0, 0, 0, 0.5, 0, 0, 0],
   3: [0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -18,6 +18,7 @@ const LAYERS_SCENES = {
 class LayerManager {
   layers = new Map();
   layersIds = new Map();
+  loadedLayers = 0;
 
   constructor() {
     state.register(this);
@@ -29,17 +30,24 @@ class LayerManager {
     Object.values(audioFiles).map((file) => file.name).forEach((path) => {
       const name = path.split("/").pop().split(".")[0].split("_")[0];
       const src = path.split("public")[1];
-      this.layers.set(name, new Howl({ src, loop: true, volume: 0 }));
-    });
-
-    this.layers.forEach((layer, index) => {
-      const id = layer.play();
-      this.layersIds.set(index, id);
+      const howl = new Howl({ src, loop: true, volume: 0 });
+      howl.once("load", () => this.loadedLayer());
+      this.layers.set(name, howl);
     });
 
     this.canPlay = true;
 
     this.onChangeScene(app.webgl.currentScene);
+  }
+
+  loadedLayer() {
+    this.loadedLayers++;
+    if (this.loadedLayers === this.layers.size) {
+      this.layers.forEach((layer, index) => {
+        const id = layer.play();
+        this.layersIds.set(index, id);
+      });
+    }
   }
 
   onChangeScene(scene) {

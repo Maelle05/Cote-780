@@ -18,6 +18,7 @@ import { DirectionalLight } from "three";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import Milo from "../objects/Milo";
 import { Vector3 } from "three";
+import Vegetation from "../objects/Vegetation";
 
 class Chapel extends Scene {
   constructor() {
@@ -157,6 +158,9 @@ class Chapel extends Scene {
     }
 
     if (app.webgl.currentScene === 5) this.init();
+
+    this.vegetation = new Vegetation("chapel");
+    this.add(this.vegetation);
   }
 
   onPointerDown(e) {
