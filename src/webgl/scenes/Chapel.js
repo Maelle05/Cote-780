@@ -16,6 +16,8 @@ import { AmbientLight } from "three";
 import { WaterMaterial } from "../materials/Water/material";
 import { DirectionalLight } from "three";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
+import Milo from "../objects/Milo";
+import { Vector3 } from "three";
 
 class Chapel extends Scene {
   constructor() {
@@ -24,6 +26,11 @@ class Chapel extends Scene {
 
     this.PARAMS = {
       portalProgress: 0,
+      posPerso: {
+        x: -1,
+        y: 1.05,
+        z: 0,
+      },
     };
 
     this.raycaster = new Raycaster();
@@ -36,11 +43,9 @@ class Chapel extends Scene {
     this.directionLight.position.set(7, 10, 15);
     this.add(this.directionLight);
 
-    this.init();
     this.torchs = [];
     this.flames = [];
     this.flameOffset = 0.15;
-    this.index = 0;
   }
 
   init() {
@@ -56,7 +61,27 @@ class Chapel extends Scene {
         .on("change", (ev) => {
           this.portal.material.uniforms.uProgress.value = ev.value;
         });
+
+      this.pane
+        .addBinding(this.PARAMS, "posPerso", {
+          min: -10,
+          max: 10,
+          step: 0.01,
+        })
+        .on("change", (ev) => {
+          this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
+        });
     }
+
+    this.milo = new Milo();
+    this.player = this.milo.model;
+    this.player.position.set(-0.33, 1.05, 0.55);
+    this.add(this.player);
+
+    this.spirit.position.set(-1, this.torchs[0].position.y + 0.4, 0);
+
+    this.index = 0;
+    this.isAnimating = false;
 
     app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
   }
@@ -118,7 +143,6 @@ class Chapel extends Scene {
     });
 
     this.spirit = new Spirit();
-    this.spirit.position.set(-1, this.torchs[0].position.y + 0.4, 0);
     this.add(this.spirit);
 
     this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 0.66, 1, 1]);
@@ -131,25 +155,33 @@ class Chapel extends Scene {
       );
     }
 
-    // if (app.webgl.currentScene === 5) this.init();
+    console.log(app);
+
+    if (app.webgl.currentScene === 5) this.init();
   }
 
   onPointerDown(e) {
     if (app.webgl.currentScene != 5) return;
+    if (this.isAnimating === true) return;
     // if (this.anim.currentKeyfame != 2) return;
 
     this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
     const intersects = this.raycaster.intersectObjects(this.torchs);
 
     if (intersects.length != 0) {
+      const flame = intersects[0].object.flame;
+
+      if (flame.visible == true) return;
+
       this.index++;
-      this.goTo(intersects[0].object.flame);
+      this.goTo(flame.position, flame);
+      this.isAnimating = true;
     }
 
     //Create the portal & give the cairn when all torchs are on
   }
 
-  goTo(flame) {
+  goTo(position, flame) {
     //Spirit Anim
     const startPoint = {
       x: this.spirit.position.x,
@@ -157,9 +189,9 @@ class Chapel extends Scene {
       z: this.spirit.position.z,
     };
     const endPoint = {
-      x: flame.position.x,
-      y: flame.position.y + this.flameOffset + 0.2,
-      z: flame.position.z,
+      x: position.x,
+      y: position.y + this.flameOffset + 0.2,
+      z: position.z,
     };
     const controlPoint = {
       x: (startPoint.x + 1 + endPoint.x) / 2,
@@ -197,11 +229,14 @@ class Chapel extends Scene {
           e.position.set(newPosition.x, newPosition.y, newPosition.z);
         },
         onComplete: () => {
+          this.isAnimating = false;
+          if (!flame) return;
           flame.visible = true;
           flame.show();
           this.spiritStand(flame);
 
           if (this.index == this.torchs.length) {
+            this.isAnimating = true;
             //TODO : PLAY THE CAIRN ANIMATION THEN CREATE PORTAL
             this.createPortal();
             app.audio.layers.playVolumes([0, 0, 0, 0.3, 0, 0, 0, 0, 0, 0, 0]);
@@ -213,12 +248,33 @@ class Chapel extends Scene {
   }
 
   createPortal() {
-    gsap.to(this.portal.material.uniforms.uProgress, {
+    const tl = gsap.timeline();
+
+    tl.to(this.portal.material.uniforms.uProgress, {
       value: 1,
       duration: 2,
       delay: 1,
       ease: "power2.in",
     });
+
+    //Move the spirit
+    const portalPos = new Vector3(0.34, 1.05, -0.15);
+    const lookAtPos = new Vector3(0.3, 1.05, -0.17);
+    const spiritPos = new Vector3(0.83, 1.05, -0.3);
+    this.goTo(spiritPos);
+
+    //Move Milo & Spirit
+    //TODO : FIRE WHEN DIALOG SKIP
+    const animDuration = 4;
+
+    setTimeout(() => {
+      this.player.goTo(portalPos, animDuration);
+
+      setTimeout(() => {
+        this.player.lookAt(this.portal.position);
+        // this.player.goTo(lookAtPos, 1);
+      }, animDuration * 1000);
+    }, 4000);
   }
 
   spiritStand(object) {
@@ -252,6 +308,12 @@ class Chapel extends Scene {
     if (DEV_MODE) {
       this.pane.dispose();
     }
+
+    this.torchs.forEach((torch) => {
+      torch.flame.hide();
+    });
+
+    this.portal.material.uniforms.uProgress.value = 0;
 
     app.audio.fadeOutAmbient();
   }

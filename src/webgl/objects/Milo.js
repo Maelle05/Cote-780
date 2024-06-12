@@ -34,7 +34,7 @@ export default class Milo {
     // this.material.uniforms.uTime.value = e.et / 1000;
   }
 
-  goTo = (finalPos, duration, lookAtEnd) => {
+  goTo = (finalPos, duration, rotation) => {
     const tl = gsap.timeline();
 
     //Play Anim Walk
@@ -43,6 +43,7 @@ export default class Milo {
 
     tl.to(this.model.position, {
       x: finalPos.x,
+      y: finalPos.y,
       z: finalPos.z,
       delay: 0.2,
       duration: duration,
@@ -61,11 +62,11 @@ export default class Milo {
       duration - 0.2
     );
 
-    if (lookAtEnd) {
+    if (rotation) {
       tl.to(
         this.model.rotation,
         {
-          y: -Math.PI / 2,
+          y: rotation,
           duration: 1,
           ease: "linear",
         },

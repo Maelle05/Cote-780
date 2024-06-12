@@ -42,9 +42,9 @@ class Bridge extends Scene {
 
     this.PARAMS = {
       posPerso: {
-        x: 0,
+        x: 0.67,
         y: 0,
-        z: 0,
+        z: 2.19,
       },
       targetProgress: 0,
       targetNoise: 2,
@@ -105,15 +105,20 @@ class Bridge extends Scene {
     this.minSpeed = 0.01;
     this.elapsedTime = 0;
     this.interval = 1000;
+    this.isAnimating = false;
 
     this.milo = new Milo();
     this.player = this.milo.model;
-    this.player.position.set(this.center.x, this.center.y, this.center.z);
-    // this.player.scale.set(0.1, 0.1, 0.1);
-    this.player.rotation.y = Math.PI - 45;
-    this.player.anims.idle();
-
+    this.player.position.set(-0.88, 0.15, 2.81);
+    // this.player.rotation.y = Math.PI - 45;
+    const walkDuration = 3;
+    this.player.goTo(this.center, walkDuration);
     this.add(this.player);
+
+    //End of the walk & Start Tuto
+    setTimeout(() => {
+      this.#start();
+    }, walkDuration * 1000);
 
     app.audio.playMusic(MUSIC_IDS.AMBIENT_FOREST);
   }
@@ -179,7 +184,8 @@ class Bridge extends Scene {
       }
     });
 
-    this.rocks[0].material.uniforms.uProgress.value = 1;
+    this.currentRock = this.rocks[0];
+    this.currentRock.material.uniforms.uProgress.value = 1;
 
     this.spirit = new Spirit();
     this.spirit.hide();
@@ -190,7 +196,7 @@ class Bridge extends Scene {
       500,
       new Vector3(
         this.rocks[0].position.x,
-        this.rocks[0].position.y + 0.2,
+        this.rocks[0].position.y,
         this.rocks[0].position.z
       ),
       0.02,
@@ -202,20 +208,9 @@ class Bridge extends Scene {
     );
     this.add(this.target);
 
-    this.cairn = new Cairn();
-    this.cairn.position.set(
-      this.rocks.at(-1).position.x,
-      this.rocks[0].position.y + 0.2,
-      this.rocks.at(-1).position.z
-    );
-
-    this.add(this.cairn);
-
     this.radius = this.center.distanceTo(this.rocks[0].position);
 
-    this.radius = this.center.distanceTo(this.rocks[0].position);
-
-    this.anim = new CamAnim(4, this.bridge, [0, 0.25, 0.50, 0.75, 1, 1]);
+    this.anim = new CamAnim(4, this.bridge, [0, 0.25, 0.5, 0.75, 1, 1]);
     // this.anim.onChangeSceneStep(2);
 
     if (!this.anim) {
@@ -226,9 +221,6 @@ class Bridge extends Scene {
     }
 
     if (app.webgl.currentScene === 4) this.init();
-    setTimeout(() => {
-      this.#start();
-    }, 1000);
   }
 
   onTick(e) {
@@ -252,8 +244,17 @@ class Bridge extends Scene {
 
       this.elapsedTime = 0;
     }
-    // if (this.anim.currentKeyfame != 2) return;
-    if (this.state == "off") return;
+
+    if (this.anim && this.anim.currentKeyfame != 2) return;
+    if (
+      this.spirit &&
+      this.spirit.position.distanceTo(this.currentRock.position) < 0.3
+    ) {
+      //TODO : Change Color
+    } else if (this.spirit) {
+      //TODO : Change Color
+    }
+
     let normalizedAngle = this.angle / (Math.PI / 2);
 
     // Calculate easing based on the current angle's distance from the center
@@ -292,74 +293,111 @@ class Bridge extends Scene {
   }
 
   onPointerDown() {
-    if (app.webgl.currentScene != 4 || this.state == "off") return;
+    if (app.webgl.currentScene != 4 && this.anim.currentKeyfame != 2) return;
+    if (this.isAnimating === true) return;
 
     this.currentRock = this.rocks[this.rockIndex];
     this.nextRock = this.rocks[this.rockIndex + 1];
 
     if (!this.currentRock) return;
-    if (this.spirit.position.distanceTo(this.target.position) > 0.2) return;
+    if (this.spirit.position.distanceTo(this.currentRock.position) > 0.3)
+      return;
 
     const targetAnimDuration = 3;
+    const jumpDelay = targetAnimDuration - 0.5;
+    const tl = gsap.timeline();
 
     //Particle animation
     this.spirit.hide();
     this.target.next(targetAnimDuration);
-    // this.player.anims.jump();
+
+    const dummy = { progress: 0 };
 
     //Milo Jump
-    gsap.to(this.center, {
-      x: this.currentRock.position.x,
-      y: this.currentRock.position.y,
-      z: this.currentRock.position.z,
-      duration: 1,
-      delay: targetAnimDuration,
-      ease: "power1.out",
-      onUpdate: () => {
-        this.player.position.set(
-          this.center.x,
-          this.center.y + 0.03,
-          this.center.z
-        );
-      },
-      onStart: () => this.player.anims.jump(),
-      onComplete: () => {
-        if (this.rockIndex + 1 == this.rocks.length) {
-          this.state = "completed";
-        } else {
-          this.radius = this.currentRock.position.distanceTo(
-            this.nextRock.position
-          );
-          this.rockIndex++;
-          this.spirit.show();
-          this.target.position.set(
-            this.nextRock.position.x,
-            this.nextRock.position.y + 0.2,
-            this.nextRock.position.z
-          );
+    tl.to(
+      dummy,
+      {
+        progress: 1,
+        duration: 1,
+        delay: jumpDelay,
+        onUpdate: () => {
+          const maxYOffset = 0.15;
 
+          const peak = 0.4;
+          const scale = 4 / (1 - peak);
+
+          const yOffset =
+            maxYOffset *
+            Math.max(
+              0,
+              -scale * (dummy.progress - peak) * (dummy.progress - peak) +
+                scale * peak * peak
+            );
+
+          this.player.position.set(
+            this.center.x,
+            this.center.y + yOffset + 0.03,
+            this.center.z
+          );
+        },
+      },
+      0
+    );
+
+    tl.to(
+      this.center,
+      {
+        x: this.currentRock.position.x,
+        y: this.currentRock.position.y,
+        z: this.currentRock.position.z,
+        duration: 1,
+        delay: jumpDelay,
+        ease: "power2.out",
+        onComplete: () => {
           this.player.anims.idle();
 
-          if (!this.rocks[this.rockIndex + 1]) return;
+          if (this.rockIndex + 1 == this.rocks.length) {
+            this.state = "completed";
+            //TODO : PLAY NEXT STEP
+            this.#endInteraction();
+          } else {
+            this.isAnimating = false;
 
-          const nextRockPos = new Vector3(
-            this.rocks[this.rockIndex + 1].position.x,
-            this.rocks[this.rockIndex + 1].position.y + 0.2,
-            this.rocks[this.rockIndex + 1].position.z
-          );
+            this.radius = this.currentRock.position.distanceTo(
+              this.nextRock.position
+            );
+            this.rockIndex++;
+            this.spirit.show();
+            this.target.position.set(
+              this.nextRock.position.x,
+              this.nextRock.position.y,
+              this.nextRock.position.z
+            );
 
-          this.target.calculatePos(this.nextRock.position, nextRockPos);
+            if (!this.rocks[this.rockIndex + 1]) return;
 
-          // this.target.show(
-          //   new Vector3(
-          //     this.nextRock.position.x,
-          //     this.nextRock.position.y + 0.2,
-          //     this.nextRock.position.z
-          //   )
-          // );
-        }
+            const nextRockPos = new Vector3(
+              this.rocks[this.rockIndex + 1].position.x,
+              this.rocks[this.rockIndex + 1].position.y,
+              this.rocks[this.rockIndex + 1].position.z
+            );
+
+            this.target.calculatePos(this.nextRock.position, nextRockPos);
+          }
+        },
       },
-    });
+      0
+    );
+
+    tl.call(
+      () => {
+        this.player.anims.jump();
+      },
+      [],
+      jumpDelay - 0.7
+    );
+
+    this.isAnimating = true;
 
     if (!this.nextRock) {
       state.emit(EVENTS.VIEW_COLLECTION_CAIRNS, 4);
@@ -373,8 +411,10 @@ class Bridge extends Scene {
       duration: 1,
     });
 
-    if (this.rockIndex === 0) app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0]);
-    else if (this.rockIndex === 2) app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0]);
+    if (this.rockIndex === 0)
+      app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0]);
+    else if (this.rockIndex === 2)
+      app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0]);
   }
 
   #off() {}
@@ -386,15 +426,13 @@ class Bridge extends Scene {
 
     //launch spirit
     this.spirit.show();
+  }
 
-    //launch Particles
-    // this.target.show(
-    //   new Vector3(
-    //     this.rocks[0].position.x,
-    //     this.rocks[0].position.y + 0.2,
-    //     this.rocks[0].position.z
-    //   )
-    // );
+  #endInteraction() {
+    console.log("TODO : END INTERACTION");
+    //Milo gain the cairn
+    //Milo rotation look at Durance
+    //Durance Apparition
   }
 
   #getRandomOffset(value, interval) {
