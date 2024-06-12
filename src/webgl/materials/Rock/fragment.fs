@@ -63,7 +63,7 @@ void main() {
 	if(vPosition.y < edge0) {
 		gl_FragColor = vec4(0.44, 0.44, 0.44, 1.0);
 	} else if(vPosition.y < edge1) {
-		gl_FragColor = vec4(0.0, 1.0, 0.35, 1.0);
+		gl_FragColor = vec4(0.62, 0.39, 0.19, 1.0);
 	} else {
 		discard;
 	}
