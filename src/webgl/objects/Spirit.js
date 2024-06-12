@@ -103,7 +103,6 @@ export default class Spirit extends Group {
   }
 
   show() {
-    console.log("show");
     gsap.to(
       [
         this.body.material.uniforms.u_gOpacity,
