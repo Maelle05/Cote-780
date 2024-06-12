@@ -9,6 +9,7 @@ import CollectionCairns from "../components/CollectionCairns.vue"
 import InteractionTutorial from "../components/InteractionTutorial.vue"
 import Dialogues from "../components/Dialogues.vue"
 import Navigation from "../components/Navigation.vue"
+import Credits from "../components/Credits.vue"
 
 const props = defineProps({
   sceneIndex: Number,
@@ -42,6 +43,14 @@ const isCollectionCairnsVisible = () => {
 
   return false
 }
+
+const areCreditsVisible = () => {
+  if (props.sceneIndex === 7 && props.stepIndex === 4) {
+    return true
+  }
+
+  return false
+}
 </script>
 
 <template>
@@ -56,6 +65,7 @@ const isCollectionCairnsVisible = () => {
   />
   <Dialogues :sceneIndex="props.sceneIndex" />
   <Navigation :sceneIndex="props.sceneIndex"></Navigation>
+  <Credits :isVisible="areCreditsVisible()"></Credits>
 </template>
 
 <style scoped lang="scss"></style>

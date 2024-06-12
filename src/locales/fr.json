@@ -16,7 +16,7 @@
     "new-cairn_3": "cairn"
   },
   "intro": {
-    "text_1": "",
+    "text_1": "Ce conte vous plonge au cœur des Hautes-Alpes, dans la vallée de la Durance.",
     "text_2": "Un barrage y fut construit à la fin des années 1950 pour apaiser les colères de l’imposante rivière qui donne son nom à la vallée. Cet événement bouleversa de nombreuses vies dans la région, et trois villages furent engloutis sous les eaux.",
     "text_3": "Ce fut la naissance du Lac de Serre-Ponçon.",
     "start": "Démarrer l'expérience"
@@ -95,7 +95,7 @@
       "audio": "demoiselles_6"
     },
     "tuto": "Révèle les coiffes des demoiselles à l'aide de ton curseur",
-    "infos": "En savoir plus demoiselles coiffées",
+    "infos": "Entre Pontis et Le Sauze-du-Lac, se dressent de curieuses colonnes rocheuses couronnées de blocs de pierres. On les surnomme les « Demoiselles coiffées ».",
     "alt": "Les Demoiselles coiffées",
     "url": "https://www.serreponcon.com/patrimoine-naturel/demoiselles-coiffees-pontis/"
   },
@@ -119,7 +119,7 @@
       "audio": "esprit_1"
     },
     "tuto": "Clique sur l’esprit pour dégager le barrage",
-    "infos": "En savoir plus barrage",
+    "infos": "Le barrage de Serre-Ponçon, construit à partir de matériaux extraits du lit de la Durance entre 1955 et 1960, nécessita le déplacement des habitants et la destruction des villages de Savines et d’Ubaye. C’est une digue en terre compactée dont le noyau central est en argile étanche.",
     "alt": "Le Barrage",
     "url": "https://www.serreponcon.com/patrimoine-culturel/barrage-de-serre-poncon-rousset/"
   },
@@ -133,7 +133,7 @@
       "audio": "durance_2"
     },
     "tuto": "Clique au bon moment pour aider Milo à avancer",
-    "infos": "En savoir plus pont",
+    "infos": "Le pont de Chanteloube a été construit dans le cadre du projet de construction d'une ligne de chemin de fer qui devait relier Grenoble à Bercelonnette. Amorcée en 1910, sa réalisation fut finalement interrompue en 1934 au profit de la ligne Veynes-Briançon.",
     "alt": "Le Pont de Chanteloube",
     "url": "https://www.serreponcon.com/patrimoine-culturel/viaduc-de-chanteloube-chorges/"
   },
@@ -153,7 +153,7 @@
       "audio": "esprit_3"
     },
     "tuto": "Clique sur les torches pour les allumer et pénétrer dans la chapelle",
-    "infos": "En savoir plus chapelle",
+    "infos": "La destruction de la chapelle était prévue pour permettre la construction du barrage de Serre-Ponçon, mais elle fut finalement sauvegardée gâce à son altitude légèrement supérieure à la cote maximale théorique du futur lac. Désormais, la chapelle trône seule sur un îlot de quelques dizaines de mètres carrés au-dessus du niveau du lac.",
     "alt": "La Chapelle Saint-Michel",
     "url": "https://www.serreponcon.com/patrimoine-culturel/chapelle-saint-michel-prunieres/"
   },
@@ -185,50 +185,50 @@
       "audio": "esprit_7"
     },
     "text_5": {
-      "person": "DATE : 00/00/1954",
-      "text": "L’état vient de lancer la construction d’un barrage pour maîtriser l’indomptable Durance… Ils racontent qu’ils veulent engloutir la vallée jusqu’à la cote 780 ! C’est absurde !",
+      "person": "Journal",
+      "text": "xx xx 1954. L’état vient de lancer la construction d’un barrage pour maîtriser l’indomptable Durance… Ils racontent qu’ils veulent engloutir la vallée jusqu’à la cote 780 ! C’est absurde !",
       "camera": "4",
       "audio": "grandma_13"
     },
     "text_6": {
-      "person": "DATE : 00/00/1956",
-      "text": "L’autre soir, la Durance a bien failli mettre fin au chantier ! Elle s’est rebellée contre ceux qui essayent de la contrôler. Malheureusement… il sont bien décidés, ça n’a pas eu beaucoup d’effets hormis retarder le chantier.",
+      "person": "Journal",
+      "text": "xx xx 1956. L’autre soir, la Durance a bien failli mettre fin au chantier ! Elle s’est rebellée contre ceux qui essayent de la contrôler. Malheureusement… il sont bien décidés, ça n’a pas eu beaucoup d’effets hormis retarder le chantier.",
       "camera": "4",
       "audio": "grandma_14"
     },
     "text_7": {
-      "person": "DATE : 00/00/1956",
-      "text": "Toutes les habitations vont être dynamitées il paraît/ paraît-il… ils vont même déplacer le cimetière…",
+      "person": "Journal",
+      "text": "xx xx 1956. Toutes les habitations vont être dynamitées il paraît… ils vont même déplacer le cimetière…",
       "camera": "4",
       "audio": "grandma_15"
     },
     "text_8": {
-      "person": "DATE : 00/00/1957",
-      "text": "… Au début, personne ne croyait à ce barrage. Même lorsque la construction a été lancée, on se disait qu’il ne verrait jamais le jour. Maintenant que les gens commencent à quitter le village, tout devient réel…",
+      "person": "Journal",
+      "text": "xx xx 1957. …Au début, personne ne croyait à ce barrage. Même lorsque la construction a été lancée, on se disait qu’il ne verrait jamais le jour. Maintenant que les gens commencent à quitter le village, tout devient réel…",
       "camera": "5",
       "audio": "grandma_16"
     },
     "text_9": {
-      "person": "DATE : 00/00/1955",
-      "text": "Aujourd’hui j’ai eu la visite d’EDF au sujet du barrage. Ils m’ont proposé un logement et de l’argent… beaucoup... pour m'installer dans le nouveau village… Mais comment vivre, avec nos souvenirs engloutis sous les yeux ?",
+      "person": "Journal",
+      "text": "xx xx 1955. Aujourd’hui j’ai eu la visite d’EDF au sujet du barrage. Ils m’ont proposé un logement et de l’argent… beaucoup... pour m'installer dans le nouveau village… Mais comment vivre, avec nos souvenirs engloutis sous les yeux ?",
       "camera": "5",
       "audio": "grandma_17"
     },
     "text_10": {
-      "person": "DATE : 00/00/1957",
-      "text": "… Ils ont commencé à reconstruire le village au-dessus de la cote 780… et je suis bien triste de devoir quitter mon Hôtel. Mais comme les autres, je crois que j’ai fini par m’y résoudre.",
+      "person": "Journal",
+      "text": "xx xx 1957. …Ils ont commencé à reconstruire le village au-dessus de la cote 780… et je suis bien triste de devoir quitter mon Hôtel. Mais comme les autres, je crois que j’ai fini par m’y résoudre.",
       "camera": "5",
       "audio": "grandma_18"
     },
     "text_11": {
-      "person": "DATE : 00/00/1957",
+      "person": "Journal",
       "text": "Mon voisin, lui, ne bougera jamais. Il me raconte comment, pendant la nuit, il va gêner et démolir le chantier.",
       "camera": "5",
       "audio": "grandma_19"
     },
     "tuto": "Clique sur l'esprit pour le suivre dans le village",
     "infos": "En savoir plus village",
-    "alt": "Le village de Savines",
+    "alt": "Ce petit village, situé au cœur de la vallée de la Durance, a été détruit avant d'être englouti lors de la mise en eau du barrage de Serre-Ponçon en 1961, de même que le village d’Ubaye et quelques autres hameaux.",
     "url": "https://www.serreponcon.com/notre-lac/"
   },
   "scene_7": {
@@ -264,5 +264,14 @@
       "audio": "esprit_12"
     },
     "infos": "En savoir plus fin ?"
+  },
+  "credits": {
+    "line_1": "Cette expérience réalisée dans le cadre de notre projet de diplôme de DMII&nbsp;2 à&nbsp;Gobelins s'inspire de l'histoire du lac de Serre-Ponçon, dans les Hautes-Alpes.",
+    "role_1": "Design et développement",
+    "name_1": "Elsa Delmas,Léa Kovarski,Evan Martin,Justin Quillévéré,Maëlle Rabouan, Aurore Vigneron,Anna Xiberras",
+    "role_2": "Voix",
+    "name_2": "xx,xx,xx,xx,xx",
+    "role_3": "Merci à",
+    "name_3": "xx,xx,xx,xx,xx"
   }
 }
