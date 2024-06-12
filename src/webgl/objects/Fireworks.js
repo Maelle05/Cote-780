@@ -14,9 +14,12 @@ import { Group } from "three";
 import gsap from "gsap";
 import { state } from "@/utils/State";
 import { Color } from "three";
+import { CustomEase } from "gsap/CustomEase";
 
 export default class Fireworks {
   constructor(positions) {
+    gsap.registerPlugin(CustomEase);
+
     state.register(this);
     const explosionCount = 6;
     this.launchers = [];
@@ -54,9 +57,8 @@ export default class Fireworks {
       clonedLaunchers: this.clonedLaunchers,
       play: this.play,
       getRandom: this.getRandom,
+      start: this.startFirework,
     };
-
-    this.resolution = new Vector2(app.viewport.width, app.viewport.height);
   }
 
   #createMesh() {
@@ -70,7 +72,7 @@ export default class Fireworks {
     });
 
     const mesh = new Mesh(geometry, material);
-    mesh.scale.set(0.02, 0.02, 0.02);
+    mesh.scale.set(0.05, 0.2, 0.05);
 
     return mesh;
   }
@@ -99,13 +101,24 @@ export default class Fireworks {
     explosion.material.uniforms.uColor.value = new Color(
       ...this.getRandomColor()
     );
+
+    const tl = gsap.timeline();
+
     // console.log(explosion.material.uniforms);
     //Anim the launcher
-    gsap.to(launcher.position, {
+    tl.to(launcher.position, {
       y: `${randomY}`,
       duration: 1,
+      ease: CustomEase.create(
+        "custom",
+        "M0,0 C0.126,0.382 0.282,0.674 0.44,0.822 0.632,1.002 0.81,1.048 1,0.971 "
+      ),
+      onUpdate: () => {
+        launcher.material.uniforms.uProgress.value = tl.progress();
+      },
       onComplete: () => {
         //When launcher finished play explosion
+        explosion.visible = true;
         explosion.position.copy(launcher.position);
         explosion.lookAt(app.webgl.camera.position);
         explosion.spritesheet.playing = true;
@@ -156,6 +169,7 @@ export default class Fireworks {
 
   onFireworksAnimStop(e) {
     const explosion = this.explosions.filter((exp) => exp.textureID == e)[0];
+    explosion.visible = false;
     this.clonedExplosions.push(explosion);
   }
 

@@ -23,12 +23,12 @@ class End extends Scene {
     state.register(this);
 
     this.allPos = [
-      { x: -10, y: 0.01, z: 6 },
-      { x: -15, y: 0.01, z: 3 },
-      { x: -9, y: 0.01, z: -3 },
-      { x: -8, y: 0.01, z: 3 },
-      { x: -12, y: 0.01, z: 0 },
-      { x: -11, y: 0.01, z: 3 },
+      { x: -10, y: -0.01, z: 6 },
+      { x: -15, y: -0.01, z: 3 },
+      { x: -9, y: -0.01, z: -3 },
+      { x: -8, y: -0.01, z: 3 },
+      { x: -12, y: -0.01, z: 0 },
+      { x: -11, y: -0.01, z: 3 },
     ];
 
     this.PARAMS = {
@@ -98,6 +98,7 @@ class End extends Scene {
     this.add(this.end, this.ambient);
 
     this.anim = new CamAnim(7, this.end, [0, 0, 0.33, 0.66, 1]);
+    // this.anim.onChangeSceneStep(3);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -109,30 +110,35 @@ class End extends Scene {
     if (app.webgl.currentScene === 7) this.init();
   }
 
-  initAnimPorte(){
-    this.allAnimCairn = this.end.animations.filter(el => el.name.includes('Cube.'))
-    this.allMixerCairn = []
-    this.allActionCairn = []
-    this.currentProgressCairn = 0
-    
-    this.allAnimCairn.forEach(cairnAnim => {
-      const mixer = new AnimationMixer(this.end)
-      const action = mixer.clipAction(cairnAnim)
-      action.play()
+  initAnimPorte() {
+    this.allAnimCairn = this.end.animations.filter((el) =>
+      el.name.includes("Cube.")
+    );
+    this.allMixerCairn = [];
+    this.allActionCairn = [];
+    this.currentProgressCairn = 0;
+
+    this.allAnimCairn.forEach((cairnAnim) => {
+      const mixer = new AnimationMixer(this.end);
+      const action = mixer.clipAction(cairnAnim);
+      action.play();
       action.paused = true;
 
-      this.allMixerCairn.push(mixer)
-      this.allActionCairn.push(action)
+      this.allMixerCairn.push(mixer);
+      this.allActionCairn.push(action);
     });
   }
 
   onTick() {
-    if(app.sceneshandler.currentScene != 7) return
+    if (app.sceneshandler.currentScene != 7) return;
 
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
 
-    if(this.allAnimCairn.length == this.allActionCairn.length && app.sceneshandler.currentStepCam == 1) {
+    if (
+      this.allAnimCairn.length == this.allActionCairn.length &&
+      app.sceneshandler.currentStepCam == 1
+    ) {
       this.currentProgressCairn = MathUtils.lerp(
         this.currentProgressCairn,
         1,
@@ -145,7 +151,7 @@ class End extends Scene {
           this.allAnimCairn[i].duration * this.currentProgressCairn
         );
         action.paused = true;
-        this.allMixerCairn[i].update(app.ticker.delta)
+        this.allMixerCairn[i].update(app.ticker.delta);
       });
 
       if (this.currentProgressCairn > 0.98) {
@@ -157,11 +163,18 @@ class End extends Scene {
   onUpdateDialogue(step) {
     if (!step || !step.audio) return;
 
-    if (step.audio === "esprit_8") app.audio.layers.playVolumes([0, 0, 0, 0.7, 0.7, 0, 0, 0.7, 0, 0.7, 0.7]);
-    else if (step.audio === "esprit_9") app.audio.layers.playVolumes([0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7]);
-    else if (step.audio === "esprit_10") app.audio.layers.playVolumes([0, 0, 0, 0.7, 0.7, 0, 0, 0.7, 0, 0.7, 1]);
-    else if (step.audio === "esprit_11") app.audio.layers.playVolumes([0, 0, 0, 0.7, 0.7, 0, 0, 0, 0, 0, 0]);
-    else if (step.audio === "esprit_12") app.audio.layers.playVolumes([0, 0, 0, 0, 0.7, 0, 0, 0, 0, 0, 0]);
+    if (step.audio === "esprit_8")
+      app.audio.layers.playVolumes([0, 0, 0, 0.7, 0.7, 0, 0, 0.7, 0, 0.7, 0.7]);
+    else if (step.audio === "esprit_9")
+      app.audio.layers.playVolumes([
+        0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7,
+      ]);
+    else if (step.audio === "esprit_10")
+      app.audio.layers.playVolumes([0, 0, 0, 0.7, 0.7, 0, 0, 0.7, 0, 0.7, 1]);
+    else if (step.audio === "esprit_11")
+      app.audio.layers.playVolumes([0, 0, 0, 0.7, 0.7, 0, 0, 0, 0, 0, 0]);
+    else if (step.audio === "esprit_12")
+      app.audio.layers.playVolumes([0, 0, 0, 0, 0.7, 0, 0, 0, 0, 0, 0]);
   }
 
   clear() {
