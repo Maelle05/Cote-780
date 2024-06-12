@@ -75,6 +75,7 @@ class Chapel extends Scene {
 
     this.milo = new Milo();
     this.player = this.milo.model;
+    // this.player.rotation.y = 0;
     this.player.position.set(-0.33, 1.05, 0.55);
     this.add(this.player);
 
@@ -235,7 +236,7 @@ class Chapel extends Scene {
           flame.show();
           this.spiritStand(flame);
 
-          if (this.index == this.torchs.length) {
+          if (this.index == this.torchs.length - 4) {
             this.isAnimating = true;
             //TODO : PLAY THE CAIRN ANIMATION THEN CREATE PORTAL
             this.createPortal();

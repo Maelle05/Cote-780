@@ -34,6 +34,7 @@ import { WaterMaterial } from "../materials/Water/material";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { ShakiraMaterial } from "../materials/Shakira/material";
 import { Vector2 } from "three";
+import { Vector4 } from "three";
 
 class Bridge extends Scene {
   constructor() {
@@ -211,7 +212,7 @@ class Bridge extends Scene {
     this.radius = this.center.distanceTo(this.rocks[0].position);
 
     this.anim = new CamAnim(4, this.bridge, [0, 0.25, 0.5, 0.75, 1, 1]);
-    // this.anim.onChangeSceneStep(2);
+    this.anim.onChangeSceneStep(2);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -246,14 +247,6 @@ class Bridge extends Scene {
     }
 
     if (this.anim && this.anim.currentKeyfame != 2) return;
-    if (
-      this.spirit &&
-      this.spirit.position.distanceTo(this.currentRock.position) < 0.3
-    ) {
-      //TODO : Change Color
-    } else if (this.spirit) {
-      //TODO : Change Color
-    }
 
     let normalizedAngle = this.angle / (Math.PI / 2);
 
@@ -285,10 +278,12 @@ class Bridge extends Scene {
 
     this.spirit.position.set(this.x, this.rocks[0].position.y + 0.2, this.z);
 
-    if (this.spirit.position.distanceTo(this.target.position) < 0.15) {
-      // this.spirit.material.color = new Color("red");
+    if (
+      this.spirit.position.distanceTo(this.rocks[this.rockIndex].position) < 0.3
+    ) {
+      this.spirit.targetSpiritColor = new Vector4(255, 0, 0, 1);
     } else {
-      // this.spirit.material.color = new Color("white");
+      this.spirit.targetSpiritColor = new Vector4(255, 255, 255, 1);
     }
   }
 
@@ -318,7 +313,7 @@ class Bridge extends Scene {
       dummy,
       {
         progress: 1,
-        duration: 1,
+        duration: 1.2,
         delay: jumpDelay,
         onUpdate: () => {
           const maxYOffset = 0.15;
