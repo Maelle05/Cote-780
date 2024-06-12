@@ -1,4 +1,5 @@
 <script setup>
+import Navigation from "./UI/components/Navigation.vue";
 import BtnChangeScene from "./UI/components/BtnChangeScene.vue";
 import Intro from "./UI/views/Intro.vue";
 import Scenes from "./UI/views/Scenes.vue";
@@ -43,6 +44,7 @@ state.on(EVENTS.CHANGE_SCENE_STEP, (e) => {
     <div>
       <img class="logo" src="/assets/images/logo.svg" />
     </div>
+    <Navigation :sceneIndex="sceneIndex"></Navigation>
     <Intro v-if="isIntro" />
     <Scenes v-if="isScenes" :sceneIndex="sceneIndex" :stepIndex="stepIndex" />
     <BtnChangeScene />
@@ -56,6 +58,8 @@ main {
     width: 70px;
     top: 10px;
     left: 15px;
+    user-select: none;
+    z-index: 1;
   }
 }
 </style>

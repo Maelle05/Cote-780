@@ -7,8 +7,6 @@ import { gsap } from "gsap/gsap-core";
 import { ref, onMounted } from 'vue'
 
 import ChapterTitle from "./ChapterTitle.vue";
-import ChapterIcon from "./ChapterIcon.vue";
-import ChapterFrise from "./ChapterFrise.vue";
 
 const { t } = useI18n()
 
@@ -46,12 +44,10 @@ state.on(EVENTS.CHANGE_SCENE, (e) => {
 
 <template lang="">
   <div ref='container' class='welcome-scene-container' v-if='props.sceneIndex != 1'>
-    <!-- <ChapterIcon :sceneIndex="props.sceneIndex"></ChapterIcon> -->
     <div class='welcome-scene-container__chapter' >
       {{ t("global.chapter") }} {{props.sceneIndex - 1}}
     </div>
     <ChapterTitle :sceneIndex="props.sceneIndex"></ChapterTitle>
-    <ChapterFrise :sceneIndex="props.sceneIndex"></ChapterFrise>
   </div>
 </template>
 

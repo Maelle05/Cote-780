@@ -1,0 +1,94 @@
+<script setup>
+import { EVENTS } from "../../utils/constants/events"
+import { state } from "../../utils/State"
+
+import gsap from "gsap"
+
+const props = defineProps({
+  sceneIndex: Number,
+  cairnsNumber: Number,
+})
+
+const playEndAnimation = () => {
+  console.log("CairnsCollection.vue - end anim!")
+}
+
+const playCollectAnimation = () => {
+  const collectTimeline = gsap.timeline()
+  collectTimeline.fromTo(`.cairns-collection__element--${props.cairnsNumber}`, { opacity: 0, filter: "drop-shadow(0 0 0 #fff)" }, {opacity: 1, filter: "drop-shadow(0 0 12px #fff)", duration: 0.5})
+}
+
+state.on(EVENTS.COLLECT_CAIRN, (e) => {
+  playCollectAnimation()
+})
+</script>
+
+<template lang="">
+  <div class="cairns-collection__container">
+    <div class="cairns-collection">
+      <div
+        :class="`cairns-collection__element cairns-collection__element--${index + 1} cairns-collection__element--${
+          index + 1 <= cairnsNumber ? 'collected' : 'uncollected'
+        }`"
+        v-for="(cairn, index) in [2, 3, 4, 5, 6]"
+      >
+        <img :src="`/assets/images/cairns/${cairn}.svg`">
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped lang="scss">
+.cairns-collection__container {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  left: 0;
+  top: 0;
+  padding-top: 18px;
+  box-sizing: border-box;
+  display: grid;
+  align-items: start;
+  justify-content: center;
+  user-select: none;
+  pointer-events: none;
+  transition: opacity 1200ms;
+
+  &.cairns-collection__container--hidden {
+    opacity: 0;
+  }
+}
+
+.cairns-collection {
+  display: flex;
+  gap: 12px;
+}
+
+.cairns-collection__element {
+  --cairn-padding: 4px;
+  opacity: 0.2;
+  width: 56px;
+  height: 56px;
+  // background: var(--c-turquoise-dark);
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  padding: var(--cairn-padding);
+  box-sizing: border-box;
+  border-radius: 6px;
+  filter: drop-shadow(0 0 0 #fff);
+  transition: opacity 600ms, filter 600ms;
+
+  // &:nth-child(1),
+  // &.cairns-collection__element--collected {
+    // opacity: 1;
+    // filter: drop-shadow(0 0 12px #fff);
+  // }
+
+  img {
+    max-width: 100%;
+    max-height: calc(100% - var(--cairn-padding) * 2);
+  }
+}
+</style>
