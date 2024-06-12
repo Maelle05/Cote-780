@@ -30,7 +30,7 @@ void main() {
   noiseUv *= 2.;
   vec2 uv2 = vec2(noiseUv.x, noiseUv.y - u_time * 0.2);
   vec4 noise2 = texture2D(u_noise, uv2);
-  vec4 noiseTex = smoothstep( 0.2, 0.3, noise2 * noise1);
+  vec4 noiseTex = smoothstep( 0.1, 0.3, noise2 * noise1);
   noiseTex.w = noiseTex.x;
 
   // Texture
