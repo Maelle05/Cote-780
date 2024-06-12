@@ -54,9 +54,9 @@
     "title_1": "Coiffées",
     "text_1": {
       "person": "Milo",
-      "text": "Bonjour, je suis Milo. Ma grand-mère m’a dit de venir vous voir. Pourquoi êtes-vous tristes ?",
+      "text": "Bonjour, je suis Milo. Ma grand-mère m’a dit de venir vous voir. Mais pourquoi vous êtes tristes ?",
       "camera": "0",
-      "audio": "1"
+      "audio": "milo_1"
     },
     "text_2": {
       "person": "Demoiselles",
@@ -95,7 +95,7 @@
       "audio": "demoiselles_6"
     },
     "tuto": "Révèle les coiffes des demoiselles à l'aide de ton curseur",
-    "infos": "Entre Pontis et Le Sauze-du-Lac, se dressent de curieuses colonnes rocheuses couronnées de blocs de pierres. On les surnomme les « Demoiselles coiffées ».",
+    "infos": "Entre Pontis et Le Sauze-du-Lac se dressent de curieuses colonnes rocheuses couronnées de blocs de pierres. On les surnomme les « Demoiselles coiffées ».",
     "alt": "Les Demoiselles coiffées",
     "url": "https://www.serreponcon.com/patrimoine-naturel/demoiselles-coiffees-pontis/"
   },
@@ -104,7 +104,8 @@
     "text_1": {
       "person": "Milo",
       "text": "Mais qu’est-ce que c’est ?",
-      "camera": "1"
+      "camera": "1",
+      "audio": "milo_2"
     },
     "text_2": {
       "person": "Durance",
@@ -262,8 +263,7 @@
       "text": "Entre paysage montagneux et riche végétation, ce projet titanesque offre aujourd’hui, avec son vaste lac, de nouvelles perspectives pour la région. Pour la plus grande joie des vacanciers et amoureux de la nature !",
       "camera": "3",
       "audio": "esprit_12"
-    },
-    "infos": "En savoir plus fin ?"
+    }
   },
   "credits": {
     "line_1": "Cette expérience réalisée dans le cadre de notre projet de diplôme de DMII&nbsp;2 à&nbsp;Gobelins s'inspire de l'histoire du lac de Serre-Ponçon, dans les Hautes-Alpes.",
