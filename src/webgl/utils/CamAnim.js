@@ -17,10 +17,13 @@ export class CamAnim {
     this.keyframes = keyframes
     this.currentKeyfame = 0
 
-    this.pos = new Vector3(0, 0, 0);
     this.posTarget = new Vector3(0, 0, 0);
+    this.orbitEuler = new Euler(0, 0, 0, 'YXZ');
+    this.orbitEulerTarget = {
+      x: this.orbitEuler.x,
+      y: this.orbitEuler.y,
+    };
     this.rotTarget = new Euler(0, 0, 0, 'YXZ');
-    this.cursorOffset = new Vector2(0, 0);
     this.currentProgressAnim = 0;
     this.targetProgressAnim = 0;
 
@@ -61,23 +64,41 @@ export class CamAnim {
     this.animationMixer.update(app.ticker.delta);
 
     // Set position
-    // this.pos.copy(this.refCam.position)
     this.posTarget.copy(this.refCam.position)
-    // this.posTarget.x -= this.cursorOffset.x * 0.1;
-    // this.posTarget.y += this.cursorOffset.y * 0.1;
-    // this.pos.lerp(this.posTarget, 0.8 );
-    // console.log(this.pos, this.posResult);
     app.webgl.camera.position.copy(this.posTarget)
 
     // Set rotation
-    this.rotTarget.copy(this.refCam.rotation);
-    app.webgl.camera.setRotationFromEuler(this.rotTarget);
+    // this.rotTarget.copy(this.refCam.rotation);
+    // app.webgl.camera.setRotationFromEuler(this.rotTarget);
+
+    // smooth orbit
+    // this.orbitEuler.y = MathUtils.lerp(
+    //   this.orbitEuler.y,
+    //   this.orbitEulerTarget.y,
+    //   0.1
+    // );
+    // this.orbitEuler.x = MathUtils.lerp(
+    //   this.orbitEuler.x,
+    //   this.orbitEulerTarget.x,
+    //   0.1
+    // );
+    // anim rot + orbit rot
+    this.rotTarget.copy(this.refCam.rotation)
+    const rotResult = this.sumTowEuler(this.rotTarget, this.orbitEuler);
+
+    app.webgl.camera.rotation.order = 'YXZ';
+    app.webgl.camera.setRotationFromEuler(rotResult);
+
   }
 
   onPointerMove(e){
     if(app.webgl.currentScene != this.idScene) return;
-    this.cursorOffset.x = e.webgl.x;
-    this.cursorOffset.y = e.webgl.y;
+    const rotationSpeed = 0.01;
+    this.orbitEuler.y = MathUtils.lerp(this.orbitEuler.y,  - e.webgl.x * rotationSpeed, 0.1);
+    this.orbitEuler.x = MathUtils.lerp(this.orbitEuler.x, e.webgl.y * rotationSpeed, 0.1);
+
+    this.orbitEulerTarget.x = this.orbitEuler.x;
+    this.orbitEulerTarget.y = this.orbitEuler.y;
   }
 
   onChangeScene(){
@@ -100,5 +121,20 @@ export class CamAnim {
     app.webgl.camera.aspect = ratio;
     app.webgl.camera.fov = this.baseFov / Math.min(1, ratio * 1.5);
     app.webgl.camera.updateProjectionMatrix();
+  }
+
+  sumTowEuler(rotOne, rotTwo) {
+    const resultEuler = new Euler(0, 0, 0, 'YXZ');
+
+    const one = new Quaternion();
+    one.setFromEuler(rotOne);
+    const tow = new Quaternion();
+    tow.setFromEuler(rotTwo);
+
+    const resultQuaternion = new Quaternion();
+    resultQuaternion.multiplyQuaternions(one, tow);
+
+    resultEuler.setFromQuaternion(resultQuaternion, 'YXZ');
+    return resultEuler;
   }
 }

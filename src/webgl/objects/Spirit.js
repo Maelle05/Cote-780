@@ -40,7 +40,7 @@ export default class Spirit extends Group {
     this.add(this.face);
 
     // Body
-    this.bodyGeometry = new PlaneGeometry(0.25, 0.25);
+    this.bodyGeometry = new PlaneGeometry(0.25, 0.27);
     this.bodyMaterial = new SpiritBodyMaterial({
       uniforms: {
         u_time: { value: 0 },
@@ -54,7 +54,7 @@ export default class Spirit extends Group {
     });
     this.body = new Mesh(this.bodyGeometry, this.bodyMaterial);
     this.body.position.x = 0.01;
-    this.body.position.y = -0.2;
+    this.body.position.y = -0.21;
     this.body.position.z = -0.01;
     this.add(this.body);
 
