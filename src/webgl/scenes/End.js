@@ -155,10 +155,7 @@ class End extends Scene {
   }
 
   onUpdateDialogue(step) {
-    if (!step || !step.audio) {
-      app.audio.layers.playVolumes([0, 0, 0, 0.7, 0.7, 0, 0, 0, 0, 0, 0]);
-      return;
-    }
+    if (!step || !step.audio) return;
 
     if (step.audio === "esprit_8") app.audio.layers.playVolumes([0, 0, 0, 0.7, 0.7, 0, 0, 0.7, 0, 0.7, 0.7]);
     else if (step.audio === "esprit_9") app.audio.layers.playVolumes([0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7]);
