@@ -300,9 +300,9 @@ class Ladies extends Scene {
     this.vegetation = new Vegetation("ladies");
     this.add(this.vegetation);
 
-    this.dem1 = new Demoiselle(this.D1[1], this.D1[0], 0.9);
-    this.dem2 = new Demoiselle(this.D2[1], this.D2[0], 1.2);
-    this.dem3 = new Demoiselle(this.D3[1], this.D3[0], 1.2);
+    this.dem1 = new Demoiselle(this.D1[0], this.D1[1], 0.9);
+    this.dem2 = new Demoiselle(this.D2[0], this.D2[1], 1.2);
+    this.dem3 = new Demoiselle(this.D3[0], this.D3[1], 1.2);
     this.demoiselles.add(this.dem1, this.dem2, this.dem3);
 
     this.tears = new Mesh(
