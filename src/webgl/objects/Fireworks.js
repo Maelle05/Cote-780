@@ -78,7 +78,7 @@ export default class Fireworks {
   }
 
   #createExplosion(spritesheet, id) {
-    const geometry = new PlaneGeometry(2, 2, 1, 1);
+    const geometry = new PlaneGeometry(1, 1, 1, 1);
     const material = spritesheet.material;
 
     const mesh = new Mesh(geometry, material);
@@ -94,10 +94,11 @@ export default class Fireworks {
       Math.random() * this.clonedExplosions.length
     );
 
+    if (!launcher) return;
+
     const explosion = this.clonedExplosions.splice(randomIndex, 1)[0];
 
     if (!explosion) return;
-    if (!launcher) return;
     explosion.material.uniforms.uColor.value = new Color(
       ...this.getRandomColor()
     );

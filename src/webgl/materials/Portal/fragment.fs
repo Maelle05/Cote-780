@@ -16,7 +16,7 @@ float rand(float seed) {
 
 void main() {
     // gradient outside
-    float edgeSize = 0.10;
+    float edgeSize = 0.05;
     vec2 innerStart = vec2(edgeSize);
     vec2 innerEnd = vec2(1. - edgeSize, 1.);
     vec2 d = max(innerStart - vUv, vUv - innerEnd);
@@ -38,11 +38,10 @@ void main() {
     parallaxUv.x += 0.05;
     parallaxUv += (uMouse - 0.5) * 0.1;
 
-    vec2 displacedUv = parallaxUv + (finalNoise.rg - 0.5) * 0.2;
+    vec2 displacedUv = parallaxUv + (finalNoise.rg - 0.5) * 0.5;
     vec4 textureColor = texture2D(uTexture, 1. - displacedUv);
 
-    vec4 blendedColor = mix(textureColor, noise1Color * noise2Color, 0.1);
-    vec4 gradientColor = mix(textureColor, vec4(0.87, 0.43, 0.25, 1.0), gradient);
+    vec4 gradientColor = mix(textureColor, vec4(1., 1., 1., 1.0), gradient);
 
     // Apply the vertical progress-based alpha animation
     float noiseValue = finalNoise.r;
@@ -59,6 +58,7 @@ void main() {
     float noisyUvY = vUv.y + modulatedNoise * 0.5;
     float alphaMask = step(1. - noisyUvY, uProgress);
     gradientColor.a *= alphaMask;
+    // gradientColor.a *= 1. - gradient;
 
     gl_FragColor = gradientColor;
     // gl_FragColor = vec4(0.61, 0.45, 0.3, 1.0);    

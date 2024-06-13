@@ -1,9 +1,10 @@
-import { RepeatWrapping, Vector2 } from "three";
+import { RepeatWrapping, Vector2, Vector3 } from "three";
 import { ShakiraMaterial } from "../materials/Shakira/material";
 import { state } from "@/utils/State";
 import { DEV_MODE } from "@/utils/constants/config";
 import { Pane } from "tweakpane";
 import { app } from "@/App";
+import { Box3 } from "three";
 
 export class Shake {
   constructor() {
@@ -15,10 +16,12 @@ export class Shake {
     this.PARAMS = {
       shakeFrequency: 0.3,
       shakeOffset: 0.8,
-      shakeRandomRange: 0.2,
+      shakeRandomRange: 5,
+      shakeNoiseScale: 0.2,
+      shakeNoiseStrength: 0.05,
     };
 
-    // this.debug();
+    this.debug();
   }
 
   debug() {
@@ -33,13 +36,25 @@ export class Shake {
 
       this.pane.addBinding(this.PARAMS, "shakeOffset", {
         min: 0,
-        max: 0.5,
+        max: 10,
         step: 0.001,
       });
 
       this.pane.addBinding(this.PARAMS, "shakeRandomRange", {
         min: 0,
-        max: 2,
+        max: 10,
+        step: 0.001,
+      });
+
+      this.pane.addBinding(this.PARAMS, "shakeNoiseScale", {
+        min: 0,
+        max: 6,
+        step: 0.01,
+      });
+
+      this.pane.addBinding(this.PARAMS, "shakeNoiseStrength", {
+        min: 0.01,
+        max: 0.5,
         step: 0.001,
       });
     }
@@ -57,7 +72,13 @@ export class Shake {
     this.perlinTexture.wrapT = RepeatWrapping;
 
     scene.traverse((child) => {
-      if (child.isMesh && child.name.includes("-Shakira")) {
+      if (
+        (child.isMesh && child.name.includes("-Shakira")) ||
+        child.name.includes("Plane002")
+      ) {
+        const bounding = new Box3().setFromObject(child);
+        const boundingSize = bounding.getSize(new Vector3());
+
         child.material = new ShakiraMaterial({
           uniforms: {
             uTexture: { value: child.material.map },
@@ -65,6 +86,9 @@ export class Shake {
             uPerlin: { value: this.perlinTexture },
             uTime: { value: 0 },
             uOffset: { value: new Vector2() },
+            uBoundingSize: { value: boundingSize },
+            uNoiseScale: { value: 10 },
+            uNoiseStrength: { value: 10 },
           },
         });
 
@@ -83,6 +107,10 @@ export class Shake {
           this.PARAMS.shakeOffset,
           this.PARAMS.shakeRandomRange
         );
+
+        plane.material.uniforms.uNoiseScale.value = this.PARAMS.shakeNoiseScale;
+        plane.material.uniforms.uNoiseStrength.value =
+          this.PARAMS.shakeNoiseStrength;
       });
 
       this.elapsedTime = 0;

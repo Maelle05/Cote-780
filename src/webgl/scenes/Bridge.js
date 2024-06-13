@@ -117,9 +117,9 @@ class Bridge extends Scene {
     this.player.goTo(this.center, walkDuration);
     this.add(this.player);
 
-    this.durance = new Durance(app.assetsManager.get('duranceFace'));
-    this.durance.rotation.y = -30 * Math.PI / 180;
-    this.durance.scale.set(1.3, 1.3, 1.3)
+    this.durance = new Durance(app.assetsManager.get("duranceFace"));
+    this.durance.rotation.y = (-30 * Math.PI) / 180;
+    this.durance.scale.set(1.3, 1.3, 1.3);
     this.durance.hide();
     this.durance.position.set(0, 0, 0);
     this.add(this.durance);

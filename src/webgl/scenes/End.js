@@ -68,7 +68,7 @@ class End extends Scene {
 
   onAttach() {
     this.fireworks = new Fireworks(this.allPos);
-    this.fireworks.launchers.forEach((launcher) => this.add(launcher));
+    // this.fireworks.launchers.forEach((launcher) => this.add(launcher));
     this.fireworks.explosions.forEach((explosions) => this.add(explosions));
 
     this.planePos = new Mesh(

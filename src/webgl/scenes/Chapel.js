@@ -125,7 +125,7 @@ class Chapel extends Scene {
 
         child.material = new PortalMaterial({
           uniforms: {
-            uProgress: { value: 0 },
+            uProgress: { value: 1 },
             uTexture: { value: this.portalTexture },
             uNoiseTexture: { value: noiseText },
             uTime: { value: 0 },

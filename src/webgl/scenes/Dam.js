@@ -379,7 +379,7 @@ class Dam extends Scene {
     if (app.sceneshandler.currentStepCam == 4 && !this.durance.isActive) {
       this.durance.isActive = true;
       app.audio.layers.playVolumes([1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0]);
-        this.durance.show();
+      this.durance.show();
     }
     if (app.sceneshandler.currentStepCam == 5 && this.durance.isActive) {
       this.durance.isActive = false;
