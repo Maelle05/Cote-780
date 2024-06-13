@@ -1,5 +1,6 @@
 uniform float uTime;
 uniform float uProgress;
+uniform vec2 uMouse;
 uniform sampler2D uTexture;
 uniform sampler2D uNoiseTexture;
 
@@ -32,11 +33,16 @@ void main() {
 
     vec4 finalNoise = noise1Color * noise2Color;
 
-    vec2 displacedUv = vUv + (finalNoise.rg - 0.5) * 0.2;
+    // Parallax and scale effect
+    vec2 parallaxUv = vUv * 0.9;
+    parallaxUv.x += 0.05;
+    parallaxUv += (uMouse - 0.5) * 0.1;
+
+    vec2 displacedUv = parallaxUv + (finalNoise.rg - 0.5) * 0.2;
     vec4 textureColor = texture2D(uTexture, 1. - displacedUv);
 
     vec4 blendedColor = mix(textureColor, noise1Color * noise2Color, 0.1);
-    vec4 gradientColor = mix(textureColor, vec4(0.61, 0.45, 0.3, 1.0), gradient);
+    vec4 gradientColor = mix(textureColor, vec4(0.87, 0.43, 0.25, 1.0), gradient);
 
     // Apply the vertical progress-based alpha animation
     float noiseValue = finalNoise.r;

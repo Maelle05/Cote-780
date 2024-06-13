@@ -1,4 +1,10 @@
-import { Scene, MeshMatcapMaterial, RepeatWrapping, Vector2 } from "three";
+import {
+  Scene,
+  MeshMatcapMaterial,
+  RepeatWrapping,
+  Vector2,
+  MathUtils,
+} from "three";
 import { state } from "../../utils/State";
 import { Pane } from "tweakpane";
 import { DEV_MODE } from "../../utils/constants/config";
@@ -85,6 +91,7 @@ class Chapel extends Scene {
 
     this.index = 0;
     this.isAnimating = false;
+    this.interpolatedMouse = new Vector2(0.5, 0.5);
 
     app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
     app.webgl.shake.startShake();
@@ -113,6 +120,8 @@ class Chapel extends Scene {
 
       if (child.name == "Portal") {
         this.portal = child;
+        this.portal.scale.x *= 1.6;
+        this.portal.scale.z *= 1.8;
 
         child.material = new PortalMaterial({
           uniforms: {
@@ -120,6 +129,7 @@ class Chapel extends Scene {
             uTexture: { value: this.portalTexture },
             uNoiseTexture: { value: noiseText },
             uTime: { value: 0 },
+            uMouse: { value: app.mouse.coordinates.webgl },
           },
           transparent: true,
         });
@@ -157,7 +167,7 @@ class Chapel extends Scene {
     this.add(this.spirit);
 
     this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 0.66, 1, 1]);
-    // this.anim.onChangeSceneStep(2);
+    // this.anim.onChangeSceneStep(4);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -191,6 +201,19 @@ class Chapel extends Scene {
     }
 
     //Create the portal & give the cairn when all torchs are on
+  }
+
+  onPointerMove(e) {
+    if (this.anim.currentKeyfame != 3) return;
+
+    this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
+    const intersects = this.raycaster.intersectObjects(this.torchs);
+
+    if (intersects.length != 0) {
+      document.body.style.cursor = "pointer";
+    } else {
+      document.body.style.cursor = "default";
+    }
   }
 
   goTo(position, flame) {
@@ -245,7 +268,6 @@ class Chapel extends Scene {
           if (!flame) return;
           flame.visible = true;
           flame.show();
-          this.spiritStand(flame);
 
           if (this.index == this.torchs.length - 4) {
             this.isAnimating = true;
@@ -298,6 +320,22 @@ class Chapel extends Scene {
 
     this.portal.material.uniforms.uTime.value += e.dt;
     this.water.material.uniforms.uTime.value = app.ticker.elapsed;
+
+    //Parallax effect on portal
+    const mouse = app.mouse.coordinates.webgl;
+    const lerpFactor = 0.025;
+    this.interpolatedMouse.x = MathUtils.lerp(
+      this.interpolatedMouse.x,
+      mouse.x,
+      lerpFactor
+    );
+    this.interpolatedMouse.y = MathUtils.lerp(
+      this.interpolatedMouse.y,
+      mouse.y,
+      lerpFactor
+    );
+
+    this.portal.material.uniforms.uMouse.value = this.interpolatedMouse;
   }
 
   clear() {

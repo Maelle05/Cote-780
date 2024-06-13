@@ -131,6 +131,6 @@ const NEW_CAIRNS = [
     scene: 6,
     step: 6,
   },
-]
+];
 
 export { DEV_MODE, INIT_SCENE, INTRO_SECTIONS, TITLES_SCENE, NEW_CAIRNS };

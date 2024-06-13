@@ -1,47 +1,47 @@
 <script setup>
-import NavigationElement from "./NavigationElement.vue"
-import LearnMorePanel from "./LearnMorePanel.vue"
+import NavigationElement from "./NavigationElement.vue";
+import LearnMorePanel from "./LearnMorePanel.vue";
 
-import { app } from "@/App"
-import { state } from "../../utils/State"
-import { EVENTS } from "../../utils/constants/events"
+import { app } from "@/App";
+import { state } from "../../utils/State";
+import { EVENTS } from "../../utils/constants/events";
 
-import { useI18n } from "vue-i18n"
-import { ref } from "vue"
+import { useI18n } from "vue-i18n";
+import { ref } from "vue";
 
-const { t } = useI18n()
+const { t } = useI18n();
 
 const props = defineProps({
   sceneIndex: Number,
-})
+});
 
-const isLearnMorePanelOpen = ref(false)
+const isLearnMorePanelOpen = ref(false);
 
-const isSoundOn = ref(true)
+const isSoundOn = ref(true);
 
 const onClickMap = () => {
-  state.emit(EVENTS.ASK_CHANGE_SCENE, 1)
-}
+  state.emit(EVENTS.ASK_CHANGE_SCENE, 1);
+};
 
 const onClickSound = () => {
-  if (app.audio === undefined) return
+  if (app.audio === undefined) return;
 
   if (app.audio.isPlaying()) {
-    app.audio.setMute(true)
-    isSoundOn.value = false
+    app.audio.setMute(true);
+    isSoundOn.value = false;
   } else {
-    app.audio.setMute(false)
-    isSoundOn.value = true
+    app.audio.setMute(false);
+    isSoundOn.value = true;
   }
-}
+};
 
 const onClickLearnMore = () => {
   if (isLearnMorePanelOpen.value === false) {
-    isLearnMorePanelOpen.value = true
+    isLearnMorePanelOpen.value = true;
   } else {
-    isLearnMorePanelOpen.value = false
+    isLearnMorePanelOpen.value = false;
   }
-}
+};
 
 const isMapBtnVisible = () => {
   if (props.sceneIndex === 0 || props.sceneIndex === 1) {
@@ -49,7 +49,7 @@ const isMapBtnVisible = () => {
   }
 
   return true;
-}
+};
 
 const isSoundBtnVisible = () => {
   if (props.sceneIndex === 1) {
@@ -57,15 +57,17 @@ const isSoundBtnVisible = () => {
   }
 
   return true;
-}
+};
 
 const isLearnMoreBtnVisible = () => {
-  if (t(`scene_${props.sceneIndex}.infos`) === `scene_${props.sceneIndex}.infos`) {
-    return false
+  if (
+    t(`scene_${props.sceneIndex}.infos`) === `scene_${props.sceneIndex}.infos`
+  ) {
+    return false;
   }
 
-  return true
-}
+  return true;
+};
 </script>
 
 <template lang="">
