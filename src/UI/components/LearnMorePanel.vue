@@ -1,6 +1,5 @@
 <script setup>
 import { useI18n } from "vue-i18n"
-import { computed } from "vue"
 
 const { t } = useI18n()
 
@@ -23,7 +22,7 @@ const props = defineProps({
       />
     </div>
     <div class="learn-more-panel__url">
-      <a :href="t(`scene_${props.sceneIndex}.url`)">{{ t(`global.learn-more`) }}</a>
+      <a target="_blank" :href="t(`scene_${props.sceneIndex}.url`)">{{ t(`global.learn-more`) }}</a>
     </div>
   </div>
 </template>

@@ -61,7 +61,7 @@ class Village extends Scene {
     this.spirit = new Spirit();
     this.spirit.position.set(-10, 0.7, 7);
 
-    this.anim = new CamAnim(6, this.scene, [0, 0, 0.33, 0.66, 1, 1]);
+    this.anim = new CamAnim(6, this.scene, [0, 0, 0.33, 0.66, 1, 1, 1]);
     this.targetProgressAnim = 1;
 
     this.add(this.scene, this.spirit, this.ambient);

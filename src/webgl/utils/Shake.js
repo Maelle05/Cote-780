@@ -1,8 +1,9 @@
-import { Vector2 } from "three";
+import { RepeatWrapping, Vector2 } from "three";
 import { ShakiraMaterial } from "../materials/Shakira/material";
 import { state } from "@/utils/State";
 import { DEV_MODE } from "@/utils/constants/config";
 import { Pane } from "tweakpane";
+import { app } from "@/App";
 
 export class Shake {
   constructor() {
@@ -44,12 +45,24 @@ export class Shake {
     }
   }
 
+  onAttach() {}
+
   initShake(scene) {
+    this.noiseTexture = app.assetsManager.get("shakeNoise");
+    this.noiseTexture.wrapS = RepeatWrapping;
+    this.noiseTexture.wrapT = RepeatWrapping;
+
+    this.perlinTexture = app.assetsManager.get("spiritNoise");
+    this.perlinTexture.wrapS = RepeatWrapping;
+    this.perlinTexture.wrapT = RepeatWrapping;
+
     scene.traverse((child) => {
       if (child.isMesh && child.name.includes("-Shakira")) {
         child.material = new ShakiraMaterial({
           uniforms: {
             uTexture: { value: child.material.map },
+            uTextureShake: { value: this.noiseTexture },
+            uPerlin: { value: this.perlinTexture },
             uTime: { value: 0 },
             uOffset: { value: new Vector2() },
           },
@@ -87,7 +100,7 @@ export class Shake {
   }
 
   startShake() {
-    // this.dancing = true;
+    this.dancing = true;
   }
 
   stopShake() {

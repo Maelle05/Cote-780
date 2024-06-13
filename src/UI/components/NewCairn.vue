@@ -1,4 +1,5 @@
 <script setup>
+import { app } from "@/App";
 import { EVENTS } from "@/utils/constants/events"
 import { state } from "@/utils/State"
 
@@ -18,37 +19,44 @@ const cairnImageIndex = ref(props.sceneIndex)
 
 const handleClick = () => {
   console.log("CollectionCairns.vue - handleClick!")
+  state.emit(EVENTS.COLLECT_CAIRN, props.sceneIndex - 1)
   state.emit(EVENTS.GO_NEXT)
 }
 
 const playApparitionAnimation = () => {
   const appearTimeline = gsap.timeline({ defaults: { ease: "Power2.easeOut" } })
   appearTimeline
-    .fromTo(".collection-cairns", { opacity: 0 }, { duration: 1, opacity: 1 })
+    .fromTo(".new-cairn", { opacity: 0 }, { duration: 1, opacity: 1 })
     .fromTo(
-      ".collection-cairns__image",
+      ".new-cairn__image",
       { opacity: 0, rotate: 16, scale: 0 },
       { duration: 1, opacity: 1, rotate: 0, scale: 1 },
       "<"
     )
     .fromTo(
-      ".collection-cairns__text p:nth-child(1)",
+      ".new-cairn__text p:nth-child(1)",
       { opacity: 0, scale: 0.9 },
       { duration: 1, opacity: 1, rotate: 0, scale: 1 },
       "-=0.7"
     )
     .fromTo(
-      ".collection-cairns__text p:nth-child(2)",
+      ".new-cairn__text p:nth-child(2)",
       { opacity: 0, y: "-60px", rotate: -20, scale: 0.9 },
       { duration: 0.7, opacity: 1, y: 0, rotate: 2.5, scale: 1 },
       "-=0.9"
     )
     .fromTo(
-      ".collection-cairns__text p:nth-child(3)",
+      ".new-cairn__text p:nth-child(3)",
       { opacity: 0, y: "-30px", rotate: 20, scale: 0.9 },
       { duration: 0.7, opacity: 1, y: 0, rotate: -5.5, scale: 1 },
       "-=0.6"
     )
+}
+
+const playApparitionSound = () => {
+  if (app.audio === undefined) return;
+
+// [WIP][son] add UI sound here
 }
 
 watch(
@@ -56,6 +64,7 @@ watch(
   (newVal) => {
     if (newVal === true) {
       playApparitionAnimation()
+      playApparitionSound()
     }
   }
 )
@@ -73,15 +82,15 @@ watch(() => props.sceneIndex, (newVal) => {
 <template lang="">
   <div
     @click="handleClick"
-    :class="`collection-cairns__container collection-cairns__container--${
+    :class="`new-cairn__container new-cairn__container--${
       isVisible ? 'visible' : 'hidden'
     }`"
   >
-    <div class="collection-cairns">
-      <div class="collection-cairns__image">
+    <div class="new-cairn">
+      <div class="new-cairn__image">
         <img :src="`/assets/images/cairns/${cairnImageIndex}.svg`" alt="" />
       </div>
-      <div class="collection-cairns__text">
+      <div class="new-cairn__text">
         <p>{{ t(`global.new-cairn_1`) }}</p>
         <p>{{ t(`global.new-cairn_2`) }}</p>
         <p>{{ t(`global.new-cairn_3`) }}</p>
@@ -91,7 +100,7 @@ watch(() => props.sceneIndex, (newVal) => {
 </template>
 
 <style scoped lang="scss">
-.collection-cairns__container {
+.new-cairn__container {
   position: absolute;
   height: 100vh;
   width: 100%;
@@ -107,13 +116,13 @@ watch(() => props.sceneIndex, (newVal) => {
   user-select: none;
   transition: opacity 1200ms;
 
-  &.collection-cairns__container--hidden {
+  &.new-cairn__container--hidden {
     opacity: 0;
     pointer-events: none;
   }
 }
 
-.collection-cairns {
+.new-cairn {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,7 +149,7 @@ watch(() => props.sceneIndex, (newVal) => {
   }
 }
 
-.collection-cairns__image {
+.new-cairn__image {
   img {
     width: 180px;
     position: relative;
@@ -162,7 +171,7 @@ watch(() => props.sceneIndex, (newVal) => {
   }
 }
 
-.collection-cairns__text {
+.new-cairn__text {
   display: flex;
   flex-direction: column;
   align-items: center;
