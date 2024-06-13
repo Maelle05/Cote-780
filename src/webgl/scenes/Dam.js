@@ -107,6 +107,10 @@ class Dam extends Scene {
     this.spirit.position.set(5.5, 0.7, 2)
     this.add(this.spirit);
 
+    this.duranceTex = app.assetsManager.get("duranceSide");
+    this.durance = new Durance(this.duranceTex);
+    this.add(this.durance)
+
     this.add(this.scene);
     this.anim = new CamAnim(3, this.scene, [0, 0.25, 0.5, 0.75, 1, 1, 1]);
 
@@ -174,13 +178,11 @@ class Dam extends Scene {
     // this.player.scale.set(0.15, 0.15, 0.15);
     this.add(this.player);
 
-    this.duranceTex = app.assetsManager.get("duranceSide");
-    this.durance = new Durance(this.duranceTex);
     this.durance.hide();
     this.durance.scale.set(2.5, 2.5, 2.5);
     this.durance.position.set(1.5, 0, 0);
     this.durance.renderOrder = 1;
-    this.add(this.durance);
+    this.durance.isActive = false
 
     this.player.goTo(new Vector3(4.3, this.PARAMS.persoPos.y, 5.6), 7);
   }
