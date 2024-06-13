@@ -25,6 +25,7 @@ import { Vector4 } from "three";
 import Durance from "../objects/Durance";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { Vector3 } from "three";
+import Vegetation from "../objects/Vegetation";
 
 class ColorSpirit extends Spirit {
   constructor() {
@@ -200,6 +201,9 @@ class Dam extends Scene {
     this.anim = new CamAnim(3, this.scene, [0, 0.25, 0.5, 0.75, 1, 1]);
 
     if (app.webgl.currentScene === 3) this.init();
+
+    this.vegetation = new Vegetation("dam");
+    this.add(this.vegetation);
   }
 
   init() {
