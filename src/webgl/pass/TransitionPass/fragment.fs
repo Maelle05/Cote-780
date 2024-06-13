@@ -113,5 +113,5 @@ void main()
     finalColor = mix(sceneTex, bgColor, finalMix);
   }
 
-  gl_FragColor = finalColor;
+  gl_FragColor = vec4( vec3( finalColor ), 1. );
 }

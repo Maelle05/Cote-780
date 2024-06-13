@@ -27,83 +27,6 @@ import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { Vector3 } from "three";
 import Vegetation from "../objects/Vegetation";
 
-class ColorSpirit extends Spirit {
-  constructor() {
-    super();
-
-    this.allPos = [
-      { x: 5.8, y: 0.7, z: 1.9 },
-      { x: 5, y: 1, z: 1 },
-      { x: 5.5, y: 0.8, z: 2.4 },
-    ];
-    this.currentPos = 2;
-    this.currentLife = 4;
-    this.isCaptured = false;
-
-    this.position.set(
-      this.allPos[this.currentPos].x,
-      this.allPos[this.currentPos].y,
-      this.allPos[this.currentPos].z
-    );
-
-    this.isIntroPass = false
-    this.isFinAnim = false
-  }
-
-  initAnim() {
-    console.log('init');
-    this.tl = gsap.timeline({
-      onComplete: () => {
-        this.changePos();
-      },
-    });
-    this.tl.to(this.targetSpiritColor, { w: 1, duration: 0.3 });
-    this.tl.to(this.targetSpiritColor, { w: 0.2, duration: 1 });
-    this.tl.to(this.targetSpiritColor, { w: 1, duration: 1 });
-    this.tl.to(this.targetSpiritColor, { w: 0, duration: 1 });
-
-    this.anim()
-  }
-
-  anim() {
-    if (this.isCaptured) return;
-    this.tl.restart();
-    this.tl.play();
-  }
-
-  updateLife() {
-    this.isOnTransit = true;
-    this.currentLife = this.currentLife - 1;
-    switch (this.currentLife) {
-      case 1 || 2 || 3:
-        this.changePos();
-        break;
-
-      case 0:
-        this.isCaptured = true;
-        state.emit(EVENTS.GO_NEXT);
-        break;
-
-      default:
-        break;
-    }
-  }
-
-  changePos() {
-    if (app.webgl.currentScene != 2) return;
-    this.hide();
-    setTimeout(() => {
-      this.currentPos = (this.currentPos + 1) % this.allPos.length;
-      this.position.set(
-        this.allPos[this.currentPos].x,
-        this.allPos[this.currentPos].y,
-        this.allPos[this.currentPos].z
-      );
-      this.show();
-      this.anim();
-    }, 700);
-  }
-}
 
 class Dam extends Scene {
   constructor() {
@@ -156,7 +79,12 @@ class Dam extends Scene {
 
   onAttach() {
     this.scene = app.assetsManager.get("dam");
+    this.rocks = [];
     this.scene.traverse((el) => {
+      if (el.name.includes('Pierre')) {
+        this.rocks.push(el)
+        el.material.transparent = true
+      }
       if (el.name == "WaterSurface") {
         this.water = el;
         el.material = new WaterMaterial({
@@ -166,7 +94,6 @@ class Dam extends Scene {
           },
           transparent: true,
           depthWrite: false,
-          // depthTest: false
         });
       }
     });
@@ -176,29 +103,12 @@ class Dam extends Scene {
     this.light = new AmbientLight({ color: 0xffffff });
     this.add(this.light);
 
-    this.spirit = new ColorSpirit();
+    this.spirit = new Spirit();
+    this.spirit.position.set(5.5, 0.7, 2)
     this.add(this.spirit);
 
     this.add(this.scene);
-
-    this.rocks = app.assetsManager.get("rocks");
-    this.rocks.traverse((el) => {
-      el.material = new MeshMatcapMaterial({
-        matcap: app.assetsManager.get("matcap"),
-        transparent: true,
-      });
-
-      el.visible = true;
-    });
-    this.rocks.position.set(
-      this.PARAMS.rocksPos.x,
-      this.PARAMS.rocksPos.y,
-      this.PARAMS.rocksPos.z
-    );
-    this.rocks.scale.set(1.5, 1.5, 1.5);
-    this.add(this.rocks);
-
-    this.anim = new CamAnim(3, this.scene, [0, 0.25, 0.5, 0.75, 1, 1]);
+    this.anim = new CamAnim(3, this.scene, [0, 0.25, 0.5, 0.75, 1, 1, 1]);
 
     if (app.webgl.currentScene === 3) this.init();
 
@@ -249,15 +159,6 @@ class Dam extends Scene {
         .on("change", (ev) => {
           this.spirit.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
-      this.pane
-        .addBinding(this.PARAMS, "rocksPos", {
-          min: -10,
-          max: 10,
-          step: 0.1,
-        })
-        .on("change", (ev) => {
-          this.rocks.position.set(ev.value.x, ev.value.y, ev.value.z);
-        });
     }
 
     app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
@@ -284,7 +185,7 @@ class Dam extends Scene {
     this.player.goTo(new Vector3(4.3, this.PARAMS.persoPos.y, 5.6), 7);
     setTimeout(()=>{
       state.emit(EVENTS.GO_NEXT)
-    }, 1000)
+    }, 6000)
   }
 
   onPointerDown(e) {
@@ -293,45 +194,34 @@ class Dam extends Scene {
 
     if(!this.isTutoPass) {
       this.isTutoPass = true;
-      state.emit(EVENTS.TUTO_PASS, 3)
-      this.spirit.initAnim()
+      state.emit(EVENTS.TUTO_PASS, 3);
     }
 
     this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
-    const intersects = this.raycaster.intersectObject(this.spirit);
+
+    const intersects = this.raycaster.intersectObjects(this.rocks);
 
     if (intersects.length != 0) {
-      this.nbClick = this.nbClick + 2;
-      this.spirit.updateLife();
-      if (this.spirit.isCaptured) {
-        gsap.to(this.spirit.position, {
-          x: this.player.position.x,
-          y: this.player.position.y,
-          z: this.player.position.z,
-        });
+      this.nbClick++;
 
-        gsap.to(this.spirit.scale, {
-          x: 0,
-          y: 0,
-          z: 0,
-        });
-      }
-
-      gsap.to(
-        this.rocks.children.find(
-          (el) => el.name === "Pierre" + (this.nbClick - 1)
-        ).material,
-        {
+      intersects.forEach((el)=>{
+        gsap.to(el.object.material, {
           opacity: 0,
-        }
-      );
-      gsap.to(
-        this.rocks.children.find((el) => el.name === "Pierre" + this.nbClick)
-          .material,
-        {
-          opacity: 0,
-        }
-      );
+          onComplete: () => {
+            el.object.visible = false
+            this.rocks = this.rocks.filter((rock) => rock.name != el.object.name)
+            if(this.rocks.length == 0 && !this.isInteractionFini){
+              this.isInteractionFini = true
+              state.emit(EVENTS.GO_NEXT)
+              gsap.to(this.spirit.position, {
+                x: 5.5,
+                y: 0.8,
+                z: 2.4,
+              })
+            }
+          }
+        })
+      })
     }
   }
 
@@ -357,6 +247,21 @@ class Dam extends Scene {
         7,
         -Math.PI / 2
       );
+    }
+
+
+    // if (this.anim.currentKeyfame === 5 && !this.isAfterDialogues) {
+    //   this.isAfterDialogues = true
+    //   setTimeout(()=>{
+    //     state.emit(EVENTS.GO_NEXT)
+    //   }, 2000)
+    // }
+
+    if (this.anim.currentKeyfame === 6 && !this.isAfterCairn) {
+      this.isAfterCairn = true
+      setTimeout(()=>{
+        state.emit(EVENTS.GO_NEXT)
+      }, 2000)
     }
   }
 

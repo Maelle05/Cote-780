@@ -54,6 +54,21 @@ export class CamAnim {
     )
       return;
 
+    const rotationSpeed = 0.03;
+    this.orbitEuler.y = MathUtils.lerp(
+      this.orbitEuler.y,
+      -app.mouse.coordinates.webgl.x * rotationSpeed,
+      0.05
+    );
+    this.orbitEuler.x = MathUtils.lerp(
+      this.orbitEuler.x,
+      app.mouse.coordinates.webgl.y * rotationSpeed,
+      0.05
+    );
+
+    this.orbitEulerTarget.x = this.orbitEuler.x;
+    this.orbitEulerTarget.y = this.orbitEuler.y;
+
     this.targetProgressAnim = this.keyframes[this.currentKeyfame];
     this.currentProgressAnim = MathUtils.lerp(
       this.currentProgressAnim,
@@ -93,24 +108,6 @@ export class CamAnim {
 
     app.webgl.camera.rotation.order = "YXZ";
     app.webgl.camera.setRotationFromEuler(rotResult);
-  }
-
-  onPointerMove(e) {
-    if (app.webgl.currentScene != this.idScene) return;
-    const rotationSpeed = 0.01;
-    this.orbitEuler.y = MathUtils.lerp(
-      this.orbitEuler.y,
-      -e.webgl.x * rotationSpeed,
-      0.1
-    );
-    this.orbitEuler.x = MathUtils.lerp(
-      this.orbitEuler.x,
-      e.webgl.y * rotationSpeed,
-      0.1
-    );
-
-    this.orbitEulerTarget.x = this.orbitEuler.x;
-    this.orbitEulerTarget.y = this.orbitEuler.y;
   }
 
   onChangeScene() {
