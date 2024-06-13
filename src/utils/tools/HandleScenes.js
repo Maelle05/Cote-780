@@ -55,8 +55,8 @@ export default class HandleScenes {
   onGoNext() {
     switch (this.currentScene) {
       case 0:
-        this.currentScene = 1;
-        state.emit(EVENTS.CHANGE_SCENE, 1);
+        this.currentScene = 2;
+        state.emit(EVENTS.ASK_CHANGE_SCENE, 2);
         break;
 
       case 1:
