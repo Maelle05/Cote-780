@@ -151,6 +151,7 @@ const onClickDialogue = () => {
   transition: opacity 1000ms, height 800ms;
   box-sizing: border-box;
   user-select: none;
+  cursor: pointer;
   
   span {
     pointer-events: none;

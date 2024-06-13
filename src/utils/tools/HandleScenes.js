@@ -56,12 +56,9 @@ export default class HandleScenes {
     switch (this.currentScene) {
       case 0:
         this.currentScene = 2;
-        state.emit(EVENTS.ASK_CHANGE_SCENE, 2);
-        break;
-
-      case 1:
-        this.currentScene = 2;
-        state.emit(EVENTS.ASK_CHANGE_SCENE, 2);
+        app.webgl.transitionPass.material.uniforms.uIsColor.value = true;
+        app.webgl.transitionPass.material.uniforms.uProgress.value = 0;
+        state.emit(EVENTS.CHANGE_SCENE, 2);
         break;
 
       default:
@@ -79,7 +76,10 @@ export default class HandleScenes {
             this.currentStepCam = 0;
             this.currentStepText = 0;
             this.currentScene = (this.currentScene + 1) % this.scenes.length;
-            state.emit(EVENTS.ASK_CHANGE_SCENE, this.currentScene);
+            state.emit(EVENTS.ASK_TRANSITION);
+            setTimeout(()=>{
+              state.emit(EVENTS.CHANGE_SCENE, this.currentScene);
+            }, 3000)
             this.initCurrentText();
           }
         }

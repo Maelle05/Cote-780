@@ -27,6 +27,7 @@ import { EVENTS } from "@/utils/constants/events";
 import { RenderTarget } from "three";
 import { WaterPass } from "./pass/WaterPass/TransitionPass";
 import { Shake } from "./utils/Shake";
+import { Null } from "./UI/Null";
 
 export default class WebglController {
   constructor(container) {
@@ -39,7 +40,7 @@ export default class WebglController {
 
     this.allScene = [
       new Intro(),
-      new Map(),
+      new Null(),
       new Ladies(),
       new Dam(),
       new Bridge(),
@@ -123,16 +124,13 @@ export default class WebglController {
     }
   }
 
-  onAskChangeScene(e) {
+  onAskTransition() {
     app.webgl.transitionPass.material.uniforms.uIsColor.value = false;
     app.webgl.transitionPass.material.uniforms.uProgress.value = 0;
     gsap.to(app.webgl.transitionPass.material.uniforms.uProgress, {
       value: 1,
       duration: 3,
-      ease: "circ.in",
-      onComplete: () => {
-        state.emit(EVENTS.CHANGE_SCENE, e);
-      },
+      ease: "circ.in"
     });
   }
 
@@ -150,6 +148,9 @@ export default class WebglController {
     } else {
       this.waterPass.material.uniforms.uIsWater.value = false;
     }
+  }
+
+  onAskRemoveTransition(){
     this.transitionPass.material.uniforms.uIsColor.value = true;
     this.transitionPass.material.uniforms.uProgress.value = 0;
     gsap.to(this.transitionPass.material.uniforms.uProgress, {

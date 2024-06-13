@@ -109,13 +109,13 @@ class Bridge extends Scene {
     this.elapsedTime = 0;
     this.interval = 1000;
     this.isAnimating = false;
+    this.nbJumps = 0;
 
     this.milo = new Milo();
     this.player = this.milo.model;
+    const walkDuration = 3;
     this.player.position.set(-0.88, 0.15, 2.81);
     // this.player.rotation.y = Math.PI - 45;
-    const walkDuration = 3;
-    this.player.goTo(this.center, walkDuration);
     this.add(this.player);
 
     this.durance = new Durance(app.assetsManager.get("duranceFace"));
@@ -125,6 +125,8 @@ class Bridge extends Scene {
     this.durance.position.set(0, 0, 0);
     this.add(this.durance);
 
+    this.spirit.hide();
+
     //End of the walk & Start Tuto
     setTimeout(() => {
       this.#start();
@@ -132,6 +134,14 @@ class Bridge extends Scene {
 
     app.webgl.shake.startShake();
     app.audio.playMusic(MUSIC_IDS.AMBIENT_FOREST);
+  }
+
+  onAskRemoveTransition() {
+    if (app.webgl.currentScene != 4) return;
+    this.player.goTo(this.center, 3);
+    setTimeout(() => {
+      state.emit(EVENTS.GO_NEXT);
+    }, 3000);
   }
 
   onAttach() {
@@ -240,7 +250,14 @@ class Bridge extends Scene {
       this.durance.hide();
     }
 
-    if (this.anim && this.anim.currentKeyfame != 2) return;
+    if (
+      this.anim &&
+      this.anim.currentKeyfame == 0 &&
+      this.anim.currentKeyfame == 1 &&
+      this.anim.currentKeyfame == 4 &&
+      this.anim.currentKeyfame == 5
+    )
+      return;
 
     if (!this.spirit) return;
 
@@ -265,7 +282,7 @@ class Bridge extends Scene {
     this.spirit.position.set(finalX, center.y + 0.2, finalZ);
 
     if (
-      this.spirit.position.distanceTo(this.rocks[this.rockIndex].position) < 0.3
+      this.spirit.position.distanceTo(this.rocks[this.rockIndex].position) < 0.6
     ) {
       this.spirit.targetSpiritColor = new Vector4(0.941, 0.608, 0.345);
     } else {
@@ -274,8 +291,20 @@ class Bridge extends Scene {
   }
 
   onPointerDown() {
-    if (app.webgl.currentScene != 4 && this.anim.currentKeyfame != 2) return;
+    if (app.webgl.currentScene != 4) return;
+    if (
+      this.anim.currentKeyfame == 0 ||
+      this.anim.currentKeyfame == 1 ||
+      this.anim.currentKeyfame == 4 ||
+      this.anim.currentKeyfame == 5
+    )
+      return;
     if (this.isAnimating === true) return;
+
+    if (!this.isTutoPass && this.anim.currentKeyfame == 2) {
+      this.isTutoPass = true;
+      state.emit(EVENTS.TUTO_PASS, 4);
+    }
 
     this.currentRock = this.rocks[this.rockIndex];
     this.nextRock = this.rocks[this.rockIndex + 1];
@@ -283,6 +312,9 @@ class Bridge extends Scene {
     if (!this.currentRock) return;
     if (this.spirit.position.distanceTo(this.currentRock.position) > 0.3)
       return;
+
+    this.nbJumps++;
+    if (this.nbJumps == 1) state.emit(EVENTS.GO_NEXT);
 
     const targetAnimDuration = 3;
     const jumpDelay = targetAnimDuration - 0.5;

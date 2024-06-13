@@ -62,7 +62,7 @@ class Demoiselle extends Group {
   onPointerMove(e) {
     if (this.topIsDraw) return;
     if (app.webgl.currentScene != 2) return;
-    if (app.webgl.scene.anim.currentKeyfame != 2) return;
+    if (app.webgl.scene.anim.currentKeyfame != 3) return;
 
     // update the picking ray with the camera and pointer position
     this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
@@ -258,12 +258,12 @@ class Ladies extends Scene {
       this.isTutoPass = true;
       state.emit(EVENTS.TUTO_PASS, 2);
     }
-    if (app.sceneshandler.currentStepCam == 2 && !this.isTutoPass) {
+    if (app.sceneshandler.currentStepCam == 3 && !this.isTutoPass) {
       this.demoiselles.children.forEach((dem) => {
         dem.top.material.uniforms.u_gAlpha.value =
           (Math.sin(app.ticker.elapsed * 0.005) * 0.5 + 0.5) * 0.4;
       });
-    } else if (app.sceneshandler.currentStepCam == 2 && this.isTutoPass) {
+    } else if (app.sceneshandler.currentStepCam == 3 && this.isTutoPass) {
       this.demoiselles.children.forEach((dem) => {
         dem.top.material.uniforms.u_gAlpha.value = 0;
       });
@@ -325,13 +325,21 @@ class Ladies extends Scene {
     this.tears.userData.isActive = true;
     this.tears.position.set(2.05, 2.84, 1.7);
 
-    this.anim = new CamAnim(2, this.ladies, [0, 0.25, 0.5, 1, 1, 1]);
+    this.anim = new CamAnim(2, this.ladies, [0, 0, 0.25, 0.5, 1, 1, 1]);
     // this.anim.onChangeSceneStep(2);
 
     this.add(this.ladies, this.ambient, this.tears);
     app.webgl.shake.initShake(this.ladies);
 
     if (app.webgl.currentScene === 2) this.init();
+  }
+
+  onAskRemoveTransition(){
+    if (app.sceneshandler.currentScene != 2) return;
+    
+    setTimeout(() => {
+      state.emit(EVENTS.GO_NEXT)
+    }, 3000)
   }
 
   clear() {

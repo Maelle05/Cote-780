@@ -55,43 +55,43 @@
     "text_1": {
       "person": "Milo",
       "text": "Bonjour, je suis Milo. Ma grand-mère m’a dit de venir vous voir. Mais pourquoi vous êtes tristes ?",
-      "camera": "0",
+      "camera": "1",
       "audio": "milo_1"
     },
     "text_2": {
       "person": "Demoiselles",
       "text": "L'équilibre de la vallée a été rompu et nous avons perdu nos chapeaux. Peux-tu nous aider à les retrouver ?",
-      "camera": "1",
+      "camera": "2",
       "audio": "demoiselles_1"
     },
     "text_3": {
       "person": "Demoiselles",
       "text": "Merci pour ton aide, jeune homme.",
-      "camera": "3",
+      "camera": "4",
       "audio": "demoiselles_2"
     },
     "text_4": {
       "person": "Demoiselles",
       "text": "Dans ce grand désarroi, ta grand-mère est partie en laissant s’écrouler avec elle le Passage de Savines. Toi seul détiens le pouvoir de le reconstruire.",
-      "camera": "3",
+      "camera": "4",
       "audio": "demoiselles_3"
     },
     "text_5": {
       "person": "Demoiselles",
       "text": "Tu dois maintenant retrouver les cinq cairns qui le composent. Voici le premier.",
-      "camera": "3",
+      "camera": "4",
       "audio": "demoiselles_4"
     },
     "text_6": {
       "person": "Demoiselles",
       "text": "Le second cairn se trouve là où tout a commencé, au barrage.",
-      "camera": "5",
+      "camera": "6",
       "audio": "demoiselles_5"
     },
     "text_7": {
       "person": "Demoiselles",
       "text": "Bon courage dans ta quête. Gagne la confiance de la Durance, mais attention, elle peut être très capricieuse…",
-      "camera": "5",
+      "camera": "6",
       "audio": "demoiselles_6"
     },
     "tuto": "Révèle les coiffes des demoiselles à l'aide de ton curseur",
@@ -129,7 +129,7 @@
     "title_1": "Chanteloube",
     "text_1": {
       "person": "Milo",
-      "text": "oh",
+      "text": "Oh !",
       "camera": "1",
       "audio": "milo_oh"
     },
@@ -140,7 +140,7 @@
       "audio": "durance_2"
     },
     "tuto": "Clique au bon moment pour aider Milo à avancer",
-    "infos": "Le pont de Chanteloube a été construit dans le cadre du projet de construction d'une ligne de chemin de fer qui devait relier Grenoble à Bercelonnette. Amorcée en 1910, sa réalisation fut finalement interrompue en 1934 au profit de la ligne Veynes-Briançon.",
+    "infos": "Le pont de Chanteloube a été construit dans le cadre du projet de ligne de chemin de fer qui devait relier Grenoble à Bercelonnette. Amorcée en 1910, sa réalisation fut finalement interrompue en 1934 au profit de la ligne Veynes-Briançon.",
     "alt": "Le Pont de Chanteloube",
     "url": "https://www.serreponcon.com/patrimoine-culturel/viaduc-de-chanteloube-chorges/"
   },
