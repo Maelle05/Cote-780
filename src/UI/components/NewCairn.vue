@@ -62,6 +62,9 @@ const playApparitionAnimation = () => {
       { duration: 0.7, opacity: 1, y: 0, rotate: -5.5, scale: 1 },
       "-=0.6"
     )
+    .call(() => {
+      app.audio.ui.play("unlocking_texture");
+    }, [], "0.5")
 }
 
 const playCollectionSound = () => {

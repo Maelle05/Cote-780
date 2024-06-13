@@ -2,7 +2,7 @@ import { Howl } from "howler";
 import { state } from "../../State";
 import data from "./jsons/dialog.json";
 
-const DIALOG_MAX_VOLUME = 1;
+const DIALOG_MAX_VOLUME = 0.7;
 
 class DialogManager {
   currentDialogId = null;

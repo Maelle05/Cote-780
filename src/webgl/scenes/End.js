@@ -63,7 +63,7 @@ class End extends Scene {
     }
 
     app.webgl.shake.startShake();
-    app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
+    app.audio.playMusic(MUSIC_IDS.AMBIENT_END);
   }
 
   onAttach() {

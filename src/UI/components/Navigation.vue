@@ -33,13 +33,17 @@ const onClickSound = () => {
     app.audio.setMute(false);
     isSoundOn.value = true;
   }
+  app.audio.ui.play("magic_action_2");
 };
 
 const onClickLearnMore = () => {
   if (isLearnMorePanelOpen.value === false) {
     isLearnMorePanelOpen.value = true;
+    app.audio.ui.play("magic_action_2");
+    app.audio.ui.play("texture_opening");
   } else {
     isLearnMorePanelOpen.value = false;
+    app.audio.ui.play("back", 0.3);
   }
 };
 
@@ -68,6 +72,10 @@ const isLearnMoreBtnVisible = () => {
 
   return true;
 };
+
+const onHover = () => {
+  app.audio.ui.play("click");
+};
 </script>
 
 <template lang="">
@@ -75,6 +83,7 @@ const isLearnMoreBtnVisible = () => {
     <div class="navigation">
       <NavigationElement
         @click="onClickLearnMore"
+        @mouseenter="onHover"
         :icon="isLearnMorePanelOpen ? 'close' : 'learn-more'"
         :isVisible="isLearnMoreBtnVisible()"
       ></NavigationElement>
@@ -85,6 +94,7 @@ const isLearnMoreBtnVisible = () => {
       ></NavigationElement> -->
       <NavigationElement
         @click="onClickSound"
+        @mouseenter="onHover"
         :icon="isSoundOn ? 'sound-on' : 'sound-off'"
         :isVisible="isSoundBtnVisible()"
       ></NavigationElement>
