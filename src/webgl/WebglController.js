@@ -27,6 +27,7 @@ import { EVENTS } from "@/utils/constants/events";
 import { RenderTarget } from "three";
 import { WaterPass } from "./pass/WaterPass/TransitionPass";
 import { Shake } from "./utils/Shake";
+import { Null } from "./UI/Null";
 
 export default class WebglController {
   constructor(container) {
@@ -39,7 +40,7 @@ export default class WebglController {
 
     this.allScene = [
       new Intro(),
-      new Map(),
+      new Null(),
       new Ladies(),
       new Dam(),
       new Bridge(),
