@@ -25,117 +25,8 @@ import { Vector4 } from "three";
 import Durance from "../objects/Durance";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { Vector3 } from "three";
+import Vegetation from "../objects/Vegetation";
 
-class ColorSpirit extends Spirit {
-  constructor() {
-    super();
-
-    this.allPos = [
-      { x: 5.8, y: 0.7, z: 1.9 },
-      { x: 5, y: 1, z: 1 },
-      { x: 5.5, y: 0.8, z: 2.4 },
-    ];
-    this.currentPos = 2;
-    this.currentLife = 4;
-    this.isCaptured = false;
-
-    this.allColors = [
-      new Color(0xacc8e4),
-      new Color(0x809bbf),
-      new Color(0x53a0ec),
-      new Color(0x1a80e6),
-    ];
-
-    this.position.set(
-      this.allPos[this.currentPos].x,
-      this.allPos[this.currentPos].y,
-      this.allPos[this.currentPos].z
-    );
-
-    this.tl = gsap.timeline({
-      onComplete: () => {
-        this.changePos();
-      },
-    });
-    this.tl.to(this.material, { opacity: 1, duration: 0.3 });
-    this.tl.to(this.material, { opacity: 0.2, duration: 1 });
-    this.tl.to(this.material, { opacity: 1, duration: 1 });
-    this.tl.to(this.material, { opacity: 0, duration: 1 });
-
-    this.anim();
-  }
-
-  anim() {
-    if (this.isCaptured) return;
-    this.tl.restart();
-    this.tl.play();
-  }
-
-  updateLife() {
-    this.isOnTransit = true;
-    this.currentLife = this.currentLife - 1;
-    switch (this.currentLife) {
-      case 3:
-        this.targetSpiritColor = new Vector4(
-          this.allColors[0].r,
-          this.allColors[0].g,
-          this.allColors[0].b,
-          1
-        );
-        this.changePos();
-        break;
-
-      case 2:
-        this.targetSpiritColor = new Vector4(
-          this.allColors[1].r,
-          this.allColors[1].g,
-          this.allColors[1].b,
-          1
-        );
-        this.changePos();
-        break;
-
-      case 1:
-        this.targetSpiritColor = new Vector4(
-          this.allColors[2].r,
-          this.allColors[2].g,
-          this.allColors[2].b,
-          1
-        );
-        this.changePos();
-        break;
-
-      case 0:
-        this.targetSpiritColor = new Vector4(
-          this.allColors[3].r,
-          this.allColors[3].g,
-          this.allColors[3].b,
-          1
-        );
-        this.isCaptured = true;
-        state.emit(EVENTS.GO_NEXT);
-        break;
-
-      default:
-        break;
-    }
-  }
-
-  changePos() {
-    if (app.webgl.currentScene != 3) return;
-    this.hide();
-    setTimeout(() => {
-      this.currentPos = (this.currentPos + 1) % this.allPos.length;
-      this.position.set(
-        this.allPos[this.currentPos].x,
-        this.allPos[this.currentPos].y,
-        this.allPos[this.currentPos].z
-      );
-      this.show();
-      this.anim();
-    }, 700);
-  }
-}
 
 class Dam extends Scene {
   constructor() {
@@ -181,11 +72,19 @@ class Dam extends Scene {
     };
 
     this.nbClick = 0;
+    this.isAnimIntroPass = false;
+    this.isTutoPass = false;
+    this.miloHasMove = false;
   }
 
   onAttach() {
     this.scene = app.assetsManager.get("dam");
+    this.rocks = [];
     this.scene.traverse((el) => {
+      if (el.name.includes('Pierre')) {
+        this.rocks.push(el)
+        el.material.transparent = true
+      }
       if (el.name == "WaterSurface") {
         this.water = el;
         el.material = new WaterMaterial({
@@ -195,7 +94,6 @@ class Dam extends Scene {
           },
           transparent: true,
           depthWrite: false,
-          // depthTest: false
         });
       }
     });
@@ -205,41 +103,17 @@ class Dam extends Scene {
     this.light = new AmbientLight({ color: 0xffffff });
     this.add(this.light);
 
-    // this.milo = new Milo();
-    // this.player = this.milo.model;
-    // this.player.position.set(
-    //   this.PARAMS.persoPos.x,
-    //   this.PARAMS.persoPos.y,
-    //   this.PARAMS.persoPos.z
-    //   );
-    //   // this.player.scale.set(0.15, 0.15, 0.15);
-    //   this.add(this.player);
-
-    this.spirit = new ColorSpirit();
+    this.spirit = new Spirit();
+    this.spirit.position.set(5.5, 0.7, 2)
     this.add(this.spirit);
 
     this.add(this.scene);
-
-    this.rocks = app.assetsManager.get("rocks");
-    this.rocks.traverse((el) => {
-      el.material = new MeshMatcapMaterial({
-        matcap: app.assetsManager.get("matcap"),
-        transparent: true,
-      });
-
-      el.visible = false;
-    });
-    this.rocks.position.set(
-      this.PARAMS.rocksPos.x,
-      this.PARAMS.rocksPos.y,
-      this.PARAMS.rocksPos.z
-    );
-    this.rocks.scale.set(1.5, 1.5, 1.5);
-    this.add(this.rocks);
-
-    this.anim = new CamAnim(3, this.scene, [0, 0.25, 0.5, 0.5, 0.75, 1]);
+    this.anim = new CamAnim(3, this.scene, [0, 0.25, 0.5, 0.75, 1, 1, 1]);
 
     if (app.webgl.currentScene === 3) this.init();
+
+    this.vegetation = new Vegetation("dam");
+    this.add(this.vegetation);
   }
 
   init() {
@@ -285,15 +159,6 @@ class Dam extends Scene {
         .on("change", (ev) => {
           this.spirit.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
-      this.pane
-        .addBinding(this.PARAMS, "rocksPos", {
-          min: -10,
-          max: 10,
-          step: 0.1,
-        })
-        .on("change", (ev) => {
-          this.rocks.position.set(ev.value.x, ev.value.y, ev.value.z);
-        });
     }
 
     app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
@@ -318,57 +183,45 @@ class Dam extends Scene {
     this.add(this.durance);
 
     this.player.goTo(new Vector3(4.3, this.PARAMS.persoPos.y, 5.6), 7);
+    setTimeout(()=>{
+      state.emit(EVENTS.GO_NEXT)
+    }, 6000)
   }
 
   onPointerDown(e) {
     if (app.webgl.currentScene != 3) return;
+    if (this.anim.currentKeyfame != 2) return;
 
-    //Move Milo after interraction
-    if (this.anim.currentKeyfame === 3) {
-      this.player.goTo(
-        new Vector3(5.7, this.PARAMS.persoPos.y, 1.8),
-        7,
-        -Math.PI / 2
-      );
+    if(!this.isTutoPass) {
+      this.isTutoPass = true;
+      state.emit(EVENTS.TUTO_PASS, 3);
     }
 
-    if (this.anim.currentKeyfame != 3) return;
-
     this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
-    const intersects = this.raycaster.intersectObject(this.spirit);
+
+    const intersects = this.raycaster.intersectObjects(this.rocks);
 
     if (intersects.length != 0) {
-      this.nbClick = this.nbClick + 2;
-      this.spirit.updateLife();
-      if (this.spirit.isCaptured) {
-        gsap.to(this.spirit.position, {
-          x: this.player.position.x,
-          y: this.player.position.y,
-          z: this.player.position.z,
-        });
+      this.nbClick++;
 
-        gsap.to(this.spirit.scale, {
-          x: 0,
-          y: 0,
-          z: 0,
-        });
-      }
-
-      gsap.to(
-        this.rocks.children.find(
-          (el) => el.name === "Pierre" + (this.nbClick - 1)
-        ).material,
-        {
+      intersects.forEach((el)=>{
+        gsap.to(el.object.material, {
           opacity: 0,
-        }
-      );
-      gsap.to(
-        this.rocks.children.find((el) => el.name === "Pierre" + this.nbClick)
-          .material,
-        {
-          opacity: 0,
-        }
-      );
+          onComplete: () => {
+            el.object.visible = false
+            this.rocks = this.rocks.filter((rock) => rock.name != el.object.name)
+            if(this.rocks.length == 0 && !this.isInteractionFini){
+              this.isInteractionFini = true
+              state.emit(EVENTS.GO_NEXT)
+              gsap.to(this.spirit.position, {
+                x: 5.5,
+                y: 0.8,
+                z: 2.4,
+              })
+            }
+          }
+        })
+      })
     }
   }
 
@@ -376,7 +229,7 @@ class Dam extends Scene {
     if (app.sceneshandler.currentScene != 3) return;
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
-    if (app.sceneshandler.currentStepCam == 4 && !this.durance.isActive) {
+    if (app.sceneshandler.currentStepCam == 3 && !this.durance.isActive) {
       this.durance.isActive = true;
       app.audio.layers.playVolumes([1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0]);
       this.durance.show();
@@ -384,6 +237,31 @@ class Dam extends Scene {
     if (app.sceneshandler.currentStepCam == 5 && this.durance.isActive) {
       this.durance.isActive = false;
       this.durance.hide();
+    }
+
+    //Move Milo after interraction
+    if (this.anim.currentKeyfame === 3 && !this.miloHasMove) {
+      this.miloHasMove = true
+      this.player.goTo(
+        new Vector3(5.7, this.PARAMS.persoPos.y, 1.8),
+        7,
+        -Math.PI / 2
+      );
+    }
+
+
+    // if (this.anim.currentKeyfame === 5 && !this.isAfterDialogues) {
+    //   this.isAfterDialogues = true
+    //   setTimeout(()=>{
+    //     state.emit(EVENTS.GO_NEXT)
+    //   }, 2000)
+    // }
+
+    if (this.anim.currentKeyfame === 6 && !this.isAfterCairn) {
+      this.isAfterCairn = true
+      setTimeout(()=>{
+        state.emit(EVENTS.GO_NEXT)
+      }, 2000)
     }
   }
 

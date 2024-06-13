@@ -52,14 +52,14 @@ export default class WebglController {
     // this.scene = new Bridge();
 
     // Post pros
-    const renderTarget = new RenderTarget(0, 0, { samples: 4 });
+    const renderTarget = new RenderTarget(0, 0, { samples: 4,  });
     this.effectComposer = new EffectComposer(this.renderer, renderTarget);
     this.effectComposer.setPixelRatio(window.devicePixelRatio);
     this.effectComposer.setSize(
       this.canvasWrapper.offsetWidth,
       this.canvasWrapper.offsetHeight
     );
-    this.renderPass = new RenderPass(this.scene, this.camera);
+    this.renderPass = new RenderPass(this.scene, this.camera, null, 0x988c86, 1);
     this.effectComposer.addPass(this.renderPass);
     this.waterPass = new ShaderPass(WaterPass);
     this.waterPass.material.uniforms.uResolution.value = new Vector4(

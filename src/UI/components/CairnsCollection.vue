@@ -1,4 +1,5 @@
 <script setup>
+import { app } from "@/App";
 import { EVENTS } from "../../utils/constants/events"
 import { state } from "../../utils/State"
 
@@ -13,7 +14,7 @@ const playEndAnimation = () => {
   console.log("CairnsCollection.vue - end anim!")
 }
 
-const playCollectAnimation = (index) => {
+const playCollectionAnimation = (index) => {
   const collectTimeline = gsap.timeline()
   collectTimeline
   .fromTo(
@@ -29,8 +30,17 @@ const playCollectAnimation = (index) => {
   )
 }
 
+const playCollectionSound = () => {
+  if (app.audio === undefined) return;
+
+  // [WIP][son] add UI sound here
+}
+
 state.on(EVENTS.COLLECT_CAIRN, (e) => {
-  playCollectAnimation(e)
+  setTimeout(() => {
+    playCollectionAnimation(e)
+    playCollectionSound()
+  }, 300);
 })
 </script>
 

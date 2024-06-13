@@ -80,6 +80,16 @@ class Chapel extends Scene {
         .on("change", (ev) => {
           this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
+
+        this.pane
+        .addBinding(app.webgl.transitionPass.material.uniforms.uProgress, "value", {
+          min: 0,
+          max: 1,
+          step: 0.1,
+        })
+        .on("change", (ev) => {
+          app.webgl.transitionPass.material.uniforms.uProgress.value = ev.value
+        });
     }
 
     this.milo = new Milo();

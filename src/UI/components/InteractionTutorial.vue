@@ -13,7 +13,6 @@ const props = defineProps({
 
 const handleClick = () => {
   console.log("InteractionTutorial.vue - handleClick!")
-  state.emit(EVENTS.GO_NEXT)
 }
 
 const interactionType = props.sceneIndex === 2 ? "move" : "click"
@@ -47,7 +46,7 @@ const interactionType = props.sceneIndex === 2 ? "move" : "click"
   width: 100%;
   top: 0;
   left: 0;
-  background-color: #4e5d6c99;
+  // background-color: #4e5d6c99;
   display: grid;
   align-items: center;
   justify-content: center;

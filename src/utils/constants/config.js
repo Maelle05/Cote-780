@@ -113,7 +113,7 @@ const INTRO_SECTIONS = [
 const NEW_CAIRNS = [
   {
     scene: 2,
-    step: 5,
+    step: 4,
   },
   {
     scene: 3,

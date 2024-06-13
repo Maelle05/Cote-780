@@ -18,9 +18,16 @@ const props = defineProps({
 const cairnImageIndex = ref(props.sceneIndex)
 
 const handleClick = () => {
-  console.log("CollectionCairns.vue - handleClick!")
-  state.emit(EVENTS.COLLECT_CAIRN, props.sceneIndex - 1)
+  const cairnIndex = props.sceneIndex - 1
+  state.emit(EVENTS.COLLECT_CAIRN, cairnIndex)
   state.emit(EVENTS.GO_NEXT)
+  playCollectionAnimation(cairnIndex)
+  playCollectionSound()
+}
+
+const playCollectionAnimation = (cairnIndex) => {
+  const xValue = `${(cairnIndex - 3) * 50}px`;
+  gsap.to(".new-cairn__image", { y: "-160px", x: xValue, opacity: 0, scale: 0.5, duration: 0.6 })
 }
 
 const playApparitionAnimation = () => {
@@ -51,6 +58,12 @@ const playApparitionAnimation = () => {
       { duration: 0.7, opacity: 1, y: 0, rotate: -5.5, scale: 1 },
       "-=0.6"
     )
+}
+
+const playCollectionSound = () => {
+  if (app.audio === undefined) return;
+
+  // [WIP][son] add UI sound here
 }
 
 const playApparitionSound = () => {
@@ -88,7 +101,7 @@ watch(() => props.sceneIndex, (newVal) => {
   >
     <div class="new-cairn">
       <div class="new-cairn__image">
-        <img :src="`/assets/images/cairns/${cairnImageIndex}.svg`" alt="" />
+        <img :src="`/assets/images/cairns/collected/${cairnImageIndex}.svg`" alt="" />
       </div>
       <div class="new-cairn__text">
         <p>{{ t(`global.new-cairn_1`) }}</p>
