@@ -27,7 +27,6 @@ import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { Vector3 } from "three";
 import Vegetation from "../objects/Vegetation";
 
-
 class Dam extends Scene {
   constructor() {
     super();
@@ -81,9 +80,9 @@ class Dam extends Scene {
     this.scene = app.assetsManager.get("dam");
     this.rocks = [];
     this.scene.traverse((el) => {
-      if (el.name.includes('Pierre')) {
-        this.rocks.push(el)
-        el.material.transparent = true
+      if (el.name.includes("Pierre")) {
+        this.rocks.push(el);
+        el.material.transparent = true;
       }
       if (el.name == "WaterSurface") {
         this.water = el;
@@ -104,12 +103,12 @@ class Dam extends Scene {
     this.add(this.light);
 
     this.spirit = new Spirit();
-    this.spirit.position.set(5.5, 0.7, 2)
+    this.spirit.position.set(5.5, 0.7, 2);
     this.add(this.spirit);
 
     this.duranceTex = app.assetsManager.get("duranceSide");
     this.durance = new Durance(this.duranceTex);
-    this.add(this.durance)
+    this.add(this.durance);
 
     this.add(this.scene);
     this.anim = new CamAnim(3, this.scene, [0, 0.25, 0.5, 0.75, 1, 1, 1]);
@@ -182,24 +181,24 @@ class Dam extends Scene {
     this.durance.scale.set(2.5, 2.5, 2.5);
     this.durance.position.set(1.5, 0, 0);
     this.durance.renderOrder = 1;
-    this.durance.isActive = false
+    this.durance.isActive = false;
 
     this.player.goTo(new Vector3(4.3, this.PARAMS.persoPos.y, 5.6), 7);
   }
 
-  onAskRemoveTransition(){
+  onAskRemoveTransition() {
     if (app.sceneshandler.currentScene != 3) return;
 
-    setTimeout(()=>{
-      state.emit(EVENTS.GO_NEXT)
-    }, 4000)
+    setTimeout(() => {
+      state.emit(EVENTS.GO_NEXT);
+    }, 4000);
   }
 
   onPointerDown(e) {
     if (app.webgl.currentScene != 3) return;
     if (this.anim.currentKeyfame != 2) return;
 
-    if(!this.isTutoPass) {
+    if (!this.isTutoPass) {
       this.isTutoPass = true;
       state.emit(EVENTS.TUTO_PASS, 3);
     }
@@ -211,25 +210,27 @@ class Dam extends Scene {
     if (intersects.length != 0) {
       this.nbClick++;
 
-      intersects.forEach((el)=>{
+      intersects.forEach((el) => {
         gsap.to(el.object.material, {
           opacity: 0,
           onComplete: () => {
-            el.object.visible = false
-            this.rocks = this.rocks.filter((rock) => rock.name != el.object.name)
+            el.object.visible = false;
+            this.rocks = this.rocks.filter(
+              (rock) => rock.name != el.object.name
+            );
             app.audio.ui.play("click", 0.3);
-            if(this.rocks.length == 0 && !this.isInteractionFini){
-              this.isInteractionFini = true
-              state.emit(EVENTS.GO_NEXT)
+            if (this.rocks.length == 0 && !this.isInteractionFini) {
+              this.isInteractionFini = true;
+              state.emit(EVENTS.GO_NEXT);
               gsap.to(this.spirit.position, {
                 x: 5.5,
                 y: 0.8,
                 z: 2.4,
-              })
+              });
             }
-          }
-        })
-      })
+          },
+        });
+      });
     }
   }
 
@@ -249,14 +250,13 @@ class Dam extends Scene {
 
     //Move Milo after interraction
     if (this.anim.currentKeyfame === 3 && !this.miloHasMove) {
-      this.miloHasMove = true
+      this.miloHasMove = true;
       this.player.goTo(
         new Vector3(5.7, this.PARAMS.persoPos.y, 1.8),
         7,
         -Math.PI / 2
       );
     }
-
 
     // if (this.anim.currentKeyfame === 5 && !this.isAfterDialogues) {
     //   this.isAfterDialogues = true
@@ -266,10 +266,10 @@ class Dam extends Scene {
     // }
 
     if (this.anim.currentKeyfame === 6 && !this.isAfterCairn) {
-      this.isAfterCairn = true
-      setTimeout(()=>{
-        state.emit(EVENTS.GO_NEXT)
-      }, 2000)
+      this.isAfterCairn = true;
+      setTimeout(() => {
+        state.emit(EVENTS.GO_NEXT);
+      }, 2000);
     }
   }
 
