@@ -56,12 +56,13 @@ class Demoiselle extends Group {
     this.top = top;
     this.riseTop = riseTop;
     this.topIsDraw = false;
+    this.isElHit = false;
   }
 
   onPointerMove(e) {
     if (this.topIsDraw) return;
     if (app.webgl.currentScene != 2) return;
-    if (app.webgl.scene.anim.currentKeyfame != 3) return;
+    if (app.webgl.scene.anim.currentKeyfame != 2) return;
 
     // update the picking ray with the camera and pointer position
     this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
@@ -70,6 +71,7 @@ class Demoiselle extends Group {
     const intersects = this.raycaster.intersectObject(this.top);
 
     for (let i = 0; i < intersects.length; i++) {
+      if (!this.isElHit) this.isElHit = true;
       intersects[i].object.material.opacity = 1;
       this.drawOnCanvasTex(intersects[i].uv);
     }
@@ -152,6 +154,7 @@ class Ladies extends Scene {
     };
 
     this.finish = false;
+    this.isTutoPass = false;
 
     this.light = new AmbientLight({ color: 0xffffff });
     this.add(this.light);
@@ -234,7 +237,9 @@ class Ladies extends Scene {
 
     this.milo = new Milo();
     this.player = this.milo.model;
-    this.player.position.set(8.3, 0.0, -5.2);
+    this.player.position.set(8.37, -0.04, -5.2);
+    this.player.scale.set(0.06, 0.06, 0.06);
+    this.player.rotation.y = -130 * Math.PI / 180;
 
     this.add(this.player);
   }
@@ -252,12 +257,16 @@ class Ladies extends Scene {
       }
     }
 
-    if (app.sceneshandler.currentStepCam == 2) {
+    if( this.dem1.isElHit || this.dem2.isElHit || this.dem3.isElHit) {
+      this.isTutoPass = true
+      state.emit(EVENTS.TUTO_PASS, 2)
+    }
+    if (app.sceneshandler.currentStepCam == 2 && !this.isTutoPass) {
       this.demoiselles.children.forEach((dem) => {
         dem.top.material.uniforms.u_gAlpha.value =
           (Math.sin(app.ticker.elapsed * 0.005) * 0.5 + 0.5) * 0.4;
       });
-    } else if (app.sceneshandler.currentStepCam == 3) {
+    } else if (app.sceneshandler.currentStepCam == 2 && this.isTutoPass) {
       this.demoiselles.children.forEach((dem) => {
         dem.top.material.uniforms.u_gAlpha.value = 0;
       });
@@ -320,7 +329,7 @@ class Ladies extends Scene {
     this.tears.userData.isActive = true;
     this.tears.position.set(2.05, 2.84, 1.7);
 
-    this.anim = new CamAnim(2, this.ladies, [0, 0.25, 0.5, 0.75, 1, 1, 1]);
+    this.anim = new CamAnim(2, this.ladies, [0, 0.25, 0.5, 1, 1, 1]);
     // this.anim.onChangeSceneStep(2);
 
     this.add(this.ladies, this.ambient, this.tears);

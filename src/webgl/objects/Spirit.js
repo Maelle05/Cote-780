@@ -8,6 +8,7 @@ import { Vector2 } from "three";
 import { Group } from "three";
 import { Vector3 } from "three";
 import { Vector4 } from "three";
+import { Color } from "three";
 
 export default class Spirit extends Group {
   constructor() {
@@ -20,7 +21,13 @@ export default class Spirit extends Group {
     noise.wrapT = RepeatWrapping;
     const tex = app.assetsManager.get("spiritTex");
     const texBody = app.assetsManager.get("spiritTexBody");
-    this.currentSpiritColor = new Vector4(1, 1, 1, 1);
+    this.baseColor = new Color(0xacc8e4);
+    this.currentSpiritColor = new Vector4(
+      this.baseColor.r,
+      this.baseColor.g,
+      this.baseColor.b,
+      1
+    );
     this.targetSpiritColor = new Vector4(1, 1, 1, 1);
 
     // Face
