@@ -116,6 +116,9 @@ class Bridge extends Scene {
     // this.player.rotation.y = Math.PI - 45;
     const walkDuration = 3;
     this.player.goTo(this.center, walkDuration);
+    setTimeout(()=>{
+      state.emit(EVENTS.GO_NEXT)
+    }, 3000)
     this.add(this.player);
 
     this.durance = new Durance(app.assetsManager.get("duranceFace"));
@@ -124,6 +127,8 @@ class Bridge extends Scene {
     this.durance.hide();
     this.durance.position.set(0, 0, 0);
     this.add(this.durance);
+
+    this.spirit.hide();
 
     //End of the walk & Start Tuto
     setTimeout(() => {
@@ -273,17 +278,22 @@ class Bridge extends Scene {
     this.spirit.position.set(this.x, this.rocks[0].position.y + 0.2, this.z);
 
     if (
-      this.spirit.position.distanceTo(this.rocks[this.rockIndex].position) < 0.3
+      this.spirit.position.distanceTo(this.rocks[this.rockIndex].position) < 0.6
     ) {
-      this.spirit.targetSpiritColor = new Vector4(255, 0, 0, 1);
-    } else {
       this.spirit.targetSpiritColor = new Vector4(255, 255, 255, 1);
+    } else {
+      this.spirit.targetSpiritColor = new Vector4(255, 255, 255, 0);
     }
   }
 
   onPointerDown() {
     if (app.webgl.currentScene != 4 && this.anim.currentKeyfame != 2) return;
     if (this.isAnimating === true) return;
+
+    if(!this.isTutoPass && this.anim.currentKeyfame == 2){
+      this.isTutoPass = true
+      state.emit(EVENTS.TUTO_PASS, 4)
+    }
 
     this.currentRock = this.rocks[this.rockIndex];
     this.nextRock = this.rocks[this.rockIndex + 1];

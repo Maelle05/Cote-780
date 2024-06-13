@@ -31,7 +31,7 @@ const isTutorialVisible = () => {
     return true
   }
 
-  if (props.sceneIndex === 4 && props.stepIndex === 1) {
+  if (props.sceneIndex === 4 && props.stepIndex === 2 && !isTutoPass.value.includes(4)) {
     return true
   }
 

@@ -128,6 +128,12 @@
     "title_0": "Le Pont de",
     "title_1": "Chanteloube",
     "text_1": {
+      "person": "Milo",
+      "text": "oh",
+      "camera": "1",
+      "audio": "milo_oh"
+    },
+    "text_2": {
       "person": "Durance",
       "text": "Tu en es digne, suis-moi, il faut que je te montre.",
       "camera": "4",
@@ -233,7 +239,8 @@
     "url": "https://www.serreponcon.com/notre-lac/"
   },
   "scene_7": {
-    "title": "Fin",
+    "title_0": "Le Passage",
+    "title_1": "de Savines",
     "text_1": {
       "person": "Esprit",
       "text": "Bravo Milo ! À travers cette quête tu as pu t’immerger dans l’histoire de la contrée et regagner la confiance de la Durance. La vallée peut désormais retrouver sa tranquillité.",
