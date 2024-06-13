@@ -42,7 +42,7 @@ state.on(EVENTS.CHANGE_SCENE_STEP, (e) => {
 
   <main>
     <div>
-      <img class="logo" src="/assets/images/logo.svg" />
+      <img :class="`logo logo--${isScenes ? 'visible' : 'hidden'}`" src="/assets/images/logo.svg" />
     </div>
     <Navigation :sceneIndex="sceneIndex"></Navigation>
     <Intro v-if="isIntro" />
@@ -60,6 +60,11 @@ main {
     left: 16px;
     user-select: none;
     z-index: 110;
+    transition: opacity 600ms;
+
+    &.logo--hidden {
+      opacity: 0;
+    }
   }
 }
 </style>

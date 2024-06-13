@@ -223,8 +223,8 @@ const handleMouseEnterCircle = (type) => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: opacity 1000ms;
-  background-color: var(--c-background-beige);
+  transition: opacity 2000ms;
+  // background-color: var(--c-background-beige);
   overflow: hidden;
 
   &.welcome-scene__container--hidden {

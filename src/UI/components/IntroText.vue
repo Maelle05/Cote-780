@@ -12,7 +12,7 @@ const props = defineProps({
 
 const isVisible = ref(false)
 
-const LIMIT_APPEAR = props.index === 0 ? 0.2 : 0.4
+const LIMIT_APPEAR = 0.2
 const LIMIT_DISAPPEAR = 0.8
 
 watchEffect(() => {
@@ -21,7 +21,9 @@ watchEffect(() => {
     props.sectionProgress > LIMIT_APPEAR &&
     props.sectionProgress < LIMIT_DISAPPEAR
   ) {
-    isVisible.value = true
+    setTimeout(() => {
+      isVisible.value = true
+    }, 500 * props.index);
     app.audio.dialog.play(props.audio);
   } else if (
     isVisible.value === true &&

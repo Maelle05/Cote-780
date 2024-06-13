@@ -28,20 +28,20 @@ const INTRO_SECTIONS = [
   },
   {
     elements: [
-      { id: "1-colline-1", src: "/assets/images/intro/1_colline-1.png" },
+      // { id: "1-colline-1", src: "/assets/images/intro/1_colline-1.png" },
       { id: "1-colline-2", src: "/assets/images/intro/1_colline-2.png" },
       { id: "1-maison", src: "/assets/images/intro/1_maison.png" },
-      {
-        id: "1-buisson-gauche",
-        src: "/assets/images/intro/1_buisson-droite.png",
-      },
-      {
-        id: "1-buisson-droite",
-        src: "/assets/images/intro/1_buisson-gauche.png",
-      },
+      // {
+      //   id: "1-buisson-gauche",
+      //   src: "/assets/images/intro/1_buisson-droite.png",
+      // },
+      // {
+      //   id: "1-buisson-droite",
+      //   src: "/assets/images/intro/1_buisson-gauche.png",
+      // },
       { id: "1-arbre", src: "/assets/images/intro/1_arbre.png" },
     ],
-    texts: [],
+    texts: [dataText["intro"]["text_1"], dataText["intro"]["text_2"], dataText["intro"]["text_3"]],
     audios: [],
   },
   {
@@ -70,7 +70,7 @@ const INTRO_SECTIONS = [
   {
     elements: [
       { id: "4-durance-1", src: "/assets/images/intro/4_durance-1.png" },
-      { id: "4-durance-2", src: "/assets/images/intro/4_durance-2.png" },
+      // { id: "4-durance-2", src: "/assets/images/intro/4_durance-2.png" },
       { id: "4-durance-3", src: "/assets/images/intro/4_durance-3.png" },
       { id: "4-grandma", src: "/assets/images/intro/4_grandma.png" },
       { id: "4-cairn", src: "/assets/images/intro/4_cairn.png" },
