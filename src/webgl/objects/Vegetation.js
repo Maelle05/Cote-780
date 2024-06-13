@@ -1,9 +1,10 @@
 import { app } from "@/App";
-import { Group, InstancedMesh } from "three";
+import { Group, InstancedMesh, Vector3 } from "three";
 
 export default class Vegetation extends Group {
-  constructor(sceneId) {
+  constructor(sceneId, scale = 1) {
     super();
+    this.scaleVector = new Vector3(scale, scale, scale);
 
     this.empties = new Map(); // Map of empties representing the position, scale and rotation of the vegetation
     this.samples = new Map(); // Map of samples representing the mesh of each different vegetation type
@@ -43,6 +44,7 @@ export default class Vegetation extends Group {
       }
 
       empties.forEach((empty, i) => {
+        empty.matrix.scale(this.scaleVector);
         instancedMesh.setMatrixAt(i, empty.matrix);
       });
       instancedMesh.instanceMatrix.needsUpdate = true;

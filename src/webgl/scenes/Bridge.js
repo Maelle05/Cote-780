@@ -36,6 +36,7 @@ import { ShakiraMaterial } from "../materials/Shakira/material";
 import { Vector2 } from "three";
 import { Vector4 } from "three";
 import Durance from "../objects/Durance";
+import Vegetation from "../objects/Vegetation";
 
 class Bridge extends Scene {
   constructor() {
@@ -229,6 +230,9 @@ class Bridge extends Scene {
     }
 
     if (app.webgl.currentScene === 4) this.init();
+
+    this.vegetation = new Vegetation("bridge", 0.8);
+    this.add(this.vegetation);
   }
 
   onTick(e) {
