@@ -125,7 +125,7 @@ const NEW_CAIRNS = [
   },
   {
     scene: 5,
-    step: 5,
+    step: 4,
   },
   {
     scene: 6,

@@ -16,10 +16,11 @@
     "new-cairn_3": "cairn"
   },
   "intro": {
-    "text_1": "Ce conte vous plonge au cœur des Hautes-Alpes, dans la vallée de la Durance.",
+    "text_1": "Ce conte se déroule au cœur des Hautes-Alpes, dans la vallée de la Durance.",
     "text_2": "Un barrage y fut construit à la fin des années 1950 pour apaiser les colères de l’imposante rivière qui donne son nom à la vallée. Cet événement bouleversa de nombreuses vies dans la région, et trois villages furent engloutis sous les eaux.",
     "text_3": "Ce fut la naissance du Lac de Serre-Ponçon.",
-    "start": "Démarrer l'expérience"
+    "start": "Démarrer l'expérience",
+    "next": "Compris !"
   },
   "scene_0": {
     "title": "Intro",
@@ -150,13 +151,18 @@
     "text_1": {
       "person": "Esprit",
       "text": "Cette chapelle est le souvenir d’une vallée engloutie. À l’intérieur t’attend ton destin.",
-      "camera": "1",
-      "audio": "esprit_2"
+      "camera": "1"
     },
     "text_2": {
+      "person": "Milo",
+      "text": "wouhou !",
+      "camera": "3",
+      "audio": "milo_wouhou"
+    },
+    "text_3": {
       "person": "Esprit",
       "text": "Par ici ! Si tu décides de traverser ce portail, tu découvriras un lieu que le temps tente d'effacer.",
-      "camera": "4",
+      "camera": "5",
       "audio": "esprit_3"
     },
     "tuto": "Clique sur les torches pour les allumer et pénétrer dans la chapelle",

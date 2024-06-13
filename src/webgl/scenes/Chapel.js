@@ -26,6 +26,7 @@ import Milo from "../objects/Milo";
 import { Vector3 } from "three";
 import { ShakiraMaterial } from "../materials/Shakira/material";
 import Vegetation from "../objects/Vegetation";
+import { EVENTS } from "@/utils/constants/events";
 
 class Chapel extends Scene {
   constructor() {
@@ -81,7 +82,7 @@ class Chapel extends Scene {
           this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
 
-        this.pane
+      this.pane
         .addBinding(app.webgl.transitionPass.material.uniforms.uProgress, "value", {
           min: 0,
           max: 1,
@@ -102,6 +103,7 @@ class Chapel extends Scene {
     this.index = 0;
     this.isAnimating = false;
     this.interpolatedMouse = new Vector2(0.5, 0.5);
+    this.portal.material.uniforms.uProgress.value = 0;
 
     app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
     app.webgl.shake.startShake();
@@ -176,7 +178,7 @@ class Chapel extends Scene {
     this.spirit = new Spirit();
     this.add(this.spirit);
 
-    this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 0.66, 1, 1]);
+    this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 0.66, 0.66, 1]);
     // this.anim.onChangeSceneStep(4);
 
     if (!this.anim) {
@@ -192,13 +194,25 @@ class Chapel extends Scene {
     this.add(this.vegetation);
   }
 
+  onAskRemoveTransition(){
+    if (app.webgl.currentScene != 5) return;
+    setTimeout(()=> {
+      state.emit(EVENTS.GO_NEXT)
+    }, 4000)
+  }
+
   onPointerDown(e) {
     if (app.webgl.currentScene != 5) return;
     if (this.isAnimating === true) return;
-    // if (this.anim.currentKeyfame != 2) return;
+    if (this.anim.currentKeyfame != 2) return;
 
     this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
     const intersects = this.raycaster.intersectObjects(this.torchs);
+
+    if(!this.isTutoPass) {
+      this.isTutoPass = true;
+      state.emit(EVENTS.TUTO_PASS, 5);
+    }
 
     if (intersects.length != 0) {
       const flame = intersects[0].object.flame;
@@ -214,7 +228,7 @@ class Chapel extends Scene {
   }
 
   onPointerMove(e) {
-    if (this.anim.currentKeyfame != 3) return;
+    if (this.anim.currentKeyfame != 2) return;
 
     this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
     const intersects = this.raycaster.intersectObjects(this.torchs);
@@ -279,11 +293,12 @@ class Chapel extends Scene {
           flame.visible = true;
           flame.show();
 
-          if (this.index == this.torchs.length - 4) {
+          if (this.index == 5) {
             this.isAnimating = true;
-            //TODO : PLAY THE CAIRN ANIMATION THEN CREATE PORTAL
+            state.emit(EVENTS.GO_NEXT)
             this.createPortal();
             app.audio.layers.playVolumes([0, 0, 0, 0.3, 0, 0, 0, 0, 0, 0, 0]);
+            //TODO : PLAY THE CAIRN ANIMATION THEN CREATE PORTAL
           }
         },
         onUpdateParams: [this.spirit], // Pass the spirit object to onUpdate
@@ -297,34 +312,30 @@ class Chapel extends Scene {
     tl.to(this.portal.material.uniforms.uProgress, {
       value: 1,
       duration: 2,
-      delay: 1,
       ease: "power2.in",
     });
-
-    //Move the spirit
-    const portalPos = new Vector3(0.34, 1.05, -0.15);
-    const lookAtPos = new Vector3(0.3, 1.05, -0.17);
-    const spiritPos = new Vector3(0.83, 1.25, -0.3);
-    this.goTo(spiritPos);
-
-    //Move Milo & Spirit
-    //TODO : FIRE WHEN DIALOG SKIP
-    const animDuration = 4;
-
-    setTimeout(() => {
-      this.player.goTo(portalPos, animDuration);
-
-      setTimeout(() => {
-        gsap.to(this.player.rotation, {
-          y: -Math.PI / 4,
-          duration: 1,
-        });
-      }, animDuration * 1000);
-    }, 4000);
   }
 
   onTick(e) {
     if (app.webgl.currentScene != 5) return;
+
+    if (!this.endTransition && app.sceneshandler.currentStepCam == 5) {
+      this.endTransition = true
+      const portalPos = new Vector3(0.34, 1.05, -0.15);
+      const spiritPos = new Vector3(0.83, 1.25, -0.3);
+      this.goTo(spiritPos);
+      setTimeout(() => {
+        const animDuration = 4;
+        this.player.goTo(portalPos, animDuration);
+
+        setTimeout(() => {
+          gsap.to(this.player.rotation, {
+            y: -Math.PI / 4,
+            duration: 1,
+          });
+        }, animDuration * 1000);
+      }, 2000);
+    }
 
     if (!this.portal) return;
 
