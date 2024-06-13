@@ -89,7 +89,7 @@ class Chapel extends Scene {
           step: 0.1,
         })
         .on("change", (ev) => {
-          app.webgl.transitionPass.material.uniforms.uProgress.value = ev.value
+          app.webgl.transitionPass.material.uniforms.uProgress.value = ev.value;
         });
     }
 
