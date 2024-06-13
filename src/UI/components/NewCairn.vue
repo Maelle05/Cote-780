@@ -19,7 +19,7 @@ const cairnImageIndex = ref(props.sceneIndex)
 
 const handleClick = () => {
   console.log("CollectionCairns.vue - handleClick!")
-  state.emit(EVENTS.COLLECT_CAIRN)
+  state.emit(EVENTS.COLLECT_CAIRN, props.sceneIndex - 1)
   state.emit(EVENTS.GO_NEXT)
 }
 

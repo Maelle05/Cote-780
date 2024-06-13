@@ -13,13 +13,24 @@ const playEndAnimation = () => {
   console.log("CairnsCollection.vue - end anim!")
 }
 
-const playCollectAnimation = () => {
+const playCollectAnimation = (index) => {
   const collectTimeline = gsap.timeline()
-  collectTimeline.fromTo(`.cairns-collection__element--${props.cairnsNumber}`, { opacity: 0, filter: "drop-shadow(0 0 0 #fff)" }, {opacity: 1, filter: "drop-shadow(0 0 12px #fff)", duration: 0.5})
+  collectTimeline
+  .fromTo(
+    `.cairns-collection__element--${index}`, 
+    { opacity: 0, filter: "drop-shadow(0 0 0 #fff)" }, 
+    { opacity: 1, scale: 1.15, filter: "drop-shadow(0 0 12px #fff)", duration: 0.5 }
+  )
+  .to(`.cairns-collection__element--${index} .cairn--collected`, { opacity: 1, duration: 0.4 }, "<")
+  .to(`.cairns-collection__element--${index} .cairn--uncollected`, { opacity: 0, duration: 0.4 }, "<")
+  .to(
+    `.cairns-collection__element--${index}`, 
+    { scale: 1,  duration: 0.2},
+  )
 }
 
 state.on(EVENTS.COLLECT_CAIRN, (e) => {
-  playCollectAnimation()
+  playCollectAnimation(e)
 })
 </script>
 
@@ -32,7 +43,8 @@ state.on(EVENTS.COLLECT_CAIRN, (e) => {
         }`"
         v-for="(cairn, index) in [2, 3, 4, 5, 6]"
       >
-        <img :src="`/assets/images/cairns/${cairn}.svg`">
+        <img class="cairn cairn--uncollected" :src="`/assets/images/cairns/uncollected/${cairn}.svg`">
+        <img class="cairn cairn--collected" :src="`/assets/images/cairns/collected/${cairn}.svg`">
       </div>
     </div>
   </div>
@@ -66,10 +78,8 @@ state.on(EVENTS.COLLECT_CAIRN, (e) => {
 
 .cairns-collection__element {
   --cairn-padding: 4px;
-  opacity: 0.2;
   width: 56px;
   height: 56px;
-  // background: var(--c-turquoise-dark);
   display: grid;
   align-items: center;
   justify-content: center;
@@ -80,15 +90,21 @@ state.on(EVENTS.COLLECT_CAIRN, (e) => {
   filter: drop-shadow(0 0 0 #fff);
   transition: opacity 600ms, filter 600ms;
 
-  // &:nth-child(1),
-  // &.cairns-collection__element--collected {
-    // opacity: 1;
-    // filter: drop-shadow(0 0 12px #fff);
-  // }
 
   img {
+    grid-area: 1 / -1;
     max-width: 100%;
     max-height: calc(100% - var(--cairn-padding) * 2);
+    position: relative;
+  }
+
+  .cairn.cairn--uncollected {
+    z-index: 0;
+  }
+  
+  .cairn.cairn--collected {
+    opacity: 0;
+    z-index: 1;
   }
 }
 </style>
