@@ -1,58 +1,58 @@
 <script setup>
-import { state } from "../../utils/State"
-import { EVENTS } from "../../utils/constants/events"
-import { MAP_DATA } from "../../utils/constants/config"
+import { state } from "../../utils/State";
+import { EVENTS } from "../../utils/constants/events";
+import { MAP_DATA } from "../../utils/constants/config";
 
-import { useI18n } from "vue-i18n"
-import { ref, onMounted, computed } from "vue"
-import { gsap } from "gsap/gsap-core"
+import { useI18n } from "vue-i18n";
+import { ref, onMounted, computed } from "vue";
+import { gsap } from "gsap/gsap-core";
 
-import ChapterTitle from "./ChapterTitle.vue"
+import ChapterTitle from "./ChapterTitle.vue";
 
-const { t } = useI18n()
+const { t } = useI18n();
 
 const props = defineProps({
   sceneIndex: Number,
-})
+});
 
-const sceneIndex = ref(0)
-const isVisible = ref(false)
-const pathRefs = ref([])
+const sceneIndex = ref(0);
+const isVisible = ref(false);
+const pathRefs = ref([]);
 
 state.on(EVENTS.CHANGE_SCENE, (e) => {
-  sceneIndex.value = e
-  if (e === 1) return
-  initApparition()
-})
+  sceneIndex.value = e;
+  if (e === 1) return;
+  initApparition();
+});
 
 onMounted(() => {
   pathRefs.value.forEach((path) => {
-    const length = path.getTotalLength()
-    path.style.setProperty("--path-length", length)
-  })
+    const length = path.getTotalLength();
+    path.style.setProperty("--path-length", length);
+  });
 
   if (props.sceneIndex > 1) {
-    sceneIndex.value = props.sceneIndex
-    initApparition()
+    sceneIndex.value = props.sceneIndex;
+    initApparition();
   }
-})
+});
 
 const initApparition = () => {
-  isVisible.value = true
+  isVisible.value = true;
   setTimeout(() => {
-    playApparitionAnimation()
-  }, 100)
-}
+    playApparitionAnimation();
+  }, 100);
+};
 
 const playApparitionAnimation = () => {
-  const apparitionTimeline = gsap.timeline()
+  const apparitionTimeline = gsap.timeline();
 
   if (sceneIndex.value > 1) {
     const activePath = document.querySelector(
       ".welcome-scene__path--active-mask"
-    )
-    const pathLength = activePath ? activePath.getTotalLength() : 0
-    const pathAnimDuration = activePath ? Math.max(0.8, pathLength / 200) : 0
+    );
+    const pathLength = activePath ? activePath.getTotalLength() : 0;
+    const pathAnimDuration = activePath ? Math.max(0.8, pathLength / 200) : 0;
 
     apparitionTimeline
       .to(".welcome-scene__point--last", {
@@ -68,7 +68,7 @@ const playApparitionAnimation = () => {
           ease: "linear",
         },
         "-=1"
-      )
+      );
   }
 
   apparitionTimeline
@@ -79,7 +79,7 @@ const playApparitionAnimation = () => {
       onComplete: () => {
         document
           .querySelector(".welcome-scene__point--active")
-          ?.classList.add("welcome-scene__point--ready")
+          ?.classList.add("welcome-scene__point--ready");
       },
     })
     .to(
@@ -90,44 +90,44 @@ const playApparitionAnimation = () => {
         ease: "power4.out",
       },
       "-=0.8"
-    )
-}
+    );
+};
 
 const filteredMapData = computed(() => {
   return MAP_DATA.map((el) => {
     if (el.scene < sceneIndex.value - 1) {
-      return { ...el, type: "inactive" }
+      return { ...el, type: "inactive" };
     } else if (el.scene === sceneIndex.value - 1) {
-      return { ...el, type: "last" }
+      return { ...el, type: "last" };
     } else if (el.scene === sceneIndex.value) {
-      return { ...el, type: "active" }
+      return { ...el, type: "active" };
     } else {
-      return { ...el, type: "hidden" }
+      return { ...el, type: "hidden" };
     }
-  })
-})
+  });
+});
 
 const handleClickCircle = (type) => {
-  if (!isVisible) return
-  if (type !== "active") return
+  if (!isVisible) return;
+  if (type !== "active") return;
 
-  isVisible.value = false
-  state.emit(EVENTS.GO_NEXT)
+  isVisible.value = false;
+  state.emit(EVENTS.GO_NEXT);
 
   setTimeout(() => {
     gsap.set("#watercolor-mask circle", {
       attr: { r: 0 },
-    })
-  }, 5000)
+    });
+  }, 5000);
 
   // [WIP][son] jouer son
-}
+};
 
 const handleMouseEnterCircle = (e) => {
-  if (!isVisible) return
+  if (!isVisible) return;
 
   // [WIP][son] jouer son
-}
+};
 </script>
 
 <template lang="">

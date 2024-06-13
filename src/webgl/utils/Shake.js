@@ -18,7 +18,7 @@ export class Shake {
       shakeOffset: 0.8,
       shakeRandomRange: 5,
       shakeNoiseScale: 0.2,
-      shakeNoiseStrength: 0.05,
+      shakeNoiseStrength: 0.1,
     };
 
     this.debug();
@@ -72,12 +72,11 @@ export class Shake {
     this.perlinTexture.wrapT = RepeatWrapping;
 
     scene.traverse((child) => {
-      if (
-        (child.isMesh && child.name.includes("-Shakira")) ||
-        child.name.includes("Plane002")
-      ) {
+      // if (child.isMesh) console.log(child.material.type);
+      if (child.isMesh && child.material.type == "MeshStandardMaterial") {
         const bounding = new Box3().setFromObject(child);
         const boundingSize = bounding.getSize(new Vector3());
+        const worldPos = child.position;
 
         child.material = new ShakiraMaterial({
           uniforms: {
@@ -89,6 +88,8 @@ export class Shake {
             uBoundingSize: { value: boundingSize },
             uNoiseScale: { value: 10 },
             uNoiseStrength: { value: 10 },
+            uCameraPosition: { value: new Vector3() },
+            uWorldPosition: { value: worldPos },
           },
         });
 
@@ -99,6 +100,7 @@ export class Shake {
 
   onTick(e) {
     if (!this.dancing) return;
+
     this.elapsedTime += e.dt;
 
     if (this.shakes && this.elapsedTime > this.PARAMS.shakeFrequency) {
@@ -111,6 +113,9 @@ export class Shake {
         plane.material.uniforms.uNoiseScale.value = this.PARAMS.shakeNoiseScale;
         plane.material.uniforms.uNoiseStrength.value =
           this.PARAMS.shakeNoiseStrength;
+
+        plane.material.uniforms.uCameraPosition.value =
+          app.webgl.camera.position;
       });
 
       this.elapsedTime = 0;

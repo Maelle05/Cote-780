@@ -61,7 +61,7 @@ class Map extends Scene {
     this.add(this.text);
     this.text.sync();
 
-    if(app.webgl.currentScene === 1) this.init() 
+    if (app.webgl.currentScene === 1) this.init();
   }
 
   onPointerDown(e) {

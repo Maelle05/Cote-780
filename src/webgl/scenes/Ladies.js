@@ -167,69 +167,66 @@ class Ladies extends Scene {
 
   init() {
     if (DEV_MODE) {
-      this.pane = new Pane({ title: "Parameters Ladies", expanded: true });
-      this.pane
-        .addBinding(this.PARAMS, "rotateY", {
-          min: -180,
-          max: 180,
-          step: 0.1,
-        })
-        .on("change", (ev) => {
-          this.ladies.rotation.y = ev.value / (180 / Math.PI);
-        });
-      this.pane
-        .addBinding(this.PARAMS, "rotateX", {
-          min: -180,
-          max: 180,
-          step: 0.1,
-        })
-        .on("change", (ev) => {
-          this.ladies.rotation.x = ev.value / (180 / Math.PI);
-        });
-      this.pane
-        .addBinding(this.PARAMS, "scenePos", {
-          min: -10,
-          max: 10,
-          step: 0.1,
-        })
-        .on("change", (ev) => {
-          this.ladies.position.set(ev.value.x, ev.value.y, ev.value.z);
-        });
-
-      this.pane
-        .addBinding(this.PARAMS, "miloPos", {
-          min: -10,
-          max: 10,
-          step: 0.1,
-        })
-        .on("change", (ev) => {
-          this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
-        });
-
-      this.pane
-        .addBinding(
-          app.webgl.transitionPass.material.uniforms.uProgress,
-          "value",
-          {
-            min: 0,
-            max: 1,
-            step: 0.001,
-            label: "Transition progress",
-          }
-        )
-        .on("change", (ev) => {
-          this.transitionPass.material.uniforms.uProgress.value = ev.value;
-        });
-
-      this.pane
-        .addBinding(this.tears, "position", {
-          min: -10,
-          max: 10,
-          step: 0.1,
-        })
-        .on("change", (ev) => {
-          this.tears.position.set(ev.value.x, ev.value.y, ev.value.z);
-        });
+      // this.pane = new Pane({ title: "Parameters Ladies", expanded: true });
+      // this.pane
+      //   .addBinding(this.PARAMS, "rotateY", {
+      //     min: -180,
+      //     max: 180,
+      //     step: 0.1,
+      //   })
+      //   .on("change", (ev) => {
+      //     this.ladies.rotation.y = ev.value / (180 / Math.PI);
+      //   });
+      // this.pane
+      //   .addBinding(this.PARAMS, "rotateX", {
+      //     min: -180,
+      //     max: 180,
+      //     step: 0.1,
+      //   })
+      //   .on("change", (ev) => {
+      //     this.ladies.rotation.x = ev.value / (180 / Math.PI);
+      //   });
+      // this.pane
+      //   .addBinding(this.PARAMS, "scenePos", {
+      //     min: -10,
+      //     max: 10,
+      //     step: 0.1,
+      //   })
+      //   .on("change", (ev) => {
+      //     this.ladies.position.set(ev.value.x, ev.value.y, ev.value.z);
+      //   });
+      // this.pane
+      //   .addBinding(this.PARAMS, "miloPos", {
+      //     min: -10,
+      //     max: 10,
+      //     step: 0.1,
+      //   })
+      //   .on("change", (ev) => {
+      //     this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
+      //   });
+      // this.pane
+      //   .addBinding(
+      //     app.webgl.transitionPass.material.uniforms.uProgress,
+      //     "value",
+      //     {
+      //       min: 0,
+      //       max: 1,
+      //       step: 0.001,
+      //       label: "Transition progress",
+      //     }
+      //   )
+      //   .on("change", (ev) => {
+      //     this.transitionPass.material.uniforms.uProgress.value = ev.value;
+      //   });
+      // this.pane
+      //   .addBinding(this.tears, "position", {
+      //     min: -10,
+      //     max: 10,
+      //     step: 0.1,
+      //   })
+      //   .on("change", (ev) => {
+      //     this.tears.position.set(ev.value.x, ev.value.y, ev.value.z);
+      //   });
     }
 
     app.audio.playMusic(MUSIC_IDS.AMBIENT_FOREST);
@@ -239,7 +236,7 @@ class Ladies extends Scene {
     this.player = this.milo.model;
     this.player.position.set(8.37, -0.04, -5.2);
     this.player.scale.set(0.06, 0.06, 0.06);
-    this.player.rotation.y = -130 * Math.PI / 180;
+    this.player.rotation.y = (-130 * Math.PI) / 180;
 
     this.add(this.player);
   }
@@ -257,9 +254,9 @@ class Ladies extends Scene {
       }
     }
 
-    if( this.dem1.isElHit || this.dem2.isElHit || this.dem3.isElHit) {
-      this.isTutoPass = true
-      state.emit(EVENTS.TUTO_PASS, 2)
+    if (this.dem1.isElHit || this.dem2.isElHit || this.dem3.isElHit) {
+      this.isTutoPass = true;
+      state.emit(EVENTS.TUTO_PASS, 2);
     }
     if (app.sceneshandler.currentStepCam == 2 && !this.isTutoPass) {
       this.demoiselles.children.forEach((dem) => {
@@ -307,7 +304,6 @@ class Ladies extends Scene {
       }
     });
 
-    app.webgl.shake.initShake(this.ladies);
     this.vegetation = new Vegetation("ladies");
     this.add(this.vegetation);
 
@@ -333,6 +329,7 @@ class Ladies extends Scene {
     // this.anim.onChangeSceneStep(2);
 
     this.add(this.ladies, this.ambient, this.tears);
+    app.webgl.shake.initShake(this.ladies);
 
     if (app.webgl.currentScene === 2) this.init();
   }

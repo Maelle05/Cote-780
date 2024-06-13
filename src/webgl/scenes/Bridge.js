@@ -103,7 +103,7 @@ class Bridge extends Scene {
     this.angle = 0;
     this.direction = 1;
     this.radius = 0.68;
-    this.radiusOffset = 0;
+
     this.rockIndex = 0;
     this.minSpeed = 0.01;
     this.elapsedTime = 0;
@@ -139,7 +139,7 @@ class Bridge extends Scene {
     this.rocks = [];
 
     this.bridge = app.assetsManager.get("bridge");
-    app.webgl.shake.initShake(this.bridge);
+    // app.webgl.shake.initShake(this.bridge);
     this.add(this.bridge);
 
     this.bridge.traverse((child) => {
@@ -210,7 +210,7 @@ class Bridge extends Scene {
     this.radius = this.center.distanceTo(this.rocks[0].position);
 
     this.anim = new CamAnim(4, this.bridge, [0, 0.25, 0.5, 0.75, 1, 1]);
-    // this.anim.onChangeSceneStep(2);
+    this.anim.onChangeSceneStep(2);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -242,42 +242,34 @@ class Bridge extends Scene {
 
     if (this.anim && this.anim.currentKeyfame != 2) return;
 
-    let normalizedAngle = this.angle / (Math.PI / 2);
-
-    // Calculate easing based on the current angle's distance from the center
-    let easing = Math.abs(normalizedAngle);
-
-    // Calculate new angle based on easing
-    let angleIncrement = (0.05 * easing + this.minSpeed) * this.direction;
-    this.angle += angleIncrement;
-
-    if (this.angle >= Math.PI / 2 || this.angle <= -Math.PI / 2) {
-      this.direction *= -1;
-    }
-
-    this.progressAngle = Math.abs(this.angle / (Math.PI / 2));
-
-    // if (this.progressAngle > 0.7 && this.progressAngle < 0.85)
-    //   this.radiusOffset += 0.0051;
-    // if (this.progressAngle > 0.85) this.radiusOffset -= 0.0051;
-
     if (!this.spirit) return;
 
-    this.x =
-      this.center.x +
-      (this.radius + this.radiusOffset) * Math.cos(this.angle - 0.6);
-    this.z =
-      this.center.z +
-      (this.radius + this.radiusOffset) * Math.sin(this.angle - 0.6);
+    this.angle = app.ticker.elapsed * 0.0015;
 
-    this.spirit.position.set(this.x, this.rocks[0].position.y + 0.2, this.z);
+    const animRadiusX = 0.7;
+    const animRadiusZ = 0.2;
+    const rotationAngle = Math.PI / 4;
+    const center = this.rocks[this.rockIndex].position;
+
+    const x = animRadiusX * Math.sin(this.angle);
+    const z = animRadiusZ * Math.sin(2 * this.angle);
+
+    // Apply rotation to the X and Z positions
+    const rotatedX = x * Math.cos(rotationAngle) - z * Math.sin(rotationAngle);
+    const rotatedZ = x * Math.sin(rotationAngle) + z * Math.cos(rotationAngle);
+
+    // Translate the rotated position back to the center
+    const finalX = center.x + rotatedX;
+    const finalZ = center.z + rotatedZ;
+
+    this.spirit.position.set(finalX, center.y + 0.2, finalZ);
 
     if (
       this.spirit.position.distanceTo(this.rocks[this.rockIndex].position) < 0.3
     ) {
-      this.spirit.targetSpiritColor = new Vector4(255, 0, 0, 1);
+      this.spirit.targetSpiritColor = new Vector4(0.941, 0.608, 0.345);
     } else {
-      this.spirit.targetSpiritColor = new Vector4(255, 255, 255, 1);
+      this.spirit.targetSpiritColor = new Vector4(1, 1, 1, 1);
     }
   }
 
