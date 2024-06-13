@@ -107,7 +107,7 @@ class Chapel extends Scene {
     this.isAnimating = false;
     this.interpolatedMouse = new Vector2(0.5, 0.5);
 
-    app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
+    app.audio.playMusic(MUSIC_IDS.AMBIENT_CHAPEL);
     app.webgl.shake.startShake();
   }
 

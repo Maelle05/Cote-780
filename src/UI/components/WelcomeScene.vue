@@ -121,14 +121,15 @@ const handleClickCircle = (type) => {
     });
   }, 5000);
 
-  // [WIP][son] jouer son
-};
+  app.audio.ui.play("magic_action_2");
+}
 
-const handleMouseEnterCircle = (e) => {
-  if (!isVisible) return;
+const handleMouseEnterCircle = (type) => {
+  if (!isVisible) return
+  if (type !== "active") return
 
-  // [WIP][son] jouer son
-};
+  app.audio.ui.play("click");
+}
 </script>
 
 <template lang="">
@@ -194,7 +195,7 @@ const handleMouseEnterCircle = (e) => {
               :cx="el.point.x"
               :cy="el.point.y"
               @click="() => handleClickCircle(el.type)"
-              @mouseenter="handleMouseEnterCircle"
+              @mouseenter="() => handleMouseEnterCircle(el.type)"
               r="10"
             />
           </g>
