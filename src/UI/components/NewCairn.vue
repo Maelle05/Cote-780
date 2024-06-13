@@ -23,6 +23,10 @@ const handleClick = () => {
   state.emit(EVENTS.GO_NEXT)
   playCollectionAnimation(cairnIndex)
   playCollectionSound()
+
+  setTimeout(() => {
+    gsap.set(".new-cairn__image", { y: 0, x: 0, opacity: 1, scale: 1 })
+  }, 5000);
 }
 
 const playCollectionAnimation = (cairnIndex) => {

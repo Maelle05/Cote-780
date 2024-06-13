@@ -26,7 +26,7 @@ const getWordLength = (word) => {
 
 <style scoped lang="scss">
 .chapter-title {
-  color: var(--c-text-turquoise);
+  color: var(--c-beige-dark);
   display: flex;
   flex-direction: column;
   font-family: var(--ff-eczar);
@@ -34,14 +34,14 @@ const getWordLength = (word) => {
   font-size: 92px;
   font-weight: 400;
   text-align: center;
-  margin-top: 42px;
+  margin-top: 24px;
 }
 
 .chapter-title__word {
   display: inline-block;
 }
 
-.chapter-title__line:nth-child(1) {
+.chapter-title__line {
   display: flex;
   gap: 0.2em;
   justify-content: center;

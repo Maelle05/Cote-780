@@ -11,7 +11,7 @@ const TITLES_SCENE = [
   [dataText["scene_4"].title_0, dataText["scene_4"].title_1],
   [dataText["scene_5"].title_0, dataText["scene_5"].title_1],
   [dataText["scene_6"].title_0, dataText["scene_6"].title_1],
-  [dataText["scene_7"].title],
+  [dataText["scene_7"].title_0, dataText["scene_7"].title_1],
 ];
 
 const introTexts = dataText["scene_0"];
@@ -133,4 +133,55 @@ const NEW_CAIRNS = [
   },
 ];
 
-export { DEV_MODE, INIT_SCENE, INTRO_SECTIONS, TITLES_SCENE, NEW_CAIRNS };
+const MAP_DATA = [
+  {
+    scene: 2,
+    point: {
+      x: 445,
+      y: 516,
+    },
+    path: ''
+  },
+  {
+    scene: 3,
+    point: {
+      x: 223,
+      y: 572,
+    },
+    path: 'M442.5 525.5C439 531.833 437.1 544.9 445.5 550.5C463 562.167 470.5 545.5 496 545.5C565 545.5 680 610.5 695 643C706.5 670.5 683 675.5 669.5 673.5C656 671.5 628.993 664.135 612 659.5C568 647.5 564.5 669 544.5 669C527 669 520.5 647 503 642.5C490.5 639.286 480 648.479 455.5 650C383 654.5 284.5 641.5 230 579.5'
+  },
+  {
+    scene: 4,
+    point: {
+      x: 363,
+      y: 350,
+    },
+    path: 'M217.5 564C201.167 546.667 183.379 510.682 202.5 482C232.5 437 294.703 445.5 305.5 421C316.297 396.5 308 358 351.5 352.5'
+  },
+  {
+    scene: 5,
+    point: {
+      x: 489,
+      y: 277,
+    },
+    path: 'M351.5 346.501C336 344.834 316.388 339.083 309.5 317.5C302 294 316 281.5 312 254.5C308.579 231.407 334.041 222.402 345.5 240C359.5 261.5 375.009 308.007 399.5 295.501C423 283.501 393.5 213.499 439 208.501C466.5 205.479 485 260.167 486 265.5'
+  },
+  {
+    scene: 6,
+    point: {
+      x: 602,
+      y: 266,
+    },
+    path: 'M492 288.5C496.5 311 511.5 313.7 525.5 309.5C550.592 301.973 548.5 277 590.5 267.5'
+  },
+  {
+    scene: 7,
+    point: {
+      x: 680,
+      y: 294,
+    },
+    path: 'M613 266C628 266.5 656.5 272.7 670.5 287.5'
+  },
+]
+
+export { DEV_MODE, INIT_SCENE, INTRO_SECTIONS, TITLES_SCENE, NEW_CAIRNS, MAP_DATA };

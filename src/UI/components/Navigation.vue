@@ -78,11 +78,11 @@ const isLearnMoreBtnVisible = () => {
         :icon="isLearnMorePanelOpen ? 'close' : 'learn-more'"
         :isVisible="isLearnMoreBtnVisible()"
       ></NavigationElement>
-      <NavigationElement
+      <!-- <NavigationElement
         @click="onClickMap"
         icon="map"
         :isVisible="isMapBtnVisible()"
-      ></NavigationElement>
+      ></NavigationElement> -->
       <NavigationElement
         @click="onClickSound"
         :icon="isSoundOn ? 'sound-on' : 'sound-off'"

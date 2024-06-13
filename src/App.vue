@@ -56,10 +56,10 @@ main {
   img.logo {
     position: absolute;
     width: 70px;
-    top: 10px;
-    left: 15px;
+    top: 16px;
+    left: 16px;
     user-select: none;
-    z-index: 1;
+    z-index: 110;
   }
 }
 </style>
