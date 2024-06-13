@@ -71,7 +71,7 @@ class Map extends Scene {
     const intersects = this.raycaster.intersectObjects(this.plan.allPoint);
 
     if (intersects.length != 0 && intersects[0].object.name == "2") {
-      state.emit(EVENTS.ASK_CHANGE_SCENE, parseInt(intersects[0].object.name));
+      state.emit(EVENTS.ASK_TRANSITION, parseInt(intersects[0].object.name));
     }
   }
 

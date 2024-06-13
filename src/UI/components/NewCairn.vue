@@ -132,6 +132,7 @@ watch(() => props.sceneIndex, (newVal) => {
   pointer-events: all;
   user-select: none;
   transition: opacity 1200ms;
+  cursor: pointer;
 
   &.new-cairn__container--hidden {
     opacity: 0;

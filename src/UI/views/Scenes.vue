@@ -23,7 +23,7 @@ let cairnsNumber = 0;
 let isTutoPass = ref([]);
 
 const isTutorialVisible = () => {
-  if (props.sceneIndex === 2 && props.stepIndex === 2 && !isTutoPass.value.includes(2)) {
+  if (props.sceneIndex === 2 && props.stepIndex === 3 && !isTutoPass.value.includes(2)) {
     return true
   }
 

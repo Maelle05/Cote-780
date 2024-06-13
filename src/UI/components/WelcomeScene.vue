@@ -8,6 +8,7 @@ import { ref, onMounted, computed } from "vue"
 import { gsap } from "gsap/gsap-core"
 
 import ChapterTitle from "./ChapterTitle.vue"
+import { app } from "@/App"
 
 const { t } = useI18n()
 
@@ -112,7 +113,7 @@ const handleClickCircle = (type) => {
   if (type !== "active") return
 
   isVisible.value = false
-  state.emit(EVENTS.GO_NEXT)
+  state.emit(EVENTS.ASK_REMOVE_TRANSITION)
 
   setTimeout(() => {
     gsap.set("#watercolor-mask circle", {

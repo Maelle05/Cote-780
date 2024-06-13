@@ -109,16 +109,13 @@ class Bridge extends Scene {
     this.elapsedTime = 0;
     this.interval = 1000;
     this.isAnimating = false;
+    this.nbJumps = 0;
 
     this.milo = new Milo();
     this.player = this.milo.model;
+    const walkDuration = 3;
     this.player.position.set(-0.88, 0.15, 2.81);
     // this.player.rotation.y = Math.PI - 45;
-    const walkDuration = 3;
-    this.player.goTo(this.center, walkDuration);
-    setTimeout(()=>{
-      state.emit(EVENTS.GO_NEXT)
-    }, 3000)
     this.add(this.player);
 
     this.durance = new Durance(app.assetsManager.get("duranceFace"));
@@ -137,6 +134,14 @@ class Bridge extends Scene {
 
     app.webgl.shake.startShake();
     app.audio.playMusic(MUSIC_IDS.AMBIENT_FOREST);
+  }
+
+  onAskRemoveTransition(){
+    if (app.webgl.currentScene != 4) return;
+    this.player.goTo(this.center, 3);
+    setTimeout(()=>{
+      state.emit(EVENTS.GO_NEXT)
+    }, 3000)
   }
 
   onAttach() {
@@ -245,7 +250,9 @@ class Bridge extends Scene {
       this.durance.hide();
     }
 
-    if (this.anim && this.anim.currentKeyfame != 2) return;
+    if (this.anim && this.anim.currentKeyfame == 0 && this.anim.currentKeyfame == 1
+      && this.anim.currentKeyfame == 4 && this.anim.currentKeyfame == 5
+    ) return;
 
     let normalizedAngle = this.angle / (Math.PI / 2);
 
@@ -287,7 +294,8 @@ class Bridge extends Scene {
   }
 
   onPointerDown() {
-    if (app.webgl.currentScene != 4 && this.anim.currentKeyfame != 2) return;
+    if (app.webgl.currentScene != 4) return;
+    if (this.anim.currentKeyfame == 0 || this.anim.currentKeyfame == 1 || this.anim.currentKeyfame == 4 || this.anim.currentKeyfame == 5) return
     if (this.isAnimating === true) return;
 
     if(!this.isTutoPass && this.anim.currentKeyfame == 2){
@@ -301,6 +309,10 @@ class Bridge extends Scene {
     if (!this.currentRock) return;
     if (this.spirit.position.distanceTo(this.currentRock.position) > 0.3)
       return;
+
+    this.nbJumps++;
+    if (this.nbJumps == 1) state.emit(EVENTS.GO_NEXT)
+
 
     const targetAnimDuration = 3;
     const jumpDelay = targetAnimDuration - 0.5;

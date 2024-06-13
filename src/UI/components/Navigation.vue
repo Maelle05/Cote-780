@@ -20,7 +20,7 @@ const isLearnMorePanelOpen = ref(false);
 const isSoundOn = ref(true);
 
 const onClickMap = () => {
-  state.emit(EVENTS.ASK_CHANGE_SCENE, 1);
+  state.emit(EVENTS.ASK_TRANSITION, 1);
 };
 
 const onClickSound = () => {

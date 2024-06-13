@@ -183,9 +183,14 @@ class Dam extends Scene {
     this.add(this.durance);
 
     this.player.goTo(new Vector3(4.3, this.PARAMS.persoPos.y, 5.6), 7);
+  }
+
+  onAskRemoveTransition(){
+    if (app.sceneshandler.currentScene != 3) return;
+
     setTimeout(()=>{
       state.emit(EVENTS.GO_NEXT)
-    }, 6000)
+    }, 4000)
   }
 
   onPointerDown(e) {
