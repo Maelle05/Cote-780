@@ -60,6 +60,10 @@ class AudioManager {
     }
   }
 
+  isPlaying() {
+    return Howler.volume() === 1 ? true : false
+  }
+
   setMute(flag) {
     Howler.volume(flag ? 0 : 1);
   }

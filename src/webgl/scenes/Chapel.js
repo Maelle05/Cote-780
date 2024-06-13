@@ -1,4 +1,10 @@
-import { Scene, MeshMatcapMaterial, RepeatWrapping } from "three";
+import {
+  Scene,
+  MeshMatcapMaterial,
+  RepeatWrapping,
+  Vector2,
+  MathUtils,
+} from "three";
 import { state } from "../../utils/State";
 import { Pane } from "tweakpane";
 import { DEV_MODE } from "../../utils/constants/config";
@@ -18,6 +24,7 @@ import { DirectionalLight } from "three";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import Milo from "../objects/Milo";
 import { Vector3 } from "three";
+import { ShakiraMaterial } from "../materials/Shakira/material";
 import Vegetation from "../objects/Vegetation";
 
 class Chapel extends Scene {
@@ -46,6 +53,7 @@ class Chapel extends Scene {
 
     this.torchs = [];
     this.flames = [];
+    this.empties = [];
     this.flameOffset = 0.15;
   }
 
@@ -76,7 +84,6 @@ class Chapel extends Scene {
 
     this.milo = new Milo();
     this.player = this.milo.model;
-    // this.player.rotation.y = 0;
     this.player.position.set(-0.33, 1.05, 0.55);
     this.add(this.player);
 
@@ -84,8 +91,10 @@ class Chapel extends Scene {
 
     this.index = 0;
     this.isAnimating = false;
+    this.interpolatedMouse = new Vector2(0.5, 0.5);
 
     app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
+    app.webgl.shake.startShake();
   }
 
   onAttach() {
@@ -97,32 +106,41 @@ class Chapel extends Scene {
     noiseText.wrapS = RepeatWrapping;
     noiseText.wrapT = RepeatWrapping;
 
-    this.chapel.traverse((el) => {
-      if (el.name == "WaterSurface") {
-        this.water = el;
-        el.material = new WaterMaterial({
+    this.chapel.traverse((child) => {
+      if (child.name == "WaterSurface") {
+        this.water = child;
+        child.material = new WaterMaterial({
           uniforms: {
-            uTexture: { value: el.material.map },
+            uTexture: { value: child.material.map },
             uTime: { value: 0 },
           },
           // transparent: true,
         });
       }
 
-      if (el.name == "Portal") {
-        this.portal = el;
+      if (child.name == "Portal") {
+        this.portal = child;
+        this.portal.scale.x *= 1.6;
+        this.portal.scale.z *= 1.8;
 
-        el.material = new PortalMaterial({
+        child.material = new PortalMaterial({
           uniforms: {
             uProgress: { value: 0 },
             uTexture: { value: this.portalTexture },
             uNoiseTexture: { value: noiseText },
             uTime: { value: 0 },
+            uMouse: { value: app.mouse.coordinates.webgl },
           },
           transparent: true,
         });
       }
+
+      if (child.name.includes("Empty")) {
+        this.empties.push(child);
+      }
     });
+
+    app.webgl.shake.initShake(this.chapel);
     this.add(this.chapel, this.ambient);
 
     this.torchs = this.chapel.children.filter((child) =>
@@ -137,6 +155,7 @@ class Chapel extends Scene {
         torch.position.z
       );
 
+      torch.empty = this.empties[index];
       torch.flame = flame;
       // flame.lookAt(app.webgl.camera.position);
       flame.visible = false;
@@ -148,7 +167,7 @@ class Chapel extends Scene {
     this.add(this.spirit);
 
     this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 0.66, 1, 1]);
-    // this.anim.onChangeSceneStep(2);
+    // this.anim.onChangeSceneStep(4);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -177,11 +196,24 @@ class Chapel extends Scene {
       if (flame.visible == true) return;
 
       this.index++;
-      this.goTo(flame.position, flame);
+      this.goTo(intersects[0].object.empty.position, flame);
       this.isAnimating = true;
     }
 
     //Create the portal & give the cairn when all torchs are on
+  }
+
+  onPointerMove(e) {
+    if (this.anim.currentKeyfame != 3) return;
+
+    this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
+    const intersects = this.raycaster.intersectObjects(this.torchs);
+
+    if (intersects.length != 0) {
+      document.body.style.cursor = "pointer";
+    } else {
+      document.body.style.cursor = "default";
+    }
   }
 
   goTo(position, flame) {
@@ -193,7 +225,7 @@ class Chapel extends Scene {
     };
     const endPoint = {
       x: position.x,
-      y: position.y + this.flameOffset + 0.2,
+      y: position.y,
       z: position.z,
     };
     const controlPoint = {
@@ -236,7 +268,6 @@ class Chapel extends Scene {
           if (!flame) return;
           flame.visible = true;
           flame.show();
-          this.spiritStand(flame);
 
           if (this.index == this.torchs.length - 4) {
             this.isAnimating = true;
@@ -263,7 +294,7 @@ class Chapel extends Scene {
     //Move the spirit
     const portalPos = new Vector3(0.34, 1.05, -0.15);
     const lookAtPos = new Vector3(0.3, 1.05, -0.17);
-    const spiritPos = new Vector3(0.83, 1.05, -0.3);
+    const spiritPos = new Vector3(0.83, 1.25, -0.3);
     this.goTo(spiritPos);
 
     //Move Milo & Spirit
@@ -274,28 +305,12 @@ class Chapel extends Scene {
       this.player.goTo(portalPos, animDuration);
 
       setTimeout(() => {
-        this.player.lookAt(this.portal.position);
-        // this.player.goTo(lookAtPos, 1);
+        gsap.to(this.player.rotation, {
+          y: -Math.PI / 4,
+          duration: 1,
+        });
       }, animDuration * 1000);
     }, 4000);
-  }
-
-  spiritStand(object) {
-    //TODO : CHANGE THIS ANIMATION
-    // gsap.to(this.spirit.rotation, {
-    //   duration: 2,
-    //   repeat: -1,
-    //   ease: "none",
-    //   y: Math.PI * 2,
-    //   onUpdate: () => {
-    //     const angle = this.spirit.rotation.y;
-    //     const radius = 0.1;
-    //     const newX = object.position.x + Math.cos(angle) * radius;
-    //     const newZ = object.position.z + Math.sin(angle) * radius;
-    //     // Update the object position
-    //     this.spirit.position.set(newX, object.position.y, newZ);
-    //   },
-    // });
   }
 
   onTick(e) {
@@ -305,6 +320,22 @@ class Chapel extends Scene {
 
     this.portal.material.uniforms.uTime.value += e.dt;
     this.water.material.uniforms.uTime.value = app.ticker.elapsed;
+
+    //Parallax effect on portal
+    const mouse = app.mouse.coordinates.webgl;
+    const lerpFactor = 0.025;
+    this.interpolatedMouse.x = MathUtils.lerp(
+      this.interpolatedMouse.x,
+      mouse.x,
+      lerpFactor
+    );
+    this.interpolatedMouse.y = MathUtils.lerp(
+      this.interpolatedMouse.y,
+      mouse.y,
+      lerpFactor
+    );
+
+    this.portal.material.uniforms.uMouse.value = this.interpolatedMouse;
   }
 
   clear() {
@@ -319,6 +350,7 @@ class Chapel extends Scene {
     this.portal.material.uniforms.uProgress.value = 0;
 
     app.audio.fadeOutAmbient();
+    app.webgl.shake.stopShake();
   }
 }
 

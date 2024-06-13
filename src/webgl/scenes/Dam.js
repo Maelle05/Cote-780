@@ -201,6 +201,7 @@ class Dam extends Scene {
       }
     });
     this.water.renderOrder = 0;
+    app.webgl.shake.initShake(this.scene);
 
     this.light = new AmbientLight({ color: 0xffffff });
     this.add(this.light);
@@ -300,6 +301,7 @@ class Dam extends Scene {
     }
 
     app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
+    app.webgl.shake.startShake();
 
     this.milo = new Milo();
     this.player = this.milo.model;
@@ -393,7 +395,7 @@ class Dam extends Scene {
     if (DEV_MODE) {
       this.pane.dispose();
     }
-
+    app.webgl.shake.stopShake();
     app.audio.fadeOutAmbient();
   }
 }

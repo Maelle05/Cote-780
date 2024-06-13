@@ -21,7 +21,7 @@ const manifest = {
     spiritNoise: {
       path: `/assets/textures/Noise/Super Perlin/SuperPerlin_02-256x256.png`,
     },
-    doorTexture: { path: `/assets/textures/DoorTexture.jpg` },
+    doorTexture: { path: `/assets/textures/DoorTexture.png` },
     doorNoise: {
       path: `/assets/textures/Noise/Swirl/Swirl_01-256x256.png`,
     },
@@ -46,6 +46,9 @@ const manifest = {
     flamme: { path: `/assets/textures/flamme.png` },
     duranceSide: { path: `/assets/textures/Durance/duranceSide.png` },
     duranceFace: { path: `/assets/textures/Durance/duranceFace.png` },
+    shakeNoise: {
+      path: `/assets/textures/Noise/Grainy/Grainy_08-256x256.png`,
+    },
   },
   envMaps: {
     // envmap: { path: `/assets/textures/envmap.hdr` },

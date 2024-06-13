@@ -130,15 +130,16 @@ class Bridge extends Scene {
       this.#start();
     }, walkDuration * 1000);
 
+    app.webgl.shake.startShake();
     app.audio.playMusic(MUSIC_IDS.AMBIENT_FOREST);
   }
 
   onAttach() {
     this.center = new Vector3(0.67, 0.01, 2.19);
     this.rocks = [];
-    this.shakePlanes = [];
 
     this.bridge = app.assetsManager.get("bridge");
+    app.webgl.shake.initShake(this.bridge);
     this.add(this.bridge);
 
     this.bridge.traverse((child) => {
@@ -169,6 +170,7 @@ class Bridge extends Scene {
         child.material = new RockMaterial({
           uniforms: {
             uProgress: { value: 0 },
+            uTexture: { value: child.material.map },
           },
           side: DoubleSide,
         });
@@ -179,18 +181,6 @@ class Bridge extends Scene {
       //Remove 2cnd Milo because here for no reasons
       if (child.isMesh && child.name.includes("Milo")) {
         child.visible = false;
-      }
-
-      if (child.isMesh && child.name.includes("Plane")) {
-        child.material = new ShakiraMaterial({
-          uniforms: {
-            uTexture: { value: child.material.map },
-            uTime: { value: 0 },
-            uOffset: { value: new Vector2() },
-          },
-        });
-
-        this.shakePlanes.push(child);
       }
     });
 
@@ -248,21 +238,6 @@ class Bridge extends Scene {
     if (app.sceneshandler.currentStepCam == 5 && this.durance.isActive) {
       this.durance.isActive = false;
       this.durance.hide();
-    }
-
-    // console.log(e.et % 1000);
-    this.elapsedTime += e.dt;
-
-    //Shake UVS
-    if (this.shakePlanes && this.elapsedTime > 0.3) {
-      this.shakePlanes.forEach((plane) => {
-        plane.material.uniforms.uOffset.value = this.#getRandomOffset(
-          0.008,
-          0.002
-        );
-      });
-
-      this.elapsedTime = 0;
     }
 
     if (this.anim && this.anim.currentKeyfame != 2) return;
@@ -422,7 +397,7 @@ class Bridge extends Scene {
     gsap.to(this.rocks[this.rockIndex + 1].material.uniforms.uProgress, {
       value: 1,
       ease: "power1.in",
-      duration: 1,
+      duration: 1.5,
     });
 
     if (this.rockIndex === 0)
@@ -451,22 +426,13 @@ class Bridge extends Scene {
     state.emit(EVENTS.GO_NEXT);
   }
 
-  #getRandomOffset(value, interval) {
-    const max = value + interval;
-    const min = value - interval;
-
-    const randomX = Math.random() * (max - min) + min;
-    const randomY = Math.random() * (max - min) + min;
-
-    return new Vector2(randomX, randomY);
-  }
-
   clear() {
     if (DEV_MODE) {
       this.pane.dispose();
     }
 
     app.audio.fadeOutAmbient();
+    app.webgl.shake.stopShake();
   }
 }
 

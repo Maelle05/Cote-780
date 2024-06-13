@@ -2,7 +2,7 @@
 import { EVENTS } from "@/utils/constants/events"
 import { state } from "@/utils/State"
 
-import { ref, onMounted, nextTick, computed } from "vue"
+import { ref, onMounted, nextTick } from "vue"
 import { gsap } from "gsap"
 import { app } from "@/App";
 
@@ -18,6 +18,7 @@ let isNewScene = false
 
 const props = defineProps({
   sceneIndex: Number,
+  isVisible: Boolean,
 })
 
 let isAnimationInProgress = false
@@ -111,7 +112,7 @@ const onClickDialogue = () => {
     @click="onClickDialogue"
     :ref="(ref) => assignRef(ref, element, 'clone')"
     :class="`wrapper wrapper--${element} wrapper--${
-      hasDialogue ? 'visible' : 'hidden'
+      isVisible && hasDialogue ? 'visible' : 'hidden'
     }`"
     :style="`--wrapper-height: ${wrapperHeight}px;`"
     v-for="element in ['original', 'clone']"

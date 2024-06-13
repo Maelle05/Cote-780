@@ -230,6 +230,7 @@ class Ladies extends Scene {
     }
 
     app.audio.playMusic(MUSIC_IDS.AMBIENT_FOREST);
+    app.webgl.shake.startShake();
 
     this.milo = new Milo();
     this.player = this.milo.model;
@@ -297,6 +298,7 @@ class Ladies extends Scene {
       }
     });
 
+    app.webgl.shake.initShake(this.ladies);
     this.vegetation = new Vegetation("ladies");
     this.add(this.vegetation);
 
@@ -332,6 +334,7 @@ class Ladies extends Scene {
     }
 
     app.audio.fadeOutAmbient();
+    app.webgl.shake.stopShake();
   }
 }
 

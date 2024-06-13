@@ -62,8 +62,8 @@ void main()
     uv.y = uv.y + sin(vUv.x * 3.0 + time) * 0.02;
 
   vec4 sceneTex = texture2D(tDiffuse, uv);
-  if(uIsWater)
-    sceneTex.b += 0.1;
+  // if(uIsWater)
+    // sceneTex.b += 0.1;
 
   vec4 finalColor = sceneTex;
 

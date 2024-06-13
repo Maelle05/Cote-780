@@ -1,11 +1,13 @@
 <script setup>
 import { EVENTS } from "../../utils/constants/events"
+import { NEW_CAIRNS } from "../../utils/constants/config"
 import { state } from "../../utils/State"
 
 import { ref } from "vue"
 
 import WelcomeScene from "../components/WelcomeScene.vue"
-import CollectionCairns from "../components/CollectionCairns.vue"
+import NewCairn from "../components/NewCairn.vue"
+import CairnsCollection from "../components/CairnsCollection.vue"
 import InteractionTutorial from "../components/InteractionTutorial.vue"
 import Dialogues from "../components/Dialogues.vue"
 import Navigation from "../components/Navigation.vue"
@@ -15,6 +17,8 @@ const props = defineProps({
   sceneIndex: Number,
   stepIndex: Number,
 })
+
+let cairnsNumber = 0;
 
 const isTutorialVisible = () => {
   if (props.sceneIndex === 2 && props.stepIndex === 2) {
@@ -36,8 +40,11 @@ const isTutorialVisible = () => {
   return false
 }
 
-const isCollectionCairnsVisible = () => {
-  if ([2, 3, 4, 5].includes(props.sceneIndex) && props.stepIndex === 5) {
+const isNewCairnVisible = () => {
+  const newCairn = NEW_CAIRNS.some(cairn => cairn.scene === props.sceneIndex && cairn.step === props.stepIndex)
+  
+  if (newCairn) {
+    cairnsNumber++
     return true
   }
 
@@ -51,20 +58,28 @@ const areCreditsVisible = () => {
 
   return false
 }
+
+const areDialoguesVisible = () => {
+  if (props.sceneIndex === 0 || props.sceneIndex === 1) {
+    return false
+  }
+
+  return true
+}
 </script>
 
 <template>
   <WelcomeScene :sceneIndex="props.sceneIndex"> </WelcomeScene>
-  <CollectionCairns
+  <NewCairn
     :sceneIndex="props.sceneIndex"
-    :isVisible="isCollectionCairnsVisible()"
+    :isVisible="isNewCairnVisible()"
   />
   <InteractionTutorial
     :sceneIndex="props.sceneIndex"
     :isVisible="isTutorialVisible()"
   />
-  <Dialogues :sceneIndex="props.sceneIndex" />
-  <Navigation :sceneIndex="props.sceneIndex"></Navigation>
+  <Dialogues :sceneIndex="props.sceneIndex" :isVisible="areDialoguesVisible()" />
+  <CairnsCollection :sceneIndex="props.sceneIndex" :cairnsNumber="cairnsNumber"></CairnsCollection>
   <Credits :isVisible="areCreditsVisible()"></Credits>
 </template>
 
