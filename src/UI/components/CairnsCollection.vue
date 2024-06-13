@@ -28,6 +28,9 @@ const playCollectionAnimation = (index) => {
     `.cairns-collection__element--${index}`, 
     { scale: 1,  duration: 0.2},
   )
+  .call(() => {
+    app.audio.ui.play("magic_popup_3");
+  }, [], "0.3");
 }
 
 const playCollectionSound = () => {

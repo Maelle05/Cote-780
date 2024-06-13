@@ -103,6 +103,7 @@ const onClickDialogue = () => {
     isAnimationInProgress = false
   } else {
     state.emit(EVENTS.GO_NEXT)
+    app.audio.ui.play("click", 0.5);
   }
 }
 </script>

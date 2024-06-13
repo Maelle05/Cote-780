@@ -86,6 +86,8 @@ class Demoiselle extends Group {
         y: this.body.position.y + this.riseTop,
         z: this.body.position.z,
       });
+
+      app.audio.ui.play("magic_popup_1", 0.5);
     }
   }
 

@@ -3,25 +3,21 @@ import { state } from "../../State";
 import SOUNDS_MUSIC from "./jsons/musics.json";
 import { LayerManager } from "./LayerManager";
 import { DialogManager } from "./DialogManager";
+import { UIManager } from "./UIManager";
 
 const MUSIC_VOLUME = 1;
-const UI_VOLUME = 0.7;
 
 //MUSIC EFFECTS
 export const MUSIC_IDS = {
   AMBIENT_UNDERWATER: "ambient_underwater",
+  AMBIENT_CHAPEL: "ambient_chapel",
+  AMBIENT_END: "ambient_end",
   AMBIENT_LAKE: "ambient_lake",
   AMBIENT_FOREST: "ambient_forest",
 };
 
-//UI SOUNDS / SOUNDS EFFECTS
-export const UI_IDS = {
-  NAME: "name",
-};
-
 class AudioManager {
   _musics = new Map();
-  _sounds = new Map();
   canPlay = false;
   currentAmbientName;
   currentAmbientId;
@@ -32,6 +28,7 @@ class AudioManager {
 
     this.layers = new LayerManager();
     this.dialog = new DialogManager();
+    this.ui = new UIManager();
   }
 
   onFirstClick() {
@@ -72,16 +69,6 @@ class AudioManager {
     if (!this.canPlay) return;
     const howl = this._musics.get(id);
     howl.fade(howl.volume(undefined, howl), volume, duration, soundId);
-  }
-
-  playUI(name, volume = UI_VOLUME) {
-    // this._UI.play(name);
-    const ui = this._sounds.get(name);
-
-    if (!ui) return;
-    ui.volume(volume);
-    ui.play();
-    return ui;
   }
 
   playMusic(name) {

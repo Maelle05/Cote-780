@@ -217,6 +217,7 @@ class Dam extends Scene {
           onComplete: () => {
             el.object.visible = false
             this.rocks = this.rocks.filter((rock) => rock.name != el.object.name)
+            app.audio.ui.play("click", 0.3);
             if(this.rocks.length == 0 && !this.isInteractionFini){
               this.isInteractionFini = true
               state.emit(EVENTS.GO_NEXT)
