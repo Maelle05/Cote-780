@@ -16,6 +16,7 @@ import { WaterMaterial } from "../materials/Water/material";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { AnimationMixer } from "three";
 import { EVENTS } from "@/utils/constants/events";
+import Milo from "../objects/Milo";
 
 class End extends Scene {
   constructor() {
@@ -37,6 +38,12 @@ class End extends Scene {
         y: 1,
         z: 0,
       },
+      posMilo: {
+        x: 1.2,
+        y: 2.2,
+        z: -7.7
+      },
+      rotMilo: -76
     };
 
     this.light = new AmbientLight({ color: 0xffffff });
@@ -60,7 +67,34 @@ class End extends Scene {
         .on("change", (ev) => {
           this.planePos.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
+
+      this.pane
+        .addBinding(this.PARAMS, "posMilo", {
+          min: -10,
+          max: 10,
+          step: 0.1,
+        })
+        .on("change", (ev) => {
+          this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
+        });
+
+      this.pane
+        .addBinding(this.PARAMS, "rotMilo", {
+          min: -100,
+          max: 10,
+          step: 0.1,
+        })
+        .on("change", (ev) => {
+          this.player.rotation.y = ev.value * Math.PI / 180;
+        });
     }
+
+    this.milo = new Milo()
+    this.player = this.milo.model;
+    this.player.position.set( 1.3, 2.2, -7.7 );
+    this.player.rotation.y = -76 * Math.PI / 180;
+    this.player.scale.set(0.05, 0.05, 0.05);
+    this.add(this.player);
 
     app.webgl.shake.startShake();
     app.audio.playMusic(MUSIC_IDS.AMBIENT_END);
@@ -112,6 +146,13 @@ class End extends Scene {
     app.webgl.shake.initShake(this.end);
   }
 
+  onAskRemoveTransition(){
+    if (app.sceneshandler.currentScene != 7) return;
+    setTimeout(() => {
+      state.emit(EVENTS.GO_NEXT)
+    }, 3000)
+  }
+
   initAnimPorte() {
     this.allAnimCairn = this.end.animations.filter((el) =>
       el.name.includes("Cube.")
@@ -134,17 +175,19 @@ class End extends Scene {
   onTick() {
     if (app.sceneshandler.currentScene != 7) return;
 
+    console.log(this.player.position);
+
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
 
     if (
       this.allAnimCairn.length == this.allActionCairn.length &&
-      app.sceneshandler.currentStepCam == 1
+      app.sceneshandler.currentStepCam >= 1
     ) {
       this.currentProgressCairn = MathUtils.lerp(
         this.currentProgressCairn,
         1,
-        0.005
+        0.007
       );
 
       this.allActionCairn.forEach((action, i) => {
@@ -156,8 +199,9 @@ class End extends Scene {
         this.allMixerCairn[i].update(app.ticker.delta);
       });
 
-      if (this.currentProgressCairn > 0.98) {
-        // state.emit(EVENTS.GO_NEXT)
+      if (this.currentProgressCairn > 0.98 && !this.isEndAnimCairn) {
+        this.isEndAnimCairn = true
+        state.emit(EVENTS.GO_NEXT)
       }
     }
   }
