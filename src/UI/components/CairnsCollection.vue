@@ -3,16 +3,20 @@ import { app } from "@/App";
 import { EVENTS } from "../../utils/constants/events"
 import { state } from "../../utils/State"
 
+import { watch } from 'vue';
 import gsap from "gsap"
 
 const props = defineProps({
   isVisible: Boolean,
   sceneIndex: Number,
+  stepIndex: Number,
   cairnsNumber: Number,
 })
 
 const playEndAnimation = () => {
-  console.log("CairnsCollection.vue - end anim!")
+  const endTimeline = gsap.timeline()
+  endTimeline
+  .to(`.cairns-collection__element`, { opacity: 0, y: '-60px', scale: 2.5, filter: "blur(20px)", duration: 1.2, stagger: 0.3 })
 }
 
 const playCollectionAnimation = (index) => {
@@ -46,6 +50,17 @@ state.on(EVENTS.COLLECT_CAIRN, (e) => {
     playCollectionSound()
   }, 300);
 })
+
+watch(
+  () => [props.sceneIndex, props.stepIndex],
+  ([newSceneIndex, newStepIndex]) => {
+    if (newSceneIndex === 7 && newStepIndex === 1) {
+      setTimeout(() => {
+        playEndAnimation();
+      }, 200);
+    }
+  }
+);
 </script>
 
 <template lang="">
