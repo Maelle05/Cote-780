@@ -50,6 +50,7 @@ const manifest = {
       path: `/assets/textures/Noise/Grainy/Grainy_11-256x256.png`,
       // path: `/assets/textures/Noise/noiseTest.png`,
     },
+    bzh: { path: `/assets/textures/bzh.png` },
   },
   envMaps: {
     // envmap: { path: `/assets/textures/envmap.hdr` },

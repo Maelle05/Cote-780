@@ -64,6 +64,8 @@ export class Shake {
 
   initShake(scene) {
     this.noiseTexture = app.assetsManager.get("shakeNoise");
+
+    if (app.url.get("bzh")) this.noiseTexture = app.assetsManager.get("bzh");
     this.noiseTexture.wrapS = RepeatWrapping;
     this.noiseTexture.wrapT = RepeatWrapping;
 
