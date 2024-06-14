@@ -11,6 +11,7 @@ import Spirit from "../objects/Spirit";
 import { DirectionalLight } from "three";
 import { AnimationMixer } from "three";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
+import { EVENTS } from "@/utils/constants/events";
 
 class Village extends Scene {
   constructor() {
@@ -61,12 +62,20 @@ class Village extends Scene {
     this.spirit = new Spirit();
     this.spirit.position.set(-10, 0.7, 7);
 
-    this.anim = new CamAnim(6, this.scene, [0, 0, 0.33, 0.66, 1, 1, 1]);
+    this.anim = new CamAnim(6, this.scene, [0, 0, 0.2, 0.33, 0.66, 1, 1, 1]);
     this.targetProgressAnim = 1;
 
     this.add(this.scene, this.spirit, this.ambient);
 
     if (app.webgl.currentScene === 6) this.init();
+  }
+
+  onAskRemoveTransition(){
+    if (app.sceneshandler.currentScene != 6) return;
+
+    setTimeout(()=> {
+      state.emit(EVENTS.GO_NEXT)
+    }, 4000)
   }
 
   onTick() {
@@ -77,16 +86,19 @@ class Village extends Scene {
         case 1:
           this.spiritTargetPos = new Vector3(-10, 0.7, 7);
           break;
-
         case 2:
-          this.spiritTargetPos = new Vector3(-2, 0.7, 0.5);
+          this.spiritTargetPos = new Vector3(-8, 0.7, 5);
           break;
 
         case 3:
-          this.spiritTargetPos = new Vector3(8, 0.7, -3);
+          this.spiritTargetPos = new Vector3(-2, 0.7, 0.5);
           break;
 
         case 4:
+          this.spiritTargetPos = new Vector3(8, 0.7, -3);
+          break;
+
+        case 5:
           this.spiritTargetPos = new Vector3(8, 0.7, -3.5);
           break;
 

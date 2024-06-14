@@ -188,55 +188,55 @@
     "text_3": {
       "person": "Esprit",
       "text": "On y passait de bons moments. On rigolait bien avec ta grand-mère.",
-      "camera": "2",
+      "camera": "3",
       "audio": "esprit_6"
     },
     "text_4": {
       "person": "Esprit",
       "text": "C’est ici ! Regarde ! Un journal !",
-      "camera": "3",
+      "camera": "4",
       "audio": "esprit_7"
     },
     "text_5": {
       "person": "Journal",
       "text": "xx xx 1954. L’état vient de lancer la construction d’un barrage pour maîtriser l’indomptable Durance… Ils racontent qu’ils veulent engloutir la vallée jusqu’à la cote 780 ! C’est absurde !",
-      "camera": "4",
+      "camera": "5",
       "audio": "grandma_13"
     },
     "text_6": {
       "person": "Journal",
       "text": "xx xx 1956. L’autre soir, la Durance a bien failli mettre fin au chantier ! Elle s’est rebellée contre ceux qui essayent de la contrôler. Malheureusement… il sont bien décidés, ça n’a pas eu beaucoup d’effets hormis retarder le chantier.",
-      "camera": "4",
+      "camera": "5",
       "audio": "grandma_14"
     },
     "text_7": {
       "person": "Journal",
       "text": "xx xx 1956. Toutes les habitations vont être dynamitées il paraît… ils vont même déplacer le cimetière…",
-      "camera": "4",
+      "camera": "5",
       "audio": "grandma_15"
     },
     "text_8": {
       "person": "Journal",
       "text": "xx xx 1957. …Au début, personne ne croyait à ce barrage. Même lorsque la construction a été lancée, on se disait qu’il ne verrait jamais le jour. Maintenant que les gens commencent à quitter le village, tout devient réel…",
-      "camera": "5",
+      "camera": "6",
       "audio": "grandma_16"
     },
     "text_9": {
       "person": "Journal",
       "text": "xx xx 1955. Aujourd’hui j’ai eu la visite d’EDF au sujet du barrage. Ils m’ont proposé un logement et de l’argent… beaucoup... pour m'installer dans le nouveau village… Mais comment vivre, avec nos souvenirs engloutis sous les yeux ?",
-      "camera": "5",
+      "camera": "6",
       "audio": "grandma_17"
     },
     "text_10": {
       "person": "Journal",
       "text": "xx xx 1957. …Ils ont commencé à reconstruire le village au-dessus de la cote 780… et je suis bien triste de devoir quitter mon Hôtel. Mais comme les autres, je crois que j’ai fini par m’y résoudre.",
-      "camera": "5",
+      "camera": "6",
       "audio": "grandma_18"
     },
     "text_11": {
       "person": "Journal",
       "text": "Mon voisin, lui, ne bougera jamais. Il me raconte comment, pendant la nuit, il va gêner et démolir le chantier.",
-      "camera": "5",
+      "camera": "6",
       "audio": "grandma_19"
     },
     "tuto": "Clique sur l'esprit pour le suivre dans le village",

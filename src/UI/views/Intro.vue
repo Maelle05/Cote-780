@@ -288,7 +288,7 @@ const handleScrollTo = (section) => {
   overflow: hidden;
   width: 100%;
   color: #000;
-  background-color: var(--c-background-beige);
+  /* background-color: var(--c-background-beige); */
 }
 
 .intro__title-screen {

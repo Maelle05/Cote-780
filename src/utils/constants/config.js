@@ -1,7 +1,7 @@
 import dataText from "../../locales/fr.json";
 
 const DEV_MODE = false;
-const INIT_SCENE = 0;
+const INIT_SCENE = 6;
 
 const TITLES_SCENE = [
   [dataText["scene_0"].title],
@@ -129,7 +129,7 @@ const NEW_CAIRNS = [
   },
   {
     scene: 6,
-    step: 6,
+    step: 7,
   },
 ];
 

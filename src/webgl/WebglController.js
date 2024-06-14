@@ -85,6 +85,9 @@ export default class WebglController {
     this.effectComposer.addPass(this.gammaCorrectionPass);
 
     this.shake = new Shake();
+
+    this.transitionPass.material.uniforms.uIsColor.value = true;
+    this.transitionPass.material.uniforms.uProgress.value = 0;
   }
 
   initStats() {
