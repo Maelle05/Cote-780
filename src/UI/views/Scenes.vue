@@ -69,6 +69,18 @@ const areDialoguesVisible = () => {
   return true
 }
 
+const isCairnsCollectionVisible = () => {
+  if (props.sceneIndex < 2) {
+    return false
+  } 
+  
+  if (props.sceneIndex === 2 && props.stepIndex < 6) {
+    return false
+  } 
+
+  return true
+}
+
 state.on(EVENTS.TUTO_PASS, (e) => {
   isTutoPass.value.push(e)
 })
@@ -85,7 +97,7 @@ state.on(EVENTS.TUTO_PASS, (e) => {
     :isVisible="isTutorialVisible()"
   />
   <Dialogues :sceneIndex="props.sceneIndex" :isVisible="areDialoguesVisible()" />
-  <CairnsCollection :sceneIndex="props.sceneIndex" :cairnsNumber="cairnsNumber"></CairnsCollection>
+  <CairnsCollection :isVisible="isCairnsCollectionVisible()" :sceneIndex="props.sceneIndex" :cairnsNumber="cairnsNumber"></CairnsCollection>
   <Credits :isVisible="areCreditsVisible()"></Credits>
 </template>
 

@@ -6,6 +6,7 @@ import { state } from "../../utils/State"
 import gsap from "gsap"
 
 const props = defineProps({
+  isVisible: Boolean,
   sceneIndex: Number,
   cairnsNumber: Number,
 })
@@ -48,7 +49,7 @@ state.on(EVENTS.COLLECT_CAIRN, (e) => {
 </script>
 
 <template lang="">
-  <div class="cairns-collection__container">
+  <div :class="`cairns-collection__container cairns-collection__container--${isVisible ? 'visible' : 'hidden'}`">
     <div class="cairns-collection">
       <div
         :class="`cairns-collection__element cairns-collection__element--${index + 1} cairns-collection__element--${
