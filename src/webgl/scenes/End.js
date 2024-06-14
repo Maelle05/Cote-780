@@ -175,7 +175,7 @@ class End extends Scene {
   onTick() {
     if (app.sceneshandler.currentScene != 7) return;
 
-    console.log(this.player.position);
+    // console.log(this.player.position);
 
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
