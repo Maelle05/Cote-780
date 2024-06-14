@@ -2,6 +2,7 @@
 import { EVENTS } from "@/utils/constants/events"
 import { state } from "@/utils/State"
 
+import { computed } from 'vue'
 import { useI18n } from "vue-i18n"
 
 const { t } = useI18n()
@@ -11,16 +12,11 @@ const props = defineProps({
   sceneIndex: Number,
 })
 
-const handleClick = () => {
-  console.log("InteractionTutorial.vue - handleClick!")
-}
-
-const interactionType = props.sceneIndex === 2 ? "move" : "click"
+const interactionType = computed(() => props.sceneIndex === 2 ? "move" : "click")
 </script>
 
 <template>
   <div
-    @click="handleClick"
     :class="`interaction-tutorial__container interaction-tutorial__container--${
       isVisible ? 'visible' : 'hidden'
     }`"

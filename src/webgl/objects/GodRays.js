@@ -17,7 +17,7 @@ export default class GodRays extends Mesh {
         iTime: { value: app.ticker.elapsed * 0.0005 },
         iResolution: { value: new Vector2(1, 1) },
         g_alpha: { value: 1. },
-      }
+      },
     })
   }
   

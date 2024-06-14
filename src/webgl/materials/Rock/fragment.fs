@@ -63,9 +63,9 @@ void main() {
 
 	vec4 texture = texture2D(uTexture, vUv);
 
-	if(vPosition.y < edge0) {
+	if(vPosition.x < edge0) {
 		gl_FragColor = texture;
-	} else if(vPosition.y < edge1) {
+	} else if(vPosition.x < edge1) {
 		gl_FragColor = vec4(0.62, 0.39, 0.19, 1.0);
 	} else {
 		discard;

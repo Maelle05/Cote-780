@@ -8,6 +8,7 @@ uniform vec2 uOffset;
 uniform vec3 uBoundingSize;
 uniform vec3 uCameraPosition;
 uniform vec3 uWorldPosition;
+uniform vec3 uColor;
 
 varying vec2 vUv;
 varying vec4 vPosition;
@@ -38,7 +39,7 @@ void main() {
 	float ratioStrength = 100.;
 
 	if(ratio > 500. && dist < 0.12) {
-		ratioStrength = 20. * ((1. - dist));
+		ratioStrength = 20.;
 	}
 
 	if(ratio < 500.) {
@@ -50,11 +51,15 @@ void main() {
 	vec2 displacedUv = ((scaledUv + uOffset / 100.0) * uNoiseScale);
 
 	vec4 textureColor = texture2D(uTexture, vUv);
+	if(textureColor.r == 0.) {
+		textureColor = vec4(uColor, 1.0);
+	}
 	vec4 shakeTexture = texture2D(uTextureShake, displacedUv);
 
 	vec3 color = blendOverlay(textureColor.rgb, shakeTexture.rgb, uNoiseStrength);
 
 	gl_FragColor = vec4(color, 1.0);
+
 	// gl_FragColor = shakeTexture;
 	// gl_FragColor = vec4(vec3(invertedDist), 1.0);
 }

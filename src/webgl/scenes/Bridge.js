@@ -113,9 +113,10 @@ class Bridge extends Scene {
 
     this.milo = new Milo();
     this.player = this.milo.model;
-    const walkDuration = 3;
+    const walkDuration = 7;
     this.player.position.set(-0.88, 0.15, 2.81);
     // this.player.rotation.y = Math.PI - 45;
+    this.player.goTo(this.center, walkDuration);
     this.add(this.player);
 
     this.durance = new Durance(app.assetsManager.get("duranceFace"));
@@ -149,7 +150,6 @@ class Bridge extends Scene {
     this.rocks = [];
 
     this.bridge = app.assetsManager.get("bridge");
-    // app.webgl.shake.initShake(this.bridge);
     this.add(this.bridge);
 
     this.bridge.traverse((child) => {
@@ -220,7 +220,7 @@ class Bridge extends Scene {
     this.radius = this.center.distanceTo(this.rocks[0].position);
 
     this.anim = new CamAnim(4, this.bridge, [0, 0.25, 0.5, 0.75, 1, 1]);
-    this.anim.onChangeSceneStep(2);
+    // this.anim.onChangeSceneStep(2);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -233,6 +233,9 @@ class Bridge extends Scene {
 
     this.vegetation = new Vegetation("bridge", 0.8);
     this.add(this.vegetation);
+
+    this.bridge.name = "bridge";
+    app.webgl.shake.initShake(this.bridge);
   }
 
   onTick(e) {
@@ -282,7 +285,7 @@ class Bridge extends Scene {
     this.spirit.position.set(finalX, center.y + 0.2, finalZ);
 
     if (
-      this.spirit.position.distanceTo(this.rocks[this.rockIndex].position) < 0.6
+      this.spirit.position.distanceTo(this.rocks[this.rockIndex].position) < 0.3
     ) {
       this.spirit.targetSpiritColor = new Vector4(0.941, 0.608, 0.345);
     } else {

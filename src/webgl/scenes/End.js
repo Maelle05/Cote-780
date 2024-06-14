@@ -80,7 +80,6 @@ class End extends Scene {
     this.add(this.planePos);
 
     this.end = app.assetsManager.get("end");
-    // app.webgl.shake.initShake(this.end);
     this.end.traverse((el) => {
       if (el.name == "WaterSurface") {
         this.water = el;
@@ -110,6 +109,7 @@ class End extends Scene {
     }
 
     if (app.webgl.currentScene === 7) this.init();
+    app.webgl.shake.initShake(this.end);
   }
 
   initAnimPorte() {

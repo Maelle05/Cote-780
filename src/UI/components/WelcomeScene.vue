@@ -121,15 +121,14 @@ const handleClickCircle = (type) => {
     });
   }, 5000);
 
-  app.audio.ui.play("magic_action_2");
-}
+  // [WIP][son] jouer son
+};
 
-const handleMouseEnterCircle = (type) => {
-  if (!isVisible) return
-  if (type !== "active") return
+const handleMouseEnterCircle = (e) => {
+  if (!isVisible) return;
 
-  app.audio.ui.play("click");
-}
+  // [WIP][son] jouer son
+};
 </script>
 
 <template lang="">
@@ -195,7 +194,7 @@ const handleMouseEnterCircle = (type) => {
               :cx="el.point.x"
               :cy="el.point.y"
               @click="() => handleClickCircle(el.type)"
-              @mouseenter="() => handleMouseEnterCircle(el.type)"
+              @mouseenter="handleMouseEnterCircle"
               r="10"
             />
           </g>
@@ -223,8 +222,8 @@ const handleMouseEnterCircle = (type) => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: opacity 2000ms;
-  // background-color: var(--c-background-beige);
+  transition: opacity 1000ms;
+  background-color: var(--c-background-beige);
   overflow: hidden;
 
   &.welcome-scene__container--hidden {

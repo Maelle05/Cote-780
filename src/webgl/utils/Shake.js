@@ -71,9 +71,17 @@ export class Shake {
     this.perlinTexture.wrapS = RepeatWrapping;
     this.perlinTexture.wrapT = RepeatWrapping;
 
+    if (scene.name == "bridge") this.strength = 0.15;
+    else this.strength = 0.1;
+
     scene.traverse((child) => {
-      // if (child.isMesh) console.log(child.material.type);
-      if (child.isMesh && child.material.type == "MeshStandardMaterial") {
+      // if (child.isMesh) console.log(child.name, child.material.type);
+      // if (child.isMesh && scene.name == "dam" && !child.material.map)
+      if (
+        child.isMesh &&
+        (child.material.type == "MeshStandardMaterial" ||
+          child.material.type == "MeshPhysicalMaterial")
+      ) {
         const bounding = new Box3().setFromObject(child);
         const boundingSize = bounding.getSize(new Vector3());
         const worldPos = child.position;
@@ -87,9 +95,10 @@ export class Shake {
             uOffset: { value: new Vector2() },
             uBoundingSize: { value: boundingSize },
             uNoiseScale: { value: 10 },
-            uNoiseStrength: { value: 10 },
+            uNoiseStrength: { value: this.strength },
             uCameraPosition: { value: new Vector3() },
             uWorldPosition: { value: worldPos },
+            uColor: { value: child.material.color },
           },
         });
 
