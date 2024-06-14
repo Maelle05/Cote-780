@@ -11,6 +11,8 @@ import Spirit from "../objects/Spirit";
 import { DirectionalLight } from "three";
 import { AnimationMixer } from "three";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { PointLight } from "three";
 
 class Village extends Scene {
   constructor() {
@@ -24,6 +26,12 @@ class Village extends Scene {
     this.directionLight.intensity = 2;
     this.directionLight.position.set(7, 10, 15);
     this.add(this.directionLight);
+
+    this.pointLight = new PointLight(0xffffff);
+    this.pointLight.position.set(9.26, 0.5, -1.825);
+    this.pointLight.intensity = 0.15;
+    this.pointLight.distance = 0.7;
+    this.add(this.pointLight);
   }
 
   init() {
@@ -37,11 +45,11 @@ class Village extends Scene {
 
   onAttach() {
     this.scene = app.assetsManager.get("village");
-    app.webgl.shake.initShake(this.scene);
 
     this.bookAnim = this.scene.animations.find(
       (el) => el.name == "Armature.001Action"
     );
+
     this.animationMixer = new AnimationMixer(this.scene);
     this.animationAction = this.animationMixer.clipAction(this.bookAnim);
     this.animationAction.play();
@@ -54,6 +62,9 @@ class Village extends Scene {
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
 
+    this.scene.name = "village";
+    // app.webgl.shake.initShake(this.scene);
+
     this.fog = new FogExp2("#0F4185", 0.08);
 
     this.addGodRays();
@@ -63,6 +74,13 @@ class Village extends Scene {
 
     this.anim = new CamAnim(6, this.scene, [0, 0, 0.33, 0.66, 1, 1, 1]);
     this.targetProgressAnim = 1;
+
+    if (!this.anim) {
+      const controls = new OrbitControls(
+        app.webgl.camera,
+        app.webgl.renderer.domElement
+      );
+    }
 
     this.add(this.scene, this.spirit, this.ambient);
 

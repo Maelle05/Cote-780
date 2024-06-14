@@ -8,5 +8,5 @@ float PI = 3.141592653589793238;
 void main() {
   vUv = uv;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  vPosition = gl_Position.xyz;
+  vPosition = position;
 }

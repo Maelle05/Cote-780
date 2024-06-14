@@ -97,7 +97,6 @@ class Dam extends Scene {
       }
     });
     this.water.renderOrder = 0;
-    app.webgl.shake.initShake(this.scene);
 
     this.light = new AmbientLight({ color: 0xffffff });
     this.add(this.light);
@@ -117,6 +116,9 @@ class Dam extends Scene {
 
     this.vegetation = new Vegetation("dam");
     this.add(this.vegetation);
+
+    this.scene.name = "dam";
+    app.webgl.shake.initShake(this.scene);
   }
 
   init() {

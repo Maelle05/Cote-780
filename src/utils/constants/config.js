@@ -41,7 +41,11 @@ const INTRO_SECTIONS = [
       // },
       { id: "1-arbre", src: "/assets/images/intro/1_arbre.png" },
     ],
-    texts: [dataText["intro"]["text_1"], dataText["intro"]["text_2"], dataText["intro"]["text_3"]],
+    texts: [
+      dataText["intro"]["text_1"],
+      dataText["intro"]["text_2"],
+      dataText["intro"]["text_3"],
+    ],
     audios: [],
   },
   {

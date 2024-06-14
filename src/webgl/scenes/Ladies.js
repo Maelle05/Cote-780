@@ -113,6 +113,7 @@ class Demoiselle extends Group {
       this.canvas.width,
       this.canvas.height
     );
+
     const data = imageData.data;
 
     const results = [];
@@ -169,66 +170,66 @@ class Ladies extends Scene {
 
   init() {
     if (DEV_MODE) {
-      // this.pane = new Pane({ title: "Parameters Ladies", expanded: true });
-      // this.pane
-      //   .addBinding(this.PARAMS, "rotateY", {
-      //     min: -180,
-      //     max: 180,
-      //     step: 0.1,
-      //   })
-      //   .on("change", (ev) => {
-      //     this.ladies.rotation.y = ev.value / (180 / Math.PI);
-      //   });
-      // this.pane
-      //   .addBinding(this.PARAMS, "rotateX", {
-      //     min: -180,
-      //     max: 180,
-      //     step: 0.1,
-      //   })
-      //   .on("change", (ev) => {
-      //     this.ladies.rotation.x = ev.value / (180 / Math.PI);
-      //   });
-      // this.pane
-      //   .addBinding(this.PARAMS, "scenePos", {
-      //     min: -10,
-      //     max: 10,
-      //     step: 0.1,
-      //   })
-      //   .on("change", (ev) => {
-      //     this.ladies.position.set(ev.value.x, ev.value.y, ev.value.z);
-      //   });
-      // this.pane
-      //   .addBinding(this.PARAMS, "miloPos", {
-      //     min: -10,
-      //     max: 10,
-      //     step: 0.1,
-      //   })
-      //   .on("change", (ev) => {
-      //     this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
-      //   });
-      // this.pane
-      //   .addBinding(
-      //     app.webgl.transitionPass.material.uniforms.uProgress,
-      //     "value",
-      //     {
-      //       min: 0,
-      //       max: 1,
-      //       step: 0.001,
-      //       label: "Transition progress",
-      //     }
-      //   )
-      //   .on("change", (ev) => {
-      //     this.transitionPass.material.uniforms.uProgress.value = ev.value;
-      //   });
-      // this.pane
-      //   .addBinding(this.tears, "position", {
-      //     min: -10,
-      //     max: 10,
-      //     step: 0.1,
-      //   })
-      //   .on("change", (ev) => {
-      //     this.tears.position.set(ev.value.x, ev.value.y, ev.value.z);
-      //   });
+      this.pane = new Pane({ title: "Parameters Ladies", expanded: true });
+      this.pane
+        .addBinding(this.PARAMS, "rotateY", {
+          min: -180,
+          max: 180,
+          step: 0.1,
+        })
+        .on("change", (ev) => {
+          this.ladies.rotation.y = ev.value / (180 / Math.PI);
+        });
+      this.pane
+        .addBinding(this.PARAMS, "rotateX", {
+          min: -180,
+          max: 180,
+          step: 0.1,
+        })
+        .on("change", (ev) => {
+          this.ladies.rotation.x = ev.value / (180 / Math.PI);
+        });
+      this.pane
+        .addBinding(this.PARAMS, "scenePos", {
+          min: -10,
+          max: 10,
+          step: 0.1,
+        })
+        .on("change", (ev) => {
+          this.ladies.position.set(ev.value.x, ev.value.y, ev.value.z);
+        });
+      this.pane
+        .addBinding(this.PARAMS, "miloPos", {
+          min: -10,
+          max: 10,
+          step: 0.1,
+        })
+        .on("change", (ev) => {
+          this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
+        });
+      this.pane
+        .addBinding(
+          app.webgl.transitionPass.material.uniforms.uProgress,
+          "value",
+          {
+            min: 0,
+            max: 1,
+            step: 0.001,
+            label: "Transition progress",
+          }
+        )
+        .on("change", (ev) => {
+          this.transitionPass.material.uniforms.uProgress.value = ev.value;
+        });
+      this.pane
+        .addBinding(this.tears, "position", {
+          min: -10,
+          max: 10,
+          step: 0.1,
+        })
+        .on("change", (ev) => {
+          this.tears.position.set(ev.value.x, ev.value.y, ev.value.z);
+        });
     }
 
     app.audio.playMusic(MUSIC_IDS.AMBIENT_FOREST);
@@ -328,7 +329,7 @@ class Ladies extends Scene {
     this.tears.position.set(2.05, 2.84, 1.7);
 
     this.anim = new CamAnim(2, this.ladies, [0, 0, 0.25, 0.5, 1, 1, 1]);
-    // this.anim.onChangeSceneStep(2);
+    // this.anim.onChangeSceneStep(3);
 
     this.add(this.ladies, this.ambient, this.tears);
     app.webgl.shake.initShake(this.ladies);
@@ -336,12 +337,12 @@ class Ladies extends Scene {
     if (app.webgl.currentScene === 2) this.init();
   }
 
-  onAskRemoveTransition(){
+  onAskRemoveTransition() {
     if (app.sceneshandler.currentScene != 2) return;
-    
+
     setTimeout(() => {
-      state.emit(EVENTS.GO_NEXT)
-    }, 3000)
+      state.emit(EVENTS.GO_NEXT);
+    }, 3000);
   }
 
   clear() {

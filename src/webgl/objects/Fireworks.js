@@ -152,16 +152,13 @@ export default class Fireworks {
 
   getRandomColor() {
     const colors = [
-      [1.0, 0.0, 0.0], // Red
-      [0.0, 1.0, 0.0], // Green
-      [0.0, 0.0, 1.0], // Blue
-      [1.0, 1.0, 0.0], // Yellow
-      [1.0, 0.0, 1.0], // Magenta
-      [0.0, 1.0, 1.0], // Cyan
-      [1.0, 0.5, 0.0], // Orange
-      [0.5, 0.0, 0.5], // Purple
-      [0.0, 0.5, 0.5], // Teal
-      [0.5, 0.5, 0.5], // Gray
+      [0.671, 0.722, 0.89], // Lightblue
+      [0.922, 0.937, 0.988], // White
+      [0.267, 0.294, 0.6], // Darkblue
+      [0.173, 0.196, 0.463], // Darkblue2
+      [0.729, 0.263, 0.263], // Red
+      [0.89, 0.565, 0.467], // Orange
+      [0.937, 0.8, 0.761], // Beige
     ];
 
     const randomIndex = Math.floor(Math.random() * colors.length);
