@@ -1,6 +1,14 @@
 {
   "sources": [
     {
+      "name": "ambient_ladies",
+      "src": "ambient_ladies.mp3"
+    },
+    {
+      "name": "ambient_bridge",
+      "src": "ambient_bridge.mp3"
+    },
+    {
       "name": "ambient_underwater",
       "src": "ambient_underwater.mp3"
     },

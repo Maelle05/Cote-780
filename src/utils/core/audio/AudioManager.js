@@ -9,8 +9,10 @@ const MUSIC_VOLUME = 1;
 
 //MUSIC EFFECTS
 export const MUSIC_IDS = {
-  AMBIENT_UNDERWATER: "ambient_underwater",
+  AMBIENT_LADIES: "ambient_ladies",
+  AMBIENT_BRIDGE: "ambient_bridge",
   AMBIENT_CHAPEL: "ambient_chapel",
+  AMBIENT_UNDERWATER: "ambient_underwater",
   AMBIENT_END: "ambient_end",
   AMBIENT_LAKE: "ambient_lake",
   AMBIENT_FOREST: "ambient_forest",
