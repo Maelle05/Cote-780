@@ -232,7 +232,7 @@ class Ladies extends Scene {
         });
     }
 
-    app.audio.playMusic(MUSIC_IDS.AMBIENT_FOREST);
+    app.audio.playMusic(MUSIC_IDS.AMBIENT_LADIES);
     app.webgl.shake.startShake();
 
     this.milo = new Milo();
