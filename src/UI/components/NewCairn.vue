@@ -4,7 +4,7 @@ import { EVENTS } from "@/utils/constants/events"
 import { state } from "@/utils/State"
 
 import { useI18n } from "vue-i18n"
-import { watch, ref } from "vue"
+import { watch, ref } from 'vue';
 
 import gsap from "gsap"
 
@@ -18,20 +18,26 @@ const props = defineProps({
 const cairnImageIndex = ref(props.sceneIndex)
 
 const handleClick = () => {
+  collectCairn()
+}
+
+const collectCairn = () => {
   const cairnIndex = props.sceneIndex - 1
   state.emit(EVENTS.COLLECT_CAIRN, cairnIndex)
   state.emit(EVENTS.GO_NEXT)
   playCollectionAnimation(cairnIndex)
   playCollectionSound()
-
-  setTimeout(() => {
-    gsap.set(".new-cairn__image", { y: 0, x: 0, opacity: 1, scale: 1 })
-  }, 5000);
 }
 
 const playCollectionAnimation = (cairnIndex) => {
   const xValue = `${(cairnIndex - 3) * 50}px`;
-  gsap.to(".new-cairn__image", { y: "-160px", x: xValue, opacity: 0, scale: 0.5, duration: 0.6 })
+  const disappearTimeline = gsap.timeline({ defaults: { ease: "Power2.easeOut" } })
+  disappearTimeline 
+  .to(".new-cairn__image", { y: "-160px", x: xValue, opacity: 0, scale: 0.5, duration: 0.6 })
+  .to(".new-cairn__text p:nth-child(1)", { opacity: 0, scale: 0.8, duration: 1 }, "-=0.5")
+  .to(".new-cairn__text p:nth-child(2)", { opacity: 0, y: "20px", rotate: 10, scale: 0.8, duration: 1 }, "-=0.9")
+  .to(".new-cairn__text p:nth-child(3)", { opacity: 0, y: "40px", rotate: -10, scale: 0.8, duration: 1 }, "<")
+  .to(".new-cairn__container", { opacity: 0, duration: 0.5 }, "-=0.8")
 }
 
 const playApparitionAnimation = () => {
@@ -79,12 +85,21 @@ const playApparitionSound = () => {
 // [WIP][son] add UI sound here
 }
 
+const resetCairn = () => {
+  gsap.set(".new-cairn__image", { y: 0, x: 0, opacity: 1, scale: 1 })
+  gsap.set(".new-cairn__container", { opacity: 1 })
+}
+
 watch(
   () => props.isVisible,
   (newVal) => {
     if (newVal === true) {
       playApparitionAnimation()
       playApparitionSound()
+
+      setTimeout(() => {
+        collectCairn()
+      }, 2000);
     }
   }
 )
@@ -95,6 +110,7 @@ watch(
 watch(() => props.sceneIndex, (newVal) => {
   setTimeout(() => {
     cairnImageIndex.value = newVal
+    resetCairn()
   }, 3000)
 })
 </script>
@@ -135,10 +151,9 @@ watch(() => props.sceneIndex, (newVal) => {
   pointer-events: all;
   user-select: none;
   transition: opacity 1200ms;
-  cursor: pointer;
 
   &.new-cairn__container--hidden {
-    opacity: 0;
+    opacity: 0 !important;
     pointer-events: none;
   }
 }

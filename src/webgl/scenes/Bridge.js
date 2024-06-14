@@ -134,7 +134,7 @@ class Bridge extends Scene {
     }, walkDuration * 1000);
 
     app.webgl.shake.startShake();
-    app.audio.playMusic(MUSIC_IDS.AMBIENT_FOREST);
+    app.audio.playMusic(MUSIC_IDS.AMBIENT_BRIDGE);
   }
 
   onAskRemoveTransition() {
