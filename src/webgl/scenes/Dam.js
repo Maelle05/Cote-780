@@ -26,6 +26,7 @@ import Durance from "../objects/Durance";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { Vector3 } from "three";
 import Vegetation from "../objects/Vegetation";
+import SparkleParticles from "../objects/SparkleParticles";
 
 class Dam extends Scene {
   constructor() {
@@ -74,6 +75,9 @@ class Dam extends Scene {
     this.isAnimIntroPass = false;
     this.isTutoPass = false;
     this.miloHasMove = false;
+    
+    this.sparkles = new SparkleParticles();
+    this.add(this.sparkles);
   }
 
   onAttach() {
@@ -221,6 +225,7 @@ class Dam extends Scene {
               (rock) => rock.name != el.object.name
             );
             app.audio.ui.play("click", 0.3);
+            this.sparkles.spawn(el.object.position);
             if (this.rocks.length == 0 && !this.isInteractionFini) {
               this.isInteractionFini = true;
               state.emit(EVENTS.GO_NEXT);
