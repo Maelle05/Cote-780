@@ -1,4 +1,4 @@
-const PARAMS_LIST = ['scene', 'debug'];
+const PARAMS_LIST = ['scene', 'debug', 'bzh'];
 
 class URLParams {
 	params = new Map();
