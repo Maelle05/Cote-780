@@ -4,7 +4,7 @@ import { state } from "@/utils/State"
 
 import { ref, onMounted, nextTick } from "vue"
 import { gsap } from "gsap"
-import { app } from "@/App";
+import { app } from "@/App"
 
 const hasDialogue = ref(false)
 const person = ref("")
@@ -13,6 +13,7 @@ const letters = ref([])
 
 const wrapperRef = ref(null)
 const wrapperHeight = ref(0)
+const isWrapperReady = ref(false)
 
 let isNewScene = false
 
@@ -38,6 +39,7 @@ const updateHeight = () => {
 const animateLettersApparition = () => {
   if (isAnimationInProgress) return
 
+  isWrapperReady.value = false
   isAnimationInProgress = true
 
   gsap.to(".wrapper--original .letter", {
@@ -46,6 +48,7 @@ const animateLettersApparition = () => {
     stagger: 0.02,
     delay: 0.2,
     onComplete: () => {
+      isWrapperReady.value = true
       isAnimationInProgress = false
     },
   })
@@ -67,43 +70,41 @@ state.on(EVENTS.CHANGE_SCENE_STEP, (e) => {
 
 state.on(EVENTS.UPDATE_DIALOGUE, (e) => {
   const updateDialogueDelay = isNewScene ? 3000 : 0
-  
-  setTimeout(
-    () => {
-      if (e) {
-        gsap.to(".wrapper--original .letter", {
-          opacity: 0,
-          duration: hasDialogue.value === true ? 0.1 : 0.001,
-          onComplete: () => {
-            person.value = e.person
-            text.value = e.text
-            letters.value = text.value.split("")
 
-            nextTick(() => {
-              updateHeight()
-              animateLettersApparition()
-            })
-          },
-        })
+  setTimeout(() => {
+    if (e) {
+      gsap.to(".wrapper--original .letter", {
+        opacity: 0,
+        duration: hasDialogue.value === true ? 0.1 : 0.001,
+        onComplete: () => {
+          person.value = e.person
+          text.value = e.text
+          letters.value = text.value.split("")
 
-        hasDialogue.value = true
-        if (e.audio) app.audio.dialog.play(e.audio);
-      } else {
-        hasDialogue.value = false
-      }
-    },
-    updateDialogueDelay
-  )
+          nextTick(() => {
+            updateHeight()
+            animateLettersApparition()
+          })
+        },
+      })
+
+      hasDialogue.value = true
+      if (e.audio) app.audio.dialog.play(e.audio)
+    } else {
+      hasDialogue.value = false
+    }
+  }, updateDialogueDelay)
 })
 
 const onClickDialogue = () => {
   if (isAnimationInProgress) {
     gsap.killTweensOf(".wrapper--original .letter")
     gsap.set(".wrapper--original .letter", { opacity: 1 })
+    isWrapperReady.value = true
     isAnimationInProgress = false
   } else {
     state.emit(EVENTS.GO_NEXT)
-    app.audio.ui.play("click", 0.5);
+    app.audio.ui.play("click", 0.5)
   }
 }
 </script>
@@ -114,6 +115,8 @@ const onClickDialogue = () => {
     :ref="(ref) => assignRef(ref, element, 'clone')"
     :class="`wrapper wrapper--${element} wrapper--${
       isVisible && hasDialogue ? 'visible' : 'hidden'
+    } wrapper--${
+      isWrapperReady ? 'ready' : 'not-ready'
     }`"
     :style="`--wrapper-height: ${wrapperHeight}px;`"
     v-for="element in ['original', 'clone']"
@@ -153,7 +156,29 @@ const onClickDialogue = () => {
   box-sizing: border-box;
   user-select: none;
   cursor: pointer;
-  
+
+  &::after {
+    display: block;
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url("/assets/images/icons/next.svg");
+    background-size: 35px;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 4px) calc(100% - 10px);
+    opacity: 0;
+    transition: opacity 600ms;
+  }
+
+  &.wrapper--ready {
+    &::after {
+      opacity: 0.5;
+    }
+  }
+
   span {
     pointer-events: none;
   }
