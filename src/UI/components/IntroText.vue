@@ -24,7 +24,7 @@ watchEffect(() => {
     setTimeout(() => {
       isVisible.value = true
     }, 500 * props.index);
-    app.audio.dialog.play(props.audio);
+    if (props.audio) app.audio.dialog.play(props.audio);
   } else if (
     isVisible.value === true &&
     (props.sectionProgress > LIMIT_DISAPPEAR ||
