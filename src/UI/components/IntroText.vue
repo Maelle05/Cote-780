@@ -1,6 +1,6 @@
 <script setup>
 import { app } from "@/App"
-import { defineProps, watchEffect, ref, onUnmounted } from "vue"
+import { defineProps, watchEffect, ref, onUnmounted, onMounted } from 'vue';
 
 const props = defineProps({
   text: String,
@@ -10,11 +10,15 @@ const props = defineProps({
   audio: String,
 })
 
+onMounted(() => {
+  console.log("0104")
+})
+
 const isVisible = ref(false)
 const timeoutId = ref(null)
 
 const LIMIT_APPEAR = 0.2
-const LIMIT_DISAPPEAR = 0.8
+const LIMIT_DISAPPEAR = 0.99
 
 watchEffect(() => {
   if (
