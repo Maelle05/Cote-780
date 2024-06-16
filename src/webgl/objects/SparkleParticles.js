@@ -12,7 +12,7 @@ import { AdditiveBlending } from "three";
 export default class SparkleParticles extends Group {
   poolInactives = [];
   poolActives = [];
-  count = 20;
+  count = 10;
   lifetime = 1000;
 
   constructor() {
