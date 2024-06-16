@@ -28,7 +28,11 @@ import { Vector3 } from "three";
 import Vegetation from "../objects/Vegetation";
 import SparkleParticles from "../objects/SparkleParticles";
 
+const COOLDOWN_AUDIO = 200;
+
 class Dam extends Scene {
+  timeSinceLastAudio = 0;
+
   constructor() {
     super();
     state.register(this);
@@ -200,14 +204,9 @@ class Dam extends Scene {
     }, 4000);
   }
 
-  onPointerDown(e) {
+  onPointerMove(e) {
     if (app.webgl.currentScene != 3) return;
     if (this.anim.currentKeyfame != 2) return;
-
-    if (!this.isTutoPass) {
-      this.isTutoPass = true;
-      state.emit(EVENTS.TUTO_PASS, 3);
-    }
 
     this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
 
@@ -224,7 +223,10 @@ class Dam extends Scene {
             this.rocks = this.rocks.filter(
               (rock) => rock.name != el.object.name
             );
-            app.audio.ui.play("click", 0.3);
+            if (this.timeSinceLastAudio >= COOLDOWN_AUDIO) {
+              app.audio.ui.play("magic_popup_1");
+              this.timeSinceLastAudio = 0;
+            }
             this.sparkles.spawn(el.object.position);
             if (this.rocks.length == 0 && !this.isInteractionFini) {
               this.isInteractionFini = true;
@@ -241,8 +243,19 @@ class Dam extends Scene {
     }
   }
 
+  onPointerDown(e) {
+    if (app.webgl.currentScene != 3) return;
+    if (this.anim.currentKeyfame != 2) return;
+
+    if (!this.isTutoPass) {
+      this.isTutoPass = true;
+      state.emit(EVENTS.TUTO_PASS, 3);
+    }
+  }
+
   onTick() {
     if (app.sceneshandler.currentScene != 3) return;
+    this.timeSinceLastAudio += app.ticker.delta;
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
     if (app.sceneshandler.currentStepCam == 3 && !this.durance.isActive) {
