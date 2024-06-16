@@ -113,10 +113,8 @@ class Bridge extends Scene {
 
     this.milo = new Milo();
     this.player = this.milo.model;
-    const walkDuration = 7;
     this.player.position.set(-0.88, 0.15, 2.81);
     // this.player.rotation.y = Math.PI - 45;
-    this.player.goTo(this.center, walkDuration);
     this.add(this.player);
 
     this.durance = new Durance(app.assetsManager.get("duranceFace"));
@@ -128,21 +126,17 @@ class Bridge extends Scene {
 
     this.spirit.hide();
 
-    //End of the walk & Start Tuto
-    setTimeout(() => {
-      this.#start();
-    }, walkDuration * 1000);
-
     app.webgl.shake.startShake();
     app.audio.playMusic(MUSIC_IDS.AMBIENT_BRIDGE);
   }
 
   onAskRemoveTransition() {
     if (app.webgl.currentScene != 4) return;
-    this.player.goTo(this.center, 3);
+    this.player.goTo(this.center, 6);
     setTimeout(() => {
+      this.#start();
       state.emit(EVENTS.GO_NEXT);
-    }, 3000);
+    }, 4000);
   }
 
   onAttach() {
@@ -248,6 +242,7 @@ class Bridge extends Scene {
       this.durance.isActive = true;
       this.durance.show();
       app.audio.ui.play("wave_appear");
+      this.player.lookAt(this.durance.position);
     }
     if (app.sceneshandler.currentStepCam == 5 && this.durance.isActive) {
       this.durance.isActive = false;
@@ -350,7 +345,7 @@ class Bridge extends Scene {
               -scale * (dummy.progress - peak) * (dummy.progress - peak) +
                 scale * peak * peak
             );
-
+          
           this.player.position.set(
             this.center.x,
             this.center.y + yOffset + 0.03,

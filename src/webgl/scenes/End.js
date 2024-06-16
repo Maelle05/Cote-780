@@ -31,11 +31,6 @@ class End extends Scene {
         y: 1,
         z: 0,
       },
-      posMilo: {
-        x: 1.2,
-        y: 2.2,
-        z: -7.7
-      },
       rotMilo: -76
     };
 
@@ -84,9 +79,9 @@ class End extends Scene {
 
     this.milo = new Milo()
     this.player = this.milo.model;
-    this.player.position.set( 1.3, 2.2, -7.7 );
+    this.player.position.copy(this.miloPos);
     this.player.rotation.y = -76 * Math.PI / 180;
-    this.player.scale.set(0.05, 0.05, 0.05);
+    this.player.scale.set(0.15, 0.15, 0.15);
     this.add(this.player);
 
     app.webgl.shake.startShake();
@@ -118,6 +113,7 @@ class End extends Scene {
         });
       }
       if (el.name.includes("Firework")) this.allPos.push(el.position);
+      if (el.name.includes("MiloPos")) this.miloPos = el.position;
     });
 
     this.fireworks = new Fireworks(this.allPos);
