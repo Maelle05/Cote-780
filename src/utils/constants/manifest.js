@@ -52,6 +52,7 @@ const manifest = {
     },
     bzh: { path: `/assets/textures/bzh.png` },
     sparkle: { path: `/assets/textures/sparkle.png` },
+    bird: { path: `/assets/textures/bird.png` },
   },
   envMaps: {
     // envmap: { path: `/assets/textures/envmap.hdr` },
