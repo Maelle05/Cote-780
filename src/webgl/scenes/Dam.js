@@ -227,6 +227,11 @@ class Dam extends Scene {
     const intersects = this.raycaster.intersectObjects(this.rocks);
 
     if (intersects.length != 0) {
+      if (!this.isTutoPass) {
+        this.isTutoPass = true;
+        state.emit(EVENTS.TUTO_PASS, 3);
+      }
+      
       this.nbClick++;
 
       intersects.forEach((el) => {
@@ -254,16 +259,6 @@ class Dam extends Scene {
           },
         });
       });
-    }
-  }
-
-  onPointerDown(e) {
-    if (app.webgl.currentScene != 3) return;
-    if (this.anim.currentKeyfame != 2) return;
-
-    if (!this.isTutoPass) {
-      this.isTutoPass = true;
-      state.emit(EVENTS.TUTO_PASS, 3);
     }
   }
 
