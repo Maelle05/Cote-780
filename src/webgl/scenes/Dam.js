@@ -27,11 +27,13 @@ import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { Vector3 } from "three";
 import Vegetation from "../objects/Vegetation";
 import SparkleParticles from "../objects/SparkleParticles";
+import { WindMaterial } from "../materials/Wind/material";
 
 const COOLDOWN_AUDIO = 200;
 
 class Dam extends Scene {
   timeSinceLastAudio = 0;
+  winds = [];
 
   constructor() {
     super();
@@ -101,6 +103,18 @@ class Dam extends Scene {
           },
           transparent: true,
           depthWrite: false,
+        });
+      }
+      if (el.name.includes("Wind")) {
+        this.winds.push(el);
+        el.material = new WindMaterial({
+          uniforms: {
+            uTime: { value: 0 },
+            uColor: { value: new Vector3(204 / 255, 242 / 255, 255 / 255) },
+            uOffset: { value: Math.random() },
+          },
+          side: DoubleSide,
+          transparent: true,
         });
       }
     });
@@ -253,6 +267,7 @@ class Dam extends Scene {
     this.timeSinceLastAudio += app.ticker.delta;
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
+    this.winds.forEach((wind) => wind.material.uniforms.uTime.value = app.ticker.elapsed);
     if (app.sceneshandler.currentStepCam == 3 && !this.durance.isActive) {
       this.durance.isActive = true;
       app.audio.layers.playVolumes([1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0]);
