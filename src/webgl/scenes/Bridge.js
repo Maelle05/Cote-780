@@ -247,6 +247,7 @@ class Bridge extends Scene {
     if (app.sceneshandler.currentStepCam == 4 && !this.durance.isActive) {
       this.durance.isActive = true;
       this.durance.show();
+      app.audio.ui.play("wave_appear");
     }
     if (app.sceneshandler.currentStepCam == 5 && this.durance.isActive) {
       this.durance.isActive = false;
@@ -359,6 +360,9 @@ class Bridge extends Scene {
       },
       0
     );
+    tl.call(() => {
+      app.audio.ui.play("jump_rock");
+    }, [], ">-0.7");
 
     tl.to(
       this.center,

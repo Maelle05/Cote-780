@@ -19,6 +19,8 @@ import { EVENTS } from "@/utils/constants/events";
 import Milo from "../objects/Milo";
 
 class End extends Scene {
+  hasAnimatedCairns = false;
+
   constructor() {
     super();
     state.register(this);
@@ -184,6 +186,12 @@ class End extends Scene {
       this.allAnimCairn.length == this.allActionCairn.length &&
       app.sceneshandler.currentStepCam >= 1
     ) {
+      if (!this.hasAnimatedCairns) {
+        this.hasAnimatedCairns = true;
+        app.audio.ui.play("magic_cairn");
+        this.fireworks.start();
+      }
+
       this.currentProgressCairn = MathUtils.lerp(
         this.currentProgressCairn,
         1,

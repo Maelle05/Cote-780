@@ -292,6 +292,7 @@ class Chapel extends Scene {
           if (!flame) return;
           flame.visible = true;
           flame.show();
+          app.audio.ui.play("torch");
 
           if (this.index == 5) {
             this.isAnimating = true;

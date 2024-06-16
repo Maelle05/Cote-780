@@ -26,27 +26,23 @@
   "scene_0": {
     "title": "Intro",
     "text_1": "Mon cher Milo… Si tu lis ces mots, c’est que je ne suis malheureusement plus avec vous.",
-    "audio_1": "grandma_1",
+    "audio_1": "grandma_1_2",
     "text_2": "Il y a une histoire que tu dois connaître…",
-    "audio_2": "grandma_2",
     "text_3": "Lors de la création du barrage, la Durance, capricieuse et indomptable, a lancé une dernière offensive.",
     "audio_3": "grandma_3",
     "text_4": "Grâce au lien de notre famille avec la vallée, j'ai réussi à rétablir l’harmonie entre les hommes et&nbsp;la&nbsp;Durance.",
     "audio_4": "grandma_4",
     "text_5": "Le Passage de Savines est le symbole de cette union entre les hommes et la nature. Ses pierres maintiennent l’équilibre autour du lac.",
-    "audio_5": "grandma_5",
+    "audio_5": "grandma_5_6",
     "text_6": "J’étais la dernière gardienne du Passage, mon rôle était de protéger cet équilibre fragile.",
-    "audio_6": "grandma_6",
     "text_7": "Sans personne pour veiller sur lui, je crains que les cairns qui le composent ne se dispersent aux quatre coins de la vallée…",
-    "audio_7": "grandma_7",
+    "audio_7": "grandma_7_8",
     "text_8": "La Durance pourrait alors représenter de nouveau un danger pour la région.",
-    "audio_8": "grandma_8",
     "text_9": "C'est à toi, Milo, que revient le devoir de retrouver ces cairns pour rétablir l’harmonie entre tous.",
     "audio_9": "grandma_9",
     "text_10": "Prends la carte que je t’ai laissée et pars à la rencontre des Demoiselles Coiffées, ces ancestrales pierres de la montagne.",
-    "audio_10": "grandma_10",
-    "text_11": "Elles pourront te guider dans ta quête.",
-    "audio_11": "grandma_11"
+    "audio_10": "grandma_10_11",
+    "text_11": "Elles pourront te guider dans ta quête."
   },
   "scene_1": {
     "title": "Map"
@@ -121,7 +117,7 @@
       "camera": "4",
       "audio": "esprit_1"
     },
-    "tuto": "Dégage les debrits pour libérer l’esprit",
+    "tuto": "Dégage les débris pour libérer l’esprit",
     "infos": "Le barrage de Serre-Ponçon, construit à partir de matériaux extraits du lit de la Durance entre 1955 et 1960, nécessita le déplacement des habitants et la destruction des villages de Savines et d’Ubaye. C’est une digue en terre compactée dont le noyau central est en argile étanche.",
     "alt": "Le Barrage",
     "url": "https://www.serreponcon.com/patrimoine-culturel/barrage-de-serre-poncon-rousset/"
@@ -152,11 +148,12 @@
     "text_1": {
       "person": "Esprit",
       "text": "Cette chapelle est le souvenir d’une vallée engloutie. À l’intérieur t’attend ton destin.",
-      "camera": "1"
+      "camera": "1",
+      "audio": "esprit_2"
     },
     "text_2": {
       "person": "Milo",
-      "text": "wouhou !",
+      "text": "Wouhou !",
       "camera": "3",
       "audio": "milo_wouhou"
     },
@@ -206,7 +203,7 @@
     },
     "text_6": {
       "person": "Journal",
-      "text": "xx xx 1956. L’autre soir, la Durance a bien failli mettre fin au chantier ! Elle s’est rebellée contre ceux qui essayent de la contrôler. Malheureusement… il sont bien décidés, ça n’a pas eu beaucoup d’effets hormis retarder le chantier.",
+      "text": "xx xx 1956. L’autre soir, la Durance a bien failli mettre fin au chantier ! Elle s’est rebellée contre ceux qui essayent de la contrôler. Malheureusement… ils sont bien décidés, ça n’a pas eu beaucoup d’effets hormis retarder le chantier.",
       "camera": "5",
       "audio": "grandma_14"
     },
@@ -218,19 +215,19 @@
     },
     "text_8": {
       "person": "Journal",
-      "text": "xx xx 1957. …Au début, personne ne croyait à ce barrage. Même lorsque la construction a été lancée, on se disait qu’il ne verrait jamais le jour. Maintenant que les gens commencent à quitter le village, tout devient réel…",
+      "text": "xx xx 1957. Au début, personne ne croyait à ce barrage. Même lorsque la construction a été lancée, on se disait qu’il ne verrait jamais le jour. Maintenant que les gens commencent à quitter le village, tout devient réel…",
       "camera": "6",
       "audio": "grandma_16"
     },
     "text_9": {
       "person": "Journal",
-      "text": "xx xx 1955. Aujourd’hui j’ai eu la visite d’EDF au sujet du barrage. Ils m’ont proposé un logement et de l’argent… beaucoup... pour m'installer dans le nouveau village… Mais comment vivre, avec nos souvenirs engloutis sous les yeux ?",
+      "text": "xx xx 1955. Aujourd’hui j’ai eu la visite d’EDF au sujet du barrage. Ils m’ont proposé un logement et de l’argent… beaucoup… pour m'installer dans le nouveau village… Mais comment vivre, avec nos souvenirs engloutis sous les yeux ?",
       "camera": "6",
       "audio": "grandma_17"
     },
     "text_10": {
       "person": "Journal",
-      "text": "xx xx 1957. …Ils ont commencé à reconstruire le village au-dessus de la cote 780… et je suis bien triste de devoir quitter mon Hôtel. Mais comme les autres, je crois que j’ai fini par m’y résoudre.",
+      "text": "xx xx 1957. Ils ont commencé à reconstruire le village au-dessus de la cote 780… et je suis bien triste de devoir quitter mon Hôtel. Mais comme les autres, je crois que j’ai fini par m’y résoudre.",
       "camera": "6",
       "audio": "grandma_18"
     },

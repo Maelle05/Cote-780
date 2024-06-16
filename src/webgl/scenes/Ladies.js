@@ -87,7 +87,9 @@ class Demoiselle extends Group {
         z: this.body.position.z,
       });
 
-      app.audio.ui.play("magic_popup_1", 0.5);
+      app.sceneshandler.webgl.scene.drawCount++;
+
+      app.audio.ui.play(`hat_${app.sceneshandler.webgl.scene.drawCount}`, 0.5);
     }
   }
 
@@ -137,6 +139,8 @@ class Demoiselle extends Group {
 }
 
 class Ladies extends Scene {
+  drawCount = 0;
+
   constructor() {
     super();
     state.register(this);
