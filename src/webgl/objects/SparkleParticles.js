@@ -19,12 +19,14 @@ export default class SparkleParticles extends Group {
     super();
     state.register(this);
 
-    this.particleSize = 0.1;
+    this.particleSize = 0.2;
     this.resolution = new Vector2(app.viewport.width, app.viewport.height);
     this.radius = 0.05;
     this.progress = 0;
     this.time = 0;
+  }
 
+  onAttach() {
     this.geometry = this.#createGeometry();
     this.material = this.#createMaterial();
   }
@@ -60,6 +62,7 @@ export default class SparkleParticles extends Group {
   #createMaterial() {
     const material = new SparkleParticlesMaterial({
       uniforms: {
+        uTexture: { value: app.assetsManager.get("sparkle") },
         uSize: { value: this.particleSize },
         uBirth: { value: 0 },
         uLifetime: { value: this.lifetime },
@@ -84,7 +87,7 @@ export default class SparkleParticles extends Group {
     const particle = this.poolInactives.pop() || new Points(this.geometry, this.material.clone());
 
     particle.material.uniforms.uBirth.value = app.ticker.elapsed;
-    particle.material.uniforms.uRandom.value = Math.random();
+    particle.material.uniforms.uRandom.value = Math.random() * .5 + .5;
     particle.position.copy(position);
 
     this.add(particle);

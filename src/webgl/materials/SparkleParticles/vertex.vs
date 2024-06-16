@@ -8,6 +8,7 @@ attribute float particleIndex;
 attribute float particleRandom;
 
 varying float vLife;
+varying float vIndex;
 
 #define HALF_PI 1.5707963267948966
 
@@ -30,4 +31,5 @@ void main() {
   gl_Position = projectionMatrix * mvPosition;
 
   vLife = life;
+  vIndex = particleIndex;
 }

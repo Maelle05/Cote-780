@@ -51,6 +51,7 @@ const manifest = {
       // path: `/assets/textures/Noise/noiseTest.png`,
     },
     bzh: { path: `/assets/textures/bzh.png` },
+    sparkle: { path: `/assets/textures/sparkle.png` },
   },
   envMaps: {
     // envmap: { path: `/assets/textures/envmap.hdr` },
