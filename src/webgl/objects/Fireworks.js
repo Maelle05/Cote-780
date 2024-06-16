@@ -48,8 +48,6 @@ export default class Fireworks {
     this.clonedExplosions = [...this.explosions];
     this.clonedLaunchers = [...this.launchers];
 
-    this.startFirework();
-
     return {
       launchers: this.launchers,
       explosions: this.explosions,
@@ -57,7 +55,7 @@ export default class Fireworks {
       clonedLaunchers: this.clonedLaunchers,
       play: this.play,
       getRandom: this.getRandom,
-      start: this.startFirework,
+      start: () => { this.startFirework(); },
     };
   }
 
@@ -123,6 +121,7 @@ export default class Fireworks {
         explosion.position.copy(launcher.position);
         explosion.lookAt(app.webgl.camera.position);
         explosion.spritesheet.playing = true;
+        app.audio.ui.play(`fireworks_${Math.floor(Math.random() * 3) + 1}`, 0.5);
         launcher.position.y = 0;
         this.clonedLaunchers.push(launcher);
       },

@@ -19,18 +19,11 @@ import { EVENTS } from "@/utils/constants/events";
 import Milo from "../objects/Milo";
 
 class End extends Scene {
+  hasAnimatedCairns = false;
+
   constructor() {
     super();
     state.register(this);
-
-    this.allPos = [
-      { x: -10, y: -0.01, z: 6 },
-      { x: -15, y: -0.01, z: 3 },
-      { x: -9, y: -0.01, z: -3 },
-      { x: -8, y: -0.01, z: 3 },
-      { x: -12, y: -0.01, z: 0 },
-      { x: -11, y: -0.01, z: 3 },
-    ];
 
     this.PARAMS = {
       planePos: {
@@ -101,9 +94,6 @@ class End extends Scene {
   }
 
   onAttach() {
-    this.fireworks = new Fireworks(this.allPos);
-    // this.fireworks.launchers.forEach((launcher) => this.add(launcher));
-    this.fireworks.explosions.forEach((explosions) => this.add(explosions));
 
     this.planePos = new Mesh(
       new PlaneGeometry(1, 1, 1, 1),
@@ -112,6 +102,8 @@ class End extends Scene {
     this.planePos.rotation.x = Math.PI / 2;
     this.planePos.visible = false;
     this.add(this.planePos);
+
+    this.allPos = [];
 
     this.end = app.assetsManager.get("end");
     this.end.traverse((el) => {
@@ -125,7 +117,13 @@ class End extends Scene {
           transparent: true,
         });
       }
+      if (el.name.includes("Firework")) this.allPos.push(el.position);
     });
+
+    this.fireworks = new Fireworks(this.allPos);
+    // this.fireworks.launchers.forEach((launcher) => this.add(launcher));
+    this.fireworks.explosions.forEach((explosions) => this.add(explosions));
+
     this.initAnimPorte();
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
@@ -184,6 +182,12 @@ class End extends Scene {
       this.allAnimCairn.length == this.allActionCairn.length &&
       app.sceneshandler.currentStepCam >= 1
     ) {
+      if (!this.hasAnimatedCairns) {
+        this.hasAnimatedCairns = true;
+        app.audio.ui.play("magic_cairn");
+        this.fireworks.start();
+      }
+
       this.currentProgressCairn = MathUtils.lerp(
         this.currentProgressCairn,
         1,

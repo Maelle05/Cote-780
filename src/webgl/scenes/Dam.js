@@ -170,7 +170,7 @@ class Dam extends Scene {
         });
     }
 
-    app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
+    app.audio.playMusic(MUSIC_IDS.AMBIENT_DAM);
     app.webgl.shake.startShake();
 
     this.milo = new Milo();
@@ -248,6 +248,7 @@ class Dam extends Scene {
     if (app.sceneshandler.currentStepCam == 3 && !this.durance.isActive) {
       this.durance.isActive = true;
       app.audio.layers.playVolumes([1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0]);
+      app.audio.ui.play("wave_appear");
       this.durance.show();
     }
     if (app.sceneshandler.currentStepCam == 5 && this.durance.isActive) {
