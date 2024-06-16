@@ -1,6 +1,6 @@
 <script setup>
-import { app } from "@/App";
-import { defineProps, watchEffect, ref } from "vue";
+import { app } from "@/App"
+import { defineProps, watchEffect, ref, onUnmounted, onMounted } from 'vue';
 
 const props = defineProps({
   text: String,
@@ -10,10 +10,15 @@ const props = defineProps({
   audio: String,
 })
 
+onMounted(() => {
+  console.log("0104")
+})
+
 const isVisible = ref(false)
+const timeoutId = ref(null)
 
 const LIMIT_APPEAR = 0.2
-const LIMIT_DISAPPEAR = 0.8
+const LIMIT_DISAPPEAR = 0.99
 
 watchEffect(() => {
   if (
@@ -21,26 +26,40 @@ watchEffect(() => {
     props.sectionProgress > LIMIT_APPEAR &&
     props.sectionProgress < LIMIT_DISAPPEAR
   ) {
-    setTimeout(() => {
+    const apparitionDelay = props.section === 1 ? 0 : 500 * props.index
+    timeoutId.value = setTimeout(() => {
       isVisible.value = true
-    }, 500 * props.index);
-    if (props.audio) app.audio.dialog.play(props.audio);
+    }, apparitionDelay)
+    if (props.audio && app.audio) {
+      app.audio.dialog.play(props.audio)
+    }
   } else if (
     isVisible.value === true &&
     (props.sectionProgress > LIMIT_DISAPPEAR ||
       props.sectionProgress < LIMIT_APPEAR)
   ) {
     isVisible.value = false
+    if (timeoutId.value) {
+      clearTimeout(timeoutId.value)
+      timeoutId.value = null
+    }
+  }
+})
+
+onUnmounted(() => {
+  if (timeoutId.value) {
+    clearTimeout(timeoutId.value)
   }
 })
 </script>
 
 <template>
   <p
-    :class="`intro-text intro-text--${isVisible ? 'visible' : 'hidden'} intro-text--${section}-${index}`"
-  >
-    {{ props.text }}
-  </p>
+    v-html="props.text"
+    :class="`intro-text intro-text--${
+      isVisible ? 'visible' : 'hidden'
+    } intro-text--${section}-${index}`"
+  ></p>
 </template>
 
 <style scoped>

@@ -43,8 +43,6 @@ const INTRO_SECTIONS = [
     ],
     texts: [
       dataText["intro"]["text_1"],
-      dataText["intro"]["text_2"],
-      dataText["intro"]["text_3"],
     ],
     audios: [],
   },
@@ -63,6 +61,10 @@ const INTRO_SECTIONS = [
   },
   {
     elements: [
+      {
+        id: "3-chantier",
+        src: "/assets/images/intro/3_chantier.png",
+      },
       {
         id: "3-durance-colere",
         src: "/assets/images/intro/3_durance-colere.png",
@@ -106,8 +108,7 @@ const INTRO_SECTIONS = [
   },
   {
     elements: [
-      { id: "carte", src: "/assets/images/intro/11_carte.png" },
-      { id: "collier", src: "/assets/images/intro/12_collier.png" },
+      { id: "carte", src: "/assets/images/intro/7_carte.png" },
     ],
     texts: [introTexts["text_10"], introTexts["text_11"]],
     audios: [introTexts["audio_10"], introTexts["audio_11"]],
