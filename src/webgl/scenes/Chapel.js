@@ -28,6 +28,7 @@ import { Vector3 } from "three";
 import { ShakiraMaterial } from "../materials/Shakira/material";
 import Vegetation from "../objects/Vegetation";
 import { EVENTS } from "@/utils/constants/events";
+import { ElectricPortalMaterial } from "../materials/ElectricPortal/material";
 
 class Chapel extends Scene {
   boats = [];
@@ -40,7 +41,7 @@ class Chapel extends Scene {
     state.register(this);
 
     this.PARAMS = {
-      portalProgress: 0,
+      portalProgress: 1,
       posPerso: {
         x: -1,
         y: 1.05,
@@ -89,11 +90,15 @@ class Chapel extends Scene {
         });
 
       this.pane
-        .addBinding(app.webgl.transitionPass.material.uniforms.uProgress, "value", {
-          min: 0,
-          max: 1,
-          step: 0.1,
-        })
+        .addBinding(
+          app.webgl.transitionPass.material.uniforms.uProgress,
+          "value",
+          {
+            min: 0,
+            max: 1,
+            step: 0.1,
+          }
+        )
         .on("change", (ev) => {
           app.webgl.transitionPass.material.uniforms.uProgress.value = ev.value;
         });
@@ -109,7 +114,7 @@ class Chapel extends Scene {
     this.index = 0;
     this.isAnimating = false;
     this.interpolatedMouse = new Vector2(0.5, 0.5);
-    this.portal.material.uniforms.uProgress.value = 0;
+    this.portal.material.uniforms.uProgress.value = 1;
 
     app.audio.playMusic(MUSIC_IDS.AMBIENT_CHAPEL);
     app.webgl.shake.startShake();
@@ -139,8 +144,9 @@ class Chapel extends Scene {
 
       if (child.name == "Portal") {
         this.portal = child;
-        this.portal.scale.x *= 1.6;
-        this.portal.scale.z *= 1.8;
+        // this.portal.scale.x *= 1.6;
+        // this.portal.scale.z *= 1.8;
+        // this.portal.position.y += 0.2;
 
         child.material = new PortalMaterial({
           uniforms: {
@@ -149,9 +155,22 @@ class Chapel extends Scene {
             uNoiseTexture: { value: noiseText },
             uTime: { value: 0 },
             uMouse: { value: app.mouse.coordinates.webgl },
+            uResolution: { value: new Vector2(1, 1) },
           },
           transparent: true,
         });
+
+        // child.material = new PortalMaterial({
+        //   uniforms: {
+        //     uProgress: { value: 1 },
+        //     uTexture: { value: this.portalTexture },
+        //     uNoiseTexture: { value: noiseText },
+        //     uTime: { value: 0 },
+        //     uMouse: { value: app.mouse.coordinates.webgl },
+        //     uResolution: { value: new Vector2(1, 1) },
+        //   },
+        //   transparent: true,
+        // });
       }
 
       if (child.name.includes("Empty")) {
@@ -195,7 +214,7 @@ class Chapel extends Scene {
     this.add(this.spirit);
 
     this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 0.66, 0.66, 1]);
-    // this.anim.onChangeSceneStep(4);
+    this.anim.onChangeSceneStep(4);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -210,11 +229,11 @@ class Chapel extends Scene {
     this.add(this.vegetation);
   }
 
-  onAskRemoveTransition(){
+  onAskRemoveTransition() {
     if (app.webgl.currentScene != 5) return;
-    setTimeout(()=> {
-      state.emit(EVENTS.GO_NEXT)
-    }, 4000)
+    setTimeout(() => {
+      state.emit(EVENTS.GO_NEXT);
+    }, 4000);
   }
 
   onPointerDown(e) {
@@ -225,7 +244,7 @@ class Chapel extends Scene {
     this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
     const intersects = this.raycaster.intersectObjects(this.torchs);
 
-    if(!this.isTutoPass) {
+    if (!this.isTutoPass) {
       this.isTutoPass = true;
       state.emit(EVENTS.TUTO_PASS, 5);
     }
@@ -312,7 +331,7 @@ class Chapel extends Scene {
 
           if (this.index == 5) {
             this.isAnimating = true;
-            state.emit(EVENTS.GO_NEXT)
+            state.emit(EVENTS.GO_NEXT);
             this.createPortal();
             app.audio.layers.playVolumes([0, 0, 0, 0.3, 0, 0, 0, 0, 0, 0, 0]);
             //TODO : PLAY THE CAIRN ANIMATION THEN CREATE PORTAL
@@ -339,7 +358,7 @@ class Chapel extends Scene {
     this.animationMixers.forEach((mixer) => mixer.update(app.ticker.delta * 0.0001));
 
     if (!this.endTransition && app.sceneshandler.currentStepCam == 5) {
-      this.endTransition = true
+      this.endTransition = true;
       const portalPos = new Vector3(0.34, 1.05, -0.15);
       const spiritPos = new Vector3(0.83, 1.25, -0.3);
       this.goTo(spiritPos);

@@ -145,7 +145,8 @@ const handleMouseEnterCircle = (type) => {
   >
     <div class="welcome-scene">
       <div class="welcome-scene__map">
-        <img src="/assets/images/map/background.png" />
+        <img class="welcome-scene__image welcome-scene__image--routes" src="/assets/images/map/routes.png" />
+        <img class="welcome-scene__image welcome-scene__image--background" src="/assets/images/map/background.png" />
         <svg
           class="welcome-scene__svg"
           width="1435"
@@ -258,6 +259,27 @@ const handleMouseEnterCircle = (type) => {
   font-weight: 600;
   letter-spacing: 0.2em;
   font-size: 20px;
+}
+
+.welcome-scene__image {
+  width: 100%;
+  pointer-events: none;
+
+  img {
+    width: 100%;
+    pointer-events: none;
+  }
+
+  &.welcome-scene__image--routes {
+    position: relative;
+    opacity: 0.3;
+    z-index: 0;
+  }
+
+  &.welcome-scene__image--background {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .welcome-scene__point {

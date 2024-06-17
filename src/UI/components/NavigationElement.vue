@@ -3,7 +3,8 @@ import { app } from "@/App";
 
 const props = defineProps({
   icon: String,
-  isVisible: Boolean
+  isVisible: Boolean,
+  isAnimated: Boolean,
 })
 
 const handleMouseEnter = () => {
@@ -23,7 +24,7 @@ const handleClick = () => {
   <div 
     @click="handleClick" 
     @mouseenter="handleMouseEnter" 
-    :class="`navigation-element navigation-element--${isVisible ? 'visible' : 'hidden'}`">
+    :class="`navigation-element navigation-element--${isVisible ? 'visible' : 'hidden'} navigation-element--${isAnimated ? 'anim' : 'static'}`">
     <img :src="`/assets/images/icons/${icon}.svg`" alt="">
   </div>
 </template>
@@ -54,10 +55,25 @@ const handleClick = () => {
       background-color: var(--c-turquoise-medium);
       box-shadow: 0 0 12px #ffffff42;
     }
-  }
 
-  .navigation-element--hidden {
+    &.navigation-element--hidden {
     opacity: 0;
     pointer-events: none;
+  }
+
+    &.navigation-element--anim {
+      background-color: #3D5873;
+      animation: navAnim 2s infinite;
+    }
+  }
+
+  @keyframes navAnim {
+    0% {
+      background-color: #3D5873;
+    }
+
+    50% {
+      background-color: #7995A5;
+    }
   }
 </style> 

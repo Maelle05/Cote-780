@@ -16,6 +16,7 @@ const props = defineProps({
 });
 
 const isLearnMorePanelOpen = ref(false);
+const hasLearnMorePanelBeenOpen = ref(false);
 
 const isSoundOn = ref(true);
 
@@ -37,6 +38,10 @@ const onClickSound = () => {
 };
 
 const onClickLearnMore = () => {
+  if (hasLearnMorePanelBeenOpen.value === false) {
+    hasLearnMorePanelBeenOpen.value = true;
+  }
+
   if (isLearnMorePanelOpen.value === false) {
     isLearnMorePanelOpen.value = true;
     app.audio.ui.play("magic_action_2");
@@ -74,6 +79,8 @@ const isLearnMoreBtnVisible = () => {
 };
 
 const onHover = () => {
+  if (!app.audio) return;
+
   app.audio.ui.play("click");
 };
 </script>
@@ -86,6 +93,7 @@ const onHover = () => {
         @mouseenter="onHover"
         :icon="isLearnMorePanelOpen ? 'close' : 'learn-more'"
         :isVisible="isLearnMoreBtnVisible()"
+        :isAnimated="hasLearnMorePanelBeenOpen ? false : true"
       ></NavigationElement>
       <!-- <NavigationElement
         @click="onClickMap"
@@ -97,6 +105,7 @@ const onHover = () => {
         @mouseenter="onHover"
         :icon="isSoundOn ? 'sound-on' : 'sound-off'"
         :isVisible="isSoundBtnVisible()"
+        :isAnimated="false"
       ></NavigationElement>
     </div>
     <LearnMorePanel

@@ -29,9 +29,10 @@ class Village extends Scene {
     this.add(this.directionLight);
 
     this.pointLight = new PointLight(0xffffff);
-    this.pointLight.position.set(9.26, 0.5, -1.825);
-    this.pointLight.intensity = 0.15;
-    this.pointLight.distance = 0.7;
+    this.pointLight.position.set(9.23, 0.6, -1.9);
+    this.pointLight.intensity = 0.4;
+    this.pointLight.distance = 1;
+    this.pointLight.castShadow = false;
     this.add(this.pointLight);
   }
 
@@ -46,6 +47,12 @@ class Village extends Scene {
 
   onAttach() {
     this.scene = app.assetsManager.get("village");
+
+    this.scene.traverse((child) => {
+      if (child.name == "Empty001") {
+        child.receiveShadow = false;
+      }
+    });
 
     this.bookAnim = this.scene.animations.find(
       (el) => el.name == "Armature.001Action"
@@ -87,12 +94,12 @@ class Village extends Scene {
     if (app.webgl.currentScene === 6) this.init();
   }
 
-  onAskRemoveTransition(){
+  onAskRemoveTransition() {
     if (app.sceneshandler.currentScene != 6) return;
 
-    setTimeout(()=> {
-      state.emit(EVENTS.GO_NEXT)
-    }, 4000)
+    setTimeout(() => {
+      state.emit(EVENTS.GO_NEXT);
+    }, 4000);
   }
 
   onTick() {
@@ -127,34 +134,35 @@ class Village extends Scene {
       this.spirit.position.set(newPos.x, newPos.y, newPos.z);
     }
 
-    if (
-      this.animationMixer &&
-      this.bookAnim
-    ) {
-      if (app.sceneshandler.currentStepCam == 6 &&
-        app.sceneshandler.currentStepText == 0) {
-        this.targetProgressAnim = 0
+    if (this.animationMixer && this.bookAnim) {
+      if (
+        app.sceneshandler.currentStepCam == 6 &&
+        app.sceneshandler.currentStepText == 0
+      ) {
+        this.targetProgressAnim = 0;
         this.currentProgressAnim = MathUtils.lerp(
           this.currentProgressAnim,
           this.targetProgressAnim,
           0.01
         );
-  
+
         this.animationAction.paused = false;
         this.animationMixer.setTime(
           this.bookAnim.duration * this.currentProgressAnim
         );
         this.animationAction.paused = true;
         this.animationMixer.update(app.ticker.delta);
-      } else if(app.sceneshandler.currentStepCam < 2) {
-        this.targetProgressAnim = 1
+      } else if (app.sceneshandler.currentStepCam < 2) {
+        this.targetProgressAnim = 1;
         this.currentProgressAnim = MathUtils.lerp(
           this.currentProgressAnim,
           this.targetProgressAnim,
           0.01
         );
         this.animationAction.paused = false;
-        this.animationMixer.setTime(this.bookAnim.duration * this.currentProgressAnim);
+        this.animationMixer.setTime(
+          this.bookAnim.duration * this.currentProgressAnim
+        );
         this.animationAction.paused = true;
         this.animationMixer.update(app.ticker.delta);
       }

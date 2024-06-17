@@ -4,7 +4,7 @@ import {
   DoubleSide,
   Scene,
   Vector3,
-  Vector4
+  Vector4,
 } from "three";
 import { state } from "../../utils/State";
 import { EVENTS } from "../../utils/constants/events";
@@ -112,6 +112,7 @@ class Bridge extends Scene {
     this.add(this.durance);
 
     this.spirit.hide();
+    const walkDuration = 7;
 
     app.webgl.shake.startShake();
     app.audio.playMusic(MUSIC_IDS.AMBIENT_BRIDGE);
@@ -215,7 +216,10 @@ class Bridge extends Scene {
     this.vegetation = new Vegetation("bridge", 0.8);
     this.add(this.vegetation);
 
-    this.clouds = new Clouds(this.bridge.getObjectByName("CloudStart").position, this.bridge.getObjectByName("CloudEnd").position);
+    this.clouds = new Clouds(
+      this.bridge.getObjectByName("CloudStart").position,
+      this.bridge.getObjectByName("CloudEnd").position
+    );
     this.add(this.clouds);
 
     this.bridge.name = "bridge";
@@ -335,7 +339,7 @@ class Bridge extends Scene {
               -scale * (dummy.progress - peak) * (dummy.progress - peak) +
                 scale * peak * peak
             );
-          
+
           this.player.position.set(
             this.center.x,
             this.center.y + yOffset + 0.03,
@@ -345,9 +349,13 @@ class Bridge extends Scene {
       },
       0
     );
-    tl.call(() => {
-      app.audio.ui.play("jump_rock");
-    }, [], ">-0.7");
+    tl.call(
+      () => {
+        app.audio.ui.play("jump_rock");
+      },
+      [],
+      ">-0.7"
+    );
 
     tl.to(
       this.center,
@@ -434,7 +442,7 @@ class Bridge extends Scene {
   }
 
   #endInteraction() {
-    console.log("TODO : END INTERACTION");
+    // console.log("TODO : END INTERACTION");
     //Milo gain the cairn
     //Milo rotation look at Durance
     //Durance Apparition

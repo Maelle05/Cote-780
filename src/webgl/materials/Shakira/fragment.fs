@@ -51,7 +51,7 @@ void main() {
 	vec2 displacedUv = ((scaledUv + uOffset / 100.0) * uNoiseScale);
 
 	vec4 textureColor = texture2D(uTexture, vUv);
-	if(textureColor.r == 0.) {
+	if(textureColor.r == 0. && textureColor.g == 0. && textureColor.b == 0.) {
 		textureColor = vec4(uColor, 1.0);
 	}
 	vec4 shakeTexture = texture2D(uTextureShake, displacedUv);

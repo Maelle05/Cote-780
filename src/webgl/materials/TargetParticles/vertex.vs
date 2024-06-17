@@ -148,7 +148,7 @@ void main() {
   // vec3 newPosition = mix(spherePos, uP1, progress);
 
   vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-  gl_PointSize = uSize * (300.0 / -mvPosition.z);
+  gl_PointSize = 0.05 * (300.0 / -mvPosition.z);
   gl_Position = projectionMatrix * mvPosition;
 
   vIndex = particleIndex;
