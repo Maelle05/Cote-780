@@ -145,7 +145,7 @@ const handleMouseEnterCircle = (type) => {
   >
     <div class="welcome-scene">
       <div class="welcome-scene__map">
-        <img src="/assets/images/map/background.png" />
+        <img src="/assets/images/map/background.png" />        
         <svg
           class="welcome-scene__svg"
           width="1435"
