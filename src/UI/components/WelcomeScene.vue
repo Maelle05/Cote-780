@@ -121,7 +121,10 @@ const handleClickCircle = (type) => {
     });
   }, 5000);
 
-  app.audio.ui.play("intro_" + sceneIndex.value);
+  app.audio.ui.play("magic_action_2");
+  setTimeout(() => {
+    app.audio.ui.play("intro_" + sceneIndex.value);
+  }, 2000);
 };
 
 const handleMouseEnterCircle = (type) => {

@@ -4,6 +4,7 @@ import {
   RepeatWrapping,
   Vector2,
   MathUtils,
+  AnimationMixer,
 } from "three";
 import { state } from "../../utils/State";
 import { Pane } from "tweakpane";
@@ -30,6 +31,11 @@ import { EVENTS } from "@/utils/constants/events";
 import { ElectricPortalMaterial } from "../materials/ElectricPortal/material";
 
 class Chapel extends Scene {
+  boats = [];
+  boatAnims = [];
+  animationMixers = [];
+  animationClips = [];
+
   constructor() {
     super();
     state.register(this);
@@ -124,6 +130,7 @@ class Chapel extends Scene {
     noiseText.wrapT = RepeatWrapping;
 
     this.chapel.traverse((child) => {
+      if (child.name.includes("BoatPos")) this.boats.push(child);
       if (child.name == "WaterSurface") {
         this.water = child;
         child.material = new WaterMaterial({
@@ -169,6 +176,15 @@ class Chapel extends Scene {
       if (child.name.includes("Empty")) {
         this.empties.push(child);
       }
+    });
+
+    this.boatAnims = this.chapel.animations.filter((el) => el.name.includes("Boat"));
+    this.boats.forEach((boat, index) => {
+      const mixer = new AnimationMixer(boat);
+      const clip = mixer.clipAction(this.boatAnims[index]);
+      clip.play();
+      this.animationMixers.push(mixer);
+      this.animationClips.push(clip);
     });
 
     app.webgl.shake.initShake(this.chapel);
@@ -311,6 +327,7 @@ class Chapel extends Scene {
           if (!flame) return;
           flame.visible = true;
           flame.show();
+          app.audio.ui.play("torch");
 
           if (this.index == 5) {
             this.isAnimating = true;
@@ -337,6 +354,8 @@ class Chapel extends Scene {
 
   onTick(e) {
     if (app.webgl.currentScene != 5) return;
+
+    this.animationMixers.forEach((mixer) => mixer.update(app.ticker.delta * 0.0001));
 
     if (!this.endTransition && app.sceneshandler.currentStepCam == 5) {
       this.endTransition = true;

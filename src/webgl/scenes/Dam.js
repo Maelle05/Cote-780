@@ -26,8 +26,15 @@ import Durance from "../objects/Durance";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { Vector3 } from "three";
 import Vegetation from "../objects/Vegetation";
+import SparkleParticles from "../objects/SparkleParticles";
+import { WindMaterial } from "../materials/Wind/material";
+
+const COOLDOWN_AUDIO = 200;
 
 class Dam extends Scene {
+  timeSinceLastAudio = 0;
+  winds = [];
+
   constructor() {
     super();
     state.register(this);
@@ -74,6 +81,9 @@ class Dam extends Scene {
     this.isAnimIntroPass = false;
     this.isTutoPass = false;
     this.miloHasMove = false;
+    
+    this.sparkles = new SparkleParticles();
+    this.add(this.sparkles);
   }
 
   onAttach() {
@@ -93,6 +103,19 @@ class Dam extends Scene {
           },
           transparent: true,
           depthWrite: false,
+        });
+      }
+      if (el.name.includes("Wind")) {
+        this.winds.push(el);
+        el.material = new WindMaterial({
+          uniforms: {
+            uTime: { value: 0 },
+            uColor: { value: new Vector3(204 / 255, 242 / 255, 255 / 255) },
+            uOffset: { value: Math.random() },
+          },
+          side: DoubleSide,
+          transparent: true,
+          alphaTest: 0.001
         });
       }
     });
@@ -166,7 +189,7 @@ class Dam extends Scene {
         });
     }
 
-    app.audio.playMusic(MUSIC_IDS.AMBIENT_LAKE);
+    app.audio.playMusic(MUSIC_IDS.AMBIENT_DAM);
     app.webgl.shake.startShake();
 
     this.milo = new Milo();
@@ -196,20 +219,20 @@ class Dam extends Scene {
     }, 4000);
   }
 
-  onPointerDown(e) {
+  onPointerMove(e) {
     if (app.webgl.currentScene != 3) return;
     if (this.anim.currentKeyfame != 2) return;
-
-    if (!this.isTutoPass) {
-      this.isTutoPass = true;
-      state.emit(EVENTS.TUTO_PASS, 3);
-    }
 
     this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
 
     const intersects = this.raycaster.intersectObjects(this.rocks);
 
     if (intersects.length != 0) {
+      if (!this.isTutoPass) {
+        this.isTutoPass = true;
+        state.emit(EVENTS.TUTO_PASS, 3);
+      }
+      
       this.nbClick++;
 
       intersects.forEach((el) => {
@@ -220,7 +243,11 @@ class Dam extends Scene {
             this.rocks = this.rocks.filter(
               (rock) => rock.name != el.object.name
             );
-            app.audio.ui.play("click", 0.3);
+            if (this.timeSinceLastAudio >= COOLDOWN_AUDIO) {
+              app.audio.ui.play("magic_popup_1");
+              this.timeSinceLastAudio = 0;
+            }
+            this.sparkles.spawn(el.object.position);
             if (this.rocks.length == 0 && !this.isInteractionFini) {
               this.isInteractionFini = true;
               state.emit(EVENTS.GO_NEXT);
@@ -238,11 +265,14 @@ class Dam extends Scene {
 
   onTick() {
     if (app.sceneshandler.currentScene != 3) return;
+    this.timeSinceLastAudio += app.ticker.delta;
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
+    this.winds.forEach((wind) => wind.material.uniforms.uTime.value = app.ticker.elapsed);
     if (app.sceneshandler.currentStepCam == 3 && !this.durance.isActive) {
       this.durance.isActive = true;
       app.audio.layers.playVolumes([1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0]);
+      app.audio.ui.play("wave_appear");
       this.durance.show();
     }
     if (app.sceneshandler.currentStepCam == 5 && this.durance.isActive) {

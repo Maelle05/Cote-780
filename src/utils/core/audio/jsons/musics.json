@@ -2,31 +2,27 @@
   "sources": [
     {
       "name": "ambient_ladies",
-      "src": "ambient_ladies.mp3"
+      "src": "ambient_1.mp3"
+    },
+    {
+      "name": "ambient_dam",
+      "src": "ambient_2.mp3"
     },
     {
       "name": "ambient_bridge",
-      "src": "ambient_bridge.mp3"
-    },
-    {
-      "name": "ambient_underwater",
-      "src": "ambient_underwater.mp3"
+      "src": "ambient_3.mp3"
     },
     {
       "name": "ambient_chapel",
-      "src": "ambient_chapel.mp3"
+      "src": "ambient_4.mp3"
+    },
+    {
+      "name": "ambient_underwater",
+      "src": "ambient_5.mp3"
     },
     {
       "name": "ambient_end",
-      "src": "ambient_end.mp3"
-    },
-    {
-      "name": "ambient_lake",
-      "src": "ambient_lake.mp3"
-    },
-    {
-      "name": "ambient_forest",
-      "src": "ambient_forest.mp3"
+      "src": "ambient_6.mp3"
     }
   ]
 }

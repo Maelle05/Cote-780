@@ -12,7 +12,7 @@ const props = defineProps({
   sceneIndex: Number,
 })
 
-const interactionType = computed(() => props.sceneIndex === 2 ? "move" : "click")
+const interactionType = computed(() => props.sceneIndex === 2 || props.sceneIndex === 3 ? "move" : "click")
 </script>
 
 <template>

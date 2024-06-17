@@ -39,8 +39,8 @@ const props = defineProps({
 .credits__container {
   position: absolute;
   height: 100vh;
-  width: 100%;
-  left: 0;
+  width: 70%;
+  right: 0;
   top: 0;
   color: #fff;
   font-family: var(--ff-rubik);
@@ -59,24 +59,24 @@ const props = defineProps({
 }
 
 .credits {
-  max-width: 680px;
+  max-width: 450px;
   display: flex;
   flex-direction: column;
   gap: 32px;
   line-height: 150%;
-  font-size: 18px;
+  font-size: 12px;
   transform: translateY(100vh);
 }
 
 .credits__container.credits__container--visible {
   .credits {
-    animation: animCredits 20s linear forwards;
+    animation: animCredits 15s linear forwards;
   }
 }
 
 @keyframes animCredits {
   100% {
-    transform: translateY(-100vh);
+    transform: translateY(0vh);
   }
 }
 

@@ -13,6 +13,7 @@ const letters = ref([]);
 
 const wrapperRef = ref(null);
 const wrapperHeight = ref(0);
+const isWrapperReady = ref(false);
 
 let isNewScene = false;
 
@@ -38,6 +39,7 @@ const updateHeight = () => {
 const animateLettersApparition = () => {
   if (isAnimationInProgress) return;
 
+  isWrapperReady.value = false;
   isAnimationInProgress = true;
 
   gsap.to(".wrapper--original .letter", {
@@ -46,6 +48,7 @@ const animateLettersApparition = () => {
     stagger: 0.02,
     delay: 0.2,
     onComplete: () => {
+      isWrapperReady.value = true;
       isAnimationInProgress = false;
     },
   });
@@ -97,6 +100,7 @@ const onClickDialogue = () => {
   if (isAnimationInProgress) {
     gsap.killTweensOf(".wrapper--original .letter");
     gsap.set(".wrapper--original .letter", { opacity: 1 });
+    isWrapperReady.value = true;
     isAnimationInProgress = false;
   } else {
     state.emit(EVENTS.GO_NEXT);
@@ -111,7 +115,7 @@ const onClickDialogue = () => {
     :ref="(ref) => assignRef(ref, element, 'clone')"
     :class="`wrapper wrapper--${element} wrapper--${
       isVisible && hasDialogue ? 'visible' : 'hidden'
-    }`"
+    } wrapper--${isWrapperReady ? 'ready' : 'not-ready'}`"
     :style="`--wrapper-height: ${wrapperHeight}px;`"
     v-for="element in ['original', 'clone']"
   >
@@ -151,6 +155,28 @@ const onClickDialogue = () => {
   box-sizing: border-box;
   user-select: none;
   cursor: pointer;
+
+  &::after {
+    display: block;
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url("/assets/images/icons/next.svg");
+    background-size: 35px;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 4px) calc(100% - 10px);
+    opacity: 0;
+    transition: opacity 600ms;
+  }
+
+  &.wrapper--ready {
+    &::after {
+      opacity: 0.5;
+    }
+  }
 
   span {
     pointer-events: none;

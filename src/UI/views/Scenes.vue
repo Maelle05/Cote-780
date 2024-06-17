@@ -97,7 +97,12 @@ state.on(EVENTS.TUTO_PASS, (e) => {
     :isVisible="isTutorialVisible()"
   />
   <Dialogues :sceneIndex="props.sceneIndex" :isVisible="areDialoguesVisible()" />
-  <CairnsCollection :isVisible="isCairnsCollectionVisible()" :sceneIndex="props.sceneIndex" :cairnsNumber="cairnsNumber"></CairnsCollection>
+  <CairnsCollection 
+    :isVisible="isCairnsCollectionVisible()"
+    :sceneIndex="props.sceneIndex" 
+    :stepIndex="props.stepIndex" 
+    :cairnsNumber="cairnsNumber">
+  </CairnsCollection>
   <Credits :isVisible="areCreditsVisible()"></Credits>
 </template>
 

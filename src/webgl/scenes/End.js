@@ -16,20 +16,14 @@ import { WaterMaterial } from "../materials/Water/material";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { AnimationMixer } from "three";
 import { EVENTS } from "@/utils/constants/events";
+import Milo from "../objects/Milo";
 
 class End extends Scene {
+  hasAnimatedCairns = false;
+
   constructor() {
     super();
     state.register(this);
-
-    this.allPos = [
-      { x: -10, y: -0.01, z: 6 },
-      { x: -15, y: -0.01, z: 3 },
-      { x: -9, y: -0.01, z: -3 },
-      { x: -8, y: -0.01, z: 3 },
-      { x: -12, y: -0.01, z: 0 },
-      { x: -11, y: -0.01, z: 3 },
-    ];
 
     this.PARAMS = {
       planePos: {
@@ -37,6 +31,7 @@ class End extends Scene {
         y: 1,
         z: 0,
       },
+      rotMilo: -76
     };
 
     this.light = new AmbientLight({ color: 0xffffff });
@@ -60,16 +55,40 @@ class End extends Scene {
         .on("change", (ev) => {
           this.planePos.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
+
+      this.pane
+        .addBinding(this.PARAMS, "posMilo", {
+          min: -10,
+          max: 10,
+          step: 0.1,
+        })
+        .on("change", (ev) => {
+          this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
+        });
+
+      this.pane
+        .addBinding(this.PARAMS, "rotMilo", {
+          min: -100,
+          max: 10,
+          step: 0.1,
+        })
+        .on("change", (ev) => {
+          this.player.rotation.y = ev.value * Math.PI / 180;
+        });
     }
+
+    this.milo = new Milo()
+    this.player = this.milo.model;
+    this.player.position.copy(this.miloPos);
+    this.player.rotation.y = -76 * Math.PI / 180;
+    this.player.scale.set(0.15, 0.15, 0.15);
+    this.add(this.player);
 
     app.webgl.shake.startShake();
     app.audio.playMusic(MUSIC_IDS.AMBIENT_END);
   }
 
   onAttach() {
-    this.fireworks = new Fireworks(this.allPos);
-    // this.fireworks.launchers.forEach((launcher) => this.add(launcher));
-    this.fireworks.explosions.forEach((explosions) => this.add(explosions));
 
     this.planePos = new Mesh(
       new PlaneGeometry(1, 1, 1, 1),
@@ -78,6 +97,8 @@ class End extends Scene {
     this.planePos.rotation.x = Math.PI / 2;
     this.planePos.visible = false;
     this.add(this.planePos);
+
+    this.allPos = [];
 
     this.end = app.assetsManager.get("end");
     this.end.traverse((el) => {
@@ -91,7 +112,14 @@ class End extends Scene {
           transparent: true,
         });
       }
+      if (el.name.includes("Firework")) this.allPos.push(el.position);
+      if (el.name.includes("MiloPos")) this.miloPos = el.position;
     });
+
+    this.fireworks = new Fireworks(this.allPos);
+    // this.fireworks.launchers.forEach((launcher) => this.add(launcher));
+    this.fireworks.explosions.forEach((explosions) => this.add(explosions));
+
     this.initAnimPorte();
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
@@ -110,6 +138,13 @@ class End extends Scene {
 
     if (app.webgl.currentScene === 7) this.init();
     app.webgl.shake.initShake(this.end);
+  }
+
+  onAskRemoveTransition(){
+    if (app.sceneshandler.currentScene != 7) return;
+    setTimeout(() => {
+      state.emit(EVENTS.GO_NEXT)
+    }, 3000)
   }
 
   initAnimPorte() {
@@ -134,17 +169,25 @@ class End extends Scene {
   onTick() {
     if (app.sceneshandler.currentScene != 7) return;
 
+    // console.log(this.player.position);
+
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
 
     if (
       this.allAnimCairn.length == this.allActionCairn.length &&
-      app.sceneshandler.currentStepCam == 1
+      app.sceneshandler.currentStepCam >= 1
     ) {
+      if (!this.hasAnimatedCairns) {
+        this.hasAnimatedCairns = true;
+        app.audio.ui.play("magic_cairn");
+        this.fireworks.start();
+      }
+
       this.currentProgressCairn = MathUtils.lerp(
         this.currentProgressCairn,
         1,
-        0.005
+        0.007
       );
 
       this.allActionCairn.forEach((action, i) => {
@@ -156,8 +199,9 @@ class End extends Scene {
         this.allMixerCairn[i].update(app.ticker.delta);
       });
 
-      if (this.currentProgressCairn > 0.98) {
-        // state.emit(EVENTS.GO_NEXT)
+      if (this.currentProgressCairn > 0.98 && !this.isEndAnimCairn) {
+        this.isEndAnimCairn = true
+        state.emit(EVENTS.GO_NEXT)
       }
     }
   }

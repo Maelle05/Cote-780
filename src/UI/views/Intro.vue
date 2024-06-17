@@ -1,42 +1,48 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from "vue"
-import { gsap, ScrollTrigger } from "gsap/all"
+import { gsap, ScrollTrigger, ScrollToPlugin } from "gsap/all"
 import { useI18n } from "vue-i18n"
 
 import { EVENTS } from "../../utils/constants/events"
 import { INTRO_SECTIONS } from "../../utils/constants/config"
 import { state } from "../../utils/State"
+import { app } from "@/App"
 
-import IntroText from "../components/IntroText.vue" // Adjust the path as necessary
+import IntroText from "../components/IntroText.vue"
 
 const { t } = useI18n()
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
 const isStarted = ref(false)
 const hasScrolled = ref(false)
 const activeSection = ref("")
+const displayCtaEnd = ref(false)
+const displayBtnNext = ref(false)
 
 const scrollProgress = reactive([])
 INTRO_SECTIONS.forEach((_, index) => {
   scrollProgress[index] = 0
 })
 
-state.on(EVENTS.START_EXP, (e) => {
-  isStarted.value = true
-})
-
 const onClickCtaStart = () => {
   if (isStarted.value === false) {
     isStarted.value = true
   }
+
   setTimeout(() => {
-    handleScrollTo(0)
-  }, 100);
+    handleScrollTo(1)
+  }, 400)
 }
 
 const onClickCtaEnd = () => {
   state.emit(EVENTS.GO_NEXT)
+}
+
+const onMouseEnterCta = () => {
+  if (!app.audio) return
+
+  app.audio.ui.play("click")
 }
 
 onMounted(() => {
@@ -46,40 +52,48 @@ onMounted(() => {
     timelines.push(gsap.timeline())
   })
 
+  timelines[0].to(".section__element--0-milo, .section__element--0-buisson", {
+    duration: 1,
+    y: "-30vh",
+  })
+
   timelines[1]
     .fromTo(
       ".section__element--1-arbre",
-      { y: "30vh" },
+      { y: "60vh" },
       { duration: 1, y: "-30vh" }
     )
     .fromTo(
-      ".section__element--1-colline-1",
+      ".section__element--1-colline",
       { y: "10vh" },
-      { duration: 1, y: "-10vh" },
+      { duration: 1, y: "-10" },
       "<"
     )
     .fromTo(
-      ".section__element--1-colline-2",
-      { y: "15vh" },
-      { duration: 1, y: "-15vh" },
-      "<"
-    )
-    .fromTo(
-      ".section__element--1-maison, .section__button--1",
+      ".section__element--1-maison",
       { y: "20vh" },
       { duration: 1, y: "-20vh" },
       "<"
     )
     .fromTo(
-      ".section__element--1-buisson-droite",
-      { x: "-10vh", y: "25vh" },
-      { duration: 1, x: "0vh", y: "-25vh" },
+      ".section__element--1-fumee",
+      { y: "20vh", x: "150px" },
+      {
+        duration: 1,
+        y: "-25vh",
+        x: "150px",
+        onComplete: () => {
+          document
+            .querySelector(".section__element--1-fumee")
+            .classList.add("section__element--1-fumee--anim")
+        },
+      },
       "<"
     )
     .fromTo(
-      ".section__element--1-buisson-gauche",
-      { x: "10vh", y: "25vh" },
-      { duration: 1, x: "0vh", y: "-25vh" },
+      ".section__element--1-buissons",
+      { y: "25vh" },
+      { duration: 1, y: "-25vh" },
       "<"
     )
 
@@ -103,29 +117,53 @@ onMounted(() => {
       "<"
     )
     .fromTo(
-      ".section__element--2-lettre, .section__button--2",
+      ".section__element--2-lettre",
       { x: "40vw" },
       { duration: 0.5, x: "20vw" },
       "<"
     )
+    .fromTo(
+      ".section__element--2-lettre",
+      { opacity: "1" },
+      { duration: 0.5, opacity: "1" }
+    )
+
+  timelines[3]
+    .set(".section__element--3-chantier", { opacity: 0 })
+    .set(".section__element--3-durance-colere", { opacity: 0 })
+    .fromTo(
+      ".section__element--3-chantier",
+      { opacity: 0 },
+      { duration: 0.1, opacity: 1 }
+    )
+    .fromTo(
+      ".section__element--3-chantier",
+      { scale: 0.6 },
+      { duration: 0.2, rotate: -9, y: "-7vh", x: "-7vw", scale: 0.8 },
+      "-=0.1"
+    )
+    .fromTo(
+      ".section__element--3-durance-colere",
+      { opacity: 0 },
+      { duration: 0.3, opacity: 1 }
+    )
+    .fromTo(
+      ".section__element--3-durance-colere",
+      { scale: 0.6 },
+      { duration: 0.2, rotate: 4, y: "5vh", x: "7vw", scale: 0.8 },
+      "-=0.3"
+    )
+    .fromTo(
+      ".section__element--3-durance-colere",
+      { opacity: "1" },
+      { duration: 0.4, opacity: "1" }
+    )
 
   timelines[4]
     .fromTo(
-      ".section__element--4-durance-1",
+      ".section__element--4-durance",
       { y: "50vh" },
       { duration: 0.2, y: "0vh" }
-    )
-    .fromTo(
-      ".section__element--4-durance-3",
-      { y: "55vh" },
-      { duration: 0.2, y: "0vh" },
-      "<"
-    )
-    .fromTo(
-      ".section__element--4-durance-2",
-      { y: "60vh" },
-      { duration: 0.2, y: "-5vh" },
-      "<"
     )
     .fromTo(
       ".section__element--4-grandma",
@@ -134,7 +172,7 @@ onMounted(() => {
       "<"
     )
     .fromTo(
-      ".section__element--4-cairn, .section__button--4",
+      ".section__element--4-cairn",
       { y: "-40vh" },
       { duration: 0.1, y: "-23vh" },
       "<"
@@ -142,8 +180,29 @@ onMounted(() => {
     .fromTo(
       ".section__element--4-cairn",
       { opacity: 0 },
-      { duration: 0.1, opacity: 1 },
+      {
+        duration: 0.1,
+        opacity: 1,
+        onComplete: () => {
+          document
+            .querySelector(".section__element--4-cairn")
+            .classList.add("section__element--4-cairn--anim")
+        },
+      },
       "-=0.1"
+    )
+    .fromTo(
+      ".section__element--4-cairn",
+      { opacity: "1" },
+      {
+        duration: 0.2,
+        opacity: "1",
+        onComplete: () => {
+          document
+            .querySelector(".section__element--4-cairn")
+            .classList.remove("section__element--4-cairn--anim")
+        },
+      }
     )
 
   timelines[5]
@@ -153,9 +212,9 @@ onMounted(() => {
       { duration: 0.1, y: "0vh" }
     )
     .fromTo(
-      ".section__element--5-passage, .section__button--5",
-      { y: "20vh" },
-      { duration: 0.1, y: "-10vh" },
+      ".section__element--5-passage",
+      { y: "30vh" },
+      { duration: 0.1, y: "0vh" },
       "<"
     )
 
@@ -165,24 +224,18 @@ onMounted(() => {
     { duration: 0.2, scale: "1.1" }
   )
 
-  timelines[8]
-    .fromTo(
-      ".section__element--collier",
-      { opacity: 0, x: "-50vw" },
-      { duration: 0.2, opacity: 1, x: "0vw" }
-    )
-    .fromTo(
-      ".section__element--carte",
-      { opacity: 0, x: "50vw" },
-      { duration: 0.2, opacity: 1, x: "0vw" },
-      "<"
-    )
+  timelines[8].fromTo(
+    ".section__element--8-carte",
+    { opacity: 0, y: "-5vh", x: "50vw" },
+    { duration: 1, opacity: 1, y: "-5vh", x: "12vw" },
+    "<"
+  )
 
   INTRO_SECTIONS.forEach((section, index) => {
     ScrollTrigger.create({
       trigger: `.section--${index}`,
-      start: "top center",
-      end: "bottom center",
+      start: index === 0 ? "top top" : "top center",
+      end: index === 0 ? "bottom top" : "bottom center",
       animation: timelines[index],
       scrub: 1,
       onEnter: () => {
@@ -199,27 +252,77 @@ onMounted(() => {
       },
       onUpdate: (self) => {
         scrollProgress[index] = self.progress
+
+        if (index === 0 && self.progress === 0) {
+          hasScrolled.value = false
+        } else {
+          hasScrolled.value = true
+        }
+
+        if (index === 0 || index === 8) {
+          displayBtnNext.value = false
+        } else {
+          displayBtnNext.value = true
+        }
+
+        if (index === 8 && self.progress > 0.4) {
+          displayCtaEnd.value = true
+        } else {
+          displayCtaEnd.value = false
+        }
       },
     })
   })
 })
 
-const SCROLL_POSITIONS = [0, 1075, 2250, 3090, 4000, 4500, 5375, 6300, 7008]
-
 const handleScrollTo = (section) => {
-  window.scrollTo({
-    top: SCROLL_POSITIONS[section + 1],
-    behavior: "smooth",
+  console.log(section)
+  const targetSection = document.querySelector(
+    `.section--${section === 0 ? 1 : section}`
+  )
+  if (!targetSection) return
+  const targetScroll = targetSection.offsetTop
+  gsap.to(window, {
+    scrollTo: { y: targetScroll, autoKill: true },
+    duration: 1.5,
   })
 }
+
+// const handleMouseMove = (event) => {
+//   const { clientX, clientY } = event
+//   const centerX = window.innerWidth / 2
+//   const centerY = window.innerHeight / 2
+
+//   const relativeX = (clientX - centerX) / centerX
+//   const relativeY = (clientY - centerY) / centerY
+
+//   gsap.to(".section__element--0-milo", {
+//     x: relativeX * 20,
+//     y: relativeY * 20,
+//     duration: 0.8,
+//     ease: "power2.out",
+//   })
+
+//   gsap.to(".section__element--0-buisson", {
+//     x: relativeX * -10,
+//     y: relativeY * 15,
+//     duration: 0.8,
+//     ease: "power2.out",
+//   })
+// }
 </script>
 
 <template>
   <div
+    @mousemove="handleMouseMove"
     :class="`intro__container 
     intro__container--${isStarted ? 'started' : 'not-started'} 
     ${hasScrolled ? 'intro__container--has-scrolled' : ''}`"
   >
+    <div
+      :class="`intro__next intro__next--${displayBtnNext ? 'visible' : 'hidden'}`"
+      @click="() => handleScrollTo(activeSection + 1)"
+    ></div>
     <div
       :class="`
       section 
@@ -241,11 +344,6 @@ const handleScrollTo = (section) => {
         >
           <img :src="element.src" />
         </div>
-        <div
-          :class="`section__button section__button--${index}`"
-          @click="() => handleScrollTo(index)"
-        >
-        </div>
       </div>
       <div class="section__texts">
         <div
@@ -262,21 +360,38 @@ const handleScrollTo = (section) => {
         </div>
       </div>
     </div>
-    <p class="intro__cta intro__cta--end" @click="onClickCtaEnd">
-      {{ t("intro.next") }}
+    <p
+      :class="`intro__cta intro__cta--end intro__cta--${
+        displayCtaEnd ? 'visible' : 'hidden'
+      }`"
+      @click="onClickCtaEnd"
+      @mouseenter="onMouseEnterCta"
+    >
+      <span>{{ t("intro.next") }}</span>
     </p>
     <div class="intro__title-screen">
-      <div class="intro__ui">
-        <img class="intro__logo" src="/assets/images/logo.svg" alt="Cote 780" />
-        <div @click="onClickCtaStart" class="intro__cta intro__cta--start">
-          {{ t("intro.start") }}
+      <div
+        :class="`intro__ui intro__ui--${hasScrolled ? 'hidden' : 'visible'}`"
+      >
+        <div class="intro__logo">
+          <img src="/assets/images/logo-dark.svg" :alt="t('global.title')" />
+          <p class="intro__baseline">
+            {{ t("global.baseline") }}
+          </p>
+        </div>
+        <div
+          @mouseenter="onMouseEnterCta"
+          @click="onClickCtaStart"
+          class="intro__cta intro__cta--start"
+        >
+          <span>{{ t("intro.start") }}</span>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 * {
   box-sizing: border-box;
 }
@@ -288,7 +403,36 @@ const handleScrollTo = (section) => {
   overflow: hidden;
   width: 100%;
   color: #000;
-  /* background-color: var(--c-background-beige); */
+  background-color: var(--c-background-beige);
+
+  &::after {
+    display: block;
+    content: "";
+    position: fixed;
+    top: -200px;
+    left: -200px;
+    height: calc(100% + 400px);
+    width: calc(100% + 400px);
+    background-image: url("/assets/images/ui/noise.jpg");
+    z-index: 5;
+    mix-blend-mode: soft-light;
+    background-size: 140px;
+    opacity: 0.25;
+    pointer-events: none;
+    animation: grainJump 3s steps(3) infinite;
+  }
+}
+
+@keyframes grainJump {
+  0% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(-100px, 200px);
+  }
+  66% {
+    transform: translate(140px, -120px);
+  }
 }
 
 .intro__title-screen {
@@ -307,66 +451,161 @@ const handleScrollTo = (section) => {
 }
 
 .intro__ui {
-  top: 100px;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 64px;
+  gap: 92px;
   transition: transform 800ms, opacity 800ms;
+
+  &.intro__ui--hidden {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
 }
 
 .intro__logo {
-  width: 240px;
+  text-align: center;
+
+  img {
+    width: 320px;
+    margin-bottom: 20px;
+  }
 }
 
-.intro__logo img {
-  width: 100%;
+.intro__baseline {
+  font-family: var(--ff-eczar);
+  font-size: 32px;
+  color: #013946;
+  text-transform: lowercase;
+  letter-spacing: 0.12em;
 }
+
 .intro__cta {
-  padding: 12px 20px;
-  border: 1px solid;
   cursor: pointer;
-  font-family: sans-serif;
-  border-radius: 4px;
-  background-color: #eee;
+  font-family: var(--ff-rubik);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 400;
+  color: #fff;
   z-index: 20;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-shadow: 0 0 0 #ffffff7e;
+  transition: letter-spacing 600ms, opacity 600ms, text-shadow 600ms;
+
+  &.intro__cta--hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  span {
+    grid-area: 1 / -1;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    text-decoration: underline;
+    color: var(--c-stroke-beige-light);
+    text-decoration-thickness: 0.07em;
+    text-underline-offset: 0.4em;
+  }
+
+  &::before,
+  &::after {
+    opacity: 0.2;
+    position: absolute;
+    width: 140%;
+    left: -20%;
+    height: 90px;
+    display: block;
+    content: "";
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: opacity 600ms;
+  }
+
+  &::before {
+    background-image: url("/assets/images/ui/ornaments-1.svg");
+    background-position: left;
+  }
+
+  &::after {
+    background-image: url("/assets/images/ui/ornaments-2.svg");
+    background-position: right;
+  }
+
+  &:hover {
+    text-shadow: 0 0 14px #ffffff96;
+    letter-spacing: 0.16em;
+
+    &::before,
+    &::after {
+      opacity: 0.5;
+    }
+  }
 }
 
 .intro__cta--end {
-  position: absolute;
+  position: fixed;
   bottom: 10vh;
   left: 50%;
   transform: translateX(-50%);
+
+  span {
+    color: var(--c-turquoise-dark);
+  }
+
+  &::before,
+  &::after {
+    width: 200%;
+    left: -50%;
+    // height: 90px;
+    opacity: 0.4;
+  }
+
+  &:hover {
+    &::before,
+    &::after {
+      opacity: 0.7;
+    }
+  }
 }
 
-.section__button {
-  --transition-delay: 1000ms;
-  position: relative;
+.intro__next {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 5vh;
   z-index: 50;
   cursor: pointer;
   border-radius: 100%;
-  background-color: #3D58734D;
+  background-color: #3d58734d;
   height: 52px;
   width: 52px;
+  justify-self: center;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: opacity 800ms;
   box-shadow: 0 0 0 #ffffff8a;
-  border: 1px solid #ffffff4D;
-  transition: opacity 1000ms, background-color 600ms var(--transition-delay),
-    border 600ms, box-shadow 600ms;
+  border: 1px solid #ffffff4d;
   color: #fff;
   font-size: 24px;
-  background-image: url('/assets/images/icons/down.svg');
+  background-image: url("/assets/images/icons/down.svg");
   background-size: contain;
   box-sizing: border-box;
   padding: 8px;
+  transition: opacity 1000ms, background-color 600ms, border 600ms,
+    box-shadow 600ms;
 
-  /* &::after {
-    he
-  } */
+  &.intro__next--hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 
   &:hover {
     border: 1px solid #fff;
@@ -375,47 +614,9 @@ const handleScrollTo = (section) => {
   }
 }
 
-.section__button--0,
-.section__button--8 {
-  display: none;
-}
-
-.section__button--1 {
-  top: 30vh;
-  left: 60vw;
-}
-
-.section__button--2 {
-  left: 34vw;
-  top: 24vh;
-}
-
-.section__button--3 {
-  top: 50vh;
-  left: 50vw;
-}
-
-.section__button--4 {
-  top: -30vh;
-  left: 24vw;
-}
-.section__button--5 {
-  left: 46vw;
-  top: 28vh;
-}
-
-.section__button--6 {
-  left: 47vw;
-  top: -13vh;
-}
-
-.section__button--7 {
-  left: -1vw;
-  top: 50vh;
-}
-
 .section {
-  min-height: 100vh;
+  display: grid;
+  height: 100vh;
   width: 100vw;
   position: relative;
   pointer-events: all;
@@ -424,14 +625,6 @@ const handleScrollTo = (section) => {
     pointer-events: none;
   }
 }
-
-/* .section {
-  border: 2px solid red;
-}
-
-.section.section--active {
-  background-color: #ff00ff4e;
-} */
 
 .section__text {
   position: fixed;
@@ -491,35 +684,80 @@ const handleScrollTo = (section) => {
 
 .intro__container.intro__container--not-started {
   height: 100vh;
+
+  .intro__cta.intro__cta--end {
+    display: none;
+  }
 }
 
-.intro__container.intro__container--not-started .intro__cta.intro__cta--end {
-  display: none;
+.section--0 .section__element--0-milo {
+  position: relative;
+  top: 20px;
+  left: -20px;
 }
 
-/* .intro__container.intro__container--started .intro__ui {
-  opacity: 0;
-  transform: translateY(-40vh);
-  pointer-events: none;
-} */
+.section--1 .section__element {
+  transition: opacity 800ms;
+}
 
-.section__element--0-milo {
-  z-index: 20 !important;
+.section--1.section--inactive {
+  .section__element {
+    opacity: 0;
+  }
+}
+
+.section--1 .section__element--1-fumee {
+  position: relative;
+  transition: opacity 600ms;
+}
+
+.section--1.section--active .section__element--1-fumee {
+  animation: smokeAnim 4s infinite ease-in-out;
+}
+
+@keyframes smokeAnim {
+  0% {
+    top: 10px;
+    left: 0;
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    top: -30px;
+    left: 40px;
+    opacity: 0;
+  }
 }
 
 .section--2 .section__elements {
   position: fixed;
   top: 0;
   opacity: 0;
-  transition: 1200ms;
+  transition: opacity 1200ms;
 }
 
 .section--2.section--active .section__elements {
   opacity: 1;
 }
 
-.section--3.section--inactive .section__elements {
+.section--3 .section__elements {
+  position: fixed;
+  top: 0;
   opacity: 0;
+  transition: opacity 1200ms;
+}
+
+.section--3 .section__elements > img {
+  transform: scale(0.7);
+}
+
+.section--3.section--active .section__elements {
+  opacity: 1;
 }
 
 .section--4 .section__elements {
@@ -533,6 +771,24 @@ const handleScrollTo = (section) => {
   opacity: 1;
 }
 
+.section--4 .section__element--4-cairn--anim {
+  animation: floatCairn 4s infinite ease-in-out;
+}
+
+@keyframes floatCairn {
+  0% {
+    transform: translateY(-23vh);
+  }
+
+  50% {
+    transform: translateY(calc(-23vh - 20px));
+  }
+
+  100% {
+    transform: translateY(-23vh);
+  }
+}
+
 .section--5 .section__elements {
   position: absolute;
   bottom: 0;
@@ -542,12 +798,61 @@ const handleScrollTo = (section) => {
   position: fixed;
   bottom: 0;
   opacity: 0;
-  transition: opacity 600ms;
+  transition: opacity 1200ms;
 }
 
 :has(.section--7.section--active) .section__element--6-milo,
 .section--6.section--active .section__element--6-milo {
   opacity: 1;
+}
+
+// :has(.section--7.section--active) .section__element--6-milo {
+  // filter: drop-shadow(0 4px 100px #b0a591);
+  // animation: glowingMilo 4s var(--filter-transition-duration) infinite
+  //   ease-in-out;
+// }
+
+// @keyframes glowingMilo {
+//   0% {
+//     filter: drop-shadow(0 4px 100px #b0a591);
+//   }
+
+//   50% {
+//     filter: drop-shadow(0 4px 32px #b0a591);
+//   }
+
+//   100% {
+//     filter: drop-shadow(0 4px 100px #b0a591);
+//   }
+// }
+
+.section--7 .section__elements {
+  position: fixed;
+  top: 0;
+  opacity: 0;
+  transition: opacity 1200ms;
+}
+
+.section--7.section--active .section__elements {
+  opacity: 1;
+}
+
+.section__element--7-cairns {
+  animation: floatCairns 4s infinite ease-in-out;
+}
+
+@keyframes floatCairns {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .section--1 .section__text p {
@@ -558,23 +863,9 @@ const handleScrollTo = (section) => {
 }
 
 .section--1 .section__text--0 {
-  left: 40vw;
-  top: 6vh;
-}
-
-.section--1 .section__text--1 {
-  top: calc(46px + 6vh);
-  left: 40vw;
-  bottom: unset;
-  right: unset;
+  left: 38vw;
+  top: 4vh;
   max-width: 590px;
-}
-
-.section--1 .section__text--2 {
-  top: calc(168px + 6vh);
-  left: 40vw;
-  bottom: unset;
-  right: unset;
 }
 
 .section--2 .section__text--0 {
@@ -609,7 +900,7 @@ const handleScrollTo = (section) => {
 .section--5 .section__text--1 {
   text-align: center;
   width: 100%;
-  top: 20vh;
+  top: 18vh;
 }
 
 .section--6 .section__text--0 {
@@ -624,9 +915,8 @@ const handleScrollTo = (section) => {
 
 .section--7 .section__text--0 {
   top: unset;
-  text-align: center;
-  width: 100%;
-  bottom: 20vh;
+  bottom: 8vh;
+  left: 5vh;
 }
 
 .section--8 .section__text--0 {

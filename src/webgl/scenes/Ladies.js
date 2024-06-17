@@ -24,6 +24,7 @@ import { TearsMaterial } from "../materials/Tears/material";
 import { Vector3 } from "three";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import Milo from "../objects/Milo";
+import Birds from "../objects/Birds";
 
 class Demoiselle extends Group {
   constructor(body, top, riseTop) {
@@ -87,7 +88,9 @@ class Demoiselle extends Group {
         z: this.body.position.z,
       });
 
-      app.audio.ui.play("magic_popup_1", 0.5);
+      app.sceneshandler.webgl.scene.drawCount++;
+
+      app.audio.ui.play(`hat_${app.sceneshandler.webgl.scene.drawCount}`, 0.5);
     }
   }
 
@@ -137,6 +140,8 @@ class Demoiselle extends Group {
 }
 
 class Ladies extends Scene {
+  drawCount = 0;
+
   constructor() {
     super();
     state.register(this);
@@ -309,6 +314,9 @@ class Ladies extends Scene {
 
     this.vegetation = new Vegetation("ladies");
     this.add(this.vegetation);
+
+    this.birds = new Birds(this.ladies.getObjectByName("BirdStart").position, this.ladies.getObjectByName("BirdEnd").position, true);
+    this.add(this.birds);
 
     this.dem1 = new Demoiselle(this.D1[0], this.D1[1], 0.9);
     this.dem2 = new Demoiselle(this.D2[0], this.D2[1], 1.2);

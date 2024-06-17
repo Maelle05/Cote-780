@@ -99,7 +99,7 @@ watch(
 
       setTimeout(() => {
         collectCairn()
-      }, 2000);
+      }, 2800);
     }
   }
 )

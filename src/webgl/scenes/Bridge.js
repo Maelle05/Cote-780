@@ -1,29 +1,18 @@
 import {
   AmbientLight,
-  CircleGeometry,
   DirectionalLight,
   DoubleSide,
-  EdgesGeometry,
-  LineBasicMaterial,
-  LineSegments,
-  Mesh,
-  MeshBasicMaterial,
   Scene,
-  SphereGeometry,
-  HemisphereLight,
   Vector3,
-  Color,
-  RepeatWrapping,
+  Vector4,
 } from "three";
 import { state } from "../../utils/State";
 import { EVENTS } from "../../utils/constants/events";
 import gsap from "gsap";
 import { Pane } from "tweakpane";
-import { DirectionalLightHelper } from "three";
 import { DEV_MODE } from "../../utils/constants/config";
 import Spirit from "../objects/Spirit";
 import TargetParticles from "../objects/TargetParticles";
-import Cairn from "../objects/Cairn";
 import { CamAnim } from "../utils/CamAnim";
 import { app } from "@/App";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -32,11 +21,9 @@ import { RockMaterial } from "../materials/Rock/material";
 import Milo from "../objects/Milo";
 import { WaterMaterial } from "../materials/Water/material";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
-import { ShakiraMaterial } from "../materials/Shakira/material";
-import { Vector2 } from "three";
-import { Vector4 } from "three";
 import Durance from "../objects/Durance";
 import Vegetation from "../objects/Vegetation";
+import Clouds from "../objects/Clouds";
 
 class Bridge extends Scene {
   constructor() {
@@ -127,22 +114,17 @@ class Bridge extends Scene {
     this.spirit.hide();
     const walkDuration = 7;
 
-    //End of the walk & Start Tuto
-    setTimeout(() => {
-      this.#start();
-    }, walkDuration * 1000);
-
     app.webgl.shake.startShake();
     app.audio.playMusic(MUSIC_IDS.AMBIENT_BRIDGE);
   }
 
   onAskRemoveTransition() {
     if (app.webgl.currentScene != 4) return;
-    const walkDuration = 7;
-    this.player.goTo(this.center, walkDuration);
+    this.player.goTo(this.center, 6);
     setTimeout(() => {
+      this.#start();
       state.emit(EVENTS.GO_NEXT);
-    }, 3000);
+    }, 4000);
   }
 
   onAttach() {
@@ -234,6 +216,12 @@ class Bridge extends Scene {
     this.vegetation = new Vegetation("bridge", 0.8);
     this.add(this.vegetation);
 
+    this.clouds = new Clouds(
+      this.bridge.getObjectByName("CloudStart").position,
+      this.bridge.getObjectByName("CloudEnd").position
+    );
+    this.add(this.clouds);
+
     this.bridge.name = "bridge";
     app.webgl.shake.initShake(this.bridge);
   }
@@ -247,6 +235,8 @@ class Bridge extends Scene {
     if (app.sceneshandler.currentStepCam == 4 && !this.durance.isActive) {
       this.durance.isActive = true;
       this.durance.show();
+      app.audio.ui.play("wave_appear");
+      this.player.lookAt(this.durance.position);
     }
     if (app.sceneshandler.currentStepCam == 5 && this.durance.isActive) {
       this.durance.isActive = false;
@@ -359,6 +349,13 @@ class Bridge extends Scene {
       },
       0
     );
+    tl.call(
+      () => {
+        app.audio.ui.play("jump_rock");
+      },
+      [],
+      ">-0.7"
+    );
 
     tl.to(
       this.center,
@@ -445,7 +442,7 @@ class Bridge extends Scene {
   }
 
   #endInteraction() {
-    console.log("TODO : END INTERACTION");
+    // console.log("TODO : END INTERACTION");
     //Milo gain the cairn
     //Milo rotation look at Durance
     //Durance Apparition
