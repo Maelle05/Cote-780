@@ -54,6 +54,7 @@ const manifest = {
     sparkle: { path: `/assets/textures/sparkle.png` },
     bird: { path: `/assets/textures/bird.png` },
     clouds: { path: `/assets/textures/clouds.png` },
+    water: { path: `/assets/textures/water.png` },
   },
   envMaps: {
     // envmap: { path: `/assets/textures/envmap.hdr` },
