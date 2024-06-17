@@ -3,7 +3,7 @@ import { app } from "@/App"
 import { defineProps, watchEffect, ref, onMounted, onUnmounted } from "vue"
 
 const props = defineProps({
-  text: String,
+  text: Object,
   index: Number,
   section: Number,
   sectionProgress: Number,
