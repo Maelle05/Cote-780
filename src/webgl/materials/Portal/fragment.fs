@@ -67,15 +67,3 @@ void main() {
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
 }
-
-//V1 with a noise texture
-
-// vec4 noiseColor = texture2D(uNoiseTexture, vUv);
-
-//     vec2 displacedUv = vUv + (noiseColor.r * sin(uTime * 0.5) * noiseColor.g * cos(uTime * 0.5)) * 0.1;
-//     vec4 textureColor = texture2D(uTexture, 1. - displacedUv);
-
-//     vec4 blendedColor = mix(textureColor, noiseColor, 0.1);
-//     vec4 gradientColor = mix(textureColor, vec4(1.0), gradient);
-
-//     gl_FragColor = gradientColor;

@@ -32,7 +32,7 @@ export default class TargetParticles extends Points {
 
     this.dir2 = this.directionalVector.subVectors(position, nextRockPos);
 
-    this.particleSize = 0.002;
+    this.particleSize = 0.01;
     this.resolution = new Vector2(app.viewport.width, app.viewport.height);
     this.radius = 0.05;
     this.progress = 0;

@@ -1,44 +1,44 @@
 <script setup>
-import { EVENTS } from "@/utils/constants/events"
-import { state } from "@/utils/State"
+import { EVENTS } from "@/utils/constants/events";
+import { state } from "@/utils/State";
 
-import { ref, onMounted, nextTick } from "vue"
-import { gsap } from "gsap"
+import { ref, onMounted, nextTick } from "vue";
+import { gsap } from "gsap";
 import { app } from "@/App";
 
-const hasDialogue = ref(false)
-const person = ref("")
-const text = ref("")
-const letters = ref([])
+const hasDialogue = ref(false);
+const person = ref("");
+const text = ref("");
+const letters = ref([]);
 
-const wrapperRef = ref(null)
-const wrapperHeight = ref(0)
+const wrapperRef = ref(null);
+const wrapperHeight = ref(0);
 
-let isNewScene = false
+let isNewScene = false;
 
 const props = defineProps({
   sceneIndex: Number,
   isVisible: Boolean,
-})
+});
 
-let isAnimationInProgress = false
+let isAnimationInProgress = false;
 
 const assignRef = (ref, element, match) => {
   if (element === match) {
-    wrapperRef.value = ref
+    wrapperRef.value = ref;
   }
-}
+};
 
 const updateHeight = () => {
   if (wrapperRef.value) {
-    wrapperHeight.value = wrapperRef.value.offsetHeight
+    wrapperHeight.value = wrapperRef.value.offsetHeight;
   }
-}
+};
 
 const animateLettersApparition = () => {
-  if (isAnimationInProgress) return
+  if (isAnimationInProgress) return;
 
-  isAnimationInProgress = true
+  isAnimationInProgress = true;
 
   gsap.to(".wrapper--original .letter", {
     opacity: 1,
@@ -46,66 +46,63 @@ const animateLettersApparition = () => {
     stagger: 0.02,
     delay: 0.2,
     onComplete: () => {
-      isAnimationInProgress = false
+      isAnimationInProgress = false;
     },
-  })
-}
+  });
+};
 
 onMounted(() => {
   nextTick(() => {
-    updateHeight()
-  })
-})
+    updateHeight();
+  });
+});
 
 state.on(EVENTS.CHANGE_SCENE, (e) => {
-  isNewScene = true
-})
+  isNewScene = true;
+});
 
 state.on(EVENTS.CHANGE_SCENE_STEP, (e) => {
-  isNewScene = false
-})
+  isNewScene = false;
+});
 
 state.on(EVENTS.UPDATE_DIALOGUE, (e) => {
-  const updateDialogueDelay = isNewScene ? 3000 : 0
-  
-  setTimeout(
-    () => {
-      if (e) {
-        gsap.to(".wrapper--original .letter", {
-          opacity: 0,
-          duration: hasDialogue.value === true ? 0.1 : 0.001,
-          onComplete: () => {
-            person.value = e.person
-            text.value = e.text
-            letters.value = text.value.split("")
+  const updateDialogueDelay = isNewScene ? 3000 : 0;
 
-            nextTick(() => {
-              updateHeight()
-              animateLettersApparition()
-            })
-          },
-        })
+  setTimeout(() => {
+    if (e) {
+      gsap.to(".wrapper--original .letter", {
+        opacity: 0,
+        duration: hasDialogue.value === true ? 0.1 : 0.001,
+        onComplete: () => {
+          person.value = e.person;
+          text.value = e.text;
+          letters.value = text.value.split("");
 
-        hasDialogue.value = true
-        if (e.audio) app.audio.dialog.play(e.audio);
-      } else {
-        hasDialogue.value = false
-      }
-    },
-    updateDialogueDelay
-  )
-})
+          nextTick(() => {
+            updateHeight();
+            animateLettersApparition();
+          });
+        },
+      });
+
+      hasDialogue.value = true;
+      if (e.audio) app.audio.dialog.play(e.audio);
+    } else {
+      hasDialogue.value = false;
+    }
+  }, updateDialogueDelay);
+});
 
 const onClickDialogue = () => {
   if (isAnimationInProgress) {
-    gsap.killTweensOf(".wrapper--original .letter")
-    gsap.set(".wrapper--original .letter", { opacity: 1 })
-    isAnimationInProgress = false
+    gsap.killTweensOf(".wrapper--original .letter");
+    gsap.set(".wrapper--original .letter", { opacity: 1 });
+    isAnimationInProgress = false;
   } else {
-    state.emit(EVENTS.GO_NEXT)
+    state.emit(EVENTS.GO_NEXT);
     app.audio.ui.play("click", 0.5);
   }
-}
+};
 </script>
 
 <template>
@@ -133,6 +130,7 @@ const onClickDialogue = () => {
 .wrapper {
   position: absolute;
   left: 50%;
+  display: flex;
   transform: translateX(-50%);
   bottom: 5vh;
   opacity: 1;
@@ -153,7 +151,7 @@ const onClickDialogue = () => {
   box-sizing: border-box;
   user-select: none;
   cursor: pointer;
-  
+
   span {
     pointer-events: none;
   }

@@ -113,10 +113,8 @@ class Bridge extends Scene {
 
     this.milo = new Milo();
     this.player = this.milo.model;
-    const walkDuration = 7;
     this.player.position.set(-0.88, 0.15, 2.81);
     // this.player.rotation.y = Math.PI - 45;
-    this.player.goTo(this.center, walkDuration);
     this.add(this.player);
 
     this.durance = new Durance(app.assetsManager.get("duranceFace"));
@@ -127,6 +125,7 @@ class Bridge extends Scene {
     this.add(this.durance);
 
     this.spirit.hide();
+    const walkDuration = 7;
 
     //End of the walk & Start Tuto
     setTimeout(() => {
@@ -139,7 +138,8 @@ class Bridge extends Scene {
 
   onAskRemoveTransition() {
     if (app.webgl.currentScene != 4) return;
-    this.player.goTo(this.center, 3);
+    const walkDuration = 7;
+    this.player.goTo(this.center, walkDuration);
     setTimeout(() => {
       state.emit(EVENTS.GO_NEXT);
     }, 3000);
