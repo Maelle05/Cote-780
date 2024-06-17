@@ -58,6 +58,7 @@ class Demoiselle extends Group {
     this.riseTop = riseTop;
     this.topIsDraw = false;
     this.isElHit = false;
+    this.hitting = false;
   }
 
   onPointerMove(e) {
@@ -73,8 +74,15 @@ class Demoiselle extends Group {
 
     for (let i = 0; i < intersects.length; i++) {
       if (!this.isElHit) this.isElHit = true;
+      if (!this.hitting) this.hitting = true;
       intersects[i].object.material.opacity = 1;
       this.drawOnCanvasTex(intersects[i].uv);
+      document.body.style.cursor = "grabbing";
+    }
+
+    if (intersects.length == 0 && this.hitting) {
+      this.hitting = false;
+      document.body.style.cursor = "default";
     }
 
     if (this.isCanvasPainted()) {
@@ -89,6 +97,7 @@ class Demoiselle extends Group {
       });
 
       app.sceneshandler.webgl.scene.drawCount++;
+      document.body.style.cursor = "default";
 
       app.audio.ui.play(`hat_${app.sceneshandler.webgl.scene.drawCount}`, 0.5);
     }
@@ -269,11 +278,11 @@ class Ladies extends Scene {
     if (app.sceneshandler.currentStepCam == 3 && !this.isTutoPass) {
       this.demoiselles.children.forEach((dem) => {
         dem.top.material.uniforms.u_gAlpha.value =
-          (Math.sin(app.ticker.elapsed * 0.005) * 0.5 + 0.5) * 0.4;
+          (Math.sin(app.ticker.elapsed * 0.005) * 0.5 + 0.5) * 0.8;
       });
     } else if (app.sceneshandler.currentStepCam == 3 && this.isTutoPass) {
       this.demoiselles.children.forEach((dem) => {
-        dem.top.material.uniforms.u_gAlpha.value = 0;
+        dem.top.material.uniforms.u_gAlpha.value = 0.4;
       });
     }
   }
