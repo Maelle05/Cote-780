@@ -24,6 +24,7 @@ import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import Durance from "../objects/Durance";
 import Vegetation from "../objects/Vegetation";
 import Clouds from "../objects/Clouds";
+import { Raycaster } from "three";
 
 class Bridge extends Scene {
   constructor() {
@@ -47,6 +48,8 @@ class Bridge extends Scene {
     this.directionLight.intensity = 2;
     this.directionLight.position.set(7, 10, 15);
     this.add(this.directionLight);
+
+    this.raycaster = new Raycaster();
 
     // this.position.set(2, 0, -1.5);
 
@@ -96,6 +99,7 @@ class Bridge extends Scene {
     this.elapsedTime = 0;
     this.interval = 1000;
     this.isAnimating = false;
+    this.goNext = false;
     this.nbJumps = 0;
 
     this.milo = new Milo();
@@ -180,7 +184,9 @@ class Bridge extends Scene {
     this.currentRock.material.uniforms.uProgress.value = 1;
 
     this.spirit = new Spirit();
-    this.spirit.hide();
+    // this.spirit.hide();
+    this.spirit.position.copy(this.rocks[this.rocks.length - 1].position);
+    this.spirit.position.y += 0.2;
     this.add(this.spirit);
 
     this.target = new TargetParticles(
@@ -254,32 +260,47 @@ class Bridge extends Scene {
 
     if (!this.spirit) return;
 
-    this.angle = app.ticker.elapsed * 0.0015;
+    // this.angle = app.ticker.elapsed * 0.0015;
 
-    const animRadiusX = 0.7;
-    const animRadiusZ = 0.2;
-    const rotationAngle = Math.PI / 4;
-    const center = this.rocks[this.rockIndex].position;
+    // const animRadiusX = 0.7;
+    // const animRadiusZ = 0.2;
+    // const rotationAngle = Math.PI / 4;
+    // const center = this.rocks[this.rockIndex].position;
 
-    const x = animRadiusX * Math.sin(this.angle);
-    const z = animRadiusZ * Math.sin(2 * this.angle);
+    // const x = animRadiusX * Math.sin(this.angle);
+    // const z = animRadiusZ * Math.sin(2 * this.angle);
 
-    // Apply rotation to the X and Z positions
-    const rotatedX = x * Math.cos(rotationAngle) - z * Math.sin(rotationAngle);
-    const rotatedZ = x * Math.sin(rotationAngle) + z * Math.cos(rotationAngle);
+    // // Apply rotation to the X and Z positions
+    // const rotatedX = x * Math.cos(rotationAngle) - z * Math.sin(rotationAngle);
+    // const rotatedZ = x * Math.sin(rotationAngle) + z * Math.cos(rotationAngle);
 
-    // Translate the rotated position back to the center
-    const finalX = center.x + rotatedX;
-    const finalZ = center.z + rotatedZ;
+    // // Translate the rotated position back to the center
+    // const finalX = center.x + rotatedX;
+    // const finalZ = center.z + rotatedZ;
 
-    this.spirit.position.set(finalX, center.y + 0.2, finalZ);
+    // this.spirit.position.set(finalX, center.y + 0.2, finalZ);
 
-    if (
-      this.spirit.position.distanceTo(this.rocks[this.rockIndex].position) < 0.3
-    ) {
-      this.spirit.targetSpiritColor = new Vector4(0.941, 0.608, 0.345);
+    // if (
+    //   this.spirit.position.distanceTo(this.rocks[this.rockIndex].position) < 0.3
+    // ) {
+    //   this.spirit.targetSpiritColor = new Vector4(0.941, 0.608, 0.345);
+    // } else {
+    //   this.spirit.targetSpiritColor = new Vector4(1, 1, 1, 1);
+    // }
+  }
+
+  onPointerMove(e) {
+    const mesh = this.rocks[this.rockIndex];
+
+    this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
+    const intersects = this.raycaster.intersectObject(mesh);
+
+    if (intersects.length != 0) {
+      this.goNext = true;
+      document.body.style.cursor = "pointer";
     } else {
-      this.spirit.targetSpiritColor = new Vector4(1, 1, 1, 1);
+      this.goNext = false;
+      document.body.style.cursor = "default";
     }
   }
 
@@ -302,9 +323,7 @@ class Bridge extends Scene {
     this.currentRock = this.rocks[this.rockIndex];
     this.nextRock = this.rocks[this.rockIndex + 1];
 
-    if (!this.currentRock) return;
-    if (this.spirit.position.distanceTo(this.currentRock.position) > 0.3)
-      return;
+    if (!this.currentRock || this.goNext == false) return;
 
     this.nbJumps++;
     if (this.nbJumps == 1) state.emit(EVENTS.GO_NEXT);
@@ -433,10 +452,6 @@ class Bridge extends Scene {
   #off() {}
 
   #start() {
-    // console.log("start");
-    //Create all animations of apparitions
-    this.state = "step_1";
-
     //launch spirit
     this.spirit.show();
   }

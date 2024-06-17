@@ -1,7 +1,7 @@
 import dataText from "../../locales/fr.json";
 
 const DEV_MODE = false;
-const INIT_SCENE = 0;
+const INIT_SCENE = 4;
 
 const TITLES_SCENE = [
   [dataText["scene_0"].title],
@@ -37,9 +37,7 @@ const INTRO_SECTIONS = [
       },
       { id: "1-arbre", src: "/assets/images/intro/1_arbre.png" },
     ],
-    texts: [
-      {ref: dataText["intro"]["text_1"], delay: 0},
-    ],
+    texts: [{ ref: dataText["intro"]["text_1"], delay: 0 }],
     audios: [],
   },
   {
@@ -50,9 +48,9 @@ const INTRO_SECTIONS = [
       { id: "2-lettre", src: "/assets/images/intro/2_lettre.png" },
     ],
     texts: [
-      {ref: introTexts["text_1"], delay: 0}, 
-      {ref: introTexts["text_2"], delay: 5000}
-  ],
+      { ref: introTexts["text_1"], delay: 0 },
+      { ref: introTexts["text_2"], delay: 5000 },
+    ],
     audios: [introTexts["audio_1"], introTexts["audio_2"]],
   },
   {
@@ -66,9 +64,7 @@ const INTRO_SECTIONS = [
         src: "/assets/images/intro/3_durance-colere.png",
       },
     ],
-    texts: [
-      {ref: introTexts["text_3"], delay: 0}, 
-    ],
+    texts: [{ ref: introTexts["text_3"], delay: 0 }],
     audios: [introTexts["audio_3"]],
   },
   {
@@ -79,9 +75,7 @@ const INTRO_SECTIONS = [
       { id: "4-grandma", src: "/assets/images/intro/4_grandma.png" },
       { id: "4-cairn", src: "/assets/images/intro/4_cairn.png" },
     ],
-    texts: [
-      {ref: introTexts["text_4"], delay: 0}, 
-    ],
+    texts: [{ ref: introTexts["text_4"], delay: 0 }],
     audios: [introTexts["audio_4"]],
   },
   {
@@ -91,8 +85,8 @@ const INTRO_SECTIONS = [
       { id: "5-passage", src: "/assets/images/intro/5_passage.png" },
     ],
     texts: [
-      {ref: introTexts["text_5"], delay: 0}, 
-      {ref: introTexts["text_6"], delay: 8800}, 
+      { ref: introTexts["text_5"], delay: 0 },
+      { ref: introTexts["text_6"], delay: 8800 },
     ],
     audios: [introTexts["audio_5"], introTexts["audio_6"]],
   },
@@ -102,27 +96,21 @@ const INTRO_SECTIONS = [
       { id: "6-milo", src: "/assets/images/intro/6_milo.png" },
     ],
     texts: [
-      {ref: introTexts["text_7"], delay: 0}, 
-      {ref: introTexts["text_8"], delay: 7200}, 
+      { ref: introTexts["text_7"], delay: 0 },
+      { ref: introTexts["text_8"], delay: 7200 },
     ],
     audios: [introTexts["audio_7"], introTexts["audio_8"]],
   },
   {
-    elements: [
-      { id: "7-cairns", src: "/assets/images/intro/7_cairns.png" },
-    ],
-    texts: [
-      {ref: introTexts["text_9"], delay: 0}, 
-    ],
+    elements: [{ id: "7-cairns", src: "/assets/images/intro/7_cairns.png" }],
+    texts: [{ ref: introTexts["text_9"], delay: 0 }],
     audios: [introTexts["audio_9"]],
   },
   {
-    elements: [
-      { id: "8-carte", src: "/assets/images/intro/8_carte.png" },
-    ],
+    elements: [{ id: "8-carte", src: "/assets/images/intro/8_carte.png" }],
     texts: [
-      {ref: introTexts["text_10"], delay: 0}, 
-      {ref: introTexts["text_11"], delay: 8600}, 
+      { ref: introTexts["text_10"], delay: 0 },
+      { ref: introTexts["text_11"], delay: 8600 },
     ],
     audios: [introTexts["audio_10"], introTexts["audio_11"]],
   },

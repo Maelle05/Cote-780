@@ -138,15 +138,11 @@ class Chapel extends Scene {
             uTexture: { value: child.material.map },
             uTime: { value: 0 },
           },
-          // transparent: true,
         });
       }
 
       if (child.name == "Portal") {
         this.portal = child;
-        // this.portal.scale.x *= 1.6;
-        // this.portal.scale.z *= 1.8;
-        // this.portal.position.y += 0.2;
 
         child.material = new PortalMaterial({
           uniforms: {
@@ -178,7 +174,9 @@ class Chapel extends Scene {
       }
     });
 
-    this.boatAnims = this.chapel.animations.filter((el) => el.name.includes("Boat"));
+    this.boatAnims = this.chapel.animations.filter((el) =>
+      el.name.includes("Boat")
+    );
     this.boats.forEach((boat, index) => {
       const mixer = new AnimationMixer(boat);
       const clip = mixer.clipAction(this.boatAnims[index]);
@@ -355,7 +353,9 @@ class Chapel extends Scene {
   onTick(e) {
     if (app.webgl.currentScene != 5) return;
 
-    this.animationMixers.forEach((mixer) => mixer.update(app.ticker.delta * 0.0001));
+    this.animationMixers.forEach((mixer) =>
+      mixer.update(app.ticker.delta * 0.0001)
+    );
 
     if (!this.endTransition && app.sceneshandler.currentStepCam == 5) {
       this.endTransition = true;
