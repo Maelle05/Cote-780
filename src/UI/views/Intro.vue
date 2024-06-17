@@ -456,6 +456,7 @@ const handleScrollTo = (section) => {
   flex-direction: column;
   align-items: center;
   gap: 92px;
+  user-select: none;
   transition: transform 800ms, opacity 800ms;
 
   &.intro__ui--hidden {
@@ -474,7 +475,7 @@ const handleScrollTo = (section) => {
 }
 
 .intro__baseline {
-  font-family: var(--ff-eczar);
+  font-family: var(--ff-pangolin);
   font-size: 32px;
   color: #013946;
   text-transform: lowercase;
