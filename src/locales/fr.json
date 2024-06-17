@@ -17,7 +17,7 @@
     "new-cairn_3": "cairn"
   },
   "intro": {
-    "text_1": "Ce conte se déroule au cœur des Hautes-Alpes, dans la vallée de la Durance.<br><br>\nUn barrage y fut construit à la fin des années 1950 pour apaiser les colères de l’imposante rivière qui donne son nom à la vallée. Cet événement bouleversa de nombreuses vies dans la région, et trois villages furent engloutis sous les eaux.<br><br>\nCe fut la naissance du Lac de Serre-Ponçon.",
+    "text_1": "Ce conte se déroule au cœur des Hautes-Alpes, dans la vallée&nbsp;de&nbsp;la&nbsp;Durance.<br><br>\nUn barrage y fut construit à la fin des années 1950 pour apaiser les colères de l’imposante rivière qui donne son nom à la vallée. Cet événement bouleversa de nombreuses vies dans la région, et trois villages furent engloutis sous les eaux.<br><br>\nCe fut la naissance du Lac de Serre-Ponçon.",
     "text_2": "Un barrage y fut construit à la fin des années 1950 pour apaiser les colères de l’imposante rivière qui donne son nom à la vallée. Cet événement bouleversa de nombreuses vies dans la région, et trois villages furent engloutis sous les eaux.",
     "text_3": "Ce fut la naissance du Lac de Serre-Ponçon.",
     "start": "Démarrer l'expérience",
@@ -28,11 +28,11 @@
     "text_1": "Mon cher Milo… Si tu lis ces mots, c’est que je ne suis malheureusement plus avec vous.",
     "audio_1": "grandma_1_2",
     "text_2": "Il y a une histoire que tu dois connaître…",
-    "text_3": "Lors de la création du barrage, la Durance, capricieuse et indomptable, a lancé une dernière offensive.",
+    "text_3": "Lors de la création du barrage, la Durance, capricieuse et&nbsp;indomptable, a lancé une dernière offensive.",
     "audio_3": "grandma_3",
     "text_4": "Grâce au lien de notre famille avec la vallée, j'ai réussi à rétablir l’harmonie entre les hommes et&nbsp;la&nbsp;Durance.",
     "audio_4": "grandma_4",
-    "text_5": "Le Passage de Savines est le symbole de cette union entre les hommes et la nature. Ses pierres maintiennent l’équilibre autour du lac.",
+    "text_5": "Le Passage de Savines est le symbole de cette union entre les hommes et la nature. Ses&nbsp;pierres maintiennent l’équilibre autour du lac.",
     "audio_5": "grandma_5_6",
     "text_6": "J’étais la dernière gardienne du Passage, mon rôle était de protéger cet équilibre fragile.",
     "text_7": "Sans personne pour veiller sur lui, je crains que les cairns qui le composent ne se dispersent aux quatre coins de la vallée…",
@@ -40,7 +40,7 @@
     "text_8": "La Durance pourrait alors représenter de nouveau un danger pour la région.",
     "text_9": "C'est à toi, Milo, que revient le devoir de retrouver ces cairns pour rétablir l’harmonie entre tous.",
     "audio_9": "grandma_9",
-    "text_10": "Prends la carte que je t’ai laissée et pars à la rencontre des Demoiselles Coiffées, ces ancestrales pierres de la montagne.",
+    "text_10": "Prends la carte que je t’ai laissée et pars à la rencontre des Demoiselles coiffées, ces ancestrales pierres de&nbsp;la&nbsp;montagne.",
     "audio_10": "grandma_10_11",
     "text_11": "Elles pourront te guider dans ta quête."
   },
@@ -126,10 +126,10 @@
     "title_0": "Le Pont de",
     "title_1": "Chanteloube",
     "text_1": {
-      "person": "Milo",
-      "text": "Oh !",
+      "person": "Esprit",
+      "text": "Viens ! Par ici !",
       "camera": "1",
-      "audio": "milo_oh"
+      "audio": "esprit_13"
     },
     "text_2": {
       "person": "Durance",
@@ -159,7 +159,7 @@
     },
     "text_3": {
       "person": "Esprit",
-      "text": "Par ici ! Si tu décides de traverser ce portail, tu découvriras un lieu que le temps tente d'effacer.",
+      "text": "Par ici ! Si tu décides de traverser ce portail, tu&nbsp;découvriras un lieu que le temps tente d'effacer.",
       "camera": "5",
       "audio": "esprit_3"
     },
@@ -191,43 +191,43 @@
     },
     "text_4": {
       "person": "Esprit",
-      "text": "C’est ici ! Regarde ! Un journal !",
+      "text": "C’est ici, regarde ! Un journal !",
       "camera": "4",
       "audio": "esprit_7"
     },
     "text_5": {
       "person": "Journal",
-      "text": "xx xx 1954. L’état vient de lancer la construction d’un barrage pour maîtriser l’indomptable Durance… Ils racontent qu’ils veulent engloutir la vallée jusqu’à la cote 780 ! C’est absurde !",
+      "text": "1954  —  L’état vient de lancer la construction d’un barrage pour maîtriser l’indomptable Durance… Ils racontent qu’ils veulent engloutir la vallée jusqu’à la cote 780 ! C’est absurde !",
       "camera": "5",
       "audio": "grandma_13"
     },
     "text_6": {
       "person": "Journal",
-      "text": "xx xx 1956. L’autre soir, la Durance a bien failli mettre fin au chantier ! Elle s’est rebellée contre ceux qui essayent de la contrôler. Malheureusement… ils sont bien décidés, ça n’a pas eu beaucoup d’effets hormis retarder le chantier.",
+      "text": "1955  —  L’autre soir, la Durance a bien failli mettre fin au chantier ! Elle s’est rebellée contre ceux qui essayent de la contrôler. Malheureusement… ils sont bien décidés, ça n’a pas eu beaucoup d’effets hormis retarder le chantier.",
       "camera": "5",
       "audio": "grandma_14"
     },
     "text_7": {
       "person": "Journal",
-      "text": "xx xx 1956. Toutes les habitations vont être dynamitées il paraît… ils vont même déplacer le cimetière…",
+      "text": "1956  —  Toutes les habitations vont être dynamitées il paraît… ils vont même déplacer le cimetière…",
       "camera": "5",
       "audio": "grandma_15"
     },
     "text_8": {
       "person": "Journal",
-      "text": "xx xx 1957. Au début, personne ne croyait à ce barrage. Même lorsque la construction a été lancée, on se disait qu’il ne verrait jamais le jour. Maintenant que les gens commencent à quitter le village, tout devient réel…",
+      "text": "1960  —  Au début, personne ne croyait à ce barrage. Même lorsque la construction a été lancée, on se disait qu’il ne verrait jamais le jour. Maintenant que les gens commencent à quitter le village, tout devient réel…",
       "camera": "6",
       "audio": "grandma_16"
     },
     "text_9": {
       "person": "Journal",
-      "text": "xx xx 1955. Aujourd’hui j’ai eu la visite d’EDF au sujet du barrage. Ils m’ont proposé un logement et de l’argent… beaucoup… pour m'installer dans le nouveau village… Mais comment vivre, avec nos souvenirs engloutis sous les yeux ?",
+      "text": "1964  —  Aujourd’hui j’ai eu la visite d’EDF au sujet du barrage. Ils m’ont proposé un logement et de l’argent… beaucoup… pour m'installer dans le nouveau village… Mais comment vivre, avec nos souvenirs engloutis sous les yeux ?",
       "camera": "6",
       "audio": "grandma_17"
     },
     "text_10": {
       "person": "Journal",
-      "text": "xx xx 1957. Ils ont commencé à reconstruire le village au-dessus de la cote 780… et je suis bien triste de devoir quitter mon Hôtel. Mais comme les autres, je crois que j’ai fini par m’y résoudre.",
+      "text": "1966  —  Ils ont commencé à reconstruire le village au-dessus de la cote 780… et je suis bien triste de devoir quitter mon Hôtel. Mais comme les autres, je crois que j’ai fini par m’y résoudre.",
       "camera": "6",
       "audio": "grandma_18"
     },
@@ -253,7 +253,7 @@
     },
     "text_2": {
       "person": "Esprit",
-      "text": "L’édifice qu’est le Passage de Savines a regagné sa beauté en mémoire de ta grand-mère et de tous ceux qui ont vécu dans ces villages engloutis.",
+      "text": "L’édifice qu’est le Passage de Savines a regagné sa beauté apparente en mémoire de ta grand-mère et de tous ceux qui ont vécu dans ces villages engloutis.",
       "camera": "2",
       "audio": "esprit_9"
     },
@@ -264,12 +264,6 @@
       "audio": "esprit_10"
     },
     "text_4": {
-      "person": "Esprit",
-      "text": "À présent le lac de Serre Ponçon est une nouvelle page qui se tourne pour la plus grande joie des vacanciers et amoureux de la nature !",
-      "camera": "3",
-      "audio": "esprit_11"
-    },
-    "text_5": {
       "person": "Esprit",
       "text": "Entre paysage montagneux et riche végétation, ce projet titanesque offre aujourd’hui, avec son vaste lac, de nouvelles perspectives pour la région. Pour la plus grande joie des vacanciers et amoureux de la nature !",
       "camera": "3",
