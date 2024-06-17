@@ -263,8 +263,11 @@ const handleMouseEnterCircle = (type) => {
 
 .welcome-scene__image {
   width: 100%;
+  pointer-events: none;
+
   img {
     width: 100%;
+    pointer-events: none;
   }
 
   &.welcome-scene__image--routes {
