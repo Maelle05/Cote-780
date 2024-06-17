@@ -115,6 +115,7 @@ class Dam extends Scene {
           },
           side: DoubleSide,
           transparent: true,
+          alphaTest: 0.001
         });
       }
     });
