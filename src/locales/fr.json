@@ -15,7 +15,18 @@
     "new-cairn_1": "Tu viens d'obtenir un",
     "new-cairn_2": "nouveau",
     "new-cairn_3": "cairn",
-    "mobile": "Cette expérience n'est pas accessible sur les&nbsp;appareils&nbsp;mobiles."
+    "mobile": "Cette expérience n'est pas accessible sur les&nbsp;appareils&nbsp;mobiles.",
+    "loader_1": "Les Demoiselles se recoiffent",
+    "loader_2": "Les Demoiselles se préparent pour le bal",
+    "loader_3": "Milo lace ses chaussures",
+    "loader_4": "Milo consulte sa carte",
+    "loader_5": "Milo enfile son sac à dos",
+    "loader_6": "L'esprit se réveille",
+    "loader_7": "Les montagnes veillent sur la vallée",
+    "loader_8": "La Durance s'impatiente",
+    "loader_9": "La Durance se soulève",
+    "loader_10": "Les souvenirs engloutis refont surface",
+    "loader_11": "Les cairns se dispersent"
   },
   "intro": {
     "text_1": "Ce conte se déroule au cœur des Hautes-Alpes, dans la vallée&nbsp;de&nbsp;la&nbsp;Durance.<br><br>\nUn barrage y fut construit à la fin des années 1950 pour apaiser les colères de l’imposante rivière qui donne son nom à la vallée. Cet événement bouleversa de nombreuses vies dans la région, et trois villages furent engloutis sous les eaux.<br><br>\nCe fut la naissance du Lac de Serre-Ponçon.",
@@ -294,9 +305,5 @@
     "name_3": "Mamie Claude - Yannick Rocher,Milo - Swan Ehrsam,Les Demoiselles - Mélanie Masliah,L’Esprit - Adrien Melchior,La Durance - Adeline Piketty",
     "role_4": "Merci à",
     "name_4": "Mathieu Ehrsam, xx,xx,xx"
-  },
-  "loader": {
-    "line_1": "Les Demoiselles se recoiffent",
-    "line_2": "Milo lace ses chaussures"
   }
 }

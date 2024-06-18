@@ -3,6 +3,7 @@ import Navigation from "./UI/components/Navigation.vue";
 import BtnChangeScene from "./UI/components/BtnChangeScene.vue";
 import Intro from "./UI/views/Intro.vue";
 import Scenes from "./UI/views/Scenes.vue";
+import Loader from "./UI/components/Loader.vue";
 import MobileDisclaimer from "./UI/views/MobileDisclaimer.vue";
 import { ref, onMounted } from 'vue';
 import { INIT_SCENE } from "./utils/constants/config";
@@ -62,6 +63,7 @@ state.on(EVENTS.CHANGE_SCENE_STEP, (e) => {
     <div>
       <img :class="`logo logo--${isScenes ? 'visible' : 'hidden'}`" src="/assets/images/logo.svg" />
     </div>
+    <Loader />
     <div v-if="isMobile === false">
       <Navigation :sceneIndex="sceneIndex"></Navigation>
       <Intro v-if="isIntro" />
