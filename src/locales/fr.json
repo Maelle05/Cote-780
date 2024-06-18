@@ -15,7 +15,7 @@
     "new-cairn_1": "Tu viens d'obtenir un",
     "new-cairn_2": "nouveau",
     "new-cairn_3": "cairn",
-    "mobile": "Cette expérience n'est pas accessible sur mobile."
+    "mobile": "Cette expérience n'est pas accessible sur les appareils mobiles."
   },
   "intro": {
     "text_1": "Ce conte se déroule au cœur des Hautes-Alpes, dans la vallée&nbsp;de&nbsp;la&nbsp;Durance.<br><br>\nUn barrage y fut construit à la fin des années 1950 pour apaiser les colères de l’imposante rivière qui donne son nom à la vallée. Cet événement bouleversa de nombreuses vies dans la région, et trois villages furent engloutis sous les eaux.<br><br>\nCe fut la naissance du Lac de Serre-Ponçon.",
@@ -138,7 +138,7 @@
       "camera": "4",
       "audio": "durance_2"
     },
-    "tuto": "Clique au bon moment pour aider Milo à avancer",
+    "tuto": "Clique sur les pierres pour aider Milo à avancer",
     "infos": "Le pont de Chanteloube a été construit dans le cadre du projet de ligne de chemin de fer qui devait relier Grenoble à Bercelonnette. Amorcée en 1910, sa réalisation fut finalement interrompue en 1934 au profit de la ligne Veynes-Briançon.",
     "alt": "Le Pont de Chanteloube",
     "url": "https://www.serreponcon.com/patrimoine-culturel/viaduc-de-chanteloube-chorges/"

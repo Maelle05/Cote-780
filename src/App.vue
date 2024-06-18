@@ -3,7 +3,8 @@ import Navigation from "./UI/components/Navigation.vue";
 import BtnChangeScene from "./UI/components/BtnChangeScene.vue";
 import Intro from "./UI/views/Intro.vue";
 import Scenes from "./UI/views/Scenes.vue";
-import { ref } from "vue";
+import MobileDisclaimer from "./UI/views/MobileDisclaimer.vue";
+import { ref, onMounted } from 'vue';
 import { INIT_SCENE } from "./utils/constants/config";
 import { state } from "./utils/State";
 import { EVENTS } from "./utils/constants/events";
@@ -12,6 +13,23 @@ const isIntro = ref(false);
 const isScenes = ref(false);
 const sceneIndex = ref(INIT_SCENE);
 const stepIndex = ref(0);
+const isMobile = ref(false);
+
+onMounted(() => {
+  if (window.innerWidth < 800) {
+    isMobile.value = true
+  }
+})
+
+state.on(EVENTS.RESIZE, () => {
+  if (window.innerWidth < 800) {
+    isMobile.value = true
+  } else {
+    isMobile.value = false
+  }
+})
+
+// onResize
 
 if (INIT_SCENE == 0) {
   isIntro.value = true;
@@ -44,10 +62,15 @@ state.on(EVENTS.CHANGE_SCENE_STEP, (e) => {
     <div>
       <img :class="`logo logo--${isScenes ? 'visible' : 'hidden'}`" src="/assets/images/logo.svg" />
     </div>
-    <Navigation :sceneIndex="sceneIndex"></Navigation>
-    <Intro v-if="isIntro" />
-    <Scenes v-if="isScenes" :sceneIndex="sceneIndex" :stepIndex="stepIndex" />
-    <BtnChangeScene />
+    <div v-if="isMobile === false">
+      <Navigation :sceneIndex="sceneIndex"></Navigation>
+      <Intro v-if="isIntro" />
+      <Scenes v-if="isScenes" :sceneIndex="sceneIndex" :stepIndex="stepIndex" />
+      <BtnChangeScene />
+    </div>
+    <div v-if="isMobile === true">
+      <MobileDisclaimer></MobileDisclaimer>
+    </div>
   </main>
 </template>
 
