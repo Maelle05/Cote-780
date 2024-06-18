@@ -36,7 +36,11 @@ const onClickCtaStart = () => {
 }
 
 const onClickCtaEnd = () => {
-  state.emit(EVENTS.GO_NEXT)
+  gsap.to(".intro__container", { duration: 0.8, opacity: 0 })
+
+  setTimeout(() => {
+    state.emit(EVENTS.GO_NEXT)
+  }, 500);
 }
 
 const onMouseEnterCta = () => {
