@@ -93,6 +93,7 @@ const playDisparitionAnimation = () => {
 <template>
   <div class="loader__container">
     <div class="loader">
+      <img class="loader__image" src="/assets/images/milo-run.gif" alt="">
       <p class="loader__progress">{{ loaderProgress }}%</p>
       <p class="loader__text">{{ textToDisplay }}</p>
     </div>
@@ -125,13 +126,19 @@ const playDisparitionAnimation = () => {
   font-family: var(--ff-pangolin);
   font-size: 14px;
   opacity: 0;
-  animation: fadeIn 200ms 300ms forwards;
+  animation: fadeIn 200ms 300ms ease-in-out forwards;
 }
 
 @keyframes fadeIn {
   100% {
     opacity: 1;
   }
+}
+
+.loader__image {
+  width: 80px;
+  left: 6px;
+  margin-bottom: 18px;
 }
 
 .loader__text {
