@@ -52,10 +52,17 @@ onMounted(() => {
     timelines.push(gsap.timeline())
   })
 
-  timelines[0].to(".section__element--0-milo, .section__element--0-buisson", {
-    duration: 1,
-    y: "-30vh",
-  })
+  timelines[0].to(
+    `
+  .section__element--0-milo-1, 
+  .section__element--0-milo-2, 
+  .section__element--0-milo-3, 
+  .section__element--0-buisson`,
+    {
+      duration: 1,
+      y: "-30vh",
+    }
+  )
 
   timelines[1]
     .fromTo(
@@ -288,28 +295,24 @@ const handleScrollTo = (section) => {
   })
 }
 
-// const handleMouseMove = (event) => {
-//   const { clientX, clientY } = event
-//   const centerX = window.innerWidth / 2
-//   const centerY = window.innerHeight / 2
+const handleMouseMove = (event) => {
+  if (activeSection.value > 0) {return;}
 
-//   const relativeX = (clientX - centerX) / centerX
-//   const relativeY = (clientY - centerY) / centerY
+  const { clientX, clientY } = event
+  const centerX = window.innerWidth / 2
+  const centerY = window.innerHeight / 2
 
-//   gsap.to(".section__element--0-milo", {
-//     x: relativeX * 20,
-//     y: relativeY * 20,
-//     duration: 0.8,
-//     ease: "power2.out",
-//   })
+  const relativeX = (clientX - centerX) / centerX
+  const relativeY = (clientY - centerY) / centerY
 
-//   gsap.to(".section__element--0-buisson", {
-//     x: relativeX * -10,
-//     y: relativeY * 15,
-//     duration: 0.8,
-//     ease: "power2.out",
-//   })
-// }
+  const parallaxTimeline = gsap.timeline({ defaults: { duration: 0.8, ease: "power2.out" } });
+
+  parallaxTimeline.to(".section__element--0-milo-1", { x: relativeX * -5, y: relativeY * -5 })
+        .to(".section__element--0-milo-2", { x: relativeX * -15, y: relativeY * -15 }, "<")
+        .to(".section__element--0-milo-3", { x: relativeX * -30, y: relativeY * -30 }, "<")
+        .to(".section__element--0-buisson", { x: relativeX * -15, y: relativeY * -15 }, "<");
+
+}
 </script>
 
 <template>
@@ -320,7 +323,9 @@ const handleScrollTo = (section) => {
     ${hasScrolled ? 'intro__container--has-scrolled' : ''}`"
   >
     <div
-      :class="`intro__next intro__next--${displayBtnNext ? 'visible' : 'hidden'}`"
+      :class="`intro__next intro__next--${
+        displayBtnNext ? 'visible' : 'hidden'
+      }`"
       @click="() => handleScrollTo(activeSection + 1)"
     ></div>
     <div
@@ -691,10 +696,18 @@ const handleScrollTo = (section) => {
   }
 }
 
-.section--0 .section__element--0-milo {
+.section--0 .section__element--0-milo-1,
+.section--0 .section__element--0-milo-2,
+.section--0 .section__element--0-milo-3 {
   position: relative;
-  top: 20px;
-  left: -20px;
+  top: 30px;
+  left: -30px;
+}
+
+.section--0 .section__element--0-buisson {
+  position: relative;
+  top: 30px;
+  right: -30px;
 }
 
 .section--1 .section__element {
@@ -808,9 +821,9 @@ const handleScrollTo = (section) => {
 }
 
 // :has(.section--7.section--active) .section__element--6-milo {
-  // filter: drop-shadow(0 4px 100px #b0a591);
-  // animation: glowingMilo 4s var(--filter-transition-duration) infinite
-  //   ease-in-out;
+// filter: drop-shadow(0 4px 100px #b0a591);
+// animation: glowingMilo 4s var(--filter-transition-duration) infinite
+//   ease-in-out;
 // }
 
 // @keyframes glowingMilo {
