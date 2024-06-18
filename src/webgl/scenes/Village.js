@@ -14,8 +14,11 @@ import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { EVENTS } from "@/utils/constants/events";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { PointLight } from "three";
+import { AlgueMaterial } from "../materials/Algue/material";
 
 class Village extends Scene {
+  algues = [];
+
   constructor() {
     super();
     state.register(this);
@@ -51,6 +54,16 @@ class Village extends Scene {
     this.scene.traverse((child) => {
       if (child.name == "Empty001") {
         child.receiveShadow = false;
+      }
+      if (child.name.includes("Algue")) {
+        this.algues.push(child);
+        child.material = new AlgueMaterial({
+          uniforms: {
+            uTexture: { value: child.material.map },
+            uTime: { value: 0 },
+          },
+          transparent: true,
+        })
       }
     });
 
@@ -167,6 +180,8 @@ class Village extends Scene {
         this.animationMixer.update(app.ticker.delta);
       }
     }
+
+    this.algues.forEach((algue) => algue.material.uniforms.uTime.value = app.ticker.elapsed);
   }
 
   addGodRays() {

@@ -25,6 +25,7 @@ import { Vector3 } from "three";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import Milo from "../objects/Milo";
 import Birds from "../objects/Birds";
+import { Color } from "three";
 
 class Demoiselle extends Group {
   constructor(body, top, riseTop) {
@@ -58,6 +59,7 @@ class Demoiselle extends Group {
     this.riseTop = riseTop;
     this.topIsDraw = false;
     this.isElHit = false;
+    this.hitting = false;
   }
 
   onPointerMove(e) {
@@ -73,8 +75,15 @@ class Demoiselle extends Group {
 
     for (let i = 0; i < intersects.length; i++) {
       if (!this.isElHit) this.isElHit = true;
+      if (!this.hitting) this.hitting = true;
       intersects[i].object.material.opacity = 1;
       this.drawOnCanvasTex(intersects[i].uv);
+      document.body.style.cursor = "grabbing";
+    }
+
+    if (intersects.length == 0 && this.hitting) {
+      this.hitting = false;
+      document.body.style.cursor = "default";
     }
 
     if (this.isCanvasPainted()) {
@@ -89,6 +98,7 @@ class Demoiselle extends Group {
       });
 
       app.sceneshandler.webgl.scene.drawCount++;
+      document.body.style.cursor = "default";
 
       app.audio.ui.play(`hat_${app.sceneshandler.webgl.scene.drawCount}`, 0.5);
     }
@@ -269,11 +279,11 @@ class Ladies extends Scene {
     if (app.sceneshandler.currentStepCam == 3 && !this.isTutoPass) {
       this.demoiselles.children.forEach((dem) => {
         dem.top.material.uniforms.u_gAlpha.value =
-          (Math.sin(app.ticker.elapsed * 0.005) * 0.5 + 0.5) * 0.4;
+          (Math.sin(app.ticker.elapsed * 0.005) * 0.5 + 0.5) * 0.8;
       });
     } else if (app.sceneshandler.currentStepCam == 3 && this.isTutoPass) {
       this.demoiselles.children.forEach((dem) => {
-        dem.top.material.uniforms.u_gAlpha.value = 0;
+        dem.top.material.uniforms.u_gAlpha.value = 0.4;
       });
     }
   }
@@ -323,13 +333,15 @@ class Ladies extends Scene {
     this.dem3 = new Demoiselle(this.D3[0], this.D3[1], 1.2);
     this.demoiselles.add(this.dem1, this.dem2, this.dem3);
 
+    // this.tearsColor = new Color(0xB8CEE7)
+    this.tearsColor = new Color(0xAABBCE)
     this.tears = new Mesh(
       new PlaneGeometry(0.2, 0.2),
       new TearsMaterial({
         uniforms: {
-          u_color: { value: new Vector3(0.27, 0.39, 0.36) },
+          u_color: { value: new Vector3(this.tearsColor.r, this.tearsColor.g, this.tearsColor.b) },
           u_time: { value: app.ticker.elapsed * 0.001 },
-          u_gAlpha: { value: 1 },
+          u_gAlpha: { value: 0.7 },
         },
       })
     );

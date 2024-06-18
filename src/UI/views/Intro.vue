@@ -36,7 +36,11 @@ const onClickCtaStart = () => {
 }
 
 const onClickCtaEnd = () => {
-  state.emit(EVENTS.GO_NEXT)
+  gsap.to(".intro__container", { duration: 0.8, opacity: 0 })
+
+  setTimeout(() => {
+    state.emit(EVENTS.GO_NEXT)
+  }, 500);
 }
 
 const onMouseEnterCta = () => {
@@ -52,10 +56,17 @@ onMounted(() => {
     timelines.push(gsap.timeline())
   })
 
-  timelines[0].to(".section__element--0-milo, .section__element--0-buisson", {
-    duration: 1,
-    y: "-30vh",
-  })
+  timelines[0].to(
+    `
+  .section__element--0-milo-1, 
+  .section__element--0-milo-2, 
+  .section__element--0-milo-3, 
+  .section__element--0-buisson`,
+    {
+      duration: 1,
+      y: "-30vh",
+    }
+  )
 
   timelines[1]
     .fromTo(
@@ -66,13 +77,13 @@ onMounted(() => {
     .fromTo(
       ".section__element--1-colline",
       { y: "10vh" },
-      { duration: 1, y: "-10" },
+      { duration: 1, y: "-10vh" },
       "<"
     )
     .fromTo(
       ".section__element--1-maison",
       { y: "20vh" },
-      { duration: 1, y: "-20vh" },
+      { duration: 1, y: "-15vh" },
       "<"
     )
     .fromTo(
@@ -85,7 +96,7 @@ onMounted(() => {
         onComplete: () => {
           document
             .querySelector(".section__element--1-fumee")
-            .classList.add("section__element--1-fumee--anim")
+            ?.classList.add("section__element--1-fumee--anim")
         },
       },
       "<"
@@ -93,7 +104,7 @@ onMounted(() => {
     .fromTo(
       ".section__element--1-buissons",
       { y: "25vh" },
-      { duration: 1, y: "-25vh" },
+      { duration: 1, y: "-10vh" },
       "<"
     )
 
@@ -173,7 +184,7 @@ onMounted(() => {
     )
     .fromTo(
       ".section__element--4-cairn",
-      { y: "-40vh" },
+      { y: "-38vh" },
       { duration: 0.1, y: "-23vh" },
       "<"
     )
@@ -181,12 +192,12 @@ onMounted(() => {
       ".section__element--4-cairn",
       { opacity: 0 },
       {
-        duration: 0.1,
+        duration: 0.2,
         opacity: 1,
         onComplete: () => {
           document
             .querySelector(".section__element--4-cairn")
-            .classList.add("section__element--4-cairn--anim")
+            ?.classList.add("section__element--4-cairn--anim")
         },
       },
       "-=0.1"
@@ -200,7 +211,7 @@ onMounted(() => {
         onComplete: () => {
           document
             .querySelector(".section__element--4-cairn")
-            .classList.remove("section__element--4-cairn--anim")
+            ?.classList.remove("section__element--4-cairn--anim")
         },
       }
     )
@@ -288,28 +299,24 @@ const handleScrollTo = (section) => {
   })
 }
 
-// const handleMouseMove = (event) => {
-//   const { clientX, clientY } = event
-//   const centerX = window.innerWidth / 2
-//   const centerY = window.innerHeight / 2
+const handleMouseMove = (event) => {
+  if (activeSection.value > 0) {return;}
 
-//   const relativeX = (clientX - centerX) / centerX
-//   const relativeY = (clientY - centerY) / centerY
+  const { clientX, clientY } = event
+  const centerX = window.innerWidth / 2
+  const centerY = window.innerHeight / 2
 
-//   gsap.to(".section__element--0-milo", {
-//     x: relativeX * 20,
-//     y: relativeY * 20,
-//     duration: 0.8,
-//     ease: "power2.out",
-//   })
+  const relativeX = (clientX - centerX) / centerX
+  const relativeY = (clientY - centerY) / centerY
 
-//   gsap.to(".section__element--0-buisson", {
-//     x: relativeX * -10,
-//     y: relativeY * 15,
-//     duration: 0.8,
-//     ease: "power2.out",
-//   })
-// }
+  const parallaxTimeline = gsap.timeline({ defaults: { duration: 0.8, ease: "power2.out" } });
+
+  parallaxTimeline.to(".section__element--0-milo-1", { x: relativeX * -5, y: relativeY * -5 })
+        .to(".section__element--0-milo-2", { x: relativeX * -15, y: relativeY * -15 }, "<")
+        .to(".section__element--0-milo-3", { x: relativeX * -30, y: relativeY * -30 }, "<")
+        .to(".section__element--0-buisson", { x: relativeX * -15, y: relativeY * -15 }, "<");
+
+}
 </script>
 
 <template>
@@ -320,7 +327,9 @@ const handleScrollTo = (section) => {
     ${hasScrolled ? 'intro__container--has-scrolled' : ''}`"
   >
     <div
-      :class="`intro__next intro__next--${displayBtnNext ? 'visible' : 'hidden'}`"
+      :class="`intro__next intro__next--${
+        displayBtnNext ? 'visible' : 'hidden'
+      }`"
       @click="() => handleScrollTo(activeSection + 1)"
     ></div>
     <div
@@ -456,6 +465,7 @@ const handleScrollTo = (section) => {
   flex-direction: column;
   align-items: center;
   gap: 92px;
+  user-select: none;
   transition: transform 800ms, opacity 800ms;
 
   &.intro__ui--hidden {
@@ -474,7 +484,7 @@ const handleScrollTo = (section) => {
 }
 
 .intro__baseline {
-  font-family: var(--ff-eczar);
+  font-family: var(--ff-pangolin);
   font-size: 32px;
   color: #013946;
   text-transform: lowercase;
@@ -690,10 +700,18 @@ const handleScrollTo = (section) => {
   }
 }
 
-.section--0 .section__element--0-milo {
+.section--0 .section__element--0-milo-1,
+.section--0 .section__element--0-milo-2,
+.section--0 .section__element--0-milo-3 {
   position: relative;
-  top: 20px;
-  left: -20px;
+  top: 30px;
+  left: -30px;
+}
+
+.section--0 .section__element--0-buisson {
+  position: relative;
+  top: 30px;
+  right: -30px;
 }
 
 .section--1 .section__element {
@@ -807,9 +825,9 @@ const handleScrollTo = (section) => {
 }
 
 // :has(.section--7.section--active) .section__element--6-milo {
-  // filter: drop-shadow(0 4px 100px #b0a591);
-  // animation: glowingMilo 4s var(--filter-transition-duration) infinite
-  //   ease-in-out;
+// filter: drop-shadow(0 4px 100px #b0a591);
+// animation: glowingMilo 4s var(--filter-transition-duration) infinite
+//   ease-in-out;
 // }
 
 // @keyframes glowingMilo {

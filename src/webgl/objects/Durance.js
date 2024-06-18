@@ -4,19 +4,17 @@ import { AnimationMixer, MathUtils, MeshBasicMaterial } from "three";
 import { Group } from "three";
 import { DuranceMaterial } from "../materials/Durance/material";
 
-let duranceInstence = null
 export default class Durance extends Group{
-  constructor(baseTex) {
+  constructor(baseTex, sceneId) {
     super()
-    if (duranceInstence) return duranceInstence
-    duranceInstence = this
     state.register(this);
 
+    this.scene = sceneId
     this.baseTex = baseTex
   }
 
   onAttach(){
-    this.model = app.assetsManager.get('durance');
+    this.model = app.assetsManager.get('durance').clone();
     this.model.children[0].material = new DuranceMaterial({ 
       uniforms: { 
         uBaseTex: { value: this.baseTex },
@@ -47,14 +45,14 @@ export default class Durance extends Group{
   }
 
   onTick(){
-    if(!this.model) return
+    if(!this.model && app.sceneshandler.currentScene == this.scene) return
 
     this.currentProgressAnim = MathUtils.lerp(
       this.currentProgressAnim,
       this.targetProgressAnim,
       0.02
     );
-
+    // console.log(this.currentProgressAnim, this.scene);
     this.animationAction.paused = false;
     this.animationMixer.setTime(
       this.animationClip.duration * this.currentProgressAnim
@@ -64,6 +62,7 @@ export default class Durance extends Group{
 
     this.model.children[0].material.opacity = this.currentProgressAnim * 1.5;
     // this.model.children[0].material.uniforms.uProgress.value = this.currentProgressAnim;
+
   }
 
   show(){

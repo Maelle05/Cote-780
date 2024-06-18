@@ -2,6 +2,8 @@ uniform float uTime;
 uniform bool uIsWater;
 uniform vec4 uResolution;
 uniform sampler2D tDiffuse;
+uniform sampler2D tWater;
+
 varying vec2 vUv;
 
 vec2 resizeUvCover(vec2 uv, vec2 size, vec2 resolution) {
@@ -57,15 +59,24 @@ void main()
   float aspect = uResolution.x / uResolution.y;
   float time = uTime * 0.001;
   vec2 uv = vUv;
+  vec2 waterUv = vUv;
 
-  if(uIsWater)
+  if(uIsWater) {
+    uv.x = uv.x + sin(vUv.y * 3.0 + time) * 0.005;
     uv.y = uv.y + sin(vUv.x * 3.0 + time) * 0.02;
+    waterUv.x *= aspect;
+  }
+
+  float waterTexA = texture2D(tWater, vec2(waterUv.x * 0.2 - time * 0.01, waterUv.y * 0.3 + time * 0.008)).r;
+  float waterTexB = texture2D(tWater, vec2(waterUv.x * 0.2 + time * 0.008, waterUv.y * 0.2 - time * 0.01)).r;
+  float offset = waterTexA * waterTexB;
+
+  if (uIsWater) uv += vec2(offset) * 0.1;
 
   vec4 sceneTex = texture2D(tDiffuse, uv);
-  // if(uIsWater)
-    // sceneTex.b += 0.1;
 
   vec4 finalColor = sceneTex;
+  if (uIsWater) finalColor += vec4(offset) * 1.;
 
   gl_FragColor = finalColor;
 }

@@ -108,13 +108,6 @@ class Bridge extends Scene {
     // this.player.rotation.y = Math.PI - 45;
     this.add(this.player);
 
-    this.durance = new Durance(app.assetsManager.get("duranceFace"));
-    this.durance.rotation.y = (-30 * Math.PI) / 180;
-    this.durance.scale.set(1.3, 1.3, 1.3);
-    this.durance.hide();
-    this.durance.position.set(0, 0, 0);
-    this.add(this.durance);
-
     this.spirit.hide();
     const walkDuration = 7;
 
@@ -189,6 +182,14 @@ class Bridge extends Scene {
     this.spirit.position.y += 0.2;
     this.add(this.spirit);
 
+    this.duranceMateral = app.assetsManager.get("duranceFace");
+    this.durance2 = new Durance(this.duranceMateral, 4);
+    this.durance2.rotation.y = (-30 * Math.PI) / 180;
+    this.durance2.scale.set(1.3, 1.3, 1.3);
+    this.durance2.hide();
+    this.durance2.position.set(0, 0, 0);
+    this.add(this.durance2);
+
     this.target = new TargetParticles(
       500,
       new Vector3(
@@ -238,15 +239,15 @@ class Bridge extends Scene {
       this.target.material.uniforms.uTime.value = app.ticker.elapsed;
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
-    if (app.sceneshandler.currentStepCam == 4 && !this.durance.isActive) {
-      this.durance.isActive = true;
-      this.durance.show();
+    if (app.sceneshandler.currentStepCam == 4 && !this.durance2.isActive) {
+      this.durance2.isActive = true;
+      this.durance2.show();
       app.audio.ui.play("wave_appear");
-      this.player.lookAt(this.durance.position);
+      this.player.lookAt(this.durance2.position);
     }
-    if (app.sceneshandler.currentStepCam == 5 && this.durance.isActive) {
-      this.durance.isActive = false;
-      this.durance.hide();
+    if (app.sceneshandler.currentStepCam == 5 && this.durance2.isActive) {
+      this.durance2.isActive = false;
+      this.durance2.hide();
     }
 
     if (
@@ -291,7 +292,6 @@ class Bridge extends Scene {
 
   onPointerMove(e) {
     if (app.webgl.currentScene != 4) return;
-
     const mesh = this.rocks[this.rockIndex];
 
     this.raycaster.setFromCamera(e.webgl, app.webgl.camera);

@@ -20,7 +20,9 @@ const INTRO_SECTIONS = [
   {
     elements: [
       { id: "0-lac", src: "/assets/images/intro/0_lac.jpg" },
-      { id: "0-milo", src: "/assets/images/intro/0_milo.png" },
+      { id: "0-milo-1", src: "/assets/images/intro/0_milo-1.png" },
+      { id: "0-milo-2", src: "/assets/images/intro/0_milo-2.png" },
+      { id: "0-milo-3", src: "/assets/images/intro/0_milo-3.png" },
       { id: "0-buisson", src: "/assets/images/intro/0_buisson.png" },
     ],
     texts: [],
@@ -37,7 +39,8 @@ const INTRO_SECTIONS = [
       },
       { id: "1-arbre", src: "/assets/images/intro/1_arbre.png" },
     ],
-    texts: [{ ref: dataText["intro"]["text_1"], delay: 0 }],
+    // texts: [{ ref: dataText["intro"]["text_1"], delay: 0 }],
+    texts: [],
     audios: [],
   },
   {

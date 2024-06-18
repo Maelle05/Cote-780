@@ -21,7 +21,7 @@ import { Village } from "./scenes/Village";
 import { End } from "./scenes/End";
 import { TransitionPass } from "./pass/TransitionPass/TransitionPass";
 import { app } from "@/App";
-import { Vector4 } from "three";
+import { RepeatWrapping, Vector4 } from "three";
 import gsap from "gsap";
 import { EVENTS } from "@/utils/constants/events";
 import { RenderTarget } from "three";
@@ -104,6 +104,10 @@ export default class WebglController {
     this.canvasWrapper.appendChild(this.renderer.domElement);
     this.onRender();
     this.initStats();
+
+    const waterTex = app.assetsManager.get("water");
+    waterTex.wrapS = waterTex.wrapT = RepeatWrapping;
+    this.waterPass.material.uniforms.tWater.value = waterTex;
   }
 
   // UPDATE AND RENDER
@@ -171,6 +175,12 @@ export default class WebglController {
     );
     this.effectComposer.setPixelRatio(window.devicePixelRatio);
     this.transitionPass.material.uniforms.uResolution.value = new Vector4(
+      this.canvasWrapper.offsetWidth,
+      this.canvasWrapper.offsetHeight,
+      1,
+      1
+    );
+    this.waterPass.material.uniforms.uResolution.value = new Vector4(
       this.canvasWrapper.offsetWidth,
       this.canvasWrapper.offsetHeight,
       1,

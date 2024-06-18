@@ -7,6 +7,7 @@ const WaterPass = {
     uIsWater: { value: false },
     uResolution: { value: null },
     tDiffuse: { value: null },
+    tWater: { value: null },
   },
   vertexShader: vs,
   fragmentShader: fs,

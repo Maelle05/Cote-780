@@ -45,7 +45,7 @@ const manifest = {
     },
     flamme: { path: `/assets/textures/flamme.png` },
     duranceSide: { path: `/assets/textures/Durance/duranceSide.png` },
-    duranceFace: { path: `/assets/textures/Durance/duranceFace.png` },
+    duranceFace: { path: `/assets/textures/Durance/duranceFace.png`},
     shakeNoise: {
       path: `/assets/textures/Noise/Grainy/Grainy_11-256x256.png`,
     },
@@ -53,6 +53,7 @@ const manifest = {
     sparkle: { path: `/assets/textures/sparkle.png` },
     bird: { path: `/assets/textures/bird.png` },
     clouds: { path: `/assets/textures/clouds.png` },
+    water: { path: `/assets/textures/water.png` },
   },
   envMaps: {
     // envmap: { path: `/assets/textures/envmap.hdr` },
