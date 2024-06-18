@@ -66,13 +66,13 @@ onMounted(() => {
     .fromTo(
       ".section__element--1-colline",
       { y: "10vh" },
-      { duration: 1, y: "-10" },
+      { duration: 1, y: "-10vh" },
       "<"
     )
     .fromTo(
       ".section__element--1-maison",
       { y: "20vh" },
-      { duration: 1, y: "-20vh" },
+      { duration: 1, y: "-15vh" },
       "<"
     )
     .fromTo(
@@ -93,7 +93,7 @@ onMounted(() => {
     .fromTo(
       ".section__element--1-buissons",
       { y: "25vh" },
-      { duration: 1, y: "-25vh" },
+      { duration: 1, y: "-10vh" },
       "<"
     )
 
