@@ -16,7 +16,7 @@ float rand(float seed) {
 
 void main() {
     // gradient outside
-    float edgeSize = 0.05;
+    float edgeSize = 0.10;
     vec2 innerStart = vec2(edgeSize);
     vec2 innerEnd = vec2(1. - edgeSize, 1.);
     vec2 d = max(innerStart - vUv, vUv - innerEnd);

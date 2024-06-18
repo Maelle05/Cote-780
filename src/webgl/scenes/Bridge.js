@@ -182,7 +182,7 @@ class Bridge extends Scene {
     this.spirit.position.y += 0.2;
     this.add(this.spirit);
 
-    this.duranceMateral = app.assetsManager.get("duranceFace")
+    this.duranceMateral = app.assetsManager.get("duranceFace");
     this.durance2 = new Durance(this.duranceMateral, 4);
     this.durance2.rotation.y = (-30 * Math.PI) / 180;
     this.durance2.scale.set(1.3, 1.3, 1.3);

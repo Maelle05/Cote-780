@@ -155,18 +155,22 @@ class Chapel extends Scene {
           },
           transparent: true,
         });
+      }
 
-        // child.material = new PortalMaterial({
-        //   uniforms: {
-        //     uProgress: { value: 1 },
-        //     uTexture: { value: this.portalTexture },
-        //     uNoiseTexture: { value: noiseText },
-        //     uTime: { value: 0 },
-        //     uMouse: { value: app.mouse.coordinates.webgl },
-        //     uResolution: { value: new Vector2(1, 1) },
-        //   },
-        //   transparent: true,
-        // });
+      if (child.name == "PortalBack") {
+        this.backPortal = child;
+
+        child.material = new ElectricPortalMaterial({
+          uniforms: {
+            uProgress: { value: 1 },
+            uTexture: { value: this.portalTexture },
+            uNoiseTexture: { value: noiseText },
+            uTime: { value: 0 },
+            uMouse: { value: app.mouse.coordinates.webgl },
+            uResolution: { value: new Vector2(1, 1) },
+          },
+          transparent: true,
+        });
       }
 
       if (child.name.includes("Empty")) {
@@ -379,6 +383,7 @@ class Chapel extends Scene {
     if (!this.portal) return;
 
     this.portal.material.uniforms.uTime.value += e.dt;
+    this.backPortal.material.uniforms.uTime.value += e.dt;
     this.water.material.uniforms.uTime.value = app.ticker.elapsed;
 
     //Parallax effect on portal

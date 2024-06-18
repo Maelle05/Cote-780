@@ -11,6 +11,7 @@ const { t } = useI18n()
 
 const isIntroReady = ref(false)
 const isLoaderReady = ref(false)
+const isLoaderGone = ref(false)
 const loaderTexts = ref([])
 const loaderProgress = ref(0)
 const textToDisplay = ref("")
@@ -78,6 +79,7 @@ const initLoaderDisparition = () => {
     clearInterval(textUpdateInterval)
 
     setTimeout(() => {
+        isLoaderGone.value = true
         playDisparitionAnimation()
     }, 500);
 }
@@ -91,7 +93,7 @@ const playDisparitionAnimation = () => {
 </script>
 
 <template>
-  <div class="loader__container">
+  <div :class="`loader__container loader__container--${isLoaderGone ? 'hidden' : 'visible'}`">
     <div class="loader">
       <img class="loader__image" src="/assets/images/milo-run.gif" alt="">
       <p class="loader__progress">{{ loaderProgress }}%</p>
@@ -113,7 +115,12 @@ const playDisparitionAnimation = () => {
   color: var(--c-turquoise-dark);
   font-family: var(--ff-pangolin);
   font-size: 14px;
-  pointer-events: none;
+  pointer-events: all;
+  user-select: none;
+
+  &.loader__container--hidden {
+    pointer-events: none;
+  }
 }
 
 .loader {
@@ -139,9 +146,11 @@ const playDisparitionAnimation = () => {
   width: 80px;
   left: 6px;
   margin-bottom: 18px;
+  user-select: none;
 }
 
 .loader__text {
   min-height: 1em;
+  user-select: none;
 }
 </style>
