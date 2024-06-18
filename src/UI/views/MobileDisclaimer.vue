@@ -35,14 +35,18 @@ const { t } = useI18n()
   font-size: 14px;
   line-height: 150%;
 
-  > * {
-    padding: 24px;
-  }
-
   img {
     width: 100%;
-    max-width: 300px;
+    max-width: 240px;
     border-radius: 16px;
   }
 }
+
+.mobile-disclaimer__image {
+    padding: 0 24px;
+  }
+
+.mobile-disclaimer__text {
+    padding: 0 24px;
+  }
 </style>

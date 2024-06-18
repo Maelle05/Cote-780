@@ -63,8 +63,8 @@ state.on(EVENTS.CHANGE_SCENE_STEP, (e) => {
     <div>
       <img :class="`logo logo--${isScenes ? 'visible' : 'hidden'}`" src="/assets/images/logo.svg" />
     </div>
-    <Loader />
     <div v-if="isMobile === false">
+      <Loader />
       <Navigation :sceneIndex="sceneIndex"></Navigation>
       <Intro v-if="isIntro" />
       <Scenes v-if="isScenes" :sceneIndex="sceneIndex" :stepIndex="stepIndex" />
