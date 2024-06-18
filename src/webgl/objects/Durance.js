@@ -45,7 +45,7 @@ export default class Durance extends Group{
   }
 
   onTick(){
-    if(!this.model && app.sceneshandler.currentScene == this.scene) return
+    if(!this.model && app.sceneshandler.currentScene != this.scene) return
 
     this.currentProgressAnim = MathUtils.lerp(
       this.currentProgressAnim,
