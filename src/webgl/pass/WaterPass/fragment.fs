@@ -71,7 +71,7 @@ void main()
   float waterTexB = texture2D(tWater, vec2(waterUv.x * 0.2 + time * 0.008, waterUv.y * 0.2 - time * 0.01)).r;
   float offset = waterTexA * waterTexB;
 
-  uv += vec2(offset) * 0.1;
+  if (uIsWater) uv += vec2(offset) * 0.1;
 
   vec4 sceneTex = texture2D(tDiffuse, uv);
 
