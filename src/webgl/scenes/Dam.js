@@ -129,7 +129,7 @@ class Dam extends Scene {
     this.add(this.spirit);
 
     this.duranceTex = app.assetsManager.get("duranceSide");
-    this.durance = new Durance(this.duranceTex);
+    this.durance = new Durance(this.duranceTex, 3);
     this.add(this.durance);
 
     this.add(this.scene);
@@ -311,6 +311,7 @@ class Dam extends Scene {
     }
     app.webgl.shake.stopShake();
     app.audio.fadeOutAmbient();
+    this.durance = null
   }
 }
 

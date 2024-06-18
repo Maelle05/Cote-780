@@ -45,7 +45,7 @@ const manifest = {
     },
     flamme: { path: `/assets/textures/flamme.png` },
     duranceSide: { path: `/assets/textures/Durance/duranceSide.png` },
-    duranceFace: { path: `/assets/textures/Durance/duranceFace.png` },
+    duranceFace: { path: `/assets/textures/Durance/duranceFace.png`},
     shakeNoise: {
       path: `/assets/textures/Noise/Grainy/Grainy_11-256x256.png`,
       // path: `/assets/textures/Noise/noiseTest.png`,

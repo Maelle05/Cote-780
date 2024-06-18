@@ -25,6 +25,7 @@ import { Vector3 } from "three";
 import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import Milo from "../objects/Milo";
 import Birds from "../objects/Birds";
+import { Color } from "three";
 
 class Demoiselle extends Group {
   constructor(body, top, riseTop) {
@@ -332,13 +333,15 @@ class Ladies extends Scene {
     this.dem3 = new Demoiselle(this.D3[0], this.D3[1], 1.2);
     this.demoiselles.add(this.dem1, this.dem2, this.dem3);
 
+    // this.tearsColor = new Color(0xB8CEE7)
+    this.tearsColor = new Color(0xAABBCE)
     this.tears = new Mesh(
       new PlaneGeometry(0.2, 0.2),
       new TearsMaterial({
         uniforms: {
-          u_color: { value: new Vector3(0.27, 0.39, 0.36) },
+          u_color: { value: new Vector3(this.tearsColor.r, this.tearsColor.g, this.tearsColor.b) },
           u_time: { value: app.ticker.elapsed * 0.001 },
-          u_gAlpha: { value: 1 },
+          u_gAlpha: { value: 0.7 },
         },
       })
     );

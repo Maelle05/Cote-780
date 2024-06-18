@@ -21,14 +21,16 @@ export default class Spirit extends Group {
     noise.wrapT = RepeatWrapping;
     const tex = app.assetsManager.get("spiritTex");
     const texBody = app.assetsManager.get("spiritTexBody");
-    this.baseColor = new Color(0xacc8e4);
+    // this.baseColor = new Color(0xacc8e4);
+    this.baseColor = new Color(0xf2ebd7);
+    // this.baseColor = new Color(0xc6cec8);
     this.currentSpiritColor = new Vector4(
       this.baseColor.r,
       this.baseColor.g,
       this.baseColor.b,
       1
     );
-    this.targetSpiritColor = new Vector4(1, 1, 1, 1);
+    this.targetSpiritColor = new Vector4(this.baseColor.r, this.baseColor.g, this.baseColor.b, 1);
 
     // Face
     this.faceGeometry = new PlaneGeometry(0.25, 0.25);
