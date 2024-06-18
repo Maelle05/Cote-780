@@ -10,7 +10,7 @@ const { t } = useI18n()
       <img src="/assets/images/milo-dance.gif" alt="">
     </div>
     <div class="mobile-disclaimer__text">
-      <p>{{ t("global.mobile") }}</p>
+      <p v-html="t('global.mobile')"></p>
     </div>
   </div>
 </template>
@@ -19,17 +19,21 @@ const { t } = useI18n()
 .mobile-disclaimer {
   height: 100vh;
   width: 100%;
+  position: absolute;
+  top: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 24px;
-  font-family: var(--ff-rubik);
+  font-family: monospace;
   color: var(--c-text-dark);
   font-weight: 500;
   text-align: center;
   box-sizing: border-box;
+  font-size: 14px;
+  line-height: 150%;
 
   > * {
     padding: 24px;

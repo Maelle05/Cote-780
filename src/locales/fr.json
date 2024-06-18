@@ -15,7 +15,7 @@
     "new-cairn_1": "Tu viens d'obtenir un",
     "new-cairn_2": "nouveau",
     "new-cairn_3": "cairn",
-    "mobile": "Cette expérience n'est pas accessible sur les appareils mobiles."
+    "mobile": "Cette expérience n'est pas accessible sur les&nbsp;appareils&nbsp;mobiles."
   },
   "intro": {
     "text_1": "Ce conte se déroule au cœur des Hautes-Alpes, dans la vallée&nbsp;de&nbsp;la&nbsp;Durance.<br><br>\nUn barrage y fut construit à la fin des années 1950 pour apaiser les colères de l’imposante rivière qui donne son nom à la vallée. Cet événement bouleversa de nombreuses vies dans la région, et trois villages furent engloutis sous les eaux.<br><br>\nCe fut la naissance du Lac de Serre-Ponçon.",
@@ -234,9 +234,19 @@
     },
     "text_11": {
       "person": "Journal",
-      "text": "Mon voisin, lui, ne bougera jamais. Il me raconte comment, pendant la nuit, il va gêner et démolir le chantier.",
+      "text": "Mon voisin ne bougera jamais. Il me raconte comment, pendant la nuit, il va gêner et démolir le chantier.",
       "camera": "6",
       "audio": "grandma_19"
+    },
+    "text_12": {
+      "text": "1964 —  Le lac a fini par se remplir,. La majorité des anciens habitants ont quitté la région, trop nostalgique pour rester...",
+      "audio": "grandma_20",
+      "person": "Journal"
+    },
+    "text_13": {
+      "text": "Pour ma part j'ai reprit un Hôtel à Savines-le-lac et les touristes ont commencé à affluer, attirés par la curiosité qu'est le Lac de Serre-Ponçon",
+      "audio": "grandma_21",
+      "person": "Journal"
     },
     "tuto": "Clique sur l'esprit pour le suivre dans le village",
     "infos": "Le petit village de Savines, situé au cœur de la vallée de la Durance, a été détruit avant d'être englouti lors de la mise en eau du barrage de Serre-Ponçon en 1961, de même que le village d’Ubaye et quelques autres hameaux.",
@@ -284,5 +294,9 @@
     "name_3": "Mamie Claude - Yannick Rocher,Milo - Swan Ehrsam,Les Demoiselles - Mélanie Masliah,L’Esprit - Adrien Melchior,La Durance - Adeline Piketty",
     "role_4": "Merci à",
     "name_4": "Mathieu Ehrsam, xx,xx,xx"
+  },
+  "loader": {
+    "line_1": "Les Demoiselles se recoiffent",
+    "line_2": "Milo lace ses chaussures"
   }
 }

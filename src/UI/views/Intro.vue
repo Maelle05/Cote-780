@@ -180,7 +180,7 @@ onMounted(() => {
     )
     .fromTo(
       ".section__element--4-cairn",
-      { y: "-40vh" },
+      { y: "-38vh" },
       { duration: 0.1, y: "-23vh" },
       "<"
     )
@@ -188,7 +188,7 @@ onMounted(() => {
       ".section__element--4-cairn",
       { opacity: 0 },
       {
-        duration: 0.1,
+        duration: 0.2,
         opacity: 1,
         onComplete: () => {
           document

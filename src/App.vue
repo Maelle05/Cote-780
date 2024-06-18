@@ -15,21 +15,21 @@ const sceneIndex = ref(INIT_SCENE);
 const stepIndex = ref(0);
 const isMobile = ref(false);
 
+const LIMIT_MOBILE = 800
+
 onMounted(() => {
-  if (window.innerWidth < 800) {
+  if (window.innerWidth < LIMIT_MOBILE) {
     isMobile.value = true
   }
 })
 
 state.on(EVENTS.RESIZE, () => {
-  if (window.innerWidth < 800) {
+  if (window.innerWidth < LIMIT_MOBILE) {
     isMobile.value = true
   } else {
     isMobile.value = false
   }
 })
-
-// onResize
 
 if (INIT_SCENE == 0) {
   isIntro.value = true;
