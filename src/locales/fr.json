@@ -14,7 +14,8 @@
     },
     "new-cairn_1": "Tu viens d'obtenir un",
     "new-cairn_2": "nouveau",
-    "new-cairn_3": "cairn"
+    "new-cairn_3": "cairn",
+    "mobile": "Cette expérience n'est pas accessible sur mobile."
   },
   "intro": {
     "text_1": "Ce conte se déroule au cœur des Hautes-Alpes, dans la vallée&nbsp;de&nbsp;la&nbsp;Durance.<br><br>\nUn barrage y fut construit à la fin des années 1950 pour apaiser les colères de l’imposante rivière qui donne son nom à la vallée. Cet événement bouleversa de nombreuses vies dans la région, et trois villages furent engloutis sous les eaux.<br><br>\nCe fut la naissance du Lac de Serre-Ponçon.",
@@ -40,7 +41,7 @@
     "text_8": "La Durance pourrait alors représenter de nouveau un danger pour la région.",
     "text_9": "C'est à toi, Milo, que revient le devoir de retrouver ces cairns pour rétablir l’harmonie entre tous.",
     "audio_9": "grandma_9",
-    "text_10": "Prends la carte que je t’ai laissée et pars à la rencontre des Demoiselles coiffées, ces ancestrales pierres de&nbsp;la&nbsp;montagne.",
+    "text_10": "Prends la carte que je t’ai laissée et pars à la rencontre des Demoiselles coiffées, ces ancestrales pierres de la montagne.",
     "audio_10": "grandma_10_11",
     "text_11": "Elles pourront te guider dans ta quête."
   },
@@ -276,10 +277,12 @@
   "credits": {
     "line_1": "Cette expérience réalisée dans le cadre de notre projet de diplôme de DMII&nbsp;2 à&nbsp;Gobelins s'inspire de l'histoire du lac de Serre-Ponçon, dans les Hautes-Alpes.",
     "role_1": "Design et développement",
-    "name_1": "Elsa Delmas,Léa Kovarski,Evan Martin,Justin Quillévéré,Maëlle Rabouan, Aurore Vigneron,Anna Xiberras",
-    "role_2": "Voix",
-    "name_2": "Mamie Claude - Yannick Rocher,Milo - Swann Ehrsam,Les Demoiselles - Mélanie Masliah,L’Esprit - Adrien Melchior,La Durance - Adeline Piketty",
-    "role_3": "Merci à",
-    "name_3": "xx,xx,xx,xx,xx"
+    "name_1": "Elsa Delmas,Léa Kovarski,Evan Martin,Justin Quillévéré,Maëlle Rabouan, Aurore Vigneron,Axel Xiberras",
+    "role_2": "Sound design",
+    "name_2": "Laurent Bariet,Adrien Melchior",
+    "role_3": "Voix",
+    "name_3": "Mamie Claude - Yannick Rocher,Milo - Swan Ehrsam,Les Demoiselles - Mélanie Masliah,L’Esprit - Adrien Melchior,La Durance - Adeline Piketty",
+    "role_4": "Merci à",
+    "name_4": "Mathieu Ehrsam, xx,xx,xx"
   }
 }

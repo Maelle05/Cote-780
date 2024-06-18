@@ -85,7 +85,7 @@ onMounted(() => {
         onComplete: () => {
           document
             .querySelector(".section__element--1-fumee")
-            .classList.add("section__element--1-fumee--anim")
+            ?.classList.add("section__element--1-fumee--anim")
         },
       },
       "<"
@@ -186,7 +186,7 @@ onMounted(() => {
         onComplete: () => {
           document
             .querySelector(".section__element--4-cairn")
-            .classList.add("section__element--4-cairn--anim")
+            ?.classList.add("section__element--4-cairn--anim")
         },
       },
       "-=0.1"
@@ -200,7 +200,7 @@ onMounted(() => {
         onComplete: () => {
           document
             .querySelector(".section__element--4-cairn")
-            .classList.remove("section__element--4-cairn--anim")
+            ?.classList.remove("section__element--4-cairn--anim")
         },
       }
     )
