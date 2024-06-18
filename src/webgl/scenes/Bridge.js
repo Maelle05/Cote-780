@@ -290,6 +290,8 @@ class Bridge extends Scene {
   }
 
   onPointerMove(e) {
+    if (app.webgl.currentScene != 4) return;
+
     const mesh = this.rocks[this.rockIndex];
 
     this.raycaster.setFromCamera(e.webgl, app.webgl.camera);
