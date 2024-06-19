@@ -41,7 +41,7 @@ void main() {
     vec2 displacedUv = parallaxUv + (finalNoise.rg - 0.5) * 0.2;
     vec4 textureColor = texture2D(uTexture, 1. - displacedUv);
 
-    vec4 gradientColor = mix(textureColor, vec4(1., 1., 1., 1.0), gradient);
+    vec4 gradientColor = mix(textureColor, vec4(0.949, 0.922, 0.843, 1.0), gradient);
 
     // Apply the vertical progress-based alpha animation
     float noiseValue = finalNoise.r;

@@ -59,7 +59,6 @@ void main() {
 	vec3 color = blendOverlay(textureColor.rgb, shakeTexture.rgb, uNoiseStrength);
 
 	gl_FragColor = vec4(color, 1.0);
-
 	// gl_FragColor = shakeTexture;
 	// gl_FragColor = vec4(vec3(invertedDist), 1.0);
 }
