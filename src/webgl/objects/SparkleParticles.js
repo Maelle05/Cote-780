@@ -83,15 +83,17 @@ export default class SparkleParticles extends Group {
     this.poolInactives.push(points);
   }
 
-  spawn(position) {
-    const particle = this.poolInactives.pop() || new Points(this.geometry, this.material.clone());
-
-    particle.material.uniforms.uBirth.value = app.ticker.elapsed;
-    particle.material.uniforms.uRandom.value = Math.random() * .5 + .5;
-    particle.position.copy(position);
-
-    this.add(particle);
-    this.poolActives.push(particle);
+  spawn(position, count = 1) {
+    for (let i = 0; i < count; i++) {
+      const particle = this.poolInactives.pop() || new Points(this.geometry, this.material.clone());
+  
+      particle.material.uniforms.uBirth.value = app.ticker.elapsed;
+      particle.material.uniforms.uRandom.value = Math.random() * .5 + .5;
+      particle.position.copy(position);
+  
+      this.add(particle);
+      this.poolActives.push(particle);
+    }
   }
   
   onTick() {

@@ -23,6 +23,18 @@
     {
       "name": "ambient_end",
       "src": "ambient_6.mp3"
+    },
+    {
+      "name": "classic_loop",
+      "src": "classic_loop.mp3"
+    },
+    {
+      "name": "village_loop",
+      "src": "village_loop.mp3"
+    },
+    {
+      "name": "end_loop",
+      "src": "end_loop.mp3"
     }
   ]
 }

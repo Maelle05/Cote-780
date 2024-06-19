@@ -20,11 +20,12 @@ import Foam from "../objects/Foam";
 import { RockMaterial } from "../materials/Rock/material";
 import Milo from "../objects/Milo";
 import { WaterMaterial } from "../materials/Water/material";
-import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
+import { AMBIENT_IDS, MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import Durance from "../objects/Durance";
 import Vegetation from "../objects/Vegetation";
 import Clouds from "../objects/Clouds";
 import { Raycaster } from "three";
+import SparkleParticles from "../objects/SparkleParticles";
 
 class Bridge extends Scene {
   constructor() {
@@ -55,6 +56,9 @@ class Bridge extends Scene {
 
     //States : off / start / step_1 / step_2 / step_3 / completed
     this.state = "off";
+    
+    this.sparkles = new SparkleParticles();
+    this.add(this.sparkles);
   }
 
   init() {
@@ -112,7 +116,8 @@ class Bridge extends Scene {
     const walkDuration = 7;
 
     app.webgl.shake.startShake();
-    app.audio.playMusic(MUSIC_IDS.AMBIENT_BRIDGE);
+    app.audio.playAmbient(AMBIENT_IDS.AMBIENT_BRIDGE);
+    app.audio.playMusic(MUSIC_IDS.CLASSIC_LOOP);
   }
 
   onAskRemoveTransition() {
@@ -444,11 +449,12 @@ class Bridge extends Scene {
       ease: "power1.in",
       duration: 1.5,
     });
+    this.sparkles.spawn(this.rocks[this.rockIndex + 1].position, 6);
 
-    if (this.rockIndex === 0)
-      app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0]);
-    else if (this.rockIndex === 2)
-      app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0]);
+    // if (this.rockIndex === 0)
+    //   app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0]);
+    // else if (this.rockIndex === 2)
+    //   app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0]);
   }
 
   #off() {}
@@ -473,6 +479,7 @@ class Bridge extends Scene {
     }
 
     app.audio.fadeOutAmbient();
+    app.audio.fadeOutMusic();
     app.webgl.shake.stopShake();
   }
 }

@@ -10,7 +10,7 @@ import { Group } from "three";
 import Spirit from "../objects/Spirit";
 import { DirectionalLight } from "three";
 import { AnimationMixer } from "three";
-import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
+import { AMBIENT_IDS, MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { EVENTS } from "@/utils/constants/events";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { PointLight } from "three";
@@ -44,7 +44,8 @@ class Village extends Scene {
       this.pane = new Pane({ title: "Parameters Village", expanded: true });
     }
 
-    app.audio.playMusic(MUSIC_IDS.AMBIENT_UNDERWATER);
+    app.audio.playAmbient(AMBIENT_IDS.AMBIENT_UNDERWATER);
+    app.audio.playMusic(MUSIC_IDS.VILLAGE_LOOP);
     app.webgl.shake.startShake();
   }
 
@@ -206,6 +207,7 @@ class Village extends Scene {
     }
 
     app.audio.fadeOutAmbient();
+    app.audio.fadeOutMusic();
     app.webgl.shake.stopShake();
   }
 }

@@ -22,10 +22,11 @@ import Vegetation from "../objects/Vegetation";
 import { Mesh } from "three";
 import { TearsMaterial } from "../materials/Tears/material";
 import { Vector3 } from "three";
-import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
+import { AMBIENT_IDS, MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import Milo from "../objects/Milo";
 import Birds from "../objects/Birds";
 import { Color } from "three";
+import SparkleParticles from "../objects/SparkleParticles";
 
 class Demoiselle extends Group {
   constructor(body, top, riseTop) {
@@ -60,6 +61,9 @@ class Demoiselle extends Group {
     this.topIsDraw = false;
     this.isElHit = false;
     this.hitting = false;
+    
+    this.sparkles = new SparkleParticles();
+    this.add(this.sparkles);
   }
 
   onPointerMove(e) {
@@ -90,6 +94,8 @@ class Demoiselle extends Group {
       this.ctx.fillStyle = `white`;
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
       this.topIsDraw = true;
+
+      this.sparkles.spawn(this.top.position);
 
       gsap.to(this.top.position, {
         x: this.body.position.x,
@@ -247,7 +253,8 @@ class Ladies extends Scene {
         });
     }
 
-    app.audio.playMusic(MUSIC_IDS.AMBIENT_LADIES);
+    app.audio.playAmbient(AMBIENT_IDS.AMBIENT_LADIES);
+    app.audio.playMusic(MUSIC_IDS.CLASSIC_LOOP);
     app.webgl.shake.startShake();
 
     this.milo = new Milo();
@@ -297,7 +304,7 @@ class Ladies extends Scene {
     ) {
       state.emit(EVENTS.GO_NEXT);
       this.finish = true;
-      app.audio.layers.playVolumes([0, 0.5, 0, 0, 0, 0, 0, 0.5, 0, 0, 0]);
+      // app.audio.layers.playVolumes([0, 0.5, 0, 0, 0, 0, 0, 0.5, 0, 0, 0]);
     }
   }
 
@@ -371,6 +378,7 @@ class Ladies extends Scene {
     }
 
     app.audio.fadeOutAmbient();
+    app.audio.fadeOutMusic();
     app.webgl.shake.stopShake();
   }
 }
