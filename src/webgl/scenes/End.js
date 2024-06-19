@@ -17,6 +17,7 @@ import { AMBIENT_IDS, MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { AnimationMixer } from "three";
 import { EVENTS } from "@/utils/constants/events";
 import Milo from "../objects/Milo";
+import Spirit from "../objects/Spirit";
 
 class End extends Scene {
   hasAnimatedCairns = false;
@@ -56,15 +57,15 @@ class End extends Scene {
           this.planePos.position.set(ev.value.x, ev.value.y, ev.value.z);
         });
 
-      this.pane
-        .addBinding(this.PARAMS, "posMilo", {
-          min: -10,
-          max: 10,
-          step: 0.1,
-        })
-        .on("change", (ev) => {
-          this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
-        });
+      // this.pane
+      //   .addBinding(this.PARAMS, "posMilo", {
+      //     min: -10,
+      //     max: 10,
+      //     step: 0.1,
+      //   })
+      //   .on("change", (ev) => {
+      //     this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
+      //   });
 
       this.pane
         .addBinding(this.PARAMS, "rotMilo", {
@@ -83,6 +84,16 @@ class End extends Scene {
     this.player.rotation.y = (-76 * Math.PI) / 180;
     this.player.scale.set(0.15, 0.15, 0.15);
     this.add(this.player);
+
+    this.spirit.position.set(
+      this.player.position.x - 1.5,
+      this.player.position.y + 0.5,
+      this.player.position.z + 1
+    );
+
+    this.spirit.scale.set(0.6, 0.6, 0.6);
+
+    this.isFireworking = false;
 
     app.webgl.shake.startShake();
     app.audio.playAmbient(AMBIENT_IDS.AMBIENT_END);
@@ -120,6 +131,9 @@ class End extends Scene {
     this.fireworks.explosions.forEach((explosions) => this.add(explosions));
 
     this.initAnimPorte();
+
+    this.spirit = new Spirit();
+    this.add(this.spirit);
 
     this.ambient = new AmbientLight({ color: 0xffffff, intensity: 0.1 });
 
@@ -171,8 +185,12 @@ class End extends Scene {
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
 
-    if (app.sceneshandler.currentStepCam === 3) this.fireworks.start();
-    if (app.sceneshandler.currentStepCam === 4) app.audio.playMusic(MUSIC_IDS.END_LOOP);
+    if (app.sceneshandler.currentStepCam === 3 && this.isFireworking == false) {
+      this.isFireworking = true;
+      this.fireworks.start();
+    }
+    if (app.sceneshandler.currentStepCam === 4)
+      app.audio.playMusic(MUSIC_IDS.END_LOOP);
 
     if (
       this.allAnimCairn.length == this.allActionCairn.length &&

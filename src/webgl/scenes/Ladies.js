@@ -260,9 +260,9 @@ class Ladies extends Scene {
 
     this.milo = new Milo();
     this.player = this.milo.model;
-    this.player.position.set(8.37, -0.04, -5.2);
+    this.player.position.set(8.37, -0.04, -5.1);
     this.player.scale.set(0.06, 0.06, 0.06);
-    this.player.rotation.y = (-130 * Math.PI) / 180;
+    this.player.rotation.y = (-90 * Math.PI) / 180;
 
     this.add(this.player);
   }

@@ -107,7 +107,7 @@ export default class Fireworks {
   }
 
   play(launcher) {
-    const randomY = this.getRandom(4, 1);
+    const randomY = this.getRandom(3, 0.5);
     const randomIndex = Math.floor(
       Math.random() * this.clonedExplosions.length
     );
@@ -123,7 +123,6 @@ export default class Fireworks {
 
     const tl = gsap.timeline();
 
-    // console.log(explosion.material.uniforms);
     //Anim the launcher
     tl.to(launcher.position, {
       y: `${randomY}`,
@@ -175,12 +174,14 @@ export default class Fireworks {
   getRandomColor() {
     const colors = [
       [0.671, 0.722, 0.89], // Lightblue
-      [0.922, 0.937, 0.988], // White
+      [0.889, 0.911, 0.984],
       [0.267, 0.294, 0.6], // Darkblue
+      [0.244, 0.289, 0.797],
       [0.173, 0.196, 0.463], // Darkblue2
       [0.729, 0.263, 0.263], // Red
+      [0.88, 0.31, 0.31],
       [0.89, 0.565, 0.467], // Orange
-      [0.937, 0.8, 0.761], // Beige
+      [0.998, 0.716, 0.631],
     ];
 
     const randomIndex = Math.floor(Math.random() * colors.length);

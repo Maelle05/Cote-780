@@ -5,11 +5,8 @@ varying vec2 vUv;
 
 void main() {
   vec4 color = texture2D(tSpritesheet, vUv);
-  vec3 ouiColor = uColor;
 
-  float red = uColor.x;
-
-  color.rgb *= uColor.rgb;
+  color.rgb *= uColor.rgb * 1.1;
 
   gl_FragColor = color;
 
