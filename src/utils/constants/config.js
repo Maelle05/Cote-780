@@ -1,5 +1,7 @@
 import dataText from "../../locales/fr.json";
 
+const urlParams = new URLSearchParams(window.location.search);
+
 const DEV_MODE = false;
 const INIT_SCENE = 0;
 
@@ -30,7 +32,7 @@ const INTRO_SECTIONS = [
   },
   {
     elements: [
-      { id: "1-colline", src: "/assets/images/intro/1_colline.png" },
+      // { id: "1-colline", src: "/assets/images/intro/1_colline.png" },
       { id: "1-maison", src: "/assets/images/intro/1_maison.png" },
       { id: "1-fumee", src: "/assets/images/intro/1_fumee.png" },
       {
@@ -39,8 +41,7 @@ const INTRO_SECTIONS = [
       },
       { id: "1-arbre", src: "/assets/images/intro/1_arbre.png" },
     ],
-    // texts: [{ ref: dataText["intro"]["text_1"], delay: 0 }],
-    texts: [],
+    texts: urlParams.get('pres') !== null ? [] : [{ ref: dataText["intro"]["text_1"], delay: 0 }],
     audios: [],
   },
   {

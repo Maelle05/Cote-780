@@ -13,7 +13,7 @@ import { SpritesheetPlayer } from "../utils/SpritesheetPlayer";
 import { CamAnim } from "../utils/CamAnim";
 import { DirectionalLight } from "three";
 import { WaterMaterial } from "../materials/Water/material";
-import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
+import { AMBIENT_IDS, MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { AnimationMixer } from "three";
 import { EVENTS } from "@/utils/constants/events";
 import Milo from "../objects/Milo";
@@ -85,7 +85,8 @@ class End extends Scene {
     this.add(this.player);
 
     app.webgl.shake.startShake();
-    app.audio.playMusic(MUSIC_IDS.AMBIENT_END);
+    app.audio.playAmbient(AMBIENT_IDS.AMBIENT_END);
+    app.audio.playMusic(MUSIC_IDS.END_LOOP);
   }
 
   onAttach() {
@@ -203,29 +204,13 @@ class End extends Scene {
     }
   }
 
-  onUpdateDialogue(step) {
-    if (!step || !step.audio) return;
-
-    if (step.audio === "esprit_8")
-      app.audio.layers.playVolumes([0, 0, 0, 0.7, 0.7, 0, 0, 0.7, 0, 0.7, 0.7]);
-    else if (step.audio === "esprit_9")
-      app.audio.layers.playVolumes([
-        0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7,
-      ]);
-    else if (step.audio === "esprit_10")
-      app.audio.layers.playVolumes([0, 0, 0, 0.7, 0.7, 0, 0, 0.7, 0, 0.7, 1]);
-    else if (step.audio === "esprit_11")
-      app.audio.layers.playVolumes([0, 0, 0, 0.7, 0.7, 0, 0, 0, 0, 0, 0]);
-    else if (step.audio === "esprit_12")
-      app.audio.layers.playVolumes([0, 0, 0, 0, 0.7, 0, 0, 0, 0, 0, 0]);
-  }
-
   clear() {
     if (DEV_MODE) {
       this.pane.dispose();
     }
 
     app.audio.fadeOutAmbient();
+    app.audio.fadeOutMusic();
     app.webgl.shake.stopShake();
   }
 

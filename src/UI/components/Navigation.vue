@@ -129,6 +129,7 @@ const onHover = () => {
   z-index: 100;
   pointer-events: all;
   font-family: var(--ff-rubik);
+  pointer-events: none;
 }
 
 .navigation {
@@ -136,10 +137,12 @@ const onHover = () => {
   justify-content: flex-end;
   align-items: center;
   gap: 16px;
+  pointer-events: all;
 }
 
 .navigation__learn-more {
   transition: opacity 400ms ease-in-out, transform 400ms ease-in-out;
+  pointer-events: all;
 }
 .navigation__learn-more.navigation__learn-more--hidden {
   transform: translateY(40px);

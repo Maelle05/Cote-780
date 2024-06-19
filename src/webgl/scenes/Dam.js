@@ -23,7 +23,7 @@ import { DirectionalLight } from "three";
 import { WaterMaterial } from "../materials/Water/material";
 import { Vector4 } from "three";
 import Durance from "../objects/Durance";
-import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
+import { AMBIENT_IDS, MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import { Vector3 } from "three";
 import Vegetation from "../objects/Vegetation";
 import SparkleParticles from "../objects/SparkleParticles";
@@ -189,7 +189,8 @@ class Dam extends Scene {
         });
     }
 
-    app.audio.playMusic(MUSIC_IDS.AMBIENT_DAM);
+    app.audio.playAmbient(AMBIENT_IDS.AMBIENT_DAM);
+    app.audio.playMusic(MUSIC_IDS.CLASSIC_LOOP);
     app.webgl.shake.startShake();
 
     this.milo = new Milo();
@@ -271,7 +272,7 @@ class Dam extends Scene {
     this.winds.forEach((wind) => wind.material.uniforms.uTime.value = app.ticker.elapsed);
     if (app.sceneshandler.currentStepCam == 3 && !this.durance.isActive) {
       this.durance.isActive = true;
-      app.audio.layers.playVolumes([1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0]);
+      // app.audio.layers.playVolumes([1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0]);
       app.audio.ui.play("wave_appear");
       this.durance.show();
     }
@@ -311,6 +312,7 @@ class Dam extends Scene {
     }
     app.webgl.shake.stopShake();
     app.audio.fadeOutAmbient();
+    app.audio.fadeOutMusic();
     this.durance = null
   }
 }

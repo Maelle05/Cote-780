@@ -22,10 +22,11 @@ import Vegetation from "../objects/Vegetation";
 import { Mesh } from "three";
 import { TearsMaterial } from "../materials/Tears/material";
 import { Vector3 } from "three";
-import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
+import { AMBIENT_IDS, MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import Milo from "../objects/Milo";
 import Birds from "../objects/Birds";
 import { Color } from "three";
+import SparkleParticles from "../objects/SparkleParticles";
 
 class Demoiselle extends Group {
   constructor(body, top, riseTop) {
@@ -151,6 +152,9 @@ class Demoiselle extends Group {
 
 class Ladies extends Scene {
   drawCount = 0;
+  top1Draw = false;
+  top2Draw = false;
+  top3Draw = false;
 
   constructor() {
     super();
@@ -181,6 +185,9 @@ class Ladies extends Scene {
     this.directionLight.intensity = 2;
     this.directionLight.position.set(7, 10, 15);
     this.add(this.directionLight);
+    
+    this.sparkles = new SparkleParticles();
+    this.add(this.sparkles);
   }
 
   init() {
@@ -247,7 +254,8 @@ class Ladies extends Scene {
         });
     }
 
-    app.audio.playMusic(MUSIC_IDS.AMBIENT_LADIES);
+    app.audio.playAmbient(AMBIENT_IDS.AMBIENT_LADIES);
+    app.audio.playMusic(MUSIC_IDS.CLASSIC_LOOP);
     app.webgl.shake.startShake();
 
     this.milo = new Milo();
@@ -279,12 +287,29 @@ class Ladies extends Scene {
     if (app.sceneshandler.currentStepCam == 3 && !this.isTutoPass) {
       this.demoiselles.children.forEach((dem) => {
         dem.top.material.uniforms.u_gAlpha.value =
-          (Math.sin(app.ticker.elapsed * 0.005) * 0.5 + 0.5) * 0.8;
+          (Math.sin(app.ticker.elapsed * 0.005) * 0.5 + 0.5) * 0.5;
       });
     } else if (app.sceneshandler.currentStepCam == 3 && this.isTutoPass) {
       this.demoiselles.children.forEach((dem) => {
         dem.top.material.uniforms.u_gAlpha.value = 0.4;
       });
+    }
+
+    if (this.dem1.topIsDraw && !this.top1Draw) {
+      this.sparkles.spawn(this.dem1.top.position, 5);
+      setTimeout(() => {
+        this.top1Draw = true;
+      }, 200);
+    } else if (this.dem2.topIsDraw && !this.top2Draw) {
+      this.sparkles.spawn(this.dem2.top.position, 5);
+      setTimeout(() => {
+        this.top2Draw = true;
+      }, 200);
+    } else if (this.dem3.topIsDraw && !this.top3Draw) {
+      this.sparkles.spawn(this.dem3.top.position, 5);
+      setTimeout(() => {
+        this.top3Draw = true;
+      }, 200);
     }
   }
 
@@ -297,7 +322,7 @@ class Ladies extends Scene {
     ) {
       state.emit(EVENTS.GO_NEXT);
       this.finish = true;
-      app.audio.layers.playVolumes([0, 0.5, 0, 0, 0, 0, 0, 0.5, 0, 0, 0]);
+      // app.audio.layers.playVolumes([0, 0.5, 0, 0, 0, 0, 0, 0.5, 0, 0, 0]);
     }
   }
 
@@ -371,6 +396,7 @@ class Ladies extends Scene {
     }
 
     app.audio.fadeOutAmbient();
+    app.audio.fadeOutMusic();
     app.webgl.shake.stopShake();
   }
 }
