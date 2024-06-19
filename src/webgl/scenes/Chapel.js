@@ -41,8 +41,18 @@ class Chapel extends Scene {
     state.register(this);
 
     this.PARAMS = {
-      portalProgress: 1,
+      portalProgress: 0,
       posPerso: {
+        x: -1,
+        y: 1.05,
+        z: 0,
+      },
+      portalScale: {
+        x: -1,
+        y: 1.05,
+        z: 0,
+      },
+      backPortalScale: {
         x: -1,
         y: 1.05,
         z: 0,
@@ -77,6 +87,7 @@ class Chapel extends Scene {
         })
         .on("change", (ev) => {
           this.portal.material.uniforms.uProgress.value = ev.value;
+          this.backPortal.material.uniforms.uProgress.value = ev.value;
         });
 
       this.pane
@@ -87,6 +98,25 @@ class Chapel extends Scene {
         })
         .on("change", (ev) => {
           this.player.position.set(ev.value.x, ev.value.y, ev.value.z);
+        });
+
+      this.pane
+        .addBinding(this.PARAMS, "portalScale", {
+          min: 0.1,
+          max: 0.5,
+          step: 0.01,
+        })
+        .on("change", (ev) => {
+          this.portal.scale.set(ev.value.x, ev.value.y, ev.value.z);
+        });
+      this.pane
+        .addBinding(this.PARAMS, "backPortalScale", {
+          min: 0.1,
+          max: 1.2,
+          step: 0.01,
+        })
+        .on("change", (ev) => {
+          this.backPortal.scale.set(ev.value.x, ev.value.y, ev.value.z);
         });
 
       this.pane
@@ -114,7 +144,7 @@ class Chapel extends Scene {
     this.index = 0;
     this.isAnimating = false;
     this.interpolatedMouse = new Vector2(0.5, 0.5);
-    this.portal.material.uniforms.uProgress.value = 1;
+    this.portal.material.uniforms.uProgress.value = 0;
 
     app.audio.playMusic(MUSIC_IDS.AMBIENT_CHAPEL);
     app.webgl.shake.startShake();
@@ -143,10 +173,11 @@ class Chapel extends Scene {
 
       if (child.name == "Portal") {
         this.portal = child;
+        this.portal.scale.set(0.14, 0.2, 0.21);
 
         child.material = new PortalMaterial({
           uniforms: {
-            uProgress: { value: 1 },
+            uProgress: { value: 0 },
             uTexture: { value: this.portalTexture },
             uNoiseTexture: { value: noiseText },
             uTime: { value: 0 },
@@ -159,10 +190,11 @@ class Chapel extends Scene {
 
       if (child.name == "PortalBack") {
         this.backPortal = child;
+        this.backPortal.scale.set(0.24, 1, 0.33);
 
         child.material = new ElectricPortalMaterial({
           uniforms: {
-            uProgress: { value: 1 },
+            uProgress: { value: 0 },
             uTexture: { value: this.portalTexture },
             uNoiseTexture: { value: noiseText },
             uTime: { value: 0 },
@@ -345,9 +377,15 @@ class Chapel extends Scene {
   }
 
   createPortal() {
-    const tl = gsap.timeline();
+    // const tl = gsap.timeline();
 
-    tl.to(this.portal.material.uniforms.uProgress, {
+    gsap.to(this.portal.material.uniforms.uProgress, {
+      value: 1,
+      duration: 2,
+      ease: "power2.in",
+    });
+
+    gsap.to(this.backPortal.material.uniforms.uProgress, {
       value: 1,
       duration: 2,
       ease: "power2.in",

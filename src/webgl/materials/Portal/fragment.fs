@@ -38,7 +38,7 @@ void main() {
     parallaxUv.x += 0.05;
     parallaxUv += (uMouse - 0.5) * 0.1;
 
-    vec2 displacedUv = parallaxUv + (finalNoise.rg - 0.5) * 0.5;
+    vec2 displacedUv = parallaxUv + (finalNoise.rg - 0.5) * 0.2;
     vec4 textureColor = texture2D(uTexture, 1. - displacedUv);
 
     vec4 gradientColor = mix(textureColor, vec4(1., 1., 1., 1.0), gradient);
