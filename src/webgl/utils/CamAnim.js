@@ -118,7 +118,7 @@ export class CamAnim {
 
   onChangeSceneStep(e) {
     if (app.webgl.currentScene != this.idScene) return;
-    if (e) {
+    if (e || e == 0) {
       this.currentKeyfame = e;
       return;
     }

@@ -248,7 +248,7 @@ class Chapel extends Scene {
     this.add(this.spirit);
 
     this.anim = new CamAnim(5, this.chapel, [0, 0.33, 0.66, 0.66, 0.66, 1]);
-    this.anim.onChangeSceneStep(4);
+    this.anim.onChangeSceneStep(0)
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -265,6 +265,7 @@ class Chapel extends Scene {
 
   onAskRemoveTransition() {
     if (app.webgl.currentScene != 5) return;
+
     setTimeout(() => {
       state.emit(EVENTS.GO_NEXT);
     }, 4000);

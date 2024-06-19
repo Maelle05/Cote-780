@@ -199,7 +199,7 @@ class End extends Scene {
         this.allMixerCairn[i].update(app.ticker.delta);
       });
 
-      if (this.currentProgressCairn > 0.98 && !this.isEndAnimCairn) {
+      if (this.currentProgressCairn > 0.75 && !this.isEndAnimCairn) {
         this.isEndAnimCairn = true
         state.emit(EVENTS.GO_NEXT)
       }
