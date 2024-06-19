@@ -3,7 +3,7 @@ import dataText from "../../locales/fr.json";
 const urlParams = new URLSearchParams(window.location.search);
 
 const DEV_MODE = false;
-const INIT_SCENE = 4;
+const INIT_SCENE = 0;
 
 const TITLES_SCENE = [
   [dataText["scene_0"].title],
