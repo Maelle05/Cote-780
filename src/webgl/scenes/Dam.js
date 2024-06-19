@@ -29,7 +29,7 @@ import Vegetation from "../objects/Vegetation";
 import SparkleParticles from "../objects/SparkleParticles";
 import { WindMaterial } from "../materials/Wind/material";
 
-const COOLDOWN_AUDIO = 200;
+const COOLDOWN_AUDIO = 300;
 
 class Dam extends Scene {
   timeSinceLastAudio = 0;
@@ -312,7 +312,6 @@ class Dam extends Scene {
     }
     app.webgl.shake.stopShake();
     app.audio.fadeOutAmbient();
-    app.audio.fadeOutMusic();
     this.durance = null
   }
 }

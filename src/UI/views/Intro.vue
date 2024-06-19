@@ -29,6 +29,7 @@ const onClickCtaStart = () => {
   if (isStarted.value === false) {
     isStarted.value = true
   }
+  app.audio.ui.play("magic_action_2");
 
   setTimeout(() => {
     handleScrollTo(1)
@@ -37,6 +38,7 @@ const onClickCtaStart = () => {
 
 const onClickCtaEnd = () => {
   gsap.to(".intro__container", { duration: 0.8, opacity: 0 })
+  app.audio.ui.play("magic_action_2");
 
   setTimeout(() => {
     state.emit(EVENTS.GO_NEXT)
@@ -297,6 +299,7 @@ const handleScrollTo = (section) => {
     scrollTo: { y: targetScroll, autoKill: true },
     duration: 1.5,
   })
+  app.audio.ui.play("magic_action_2");
 }
 
 const handleMouseMove = (event) => {
@@ -330,6 +333,7 @@ const handleMouseMove = (event) => {
       :class="`intro__next intro__next--${
         displayBtnNext ? 'visible' : 'hidden'
       }`"
+      @mouseenter="() => app.audio.ui.play('click')"
       @click="() => handleScrollTo(activeSection + 1)"
     ></div>
     <div

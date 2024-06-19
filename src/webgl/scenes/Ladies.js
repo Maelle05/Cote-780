@@ -396,7 +396,6 @@ class Ladies extends Scene {
     }
 
     app.audio.fadeOutAmbient();
-    app.audio.fadeOutMusic();
     app.webgl.shake.stopShake();
   }
 }
