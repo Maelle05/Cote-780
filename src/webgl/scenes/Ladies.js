@@ -79,7 +79,7 @@ class Demoiselle extends Group {
       if (!this.hitting) this.hitting = true;
       intersects[i].object.material.opacity = 1;
       this.drawOnCanvasTex(intersects[i].uv);
-      document.body.style.cursor = "grabbing";
+      document.body.style.cursor = "pointer";
     }
 
     if (intersects.length == 0 && this.hitting) {
@@ -406,7 +406,6 @@ class Ladies extends Scene {
     }
 
     app.audio.fadeOutAmbient();
-    app.audio.fadeOutMusic();
     app.webgl.shake.stopShake();
   }
 }

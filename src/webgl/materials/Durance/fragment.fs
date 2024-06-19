@@ -4,7 +4,7 @@ varying vec2 vUv;
 varying float vElevation;
 
 void main() {
-  vec4 baseTex = texture2D(uBaseTex, vUv);
+  vec4 baseTex = texture2D(uBaseTex, vec2(vUv.x, 1. - vUv.y));
 
   float mask = smoothstep(0.02, 0.07, vElevation);
 
