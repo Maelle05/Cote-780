@@ -21,6 +21,7 @@ import Spirit from "../objects/Spirit";
 
 class End extends Scene {
   hasAnimatedCairns = false;
+  hasStartedFireworks = false;
 
   constructor() {
     super();
@@ -92,8 +93,6 @@ class End extends Scene {
     );
 
     this.spirit.scale.set(0.6, 0.6, 0.6);
-
-    this.isFireworking = false;
 
     app.webgl.shake.startShake();
     app.audio.playAmbient(AMBIENT_IDS.AMBIENT_END);
@@ -185,8 +184,8 @@ class End extends Scene {
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
 
-    if (app.sceneshandler.currentStepCam === 3 && this.isFireworking == false) {
-      this.isFireworking = true;
+    if (app.sceneshandler.currentStepCam === 3 && !this.hasStartedFireworks) {
+      this.hasStartedFireworks = true;
       this.fireworks.start();
     }
     if (app.sceneshandler.currentStepCam === 4)
