@@ -22,13 +22,14 @@ import { PortalMaterial } from "../materials/Portal/material";
 import { AmbientLight } from "three";
 import { WaterMaterial } from "../materials/Water/material";
 import { DirectionalLight } from "three";
-import { MUSIC_IDS } from "@/utils/core/audio/AudioManager";
+import { AMBIENT_IDS, MUSIC_IDS } from "@/utils/core/audio/AudioManager";
 import Milo from "../objects/Milo";
 import { Vector3 } from "three";
 import { ShakiraMaterial } from "../materials/Shakira/material";
 import Vegetation from "../objects/Vegetation";
 import { EVENTS } from "@/utils/constants/events";
 import { ElectricPortalMaterial } from "../materials/ElectricPortal/material";
+import SparkleParticles from "../objects/SparkleParticles";
 
 class Chapel extends Scene {
   boats = [];
@@ -73,6 +74,9 @@ class Chapel extends Scene {
     this.flames = [];
     this.empties = [];
     this.flameOffset = 0.15;
+    
+    this.sparkles = new SparkleParticles();
+    this.add(this.sparkles);
   }
 
   init() {
@@ -146,7 +150,8 @@ class Chapel extends Scene {
     this.interpolatedMouse = new Vector2(0.5, 0.5);
     this.portal.material.uniforms.uProgress.value = 0;
 
-    app.audio.playMusic(MUSIC_IDS.AMBIENT_CHAPEL);
+    app.audio.playAmbient(AMBIENT_IDS.AMBIENT_CHAPEL);
+    app.audio.playMusic(MUSIC_IDS.CLASSIC_LOOP);
     app.webgl.shake.startShake();
   }
 
@@ -291,6 +296,7 @@ class Chapel extends Scene {
 
       this.index++;
       this.goTo(intersects[0].object.empty.position, flame);
+      this.sparkles.spawn(flame.position, 5);
       this.isAnimating = true;
     }
 
@@ -368,7 +374,7 @@ class Chapel extends Scene {
             this.isAnimating = true;
             state.emit(EVENTS.GO_NEXT);
             this.createPortal();
-            app.audio.layers.playVolumes([0, 0, 0, 0.3, 0, 0, 0, 0, 0, 0, 0]);
+            // app.audio.layers.playVolumes([0, 0, 0, 0.3, 0, 0, 0, 0, 0, 0, 0]);
             //TODO : PLAY THE CAIRN ANIMATION THEN CREATE PORTAL
           }
         },
@@ -453,6 +459,7 @@ class Chapel extends Scene {
     this.portal.material.uniforms.uProgress.value = 0;
 
     app.audio.fadeOutAmbient();
+    app.audio.fadeOutMusic();
     app.webgl.shake.stopShake();
   }
 }

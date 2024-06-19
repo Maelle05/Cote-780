@@ -5,10 +5,11 @@ import { LayerManager } from "./LayerManager";
 import { DialogManager } from "./DialogManager";
 import { UIManager } from "./UIManager";
 
-const MUSIC_VOLUME = 1;
+const AMBIENT_VOLUME = 1;
+const MUSIC_VOLUME = 0.3;
 
 //MUSIC EFFECTS
-export const MUSIC_IDS = {
+export const AMBIENT_IDS = {
   AMBIENT_LADIES: "ambient_ladies",
   AMBIENT_DAM: "ambient_dam",
   AMBIENT_BRIDGE: "ambient_bridge",
@@ -17,17 +18,28 @@ export const MUSIC_IDS = {
   AMBIENT_END: "ambient_end",
 };
 
+export const MUSIC_IDS = {
+  CLASSIC_LOOP: "classic_loop",
+  VILLAGE_LOOP: "village_loop",
+  END_LOOP: "end_loop",
+};
+
 class AudioManager {
   _musics = new Map();
   canPlay = false;
+
   currentAmbientName;
   currentAmbientId;
   currentAmbient;
 
+  currentMusicName;
+  currentMusicId;
+  currentMusic;
+
   constructor() {
     state.register(this);
 
-    this.layers = new LayerManager();
+    // this.layers = new LayerManager();
     this.dialog = new DialogManager();
     this.ui = new UIManager();
   }
@@ -53,8 +65,13 @@ class AudioManager {
     this.canPlay = true;
 
     if (this.queuedAmbientName) {
-      this.playMusic(this.queuedAmbientName);
+      this.playAmbient(this.queuedAmbientName);
       this.queuedAmbientName = null;
+    }
+
+    if (this.queuedMusicName) {
+      this.playMusic(this.queuedMusicName);
+      this.queuedMusicName = null;
     }
   }
 
@@ -72,20 +89,32 @@ class AudioManager {
     howl.fade(howl.volume(undefined, howl), volume, duration, soundId);
   }
 
-  playMusic(name) {
+  playAmbient(name) {
     if (!this.canPlay) {
       this.queuedAmbientName = name;
       return;
     }
     if (name !== this.currentAmbientName) {
-      if (this.currentAmbient) {
-        // this.fadeOut(this.currentAmbientName, 1000, this.currentAmbientId);
-      }
-
       this.currentAmbient = this._musics.get(name);
       this.currentAmbientName = name;
       this.currentAmbientId = this.fadeIn(
         this.currentAmbientName,
+        AMBIENT_VOLUME,
+        1000
+      );
+    }
+  }
+
+  playMusic(name) {
+    if (!this.canPlay) {
+      this.queuedMusicName = name;
+      return;
+    }
+    if (name !== this.currentMusicName) {
+      this.currentMusic = this._musics.get(name);
+      this.currentMusicName = name;
+      this.currentMusicId = this.fadeIn(
+        this.currentMusicName,
         MUSIC_VOLUME,
         1000
       );
@@ -140,6 +169,12 @@ class AudioManager {
     if (!this.canPlay) return;
 
     this.fadeOutStop(this.currentAmbientName, 1000, this.currentAmbientId);
+  }
+
+  fadeOutMusic() {
+    if (!this.canPlay) return;
+
+    this.fadeOutStop(this.currentMusicName, 1000, this.currentMusicId);
   }
 }
 
