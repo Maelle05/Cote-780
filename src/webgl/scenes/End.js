@@ -86,7 +86,6 @@ class End extends Scene {
 
     app.webgl.shake.startShake();
     app.audio.playAmbient(AMBIENT_IDS.AMBIENT_END);
-    app.audio.playMusic(MUSIC_IDS.END_LOOP);
   }
 
   onAttach() {
@@ -172,6 +171,9 @@ class End extends Scene {
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
 
+    if (app.sceneshandler.currentStepCam === 3) this.fireworks.start();
+    if (app.sceneshandler.currentStepCam === 4) app.audio.playMusic(MUSIC_IDS.END_LOOP);
+
     if (
       this.allAnimCairn.length == this.allActionCairn.length &&
       app.sceneshandler.currentStepCam >= 1
@@ -179,7 +181,6 @@ class End extends Scene {
       if (!this.hasAnimatedCairns) {
         this.hasAnimatedCairns = true;
         app.audio.ui.play("magic_cairn");
-        this.fireworks.start();
       }
 
       this.currentProgressCairn = MathUtils.lerp(
