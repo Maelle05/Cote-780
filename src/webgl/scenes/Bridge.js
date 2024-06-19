@@ -197,7 +197,7 @@ class Bridge extends Scene {
         this.rocks[0].position.y,
         this.rocks[0].position.z
       ),
-      0.02,
+      0.01,
       new Vector3(
         this.rocks[1].position.x,
         this.rocks[1].position.y + 0.2,
@@ -260,34 +260,6 @@ class Bridge extends Scene {
       return;
 
     if (!this.spirit) return;
-
-    // this.angle = app.ticker.elapsed * 0.0015;
-
-    // const animRadiusX = 0.7;
-    // const animRadiusZ = 0.2;
-    // const rotationAngle = Math.PI / 4;
-    // const center = this.rocks[this.rockIndex].position;
-
-    // const x = animRadiusX * Math.sin(this.angle);
-    // const z = animRadiusZ * Math.sin(2 * this.angle);
-
-    // // Apply rotation to the X and Z positions
-    // const rotatedX = x * Math.cos(rotationAngle) - z * Math.sin(rotationAngle);
-    // const rotatedZ = x * Math.sin(rotationAngle) + z * Math.cos(rotationAngle);
-
-    // // Translate the rotated position back to the center
-    // const finalX = center.x + rotatedX;
-    // const finalZ = center.z + rotatedZ;
-
-    // this.spirit.position.set(finalX, center.y + 0.2, finalZ);
-
-    // if (
-    //   this.spirit.position.distanceTo(this.rocks[this.rockIndex].position) < 0.3
-    // ) {
-    //   this.spirit.targetSpiritColor = new Vector4(0.941, 0.608, 0.345);
-    // } else {
-    //   this.spirit.targetSpiritColor = new Vector4(1, 1, 1, 1);
-    // }
   }
 
   onPointerMove(e) {
@@ -363,7 +335,7 @@ class Bridge extends Scene {
 
           this.player.position.set(
             this.center.x,
-            this.center.y + yOffset + 0.03,
+            this.center.y + yOffset + 0.04,
             this.center.z
           );
         },

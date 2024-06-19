@@ -55,12 +55,33 @@ export default class Fireworks {
       clonedLaunchers: this.clonedLaunchers,
       play: this.play,
       getRandom: this.getRandom,
-      start: () => { this.startFirework(); },
+      start: () => {
+        this.startFirework();
+      },
     };
   }
 
   #createMesh() {
-    const geometry = new PlaneGeometry(1, 1, 1, 1);
+    const particleCount = 1000;
+    const positionsArray = new Float32Array(particleCount * 3);
+
+    const particleIndices = new Float32Array(particleCount);
+    for (let i = 0; i < particleCount; i++) {
+      particleIndices[i] = i / particleCount;
+    }
+
+    const geometry = new BufferGeometry();
+
+    geometry.setAttribute(
+      "position",
+      new Float32BufferAttribute(positionsArray, 3)
+    );
+    geometry.setAttribute(
+      "particleIndex",
+      new Float32BufferAttribute(particleIndices, 1)
+    );
+
+    // const geometry = new PlaneGeometry(1, 1, 1, 1);
     const material = new FireworkMaterial({
       uniforms: {
         uProgress: { value: 0 },
@@ -69,8 +90,7 @@ export default class Fireworks {
       transparent: true,
     });
 
-    const mesh = new Mesh(geometry, material);
-    mesh.scale.set(0.05, 0.2, 0.05);
+    const mesh = new Points(geometry, material);
 
     return mesh;
   }
@@ -121,7 +141,10 @@ export default class Fireworks {
         explosion.position.copy(launcher.position);
         explosion.lookAt(app.webgl.camera.position);
         explosion.spritesheet.playing = true;
-        app.audio.ui.play(`fireworks_${Math.floor(Math.random() * 3) + 1}`, 0.5);
+        app.audio.ui.play(
+          `fireworks_${Math.floor(Math.random() * 3) + 1}`,
+          0.5
+        );
         launcher.position.y = 0;
         this.clonedLaunchers.push(launcher);
       },
