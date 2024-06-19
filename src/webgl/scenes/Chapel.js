@@ -459,7 +459,6 @@ class Chapel extends Scene {
     this.portal.material.uniforms.uProgress.value = 0;
 
     app.audio.fadeOutAmbient();
-    app.audio.fadeOutMusic();
     app.webgl.shake.stopShake();
   }
 }

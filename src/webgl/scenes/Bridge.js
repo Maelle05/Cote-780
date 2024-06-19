@@ -315,6 +315,8 @@ class Bridge extends Scene {
     this.spirit.hide();
     this.target.next(targetAnimDuration);
 
+    app.audio.ui.play("magic_action_2");
+
     const dummy = { progress: 0 };
 
     //Milo Jump
@@ -451,7 +453,6 @@ class Bridge extends Scene {
     }
 
     app.audio.fadeOutAmbient();
-    app.audio.fadeOutMusic();
     app.webgl.shake.stopShake();
   }
 }
