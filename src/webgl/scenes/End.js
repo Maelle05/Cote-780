@@ -20,6 +20,7 @@ import Milo from "../objects/Milo";
 
 class End extends Scene {
   hasAnimatedCairns = false;
+  hasStartedFireworks = false;
 
   constructor() {
     super();
@@ -171,7 +172,10 @@ class End extends Scene {
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
 
-    if (app.sceneshandler.currentStepCam === 3) this.fireworks.start();
+    if (app.sceneshandler.currentStepCam === 3 && !this.hasStartedFireworks) {
+      this.hasStartedFireworks = true;
+      this.fireworks.start();
+    }
     if (app.sceneshandler.currentStepCam === 4) app.audio.playMusic(MUSIC_IDS.END_LOOP);
 
     if (
