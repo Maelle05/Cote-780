@@ -30,7 +30,7 @@ const INTRO_SECTIONS = [
   },
   {
     elements: [
-      { id: "1-colline", src: "/assets/images/intro/1_colline.png" },
+      // { id: "1-colline", src: "/assets/images/intro/1_colline.png" },
       { id: "1-maison", src: "/assets/images/intro/1_maison.png" },
       { id: "1-fumee", src: "/assets/images/intro/1_fumee.png" },
       {

@@ -1,6 +1,6 @@
 <script setup>
 import { app } from "@/App"
-import { defineProps, watchEffect, ref, onMounted, onUnmounted } from "vue"
+import { defineProps, watchEffect, ref, onUnmounted } from "vue"
 
 const props = defineProps({
   text: Object,
@@ -8,10 +8,6 @@ const props = defineProps({
   section: Number,
   sectionProgress: Number,
   audio: String,
-})
-
-onMounted(() => {
-  console.log("0104")
 })
 
 const isVisible = ref(false)
