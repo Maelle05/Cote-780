@@ -31,7 +31,7 @@ class End extends Scene {
         y: 1,
         z: 0,
       },
-      rotMilo: -76
+      rotMilo: -76,
     };
 
     this.light = new AmbientLight({ color: 0xffffff });
@@ -73,14 +73,14 @@ class End extends Scene {
           step: 0.1,
         })
         .on("change", (ev) => {
-          this.player.rotation.y = ev.value * Math.PI / 180;
+          this.player.rotation.y = (ev.value * Math.PI) / 180;
         });
     }
 
-    this.milo = new Milo()
+    this.milo = new Milo();
     this.player = this.milo.model;
     this.player.position.copy(this.miloPos);
-    this.player.rotation.y = -76 * Math.PI / 180;
+    this.player.rotation.y = (-76 * Math.PI) / 180;
     this.player.scale.set(0.15, 0.15, 0.15);
     this.add(this.player);
 
@@ -90,7 +90,6 @@ class End extends Scene {
   }
 
   onAttach() {
-
     this.planePos = new Mesh(
       new PlaneGeometry(1, 1, 1, 1),
       new MeshBasicMaterial({ color: 0xff0000, side: DoubleSide })
@@ -141,11 +140,11 @@ class End extends Scene {
     app.webgl.shake.initShake(this.end);
   }
 
-  onAskRemoveTransition(){
+  onAskRemoveTransition() {
     if (app.sceneshandler.currentScene != 7) return;
     setTimeout(() => {
-      state.emit(EVENTS.GO_NEXT)
-    }, 3000)
+      state.emit(EVENTS.GO_NEXT);
+    }, 3000);
   }
 
   initAnimPorte() {
@@ -169,8 +168,6 @@ class End extends Scene {
 
   onTick() {
     if (app.sceneshandler.currentScene != 7) return;
-
-    // console.log(this.player.position);
 
     if (this.water)
       this.water.material.uniforms.uTime.value = app.ticker.elapsed;
@@ -200,9 +197,9 @@ class End extends Scene {
         this.allMixerCairn[i].update(app.ticker.delta);
       });
 
-      if (this.currentProgressCairn > 0.98 && !this.isEndAnimCairn) {
-        this.isEndAnimCairn = true
-        state.emit(EVENTS.GO_NEXT)
+      if (this.currentProgressCairn > 0.75 && !this.isEndAnimCairn) {
+        this.isEndAnimCairn = true;
+        state.emit(EVENTS.GO_NEXT);
       }
     }
   }

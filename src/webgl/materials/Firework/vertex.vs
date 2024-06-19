@@ -1,16 +1,15 @@
 uniform float uTime;
 
-varying vec2 vUv;
-varying vec3 vPosition;
-
-float PI = 3.141592653589793238;
-
-uniform float uSize;
-uniform vec2 uResolution;
-
 void main() {
-  vUv = uv;
-  vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-  vec4 viewPosition = viewMatrix * modelPosition;
-  gl_Position = projectionMatrix * viewPosition;
+
+    // Calculate the angle and radius for the cone shape
+  float angle = position.y * 10.0 + uTime;
+  float radius = position.y * 2.0;
+
+    // Displace the particle positions in X and Z to form a cone
+  vec3 displacedPosition = vec3(cos(angle) * radius, position.y, sin(angle) * radius);
+
+  vec4 mvPosition = modelViewMatrix * vec4(displacedPosition, 1.0);
+  gl_PointSize = 5.0 * (300.0 / -mvPosition.z);
+  gl_Position = projectionMatrix * mvPosition;
 }

@@ -21,7 +21,7 @@ export class Shake {
       shakeNoiseStrength: 0.1,
     };
 
-    this.debug();
+    // this.debug();
   }
 
   debug() {

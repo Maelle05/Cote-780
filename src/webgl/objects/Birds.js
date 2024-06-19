@@ -80,6 +80,7 @@ export default class Birds extends Group {
   }
 
   onTick({ dt }) {
+    if(!this.mesh || !this.material) return
     this.progress += this.speed * dt;
     this.progress %= 1;
 

@@ -64,7 +64,7 @@ const props = defineProps({
   flex-direction: column;
   gap: 32px;
   line-height: 150%;
-  font-size: 12px;
+  font-size: 18px;
   transform: translateY(100vh);
 }
 
@@ -76,7 +76,7 @@ const props = defineProps({
 
 @keyframes animCredits {
   100% {
-    transform: translateY(0vh);
+    transform: translateY(-105vh);
   }
 }
 

@@ -15,7 +15,18 @@
     "new-cairn_1": "Tu viens d'obtenir un",
     "new-cairn_2": "nouveau",
     "new-cairn_3": "cairn",
-    "mobile": "Cette expérience n'est pas accessible sur les appareils mobiles."
+    "mobile": "Cette expérience n'est pas accessible sur les&nbsp;appareils&nbsp;mobiles.",
+    "loader_1": "Les Demoiselles se recoiffent",
+    "loader_2": "Les Demoiselles se préparent pour le bal",
+    "loader_3": "Milo lace ses chaussures",
+    "loader_4": "Milo consulte sa carte",
+    "loader_5": "Milo enfile son sac à dos",
+    "loader_6": "L'esprit se réveille",
+    "loader_7": "Les montagnes veillent sur la vallée",
+    "loader_8": "La Durance s'impatiente",
+    "loader_9": "La Durance se soulève",
+    "loader_10": "Les souvenirs engloutis refont surface",
+    "loader_11": "Les cairns se dispersent"
   },
   "intro": {
     "text_1": "Ce conte se déroule au cœur des Hautes-Alpes, dans la vallée&nbsp;de&nbsp;la&nbsp;Durance.<br><br>\nUn barrage y fut construit à la fin des années 1950 pour apaiser les colères de l’imposante rivière qui donne son nom à la vallée. Cet événement bouleversa de nombreuses vies dans la région, et trois villages furent engloutis sous les eaux.<br><br>\nCe fut la naissance du Lac de Serre-Ponçon.",
@@ -160,7 +171,7 @@
     },
     "text_3": {
       "person": "Esprit",
-      "text": "Par ici ! Si tu décides de traverser ce portail, tu&nbsp;découvriras un lieu que le temps tente d'effacer.",
+      "text": "Par ici ! Si tu décides de traverser ce portail, tu découvriras un lieu que le temps tente d'effacer.",
       "camera": "5",
       "audio": "esprit_3"
     },
@@ -205,38 +216,50 @@
     "text_6": {
       "person": "Journal",
       "text": "1955  —  L’autre soir, la Durance a bien failli mettre fin au chantier ! Elle s’est rebellée contre ceux qui essayent de la contrôler. Malheureusement… ils sont bien décidés, ça n’a pas eu beaucoup d’effets hormis retarder le chantier.",
-      "camera": "5",
+      "camera": "6",
       "audio": "grandma_14"
     },
     "text_7": {
       "person": "Journal",
       "text": "1956  —  Toutes les habitations vont être dynamitées il paraît… ils vont même déplacer le cimetière…",
-      "camera": "5",
+      "camera": "7",
       "audio": "grandma_15"
     },
     "text_8": {
       "person": "Journal",
       "text": "1960  —  Au début, personne ne croyait à ce barrage. Même lorsque la construction a été lancée, on se disait qu’il ne verrait jamais le jour. Maintenant que les gens commencent à quitter le village, tout devient réel…",
-      "camera": "6",
+      "camera": "8",
       "audio": "grandma_16"
     },
     "text_9": {
       "person": "Journal",
       "text": "1964  —  Aujourd’hui j’ai eu la visite d’EDF au sujet du barrage. Ils m’ont proposé un logement et de l’argent… beaucoup… pour m'installer dans le nouveau village… Mais comment vivre, avec nos souvenirs engloutis sous les yeux ?",
-      "camera": "6",
+      "camera": "9",
       "audio": "grandma_17"
     },
     "text_10": {
       "person": "Journal",
       "text": "1966  —  Ils ont commencé à reconstruire le village au-dessus de la cote 780… et je suis bien triste de devoir quitter mon Hôtel. Mais comme les autres, je crois que j’ai fini par m’y résoudre.",
-      "camera": "6",
+      "camera": "10",
       "audio": "grandma_18"
     },
     "text_11": {
       "person": "Journal",
-      "text": "Mon voisin, lui, ne bougera jamais. Il me raconte comment, pendant la nuit, il va gêner et démolir le chantier.",
-      "camera": "6",
+      "text": "Mon voisin ne bougera jamais. Il me raconte comment, pendant la nuit, il va gêner et démolir le chantier.",
+      "camera": "10",
       "audio": "grandma_19"
+    },
+    "text_12": {
+      "text": "1964 —  Le lac a fini par se remplir,. La majorité des anciens habitants ont quitté la région, trop nostalgique pour rester...",
+      "camera": "11",
+      "audio": "grandma_20",
+      "person": "Journal"
+    },
+    "text_13": {
+      "text": "Pour ma part j'ai reprit un Hôtel à Savines-le-lac et les touristes ont commencé à affluer, attirés par la curiosité qu'est le Lac de Serre-Ponçon",
+      "camera": "11",
+      "audio": "grandma_21",
+      "person": "Journal"
     },
     "tuto": "Clique sur l'esprit pour le suivre dans le village",
     "infos": "Le petit village de Savines, situé au cœur de la vallée de la Durance, a été détruit avant d'être englouti lors de la mise en eau du barrage de Serre-Ponçon en 1961, de même que le village d’Ubaye et quelques autres hameaux.",
@@ -283,6 +306,6 @@
     "role_3": "Voix",
     "name_3": "Mamie Claude - Yannick Rocher,Milo - Swan Ehrsam,Les Demoiselles - Mélanie Masliah,L’Esprit - Adrien Melchior,La Durance - Adeline Piketty",
     "role_4": "Merci à",
-    "name_4": "Mathieu Ehrsam, xx,xx,xx"
+    "name_4": "Mathieu Ehrsam, Florian Zumbrunn, Basti UI, Adrien Havet"
   }
 }
