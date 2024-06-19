@@ -449,7 +449,7 @@ class Bridge extends Scene {
       ease: "power1.in",
       duration: 1.5,
     });
-    this.sparkles.spawn(this.rocks[this.rockIndex + 1].position, 6);
+    this.sparkles.spawn(this.rocks[this.rockIndex].position, 6);
 
     // if (this.rockIndex === 0)
     //   app.audio.layers.playVolumes([0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0]);

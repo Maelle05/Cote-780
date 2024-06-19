@@ -29,6 +29,7 @@ import { ShakiraMaterial } from "../materials/Shakira/material";
 import Vegetation from "../objects/Vegetation";
 import { EVENTS } from "@/utils/constants/events";
 import { ElectricPortalMaterial } from "../materials/ElectricPortal/material";
+import SparkleParticles from "../objects/SparkleParticles";
 
 class Chapel extends Scene {
   boats = [];
@@ -63,6 +64,9 @@ class Chapel extends Scene {
     this.flames = [];
     this.empties = [];
     this.flameOffset = 0.15;
+    
+    this.sparkles = new SparkleParticles();
+    this.add(this.sparkles);
   }
 
   init() {
@@ -255,6 +259,7 @@ class Chapel extends Scene {
 
       this.index++;
       this.goTo(intersects[0].object.empty.position, flame);
+      this.sparkles.spawn(flame.position, 5);
       this.isAnimating = true;
     }
 
