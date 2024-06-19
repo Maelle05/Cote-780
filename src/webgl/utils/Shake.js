@@ -78,7 +78,8 @@ export class Shake {
 
     scene.traverse((child) => {
       // if (child.isMesh) console.log(child.name, child.material.type);
-      // if (child.isMesh && scene.name == "dam" && !child.material.map)
+      // if (child.isMesh && scene.name == "Milo") console.log(child);
+
       if (
         child.isMesh &&
         (child.material.type == "MeshStandardMaterial" ||
