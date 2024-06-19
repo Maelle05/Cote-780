@@ -16,5 +16,5 @@ float noise(in vec2 x) {
 
 void main() {
 	float alpha = pow(vUv.y, 2.) * pow(uProgress, 2.);
-	gl_FragColor = vec4(vec3(1., 1., 1.), alpha);
+	gl_FragColor = vec4(vec3(0.949, 0.922, 0.843), alpha);
 }

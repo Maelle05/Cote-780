@@ -115,6 +115,7 @@ class AudioManager {
       return;
     }
     if (name !== this.currentMusicName) {
+      this.fadeOutMusic();
       this.currentMusic = this._musics.get(name);
       this.currentMusicName = name;
       this.currentMusicId = this.fadeIn(
@@ -176,7 +177,7 @@ class AudioManager {
   }
 
   fadeOutMusic() {
-    if (!this.canPlay) return;
+    if (!this.canPlay || !this.currentMusicName) return;
 
     this.fadeOutStop(this.currentMusicName, 1000, this.currentMusicId);
   }

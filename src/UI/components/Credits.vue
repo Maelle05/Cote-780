@@ -20,7 +20,7 @@ const props = defineProps({
       </div>
       <div
         class="credits__element credits__element--flex"
-        v-for="index in [1, 2, 3, 4]"
+        v-for="index in [1, 2, 3, 4, 5]"
       >
         <p v-html="t(`credits.role_${index}`)" class="credits__role"></p>
         <p class="credits__names">

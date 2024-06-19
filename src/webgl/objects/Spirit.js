@@ -30,7 +30,12 @@ export default class Spirit extends Group {
       this.baseColor.b,
       1
     );
-    this.targetSpiritColor = new Vector4(this.baseColor.r, this.baseColor.g, this.baseColor.b, 1);
+    this.targetSpiritColor = new Vector4(
+      this.baseColor.r,
+      this.baseColor.g,
+      this.baseColor.b,
+      1
+    );
 
     // Face
     this.faceGeometry = new PlaneGeometry(0.25, 0.25);
@@ -108,7 +113,7 @@ export default class Spirit extends Group {
     // Var
     this.lastPos = 0;
 
-    this.scale.set(0.6, 0.6, 0.6);
+    this.scale.set(0.4, 0.4, 0.4);
   }
 
   show() {

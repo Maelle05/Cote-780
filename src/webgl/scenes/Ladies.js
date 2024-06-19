@@ -185,7 +185,7 @@ class Ladies extends Scene {
     this.directionLight.intensity = 2;
     this.directionLight.position.set(7, 10, 15);
     this.add(this.directionLight);
-    
+
     this.sparkles = new SparkleParticles();
     this.add(this.sparkles);
   }
@@ -350,7 +350,11 @@ class Ladies extends Scene {
     this.vegetation = new Vegetation("ladies");
     this.add(this.vegetation);
 
-    this.birds = new Birds(this.ladies.getObjectByName("BirdStart").position, this.ladies.getObjectByName("BirdEnd").position, true);
+    this.birds = new Birds(
+      this.ladies.getObjectByName("BirdStart").position,
+      this.ladies.getObjectByName("BirdEnd").position,
+      true
+    );
     this.add(this.birds);
 
     this.dem1 = new Demoiselle(this.D1[0], this.D1[1], 0.9);
@@ -359,12 +363,18 @@ class Ladies extends Scene {
     this.demoiselles.add(this.dem1, this.dem2, this.dem3);
 
     // this.tearsColor = new Color(0xB8CEE7)
-    this.tearsColor = new Color(0xAABBCE)
+    this.tearsColor = new Color(0xaabbce);
     this.tears = new Mesh(
       new PlaneGeometry(0.2, 0.2),
       new TearsMaterial({
         uniforms: {
-          u_color: { value: new Vector3(this.tearsColor.r, this.tearsColor.g, this.tearsColor.b) },
+          u_color: {
+            value: new Vector3(
+              this.tearsColor.r,
+              this.tearsColor.g,
+              this.tearsColor.b
+            ),
+          },
           u_time: { value: app.ticker.elapsed * 0.001 },
           u_gAlpha: { value: 0.7 },
         },
@@ -396,7 +406,6 @@ class Ladies extends Scene {
     }
 
     app.audio.fadeOutAmbient();
-    app.audio.fadeOutMusic();
     app.webgl.shake.stopShake();
   }
 }

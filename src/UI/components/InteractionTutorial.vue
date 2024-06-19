@@ -63,9 +63,9 @@ const interactionType = computed(() => props.sceneIndex === 2 || props.sceneInde
   gap: 16px;
 
   &::before {
-    height: 280px;
-    width: 280px;
-    background-color: #4e5d6ca8;
+    height: 350px;
+    width: 400px;
+    background-color: #4e5d6c;
     border-radius: 100%;
     display: block;
     filter: blur(50px);
@@ -73,7 +73,7 @@ const interactionType = computed(() => props.sceneIndex === 2 || props.sceneInde
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -45%);
     z-index: 0;
   }
 }

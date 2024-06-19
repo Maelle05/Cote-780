@@ -3,7 +3,7 @@ import dataText from "../../locales/fr.json";
 const urlParams = new URLSearchParams(window.location.search);
 
 const DEV_MODE = false;
-const INIT_SCENE = 4;
+const INIT_SCENE = 0;
 
 const TITLES_SCENE = [
   [dataText["scene_0"].title],
@@ -41,7 +41,10 @@ const INTRO_SECTIONS = [
       },
       { id: "1-arbre", src: "/assets/images/intro/1_arbre.png" },
     ],
-    texts: urlParams.get('pres') !== null ? [] : [{ ref: dataText["intro"]["text_1"], delay: 0 }],
+    texts:
+      urlParams.get("pres") !== null
+        ? []
+        : [{ ref: dataText["intro"]["text_1"], delay: 0 }],
     audios: [],
   },
   {
