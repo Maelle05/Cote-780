@@ -67,11 +67,15 @@ class AudioManager {
     if (this.queuedAmbientName) {
       this.playAmbient(this.queuedAmbientName);
       this.queuedAmbientName = null;
+    } else {
+      this.playAmbient(AMBIENT_IDS.AMBIENT_LADIES);
     }
 
     if (this.queuedMusicName) {
       this.playMusic(this.queuedMusicName);
       this.queuedMusicName = null;
+    } else {
+      this.playMusic(MUSIC_IDS.CLASSIC_LOOP);
     }
   }
 
