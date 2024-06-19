@@ -171,7 +171,7 @@
     },
     "text_3": {
       "person": "Esprit",
-      "text": "Par ici ! Si tu décides de traverser ce portail, tu&nbsp;découvriras un lieu que le temps tente d'effacer.",
+      "text": "Par ici ! Si tu décides de traverser ce portail, tu découvriras un lieu que le temps tente d'effacer.",
       "camera": "5",
       "audio": "esprit_3"
     },
@@ -216,46 +216,48 @@
     "text_6": {
       "person": "Journal",
       "text": "1955  —  L’autre soir, la Durance a bien failli mettre fin au chantier ! Elle s’est rebellée contre ceux qui essayent de la contrôler. Malheureusement… ils sont bien décidés, ça n’a pas eu beaucoup d’effets hormis retarder le chantier.",
-      "camera": "5",
+      "camera": "6",
       "audio": "grandma_14"
     },
     "text_7": {
       "person": "Journal",
       "text": "1956  —  Toutes les habitations vont être dynamitées il paraît… ils vont même déplacer le cimetière…",
-      "camera": "5",
+      "camera": "7",
       "audio": "grandma_15"
     },
     "text_8": {
       "person": "Journal",
       "text": "1960  —  Au début, personne ne croyait à ce barrage. Même lorsque la construction a été lancée, on se disait qu’il ne verrait jamais le jour. Maintenant que les gens commencent à quitter le village, tout devient réel…",
-      "camera": "6",
+      "camera": "8",
       "audio": "grandma_16"
     },
     "text_9": {
       "person": "Journal",
       "text": "1964  —  Aujourd’hui j’ai eu la visite d’EDF au sujet du barrage. Ils m’ont proposé un logement et de l’argent… beaucoup… pour m'installer dans le nouveau village… Mais comment vivre, avec nos souvenirs engloutis sous les yeux ?",
-      "camera": "6",
+      "camera": "9",
       "audio": "grandma_17"
     },
     "text_10": {
       "person": "Journal",
       "text": "1966  —  Ils ont commencé à reconstruire le village au-dessus de la cote 780… et je suis bien triste de devoir quitter mon Hôtel. Mais comme les autres, je crois que j’ai fini par m’y résoudre.",
-      "camera": "6",
+      "camera": "10",
       "audio": "grandma_18"
     },
     "text_11": {
       "person": "Journal",
       "text": "Mon voisin ne bougera jamais. Il me raconte comment, pendant la nuit, il va gêner et démolir le chantier.",
-      "camera": "6",
+      "camera": "10",
       "audio": "grandma_19"
     },
     "text_12": {
       "text": "1964 —  Le lac a fini par se remplir,. La majorité des anciens habitants ont quitté la région, trop nostalgique pour rester...",
+      "camera": "11",
       "audio": "grandma_20",
       "person": "Journal"
     },
     "text_13": {
       "text": "Pour ma part j'ai reprit un Hôtel à Savines-le-lac et les touristes ont commencé à affluer, attirés par la curiosité qu'est le Lac de Serre-Ponçon",
+      "camera": "11",
       "audio": "grandma_21",
       "person": "Journal"
     },

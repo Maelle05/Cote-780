@@ -93,7 +93,7 @@ class Village extends Scene {
     this.spirit = new Spirit();
     this.spirit.position.set(-10, 0.7, 7);
 
-    this.anim = new CamAnim(6, this.scene, [0, 0, 0.2, 0.33, 0.66, 1, 1, 1]);
+    this.anim = new CamAnim(6, this.scene, [0, 0, 0.15, 0.30, 0.55, 0.82, 0.84, 0.86, 0.9, 0.92, 0.95, 1, 1]);
 
     if (!this.anim) {
       const controls = new OrbitControls(
@@ -149,7 +149,7 @@ class Village extends Scene {
 
     if (this.animationMixer && this.bookAnim) {
       if (
-        app.sceneshandler.currentStepCam == 6 &&
+        app.sceneshandler.currentStepCam == 8 &&
         app.sceneshandler.currentStepText == 0
       ) {
         this.targetProgressAnim = 0;
@@ -165,7 +165,7 @@ class Village extends Scene {
         );
         this.animationAction.paused = true;
         this.animationMixer.update(app.ticker.delta);
-      } else if (app.sceneshandler.currentStepCam < 2) {
+      } else if (app.sceneshandler.currentStepCam < 3) {
         this.targetProgressAnim = 1;
         this.currentProgressAnim = MathUtils.lerp(
           this.currentProgressAnim,
