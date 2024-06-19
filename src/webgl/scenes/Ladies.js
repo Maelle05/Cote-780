@@ -61,9 +61,6 @@ class Demoiselle extends Group {
     this.topIsDraw = false;
     this.isElHit = false;
     this.hitting = false;
-    
-    this.sparkles = new SparkleParticles();
-    this.add(this.sparkles);
   }
 
   onPointerMove(e) {
@@ -94,8 +91,6 @@ class Demoiselle extends Group {
       this.ctx.fillStyle = `white`;
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
       this.topIsDraw = true;
-
-      this.sparkles.spawn(this.top.position);
 
       gsap.to(this.top.position, {
         x: this.body.position.x,
@@ -157,6 +152,9 @@ class Demoiselle extends Group {
 
 class Ladies extends Scene {
   drawCount = 0;
+  top1Draw = false;
+  top2Draw = false;
+  top3Draw = false;
 
   constructor() {
     super();
@@ -187,6 +185,9 @@ class Ladies extends Scene {
     this.directionLight.intensity = 2;
     this.directionLight.position.set(7, 10, 15);
     this.add(this.directionLight);
+    
+    this.sparkles = new SparkleParticles();
+    this.add(this.sparkles);
   }
 
   init() {
@@ -286,12 +287,29 @@ class Ladies extends Scene {
     if (app.sceneshandler.currentStepCam == 3 && !this.isTutoPass) {
       this.demoiselles.children.forEach((dem) => {
         dem.top.material.uniforms.u_gAlpha.value =
-          (Math.sin(app.ticker.elapsed * 0.005) * 0.5 + 0.5) * 0.8;
+          (Math.sin(app.ticker.elapsed * 0.005) * 0.5 + 0.5) * 0.5;
       });
     } else if (app.sceneshandler.currentStepCam == 3 && this.isTutoPass) {
       this.demoiselles.children.forEach((dem) => {
         dem.top.material.uniforms.u_gAlpha.value = 0.4;
       });
+    }
+
+    if (this.dem1.topIsDraw && !this.top1Draw) {
+      this.sparkles.spawn(this.dem1.top.position, 5);
+      setTimeout(() => {
+        this.top1Draw = true;
+      }, 200);
+    } else if (this.dem2.topIsDraw && !this.top2Draw) {
+      this.sparkles.spawn(this.dem2.top.position, 5);
+      setTimeout(() => {
+        this.top2Draw = true;
+      }, 200);
+    } else if (this.dem3.topIsDraw && !this.top3Draw) {
+      this.sparkles.spawn(this.dem3.top.position, 5);
+      setTimeout(() => {
+        this.top3Draw = true;
+      }, 200);
     }
   }
 

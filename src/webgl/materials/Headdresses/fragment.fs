@@ -11,7 +11,7 @@ void main()	{
   vec4 maskTex = texture2D(uMaskTex, vec2(vUv.x, 1. - vUv.y));
   vec4 baseTex = texture2D(uBaseTex, vUv);
 
-  vec4 resultTex = mix(maskTex, baseTex, maskTex);
+  vec4 resultTex = mix(1. - maskTex, baseTex, maskTex);
 
   vec4 final = vec4(resultTex.x, resultTex.y, resultTex.z, 1. * maskTex.z + 0.2);
   final.w += u_gAlpha;
