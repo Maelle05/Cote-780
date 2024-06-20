@@ -68,7 +68,7 @@ state.on(EVENTS.CHANGE_SCENE_STEP, (e) => {
       <Navigation :sceneIndex="sceneIndex"></Navigation>
       <Intro v-if="isIntro" />
       <Scenes v-if="isScenes" :sceneIndex="sceneIndex" :stepIndex="stepIndex" />
-      <BtnChangeScene />
+      <!-- <BtnChangeScene /> -->
     </div>
     <div v-if="isMobile === true">
       <MobileDisclaimer></MobileDisclaimer>

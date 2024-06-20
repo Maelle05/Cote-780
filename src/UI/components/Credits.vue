@@ -176,7 +176,7 @@ const props = defineProps({
 
 @keyframes animCredits {
   100% {
-    transform: translateY(-115vh);
+    transform: translateY(-120vh);
   }
 }
 
