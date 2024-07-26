@@ -362,6 +362,7 @@ const handleMouseMove = (event) => {
         <div
           :class="`section__text section__text--${id}`"
           v-for="(text, id) in section.texts"
+          :key="id"
         >
           <IntroText
             :text="text"
@@ -655,7 +656,7 @@ const handleMouseMove = (event) => {
 }
 
 .section__elements {
-  display: grid;
+  display: contents;
   align-items: center;
   justify-content: center;
   margin: 0 !important;
@@ -817,6 +818,7 @@ const handleMouseMove = (event) => {
 }
 
 .section--6 .section__element--6-milo {
+  width: 100%;
   position: fixed;
   bottom: 0;
   opacity: 0;
@@ -917,6 +919,14 @@ const handleMouseMove = (event) => {
   text-align: center;
   width: 100%;
   top: 5vh;
+}
+
+.section--5 .section__element--5-lac img {
+ transform: translateY(7vh);
+}
+
+.section--5 .section__element--5-collines img {
+  transform: translateY(4vh);
 }
 
 .section--5 .section__text--1 {
