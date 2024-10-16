@@ -289,7 +289,6 @@ onMounted(() => {
 })
 
 const handleScrollTo = (section) => {
-  console.log(section)
   const targetSection = document.querySelector(
     `.section--${section === 0 ? 1 : section}`
   )
